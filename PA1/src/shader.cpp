@@ -32,45 +32,86 @@ bool Shader::Initialize()
   return true;
 }
 
+std::string Shader::LoadShader(GLenum ShaderType)
+{
+  std::ifstream fin;
+  std::stringstream file_buffer;
+  std::string shader;
+
+  if (ShaderType == GL_VERTEX_SHADER)
+  {
+    fin.open("..//shaders//shader.vert");
+    if (!fin.is_open())
+    {
+      throw std::runtime_error("Could not open vertex shader file");
+    }
+  }
+  else
+  {
+    fin.open("..//shaders//shader.frag");
+    if (!fin.is_open())
+    {
+      throw std::runtime_error("Could not open fragment shader file");
+    }
+  }
+
+  //store pointer to the file buffer in stringstream and get the string
+  file_buffer << fin.rdbuf();
+  shader = file_buffer.str();
+
+  fin.close();
+  return shader;
+}
+
 // Use this method to add shaders to the program. When finished - call finalize()
 bool Shader::AddShader(GLenum ShaderType)
 {
   std::string s;
 
-  if(ShaderType == GL_VERTEX_SHADER)
+  try
   {
-    s = "#version 330\n \
-          \
-          layout (location = 0) in vec3 v_position; \
-          layout (location = 1) in vec3 v_color; \
-          \
-          smooth out vec3 color; \
-          \
-          uniform mat4 projectionMatrix; \
-          uniform mat4 viewMatrix; \
-          uniform mat4 modelMatrix; \
-          \
-          void main(void) \
-          { \
-            vec4 v = vec4(v_position, 1.0); \
-            gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v; \
-            color = v_color; \
-          } \
-          ";
+    if(ShaderType == GL_VERTEX_SHADER)
+    {
+      s = LoadShader(GL_VERTEX_SHADER);
+      /*s = "#version 330\n \
+            \
+            layout (location = 0) in vec3 v_position; \
+            layout (location = 1) in vec3 v_color; \
+            \
+            smooth out vec3 color; \
+            \
+            uniform mat4 projectionMatrix; \
+            uniform mat4 viewMatrix; \
+            uniform mat4 modelMatrix; \
+            \
+            void main(void) \
+            { \
+              vec4 v = vec4(v_position, 1.0); \
+              gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v; \
+              color = v_color; \
+            } \
+            ";*/
+    }
+    else if(ShaderType == GL_FRAGMENT_SHADER)
+    {
+      s = LoadShader(GL_FRAGMENT_SHADER);
+      /*s = "#version 330\n \
+            \
+            smooth in vec3 color; \
+            \
+            out vec4 frag_color; \
+            \
+            void main(void) \
+            { \
+               frag_color = vec4(color.rgb, 1.0); \
+            } \
+            ";*/
+    }
   }
-  else if(ShaderType == GL_FRAGMENT_SHADER)
+  catch (std::exception& error)
   {
-    s = "#version 330\n \
-          \
-          smooth in vec3 color; \
-          \
-          out vec4 frag_color; \
-          \
-          void main(void) \
-          { \
-             frag_color = vec4(color.rgb, 1.0); \
-          } \
-          ";
+    std::cout << "Error: " << error.what() << std::endl;
+    return false;
   }
 
   GLuint ShaderObj = glCreateShader(ShaderType);
