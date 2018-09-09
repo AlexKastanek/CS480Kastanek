@@ -55,12 +55,12 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 /usr/NX/scripts/vgl/vglrun ./Tutorial
 ```
 
-### Keyboard/Mouse Input Guide
-Space bar OR Middle Mouse - Pause the simulation
-Left Arrow - change direction of orbit to clockwise
-Right Arrow - change direction of orbit to counter-clockwise
-Right Mouse - switch direction of orbit
-A - change direction of spin to clockwise
-D - change direction of spin to counter-clockwise
-Left Mouse - switch direction of spin
+## Keyboard/Mouse Input Guide
+Space bar OR Middle Mouse - Pause the simulation  
+Left Arrow - change direction of orbit to clockwise  
+Right Arrow - change direction of orbit to counter-clockwise  
+Right Mouse - switch direction of orbit  
+A - change direction of spin to clockwise  
+D - change direction of spin to counter-clockwise  
+Left Mouse - switch direction of spin  
 
