@@ -5,6 +5,7 @@
 #include <assert.h>
 
 #include "window.h"
+//#include "gui.h"
 #include "graphics.h"
 
 class Engine
@@ -27,6 +28,8 @@ class Engine
     int m_WINDOW_HEIGHT;
     bool m_FULLSCREEN;
     SDL_Event m_event;
+
+    //GUI *m_gui;
 
     Graphics *m_graphics;
     unsigned int m_DT;

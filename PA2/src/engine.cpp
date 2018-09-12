@@ -20,6 +20,7 @@ Engine::Engine(string name)
 Engine::~Engine()
 {
   delete m_window;
+  //delete m_gui;
   delete m_graphics;
   m_window = NULL;
   m_graphics = NULL;
@@ -42,6 +43,14 @@ bool Engine::Initialize()
     printf("The graphics failed to initialize.\n");
     return false;
   }
+
+  // Start the GUI
+  //m_gui = new GUI();
+  //if (!m_gui->Initialize(m_window->GetWindow(), m_window->GetContext()))
+  //{
+  //  printf("The graphics failed to initialize.\n");
+  //  return false;
+  //}
 
   // Set the time
   m_currentTimeMillis = GetCurrentTimeMillis();
@@ -68,6 +77,10 @@ void Engine::Run()
     // Update and render the graphics
     m_graphics->Update(m_DT);
     m_graphics->Render();
+
+    // Update and render the GUI
+    //m_gui->Update();
+    //m_gui->Render();
 
     // Swap to the Window
     m_window->Swap();
