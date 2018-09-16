@@ -12,6 +12,8 @@ Graphics::~Graphics()
 
 bool Graphics::Initialize(int width, int height)
 {
+  //cout << "CHECK GRAPHICS INIT" << endl;
+
   // Used for the linux OS
   #if !defined(__APPLE__) && !defined(MACOSX)
     // cout << glewGetString(GLEW_VERSION) << endl;
@@ -45,8 +47,12 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Create the objects
-  m_planet = new Object();
-  m_moon = new Object(m_planet->GetModelReference());
+  m_planet = new Planet(5.0, 5.0);
+  m_moon = new Moon(30.0, 30.0);
+
+  // Build the object hierarchy
+  m_planet->AddChild(m_moon);
+  m_moon->SetParent(m_planet);
 
   // Set up the shaders
   m_shader = new Shader();
@@ -110,6 +116,8 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt)
 {
+  //cout << "CHECK GRAPHICS UPDATE" << endl;
+
   // Update the object
   m_planet->Update(dt);
   m_moon->Update(dt);
@@ -117,6 +125,8 @@ void Graphics::Update(unsigned int dt)
 
 void Graphics::Render()
 {
+  //cout << "CHECK GRAPHICS RENDER" << endl;
+
   //clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

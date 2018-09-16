@@ -3,7 +3,8 @@
 Object::Object()
 { 
 
-  m_parent = new glm::mat4(1.0);
+  //m_parent = new glm::mat4(1.0);
+  m_parent = NULL;
 
   /*
     # Blender File for a Cube
@@ -79,10 +80,12 @@ Object::Object()
   m_orbitDirection = 0; //orbiting counter-clockwise
 }
 
+/*
 Object::Object(glm::mat4* parent)
 { 
 
   m_parent = parent;
+*/
 
   /*
     # Blender File for a Cube
@@ -110,6 +113,7 @@ Object::Object(glm::mat4* parent)
     f 5 1 8
   */
 
+/*
   Vertices = {
     {{1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 0.0f}},
     {{1.0f, -1.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
@@ -157,48 +161,19 @@ Object::Object(glm::mat4* parent)
   m_spinDirection = 0; //spinning counter-clockwise
   m_orbitDirection = 0; //orbiting counter-clockwise
 }
+*/
 
 Object::~Object()
 {
+  m_children.clear();
+
   Vertices.clear();
   Indices.clear();
 }
 
-void Object::Update(unsigned int dt)
+/*virtual*/ void Object::Update(unsigned int dt)
 {
-  float radius = 6.0f;
-  float rotateMultiplier = 1000;
-  float translateMultiplier = 5000;
 
-  if (!m_paused)
-  {
-    //update spin direction
-    if (m_spinDirection == 0)
-    {
-      rotateMultiplier *= 1;
-    }
-    else
-    {
-      rotateMultiplier *= -1;
-    }
-
-    //update orbit direction
-    if (m_orbitDirection == 0)
-    {
-      translateMultiplier *= 1;
-    }
-    else
-    {
-      translateMultiplier *= -1;
-    }
-
-    angleRotate += dt * M_PI/rotateMultiplier;
-    angleTranslate += dt * M_PI/translateMultiplier;
-  
-    model = glm::translate(*m_parent, glm::vec3(radius * sin(angleTranslate), 0.0f, radius * cos(angleTranslate)));
-    model *= glm::rotate(glm::mat4(1.0f), (angleRotate), glm::vec3(0.0, 1.0, 0.0));
-    //model = glm::translate(glm::mat4(1.0f), glm::vec3(0.01f * dt, 0.0f, 0.0f));
-  }
 }
 
 void Object::Render()
@@ -223,9 +198,26 @@ glm::mat4 Object::GetModel()
   return model;
 }
 
+/*
 glm::mat4* Object::GetModelReference()
 {
   return &model;
+}
+*/
+
+glm::mat4 Object::GetTranslation()
+{
+  return translation;
+}
+
+glm::mat4 Object::GetRotation()
+{
+  return rotation;
+}
+
+glm::mat4 Object::GetScale()
+{
+  return scale;
 }
 
 bool Object::IsPaused()
@@ -241,6 +233,31 @@ unsigned int Object::GetSpinDirection()
 unsigned int Object::GetOrbitDirection()
 {
   return m_orbitDirection;
+}
+
+/*
+void SetParent(glm::mat4* parent)
+{
+  m_parent = parent;
+}
+*/
+
+void Object::SetParent(Object* parent)
+{
+  m_parent = parent;
+}
+
+void Object::AddChild(Object* child)
+{
+  m_children.push_back(child);
+}
+
+void Object::RemoveChild()
+{
+  if (!m_children.empty())
+  {
+    m_children.pop_back();
+  }
 }
 
 void Object::SetPaused(bool paused)

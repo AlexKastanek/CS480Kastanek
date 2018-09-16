@@ -56,11 +56,11 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 ```
 
 ## Keyboard/Mouse Input Guide
-Space bar OR Middle Mouse - Pause the simulation  
-Left Arrow - change direction of orbit to clockwise  
-Right Arrow - change direction of orbit to counter-clockwise  
-Right Mouse - switch direction of orbit  
-A - change direction of spin to clockwise  
-D - change direction of spin to counter-clockwise  
-Left Mouse - switch direction of spin  
+Space bar OR Middle Mouse - Freeze the planet  
+Left Arrow - change direction of planet orbit to clockwise  
+Right Arrow - change direction of planet orbit to counter-clockwise  
+Right Mouse - switch direction of planet orbit  
+A - change direction of planet spin to clockwise  
+D - change direction of planet spin to counter-clockwise  
+Left Mouse - switch direction of planet spin  
 
