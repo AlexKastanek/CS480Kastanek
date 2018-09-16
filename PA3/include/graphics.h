@@ -21,10 +21,16 @@ class Graphics
     bool IsPlanetPaused();
     unsigned int GetPlanetSpin();
     unsigned int GetPlanetOrbit();
+    bool IsMoonPaused();
+    unsigned int GetMoonSpin();
+    unsigned int GetMoonOrbit();
 
     void SetPlanetPaused(bool paused);
     void SetPlanetSpin(unsigned int spin);
     void SetPlanetOrbit(unsigned int orbit);
+    void SetMoonPaused(bool paused);
+    void SetMoonSpin(unsigned int spin);
+    void SetMoonOrbit(unsigned int orbit);
 
   private:
     std::string ErrorString(GLenum error);
