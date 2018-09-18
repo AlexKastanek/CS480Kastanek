@@ -9,6 +9,7 @@ using namespace std;
 #include "imgui_impl_opengl3.h"
 #include "graphics_headers.h"
 #include "window.h"
+#include "graphics.h"
 
 class GUI
 {
@@ -16,7 +17,7 @@ public:
 	GUI();
 	~GUI();
 	bool Initialize(SDL_Window* window, SDL_GLContext context);
-	void Update(SDL_Window* window);
+	void Update(SDL_Window* window, Graphics* graphics);
 	void Render(SDL_Window* window, SDL_GLContext context);
 
 private:

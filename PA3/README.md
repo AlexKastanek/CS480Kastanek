@@ -64,3 +64,10 @@ A - change direction of planet spin to clockwise
 D - change direction of planet spin to counter-clockwise  
 Left Mouse - switch direction of planet spin  
 
+## Menu
+Imgui was being very finnicky on my machine, so I had to disable the SDL Window bar. If I didn't, all the imgui buttons would be mapped incorrectly, and the user would need to move the mouse cursor several pixels higher than the UI item in order to select it.
+Since there is now window bar, ESC must be pressed to close the window (or right click on the task bar and select close).
+
+## Extra Credit
+This project contains the extra credit portion of the assignment. Scroll down on the menu to see a display of the current spin and orbit direction of the cube planet.
+

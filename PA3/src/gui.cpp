@@ -22,37 +22,84 @@ bool GUI::Initialize(SDL_Window* window, SDL_GLContext context)
  	return true;
 }
 
-void GUI::Update(SDL_Window* window)
+void GUI::Update(SDL_Window* window, Graphics* graphics)
 {
+    //bool buttonPressed = false;
+
   	ImGui_ImplOpenGL3_NewFrame();
   	ImGui_ImplSDL2_NewFrame(window);
   	ImGui::NewFrame();
 
-    //ImGui::ShowMetricsWindow();
-
-  	//ImGui::Begin("");
-  	if (ImGui::BeginMainMenuBar())
-  	{
-      if (ImGui::BeginMenu("Options"))
+    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove));
+    {
+      if (ImGui::Button("Play/Pause Planet"))
       {
-        //cout << "displaying options" << endl;
-        if (ImGui::MenuItem("Pause", "Spacebar"))
+        if (graphics->IsPlanetPaused())
         {
-          cout << "PAUSE" << endl;
+          graphics->SetPlanetPaused(0);
         }
-        ImGui::EndMenu();
+        else
+        {
+          graphics->SetPlanetPaused(1);
+        }
       }
-  		ImGui::EndMainMenuBar();
-  	}
-  	//ImGui::End();
+      if (ImGui::Button("Change Orbit Direction"))
+      {
+        if (graphics->GetPlanetOrbit() == 0)
+        {
+          graphics->SetPlanetOrbit(1);
+        }
+        else
+        {
+          graphics->SetPlanetOrbit(0);
+        }
+      }
+      if (ImGui::Button("Change Spin Direction"))
+      {
+        if (graphics->GetPlanetSpin() == 0)
+        {
+          graphics->SetPlanetSpin(1);
+        }
+        else
+        {
+          graphics->SetPlanetSpin(0);
+        }
+      }
 
-    ImVec2 mousePos = ImGui::GetMousePos();
-    //cout << "(" << mousePos.x << ", " << mousePos.y << ")" << endl;
+      ImGui::Separator();
 
-    //if (ImGui::Button("Press Me"))
-    //{
-    //  cout << "Button pressed" << endl;
-    //}
+      ImGui::Text("Info");
+
+      if (graphics->IsPlanetPaused())
+      {
+        ImGui::Text("Paused");
+      }
+      else
+      {
+        ImGui::Text("Playing");
+      }
+
+      if (graphics->GetPlanetOrbit() == 0)
+      {
+        ImGui::Text("Planet Orbit Direction: Clockwise");
+      }
+      else
+      {
+        ImGui::Text("Planet Orbit Direction: Counter-Clockwise");
+      }
+
+      if (graphics->GetPlanetSpin() == 0)
+      {
+        ImGui::Text("Planet Spin Direction: Clockwise");
+      }
+      else
+      {
+        ImGui::Text("Planet Spin Direction: Counter-Clockwise");
+      }
+
+    }
+    ImGui::End();
+    
 }
 
 void GUI::Render(SDL_Window* window, SDL_GLContext context)

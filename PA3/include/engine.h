@@ -29,7 +29,7 @@ class Engine
     bool m_FULLSCREEN;
     SDL_Event m_event;
 
-    GUI *m_gui; //TODO: move this object to window and pass the window and context from there to this object every update
+    GUI *m_gui;
 
     Graphics *m_graphics;
     unsigned int m_DT;

@@ -64,14 +64,23 @@ void Engine::Run()
 
   while(m_running)
   {
+    //bool guiClicked = false;
+
     // Update the DT
     m_DT = getDT();
 
-    // Check the keyboard input
     while(SDL_PollEvent(&m_event) != 0)
     {
-      ImGui_ImplSDL2_ProcessEvent(&m_event);
-      Keyboard();
+      if (!ImGui::IsMouseHoveringAnyWindow())
+      {
+        //ImGui_ImplSDL2_ProcessEvent(&m_event)
+        Keyboard();
+      }
+      //else
+      {
+        
+      }
+      //Keyboard();
     }
 
     // Update and render the graphics
@@ -79,7 +88,7 @@ void Engine::Run()
     m_graphics->Render();
 
     // Update and render the GUI
-    m_gui->Update(m_window->GetWindow());
+    m_gui->Update(m_window->GetWindow(), m_graphics);
     m_gui->Render(m_window->GetWindow(), m_window->GetContext());
 
     // Swap to the Window
