@@ -30,7 +30,7 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   	ImGui_ImplSDL2_NewFrame(window);
   	ImGui::NewFrame();
 
-    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove));
+    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize));
     {
       if (ImGui::Button("Play/Pause Planet"))
       {
