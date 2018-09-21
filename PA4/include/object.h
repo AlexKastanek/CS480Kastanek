@@ -3,8 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <time.h>
+#include <math.h>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
 #include "graphics_headers.h"
 
 using namespace std;

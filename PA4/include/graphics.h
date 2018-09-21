@@ -49,6 +49,7 @@ class Graphics
     GLint m_modelMatrix;
 
     Object *m_board;
+    Object *m_dragon;
     Planet *m_planet;
     Moon *m_moon;
 };

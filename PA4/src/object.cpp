@@ -84,6 +84,7 @@ Object::Object(string filename)
 {
   LoadObject(filename, &Vertices, &Indices);
 
+  /*
   cout << "Vertices:" << endl;
   cout << "{" << endl;
   for (int i = 0; i < Vertices.size(); i++)
@@ -103,7 +104,9 @@ Object::Object(string filename)
          << "}}" << endl;
   }
   cout << "}" << endl;
+  //*/
 
+  /*
   cout << "Indices:" << endl;
   cout << "{" << endl;
   for (int i = 0; i < Indices.size(); i++)
@@ -112,6 +115,7 @@ Object::Object(string filename)
     if (((i + 1) % 3) == 0) cout << endl;
   }
   cout << "}" << endl;
+  //*/
 
   glGenBuffers(1, &VB);
   glBindBuffer(GL_ARRAY_BUFFER, VB);
@@ -120,6 +124,13 @@ Object::Object(string filename)
   glGenBuffers(1, &IB);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
+
+  angleTranslate = 0.0f;
+  angleRotate = 0.0f;
+
+  m_paused = 0; //not paused
+  m_spinDirection = 0; //spinning counter-clockwise
+  m_orbitDirection = 0; //orbiting counter-clockwise
 }
 
 Object::~Object()
@@ -130,9 +141,12 @@ Object::~Object()
   Indices.clear();
 }
 
-/*virtual*/ void Object::Update(unsigned int dt)
+void Object::Update(unsigned int dt)
 {
-
+  angleRotate += dt * (M_PI/5000);
+  
+  model = glm::rotate(glm::mat4(1.0), angleRotate, glm::vec3(0.0,1.0,0.0));
+  //model *= glm::rotate(glm::mat4(1.0), (float)90.0, glm::vec3(1.0, 0.0, 0.0));
 }
 
 void Object::Render()
@@ -154,9 +168,10 @@ void Object::Render()
 
 bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
 {
-  ifstream fin;
+  ifstream fin, finMtl;
   string fileData;
-  glm::vec3 default_color(0.5, 0.5, 0.5);
+  string mtlFileName, mtlFilePath;
+  bool usingMtl = false;
 
   fin.open(in_filename);
   if (!fin.is_open())
@@ -165,12 +180,30 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
     return false;
   }
 
+  srand(time(NULL));
+
   out_vertices->clear();
   out_indices->clear();
 
   while (fin >> fileData)
   {
-    if (fileData == "v")
+    if (fileData == mtllib)
+    {
+      fin >> mtlFileName;
+      mtlFilePath = "..//objects//MTLS//" + mtlFileName;
+
+      finMtl.open(mtlFilePath);
+      if (!finMtl.is_open)
+      {
+        cout << "Coult not open mtl file. Using default color option..." << endl;
+        usingMtl = false;
+      }
+      else
+      {
+        usingMtl = true;
+      }
+    }
+    else if (fileData == "v")
     {
       //cout << "vertex found" << endl;
 
@@ -202,9 +235,14 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
       }
 
       //newColor = default_color;
-      newColor.x = default_color.x;
-      newColor.y = default_color.y;
-      newColor.z = default_color.z;
+      float grayscale = ( (float) (rand() % 20 + 50) ) / 100;
+      //cout << grayscale << endl;
+      newColor.x = //( (float) (rand() % 100 + 1) ) / 100;
+                   grayscale;
+      newColor.y = //( (float) (rand() % 100 + 1) ) / 100;
+                   grayscale;
+      newColor.z = //( (float) (rand() % 100 + 1) ) / 100;
+                   grayscale;
 
       //newVertexObject.vertex = newVertex;
       newVertexObject.vertex.x = newVertex.x;
@@ -215,6 +253,10 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
       newVertexObject.color.y = newColor.y;
       newVertexObject.color.z = newColor.z;
       out_vertices->push_back(newVertexObject);
+    }
+    else if (fileData = "usemtl")
+    {
+      //TODO: add functionality here
     }
     else if (fileData == "f")
     {
@@ -227,7 +269,7 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
         string vertexIndex;
 
         fin >> fileData;
-        while (fileData[fileDataIterator] != '/')
+        while (fileData[fileDataIterator] != '/' && fileDataIterator < fileData.size())
         {
           vertexIndex.push_back(fileData[fileDataIterator]);
           fileDataIterator++;
@@ -239,6 +281,10 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
     }
   }
 
+  if (usingMtl)
+  {
+    finMtl.close();
+  }
   fin.close();
 
   cout << "Load function complete" << endl;

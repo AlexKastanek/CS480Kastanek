@@ -48,6 +48,7 @@ bool Graphics::Initialize(int width, int height)
 
   // Create the objects
   m_board = new Object("..//objects//OBJS//board.obj");
+  m_dragon = new Object("..//objects//OBJS//dragon.obj");
   m_planet = new Planet(5.0, 5.0);
   m_moon = new Moon(30.0, 30.0);
 
@@ -119,7 +120,9 @@ void Graphics::Update(unsigned int dt)
 {
   //cout << "CHECK GRAPHICS UPDATE" << endl;
 
-  // Update the object
+  // Update the objects
+  m_board->Update(dt);
+  m_dragon->Update(dt);
   m_planet->Update(dt);
   m_moon->Update(dt);
 }
@@ -139,15 +142,23 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
-  // Render the object
+  // Render the objects
+
+  //Board
   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
   m_board->Render();
 
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet->GetModel()));
-  m_planet->Render();
+  //Dragon
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_dragon->GetModel()));
+  //m_dragon->Render();
 
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon->GetModel()));
-  m_moon->Render();
+  //Planet
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet->GetModel()));
+  //m_planet->Render();
+
+  //Moon
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon->GetModel()));
+  //m_moon->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();
