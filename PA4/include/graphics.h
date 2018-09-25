@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include <string>
 #include <iostream>
 using namespace std;
 
@@ -33,25 +34,23 @@ class Graphics
     void SetMoonSpin(unsigned int spin);
     void SetMoonOrbit(unsigned int orbit);
 
+    void SetObjectFilename(string objectFilename);
+
   private:
     std::string ErrorString(GLenum error);
 
     Camera *m_camera;
     Shader *m_shader;
 
-    //struct Vertex
-    //{
-    //    GLfloat
-    //}
-
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_board;
-    Object *m_dragon;
+    Object *m_object;
     Planet *m_planet;
     Moon *m_moon;
+
+    string m_objectFilename;
 };
 
 #endif /* GRAPHICS_H */

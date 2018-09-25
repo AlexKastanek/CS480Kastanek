@@ -14,6 +14,12 @@ using namespace std;
 
 class Object
 {
+    struct Material
+    {
+        string name;
+        glm::vec3 color;
+    };
+
   public:
     Object();
     Object(string filename);
@@ -24,6 +30,8 @@ class Object
     bool LoadObject(string in_filename, 
                     vector<Vertex>* out_vertices, 
                     vector<unsigned int>* out_indices);
+    bool LoadMaterial(string in_filename,
+                      vector<Material>* out_materials);
 
     glm::mat4 GetModel();
     //glm::mat4* GetModelReference();

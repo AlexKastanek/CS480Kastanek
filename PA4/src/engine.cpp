@@ -37,6 +37,7 @@ bool Engine::Initialize()
 
   // Start the graphics
   m_graphics = new Graphics();
+  m_graphics->SetObjectFilename(m_objectFilename);
   if(!m_graphics->Initialize(m_WINDOW_WIDTH, m_WINDOW_HEIGHT))
   {
     printf("The graphics failed to initialize.\n");
@@ -187,4 +188,9 @@ long long Engine::GetCurrentTimeMillis()
   gettimeofday(&t, NULL);
   long long ret = t.tv_sec * 1000 + t.tv_usec / 1000;
   return ret;
+}
+
+void Engine::SetObjectFilename(string objectFilename)
+{
+  m_objectFilename = objectFilename;
 }

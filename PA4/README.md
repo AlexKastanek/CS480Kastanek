@@ -7,17 +7,6 @@ For both of the operating systems to run this project installation of these thre
 
 This project uses OpenGL 3.3. Some computers, such as virtual machines in the ECC, can not run this version. In in order to run OpenGL 2.7 follow the instructions at [Using OpenGL 2.7](https://github.com/HPC-Vis/computer-graphics/wiki/Using-OpenGL-2.7)
 
-### Ubuntu/Linux
-```bash
-sudo apt-get install libglew-dev libglm-dev libsdl2-dev
-```
-
-### Mac OSX
-Installation of brew is suggested to easily install the libs. Ensure that the latest version of the Developer Tools is installed.
-```bash
-brew install glew glm sdl2
-```
-
 ## Building and Running
 To build this project there are two options. One is to use CMake which makes including new libraries easier, and handles new files added automatically to the src and include directory. CMake is a small new learning curve but makes things easier in the future.
 The second option is to use the provided Makefile which is used as usual.
@@ -35,7 +24,7 @@ mkdir build
 cd build
 cmake ..
 make
-./Tutorial
+./Tutorial objectfilename.obj
 ```
 
 ### Makefile Instructions 
@@ -46,8 +35,11 @@ mkdir build
 cd build
 cp ../makefile .
 make
-./Tutorial
+./Tutorial objectfilename.obj
 ```
+
+### Run Instructions
+After building the project, the executable can be ran. The program requires a single command-line argument that is the name of the .obj it needs to load. The program will not accept no command-line arguments or more than one command-line argument. The location of this .obj file must be placed in the PA4/objects/OBJS directory. Any .mtl files associated with this .obj file must be placed in the PA4/objects/MTLS directory. For example, if you want to load an object called "dragon.obj" and a material file associated with that file called "dragon.mtl", you would place the "dragon.obj" file in the PA4/objects/OBJS directory, and you would place the "dragon.mtl" file in the PA4/objects/MTLS directory. Then, you would run the program using the command "./Tutorial dragon.obj" in the build directory you created. 
 
 ## Ubuntu.cse.unr.edu
 OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) website. To do so follow the build instructions, but when running the Tutorial executable use this line to execute.
@@ -56,18 +48,7 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 ```
 
 ## Keyboard/Mouse Input Guide
-Space bar OR Middle Mouse - Freeze the planet  
-Left Arrow - change direction of planet orbit to clockwise  
-Right Arrow - change direction of planet orbit to counter-clockwise  
-Right Mouse - switch direction of planet orbit  
-A - change direction of planet spin to clockwise  
-D - change direction of planet spin to counter-clockwise  
-Left Mouse - switch direction of planet spin  
-
-## Menu
-Imgui was being very finnicky on my machine, so I had to disable the SDL Window bar. If I didn't, all the imgui buttons would be mapped incorrectly, and the user would need to move the mouse cursor several pixels higher than the UI item in order to select it.
-Since there is now no window bar, ESC must be pressed to close the window (or right-click on the task bar and select close).
+ESC - must be pressed to close the window (or right-click on the task bar and select close).
 
 ## Extra Credit
-This project contains the extra credit portion of the assignment. Scroll down on the menu to see a display of the current spin and orbit direction of the cube planet.
-
+This program implements the extra credit portion of the assignment. Please see "Run Instructions" on how to use the .mtl file associated with the .obj file.

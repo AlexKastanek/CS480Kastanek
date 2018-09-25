@@ -2,8 +2,6 @@
 
 Object::Object()
 { 
-
-  //m_parent = new glm::mat4(1.0);
   m_parent = NULL;
 
   /*
@@ -84,6 +82,7 @@ Object::Object(string filename)
 {
   LoadObject(filename, &Vertices, &Indices);
 
+  //uncomment below to print all vertices
   /*
   cout << "Vertices:" << endl;
   cout << "{" << endl;
@@ -106,6 +105,7 @@ Object::Object(string filename)
   cout << "}" << endl;
   //*/
 
+  //uncomment below to print all indices
   /*
   cout << "Indices:" << endl;
   cout << "{" << endl;
@@ -144,9 +144,7 @@ Object::~Object()
 void Object::Update(unsigned int dt)
 {
   angleRotate += dt * (M_PI/5000);
-  
   model = glm::rotate(glm::mat4(1.0), angleRotate, glm::vec3(0.0,1.0,0.0));
-  //model *= glm::rotate(glm::mat4(1.0), (float)90.0, glm::vec3(1.0, 0.0, 0.0));
 }
 
 void Object::Render()
@@ -168,9 +166,13 @@ void Object::Render()
 
 bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
 {
-  ifstream fin, finMtl;
+  //file IO
+  ifstream fin;
   string fileData;
-  string mtlFileName, mtlFilePath;
+
+  //material data
+  vector<Material> materials;
+  int currentMaterialIndex = 0;
   bool usingMtl = false;
 
   fin.open(in_filename);
@@ -187,80 +189,87 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
 
   while (fin >> fileData)
   {
-    if (fileData == mtllib)
+    if (fileData == "mtllib")
     {
+      //load the material file
+
+      string mtlFileName, mtlFilePath;
+
       fin >> mtlFileName;
+      cout << "using material file: " << mtlFileName << endl;
       mtlFilePath = "..//objects//MTLS//" + mtlFileName;
 
-      finMtl.open(mtlFilePath);
-      if (!finMtl.is_open)
+      usingMtl = LoadMaterial(mtlFilePath, &materials);
+
+      //uncomment below to print the material info
+      /*
+      for (int i = 0; i < materials.size(); i++)
       {
-        cout << "Coult not open mtl file. Using default color option..." << endl;
-        usingMtl = false;
+        cout << "Material " << i << ": " << materials[i].name << endl;
+        cout << "Color: {"
+             << materials[i].color.x << ", "
+             << materials[i].color.y << ", "
+             << materials[i].color.z << "}" << endl;
       }
-      else
-      {
-        usingMtl = true;
-      }
+      //*/
     }
     else if (fileData == "v")
     {
-      //cout << "vertex found" << endl;
+      //add the vertex
 
       Vertex newVertexObject(glm::vec3(1.0),glm::vec3(1.0));
       glm::vec3 newVertex;
       glm::vec3 newColor;
+      float value;
 
-      for (int i = 0; i < 3; i++)
-      {
-        float value;
+      //get the x, y, z coordinates of the vertex
+      fin >> value;
+      newVertex.x = value;
+      fin >> value;
+      newVertex.y = value;
+      fin >> value;
+      newVertex.z = value;
 
-        fin >> fileData;
-        value = stof(fileData);
-
-        switch (i)
-        {
-          case 0:
-            newVertex.x = value;
-            break;
-          case 1:
-            newVertex.y = value;
-            break;
-          case 2:
-            newVertex.z = value;
-            break;
-          default:
-            cout << "Index out of range" << endl;
-        }
-      }
-
-      //newColor = default_color;
+      //generate the default material
+      //(currently a medium-dark grayscale value)
       float grayscale = ( (float) (rand() % 20 + 50) ) / 100;
-      //cout << grayscale << endl;
-      newColor.x = //( (float) (rand() % 100 + 1) ) / 100;
-                   grayscale;
-      newColor.y = //( (float) (rand() % 100 + 1) ) / 100;
-                   grayscale;
-      newColor.z = //( (float) (rand() % 100 + 1) ) / 100;
-                   grayscale;
-
-      //newVertexObject.vertex = newVertex;
+      newColor.x = grayscale;
+      newColor.y = grayscale;
+      newColor.z = grayscale;
+      
+      //assign the vertices
       newVertexObject.vertex.x = newVertex.x;
       newVertexObject.vertex.y = newVertex.y;
       newVertexObject.vertex.z = newVertex.z;
-      //newVertexObject.color = newColor;
+
+      //assign the materials
       newVertexObject.color.x = newColor.x;
       newVertexObject.color.y = newColor.y;
       newVertexObject.color.z = newColor.z;
+
       out_vertices->push_back(newVertexObject);
     }
-    else if (fileData = "usemtl")
+    else if (fileData == "usemtl")
     {
-      //TODO: add functionality here
+      //switch the current material being applied
+
+      string materialName;
+
+      //search for name in material list
+      fin >> materialName;
+      for (int i = 0; i < materials.size(); i++)
+      {
+        if (materials[i].name == materialName)
+        {
+          //set the current material index to the index where the match occurred
+          currentMaterialIndex = i;
+          break;
+        }
+      }
     }
     else if (fileData == "f")
     {
-      //cout << "index found" << endl;
+      //add the index
 
       for (int i = 0; i < 3; i++)
       {
@@ -268,6 +277,8 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
         int fileDataIterator = 0;
         string vertexIndex;
 
+        //loop until '/' is hit or fileData size is reached
+        //(only caring about the first index in the potential set of 3)
         fin >> fileData;
         while (fileData[fileDataIterator] != '/' && fileDataIterator < fileData.size())
         {
@@ -275,19 +286,69 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
           fileDataIterator++;
         }
 
-        newIndex = (unsigned int) stoi(vertexIndex);
-        out_indices->push_back(newIndex - 1);
+        //convert the index from string to int
+        newIndex = (unsigned int) (stoi(vertexIndex) - 1);
+
+        //if material file was opened successfully, use the data
+        if (usingMtl)
+        {
+          //assign material to vertex located at the index
+          out_vertices->at(newIndex).color.x = materials[currentMaterialIndex].color.x;
+          out_vertices->at(newIndex).color.y = materials[currentMaterialIndex].color.y;
+          out_vertices->at(newIndex).color.z = materials[currentMaterialIndex].color.z;
+        }
+
+        out_indices->push_back(newIndex);
       }
     }
   }
 
-  if (usingMtl)
-  {
-    finMtl.close();
-  }
   fin.close();
 
-  cout << "Load function complete" << endl;
+  return true;
+}
+
+bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
+{
+  ifstream fin;
+  string fileData;
+
+  fin.open(in_filename);
+  if (!fin.is_open())
+  {
+    cout << "Could not open material file. Using default color option..." << endl;
+    return false;
+  }
+
+  out_materials->clear();
+
+  while (fin >> fileData)
+  {
+    if (fileData == "newmtl")
+    {
+      Material newMaterial;
+
+      fin >> newMaterial.name;
+
+      //loop until diffuse is found
+      while (fileData != "Kd")
+      {
+        if (!(fin >> fileData)) //return false if diffuse is not found
+        {
+          fin.close();
+          return false;
+        }
+      }
+
+      fin >> newMaterial.color.x;
+      fin >> newMaterial.color.y;
+      fin >> newMaterial.color.z;
+
+      out_materials->push_back(newMaterial);
+    }
+  }
+
+  fin.close();
   return true;
 }
 
