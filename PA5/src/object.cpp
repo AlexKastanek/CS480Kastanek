@@ -1,5 +1,11 @@
 #include "object.h"
 
+//includes for Assimp
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/color4.h>
+
 Object::Object()
 { 
   m_parent = NULL;
@@ -174,7 +180,7 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
   
   if(aiMesh -> mNumVertices > 0)
   {
-      for(int i=0; i<ai_mesh->mNumVertices ; i++)//go through each vertex read in
+      for(int i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
       {
           aiVector3D aiVec = aiMesh -> mVertices[i];
           
@@ -182,18 +188,18 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
           
           glm::vec3 color = glm::vec3((rand() % 5), (rand() % 5), (rand() % 5));//random colors
           
-          Vertex *temp = new Vertex(vec, color); //create the Vertex type to be pushed
+          Vertex *temp = new Vertex(vert, color); //create the Vertex type to be pushed
           
-          out_vertices.push_back(*temp); //push vertex
+          out_vertices -> push_back(*temp); //push vertex
       }
       
       for(int i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
       {
-          aiFace *face = &aiMesh -> mFaces[j];
+          aiFace *face = &aiMesh -> mFaces[i];
           
-          out_indices.push_back(face -> mIndices[0]);//push each vertex to create the index
-          out_indices.push_back(face -> mIndices[1]);
-          out_indices.push_back(face -> mIndices[2]);
+          out_indices -> push_back(face -> mIndices[0]);//push each vertex to create the index
+          out_indices -> push_back(face -> mIndices[1]);
+          out_indices -> push_back(face -> mIndices[2]);
       }
   }
 }
