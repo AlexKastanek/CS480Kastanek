@@ -1,5 +1,11 @@
 #include "object.h"
 
+//includes for Assimp
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/color4.h>
+
 Object::Object()
 { 
   m_parent = NULL;
@@ -27,8 +33,8 @@ Object::Object()
     f 2 1 6
     f 3 2 7
     f 3 7 4
-    f 5 1 8
-  */
+    f 5 1 8        */
+  
 
   Vertices = {
     {{1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 0.0f}},
@@ -166,146 +172,36 @@ void Object::Render()
 
 bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
 {
-  //file IO
-  ifstream fin;
-  string fileData;
-
-  //material data
-  vector<Material> materials;
-  int currentMaterialIndex = 0;
-  bool usingMtl = false;
-
-  fin.open(in_filename);
-  if (!fin.is_open())
+  Assimp::Importer importer;
+   
+  const aiScene *scene = importer.ReadFile(in_filename.c_str(), aiProcess_Triangulate);//read in vertices, with triangulation
+   
+  aiMesh *aiMesh = scene -> mMeshes[0];
+  
+  if(aiMesh -> mNumVertices > 0)
   {
-    cout << "Could not open object file" << endl;
-    return false;
-  }
-
-  srand(time(NULL));
-
-  out_vertices->clear();
-  out_indices->clear();
-
-  while (fin >> fileData)
-  {
-    if (fileData == "mtllib")
-    {
-      //load the material file
-
-      string mtlFileName, mtlFilePath;
-
-      fin >> mtlFileName;
-      cout << "using material file: " << mtlFileName << endl;
-      mtlFilePath = "..//objects//MTLS//" + mtlFileName;
-
-      usingMtl = LoadMaterial(mtlFilePath, &materials);
-
-      //uncomment below to print the material info
-      /*
-      for (int i = 0; i < materials.size(); i++)
+      for(int i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
       {
-        cout << "Material " << i << ": " << materials[i].name << endl;
-        cout << "Color: {"
-             << materials[i].color.x << ", "
-             << materials[i].color.y << ", "
-             << materials[i].color.z << "}" << endl;
+          aiVector3D aiVec = aiMesh -> mVertices[i];
+          
+          glm::vec3 vert = glm::vec3(aiVec.x, aiVec.y, aiVec.z);//set xyz of vertex
+          
+          glm::vec3 color = glm::vec3((rand() % 5), (rand() % 5), (rand() % 5));//random colors
+          
+          Vertex *temp = new Vertex(vert, color); //create the Vertex type to be pushed
+          
+          out_vertices -> push_back(*temp); //push vertex
       }
-      //*/
-    }
-    else if (fileData == "v")
-    {
-      //add the vertex
-
-      Vertex newVertexObject(glm::vec3(1.0),glm::vec3(1.0));
-      glm::vec3 newVertex;
-      glm::vec3 newColor;
-      float value;
-
-      //get the x, y, z coordinates of the vertex
-      fin >> value;
-      newVertex.x = value;
-      fin >> value;
-      newVertex.y = value;
-      fin >> value;
-      newVertex.z = value;
-
-      //generate the default material
-      //(currently a medium-dark grayscale value)
-      float grayscale = ( (float) (rand() % 20 + 50) ) / 100;
-      newColor.x = grayscale;
-      newColor.y = grayscale;
-      newColor.z = grayscale;
       
-      //assign the vertices
-      newVertexObject.vertex.x = newVertex.x;
-      newVertexObject.vertex.y = newVertex.y;
-      newVertexObject.vertex.z = newVertex.z;
-
-      //assign the materials
-      newVertexObject.color.x = newColor.x;
-      newVertexObject.color.y = newColor.y;
-      newVertexObject.color.z = newColor.z;
-
-      out_vertices->push_back(newVertexObject);
-    }
-    else if (fileData == "usemtl")
-    {
-      //switch the current material being applied
-
-      string materialName;
-
-      //search for name in material list
-      fin >> materialName;
-      for (int i = 0; i < materials.size(); i++)
+      for(int i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
       {
-        if (materials[i].name == materialName)
-        {
-          //set the current material index to the index where the match occurred
-          currentMaterialIndex = i;
-          break;
-        }
+          aiFace *face = &aiMesh -> mFaces[i];
+          
+          out_indices -> push_back(face -> mIndices[0]);//push each vertex to create the index
+          out_indices -> push_back(face -> mIndices[1]);
+          out_indices -> push_back(face -> mIndices[2]);
       }
-    }
-    else if (fileData == "f")
-    {
-      //add the index
-
-      for (int i = 0; i < 3; i++)
-      {
-        unsigned int newIndex;
-        int fileDataIterator = 0;
-        string vertexIndex;
-
-        //loop until '/' is hit or fileData size is reached
-        //(only caring about the first index in the potential set of 3)
-        fin >> fileData;
-        while (fileData[fileDataIterator] != '/' && fileDataIterator < fileData.size())
-        {
-          vertexIndex.push_back(fileData[fileDataIterator]);
-          fileDataIterator++;
-        }
-
-        //convert the index from string to int
-        newIndex = (unsigned int) (stoi(vertexIndex) - 1);
-
-        //if material file was opened successfully, use the data
-        if (usingMtl)
-        {
-          //assign material to vertex located at the index
-          out_vertices->at(newIndex).color.x = materials[currentMaterialIndex].color.x;
-          out_vertices->at(newIndex).color.y = materials[currentMaterialIndex].color.y;
-          out_vertices->at(newIndex).color.z = materials[currentMaterialIndex].color.z;
-        }
-
-        out_indices->push_back(newIndex);
-      }
-    }
   }
-
-  fin.close();
-
-  return true;
 }
 
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
