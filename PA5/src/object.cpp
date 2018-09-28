@@ -174,7 +174,7 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
   
   if(aiMesh -> mNumVertices > 0)
   {
-      for(int i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
+      for(uint i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
       {
           aiVector3D aiVec = aiMesh -> mVertices[i];
           
@@ -187,7 +187,7 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
           out_vertices -> push_back(*temp); //push vertex
       }
       
-      for(int i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
+      for(uint i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
       {
           aiFace *face = &aiMesh -> mFaces[i];
           
@@ -196,6 +196,8 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
           out_indices -> push_back(face -> mIndices[2]);
       }
   }
+  
+  return true;
 }
 
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
