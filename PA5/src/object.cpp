@@ -1,11 +1,5 @@
 #include "object.h"
 
-//includes for Assimp
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/color4.h>
-
 Object::Object()
 { 
   m_parent = NULL;
