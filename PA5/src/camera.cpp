@@ -1,7 +1,7 @@
 #include "camera.h"
-#include "graphics_headers.h"
+//#include "graphics_headers.h"
 
-class Camera
+/*class Camera
 {
   public:
     Camera();
@@ -13,7 +13,7 @@ class Camera
   private:
     glm::mat4 projection;
     glm::mat4 view;
-};
+};*/
 
 Camera::Camera()
 {

@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv)
 {
-  // Check for valid number of command line arguments (must be 1 for PA4)
+  // Check for valid number of command line arguments
   if (argc != 2)
   {
     cout << "ERROR: Invalid number of command line arguments. "
@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   }
 
   // Start an engine
-  Engine *engine = new Engine("Jordy Kastanek and Trombley PA5", 800, 600);
+  Engine *engine = new Engine("Jordy, Kastanek, and Trombley PA5", 800, 600);
 
   // Get the object file name and send to the engine
   string objectFilename = argv[1];
