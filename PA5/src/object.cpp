@@ -1,5 +1,4 @@
 #include "object.h"
-
 Object::Object()
 { 
   m_parent = NULL;
@@ -30,45 +29,10 @@ Object::Object()
     f 5 1 8        */
   
 
-  Vertices = {
-    {{1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 0.0f}},
-    {{1.0f, -1.0f, 1.0f}, {1.0f, 0.0f, 0.0f}},
-    {{-1.0f, -1.0f, 1.0f}, {0.0f, 1.0f, 0.0f}},
-    {{-1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}},
-    {{1.0f, 1.0f, -1.0f}, {1.0f, 1.0f, 0.0f}},
-    {{1.0f, 1.0f, 1.0f}, {1.0f, 0.0f, 1.0f}},
-    {{-1.0f, 1.0f, 1.0f}, {0.0f, 1.0f, 1.0f}},
-    {{-1.0f, 1.0f, -1.0f}, {1.0f, 1.0f, 1.0f}}
-  };
 
-  Indices = {
-    2, 3, 4,
-    8, 7, 6,
-    1, 5, 6,
-    2, 6, 7,
-    7, 8, 4,
-    1, 4, 8,
-    1, 2, 4,
-    5, 8, 6,
-    2, 1, 6,
-    3, 2, 7,
-    3, 7, 4,
-    5, 1, 8
-  };
 
   // The index works at a 0th index
-  for(unsigned int i = 0; i < Indices.size(); i++)
-  {
-    Indices[i] = Indices[i] - 1;
-  }
 
-  glGenBuffers(1, &VB);
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &IB);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
 
   angleTranslate = 0.0f;
   angleRotate = 0.0f;
@@ -82,7 +46,8 @@ Object::Object(string filename)
 {
   cout << "ok1" << endl;
 
-  LoadObject(filename, &Vertices, &Indices);
+
+ model1=Model::LoadObject(filename);
 
   //uncomment below to print all vertices
   /*
@@ -119,13 +84,7 @@ Object::Object(string filename)
   cout << "}" << endl;
   //*/
 
-  glGenBuffers(1, &VB);
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
 
-  glGenBuffers(1, &IB);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
 
   angleTranslate = 0.0f;
   angleRotate = 0.0f;
@@ -139,8 +98,6 @@ Object::~Object()
 {
   m_children.clear();
 
-  Vertices.clear();
-  Indices.clear();
 }
 
 void Object::Update(unsigned int dt)
@@ -151,22 +108,10 @@ void Object::Update(unsigned int dt)
 
 void Object::Render()
 {
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-
-  glBindBuffer(GL_ARRAY_BUFFER, VB);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,color));
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-
-  glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
-
-  glDisableVertexAttribArray(0);
-  glDisableVertexAttribArray(1);
+  model1->Render();
 }
 
-bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
+/*bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
 {
   
   Assimp::Importer importer;
@@ -254,8 +199,8 @@ bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector
   }
   */
   
-  return true;
-}
+ // return true;
+//}
 
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
 {

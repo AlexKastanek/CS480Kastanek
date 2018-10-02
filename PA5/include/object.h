@@ -1,6 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
-
+#include "model.h"
 #include <vector>
 #include <string>
 #include <time.h>
@@ -53,10 +53,8 @@ class Object
     void SetOrbitDirection(unsigned int orbit);
 
   private:
-    std::vector<Vertex> Vertices;
-    std::vector<unsigned int> Indices;
-    GLuint VB;
-    GLuint IB;
+    Model* m;
+    Model* model1;
 
   protected:
     Object* m_parent;
