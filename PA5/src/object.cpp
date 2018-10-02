@@ -44,7 +44,6 @@ Object::Object()
 
 Object::Object(string filename)
 {
-  cout << "ok1" << endl;
 
 
  model1=Model::LoadObject(filename);
@@ -110,97 +109,6 @@ void Object::Render()
 {
   model1->Render();
 }
-
-/*bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
-{
-  
-  Assimp::Importer importer;
-   
-  const aiScene *scene = importer.ReadFile(in_filename.c_str(), aiProcess_Triangulate);//read in vertices, with triangulation
-  cout << scene->mNumMeshes << " meshes found" << endl;
-  cout << scene->mNumMaterials << " materials found" << endl; 
-  
-  
-  aiMesh *mesh = scene -> mMeshes[0];
-
-  out_vertices->clear();
-  out_indices->clear();
-
-  for (int i = 0; i < scene->mNumMeshes; i++)
-  {
-    aiMesh *mesh = scene->mMeshes[i];
-    aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-    aiString materialName;
-    material->Get(AI_MATKEY_NAME, materialName);
-    cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
-    //cout << "using material " << i << endl;
-
-    for (int j = 0; j < mesh->mNumVertices; j++)
-    {
-      aiVector3D aiVec = mesh->mVertices[j];
-      glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
-
-      aiColor4D aiColor;
-      glm::vec3 color;
-      if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor)
-          && scene->mNumMaterials > 1)
-      {
-        cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
-        color = glm::vec3(aiColor.r, aiColor.g, aiColor.b);
-      }
-      else
-      {
-        //default setting is random colors
-        float default_color = (float) (((float) (rand() % 100 + 1)) / 100);
-        color = glm::vec3(default_color, default_color, default_color);
-      }
-      
-      Vertex *temp = new Vertex(vertex, color); //create the Vertex type to be pushed
-      out_vertices->push_back(*temp);
-      delete temp;
-    }
-
-    //cout << "Number of faces: " << mesh->mNumFaces << endl;
-    for (int j = 0; j < mesh->mNumFaces; j++)
-    {
-      aiFace face = mesh->mFaces[j];
-
-      //push each vertex to create the index
-      out_indices -> push_back(face.mIndices[0]);
-      out_indices -> push_back(face.mIndices[1]);
-      out_indices -> push_back(face.mIndices[2]);
-    }
-  }
-  
-  /*
-  if(aiMesh -> mNumVertices > 0)
-  {
-      for(int i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
-      {
-          aiVector3D aiVec = aiMesh -> mVertices[i];
-          
-          glm::vec3 vert = glm::vec3(aiVec.x, aiVec.y, aiVec.z);//set xyz of vertex
-          
-          glm::vec3 color = glm::vec3((rand() % 5), (rand() % 5), (rand() % 5));//random colors
-          
-          Vertex *temp = new Vertex(vert, color); //create the Vertex type to be pushed
-          
-          out_vertices -> push_back(*temp); //push vertex
-      }
-      
-      for(int i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
-      {
-          aiFace *face = &aiMesh -> mFaces[i];
-          
-          out_indices -> push_back(face -> mIndices[0]);//push each vertex to create the index
-          out_indices -> push_back(face -> mIndices[1]);
-          out_indices -> push_back(face -> mIndices[2]);
-      }
-  }
-  */
-  
- // return true;
-//}
 
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
 {

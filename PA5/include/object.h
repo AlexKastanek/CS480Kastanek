@@ -27,9 +27,6 @@ class Object
     virtual void Update(unsigned int dt);
     void Render();
 
-    bool LoadObject(string in_filename, 
-                    vector<Vertex>* out_vertices, 
-                    vector<unsigned int>* out_indices);
     bool LoadMaterial(string in_filename,
                       vector<Material>* out_materials);
 
@@ -53,7 +50,6 @@ class Object
     void SetOrbitDirection(unsigned int orbit);
 
   private:
-    Model* m;
     Model* model1;
 
   protected:

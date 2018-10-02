@@ -30,8 +30,9 @@ Model* Model::LoadObject(string in_filename) {
 
     const aiScene *scene = importer.ReadFile(in_filename.c_str(),
                                              aiProcess_Triangulate);//read in vertices, with triangulation
-    cout << scene->mNumMeshes << " meshes found" << endl;
-    cout << scene->mNumMaterials << " materials found" << endl;
+     //uncomment to print how many meshes and materials are found
+    //cout << scene->mNumMeshes << " meshes found" << endl;
+    //cout << scene->mNumMaterials << " materials found" << endl;
 
 
     aiMesh *mesh = scene->mMeshes[0];
@@ -44,7 +45,8 @@ Model* Model::LoadObject(string in_filename) {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         aiString materialName;
         material->Get(AI_MATKEY_NAME, materialName);
-        cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
+        //uncomment to print which material is being used
+       // cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
         //cout << "using material " << i << endl;
 
         for (int j = 0; j < mesh->mNumVertices; j++) {
@@ -55,7 +57,8 @@ Model* Model::LoadObject(string in_filename) {
             glm::vec3 color;
             if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor)
                 && scene->mNumMaterials > 1) {
-                cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
+                //uncomment to print out the color
+               // cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
                 color = glm::vec3(aiColor.r, aiColor.g, aiColor.b);
             } else {
                 //default setting is random colors
@@ -77,10 +80,6 @@ Model* Model::LoadObject(string in_filename) {
             out_indices.push_back(face.mIndices[1]);
             out_indices.push_back(face.mIndices[2]);
         }
-        /*for(unsigned int i = 0; i < Indices.size(); i++)
-        {
-            Indices[i] = Indices[i] - 1;
-        }*/
         GLuint VB;
         GLuint IB;
         glGenBuffers(1, &VB);
@@ -94,17 +93,11 @@ Model* Model::LoadObject(string in_filename) {
         model->numIndices.push_back(out_indices.size());
         out_indices.clear();
         out_vertices.clear();
-      //  for(const GLuint& VB:VBs){
-       //     VBs.push_back(VB);
-       // }
 
-
-       /* for(const GLuint& IB:IBs) {
-            IBs.push_back(IB);
-        }*/
     }
     return model;
 }
+//creating multiple models for each material
 //
 // Created by mari on 10/2/18.
 //
