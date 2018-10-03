@@ -26,7 +26,7 @@ class Object
     ~Object();
     virtual void Update(unsigned int dt);
     void Render();
-
+    
     /*
     bool LoadObject(string in_filename, 
                     vector<Vertex>* out_vertices, 
@@ -56,7 +56,6 @@ class Object
 
   private:
     //Model* m;
-    
 
   protected:
     Object* m_parent;

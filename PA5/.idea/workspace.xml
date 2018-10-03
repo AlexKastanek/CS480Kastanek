@@ -13,11 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b30478d3-5755-4590-a278-2113c9fb5259" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/include/model.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/graphics_headers.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/graphics_headers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/object.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/object.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/model.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/object.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -52,13 +50,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="665" />
+          <entry key="cpp" value="930" />
           <entry key="h" value="325" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="990" />
+          <entry key="ObjectiveC" value="1255" />
         </counts>
       </usages-collector>
     </session>
@@ -68,8 +66,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/model.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+            <state relative-caret-position="390">
+              <caret line="32" column="65" selection-start-line="32" selection-start-column="65" selection-end-line="32" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -106,8 +104,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/object.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+            <state relative-caret-position="1620">
+              <caret line="108" column="1" lean-forward="true" selection-start-line="108" selection-start-column="1" selection-end-line="108" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -115,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/object.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
+            <state relative-caret-position="146">
+              <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
               <folding>
                 <element signature="e#34#52#0" expanded="true" />
               </folding>
@@ -134,6 +132,7 @@
       <find>glDrawElement</find>
       <find>render</find>
       <find>IB</find>
+      <find>ok1</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -247,12 +246,12 @@
       <option name="presentableId" value="Default" />
       <updated>1538489003285</updated>
       <workItem from="1538489004619" duration="7266000" />
-      <workItem from="1538502587806" duration="1179000" />
+      <workItem from="1538502587806" duration="2231000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8445000" />
+    <option name="totallyTimeSpent" value="9497000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
@@ -329,8 +328,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/include/object.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
+        <state relative-caret-position="146">
+          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
           <folding>
             <element signature="e#34#52#0" expanded="true" />
           </folding>
@@ -339,15 +338,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/object.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        <state relative-caret-position="1620">
+          <caret line="108" column="1" lean-forward="true" selection-start-line="108" selection-start-column="1" selection-end-line="108" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        <state relative-caret-position="390">
+          <caret line="32" column="65" selection-start-line="32" selection-start-column="65" selection-end-line="32" selection-end-column="65" />
         </state>
       </provider>
     </entry>
