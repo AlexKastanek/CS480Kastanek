@@ -27,11 +27,13 @@ class Object
     virtual void Update(unsigned int dt);
     void Render();
 
+    /*
     bool LoadObject(string in_filename, 
                     vector<Vertex>* out_vertices, 
                     vector<unsigned int>* out_indices);
     bool LoadMaterial(string in_filename,
                       vector<Material>* out_materials);
+    */
 
     glm::mat4 GetModel();
     //glm::mat4* GetModelReference();
@@ -53,12 +55,14 @@ class Object
     void SetOrbitDirection(unsigned int orbit);
 
   private:
-    Model* m;
-    Model* model1;
+    //Model* m;
+    
 
   protected:
     Object* m_parent;
     vector<Object*> m_children;
+
+    Model* m_renderData;
 
     glm::mat4 model;
     //glm::mat4* m_parent;

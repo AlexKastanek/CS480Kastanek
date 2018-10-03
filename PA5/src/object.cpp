@@ -27,12 +27,10 @@ Object::Object()
     f 3 2 7
     f 3 7 4
     f 5 1 8        */
-  
 
+  m_renderData = new Model();
 
-
-  // The index works at a 0th index
-
+  m_renderData->LoadObject();
 
   angleTranslate = 0.0f;
   angleRotate = 0.0f;
@@ -44,10 +42,12 @@ Object::Object()
 
 Object::Object(string filename)
 {
-  cout << "ok1" << endl;
 
+ //cout << "in parameterized object constructor" << endl;
 
- model1=Model::LoadObject(filename);
+ m_renderData = new Model();
+
+ m_renderData->LoadObject(filename);
 
   //uncomment below to print all vertices
   /*
@@ -96,8 +96,8 @@ Object::Object(string filename)
 
 Object::~Object()
 {
+  delete m_renderData;
   m_children.clear();
-
 }
 
 void Object::Update(unsigned int dt)
@@ -108,7 +108,34 @@ void Object::Update(unsigned int dt)
 
 void Object::Render()
 {
-  model1->Render();
+  //m_renderData->Render();
+
+  //cout << "render function entry" << endl;
+
+  vector<GLuint> VBs = m_renderData->get_VBs();
+  vector<GLuint> IBs = m_renderData->get_IBs();
+  vector<unsigned int> numIndices = m_renderData->get_numIndices();
+
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+
+  for ( int i = 0; i<VBs.size();i++) 
+  {
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBs[i]);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, color));
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBs[i]);
+
+
+
+    glDrawElements(GL_TRIANGLES, numIndices[i], GL_UNSIGNED_INT, 0);
+
+  }
+
+  glDisableVertexAttribArray(0);
+  glDisableVertexAttribArray(1);
 }
 
 /*bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
@@ -202,6 +229,7 @@ void Object::Render()
  // return true;
 //}
 
+/*
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
 {
   ifstream fin;
@@ -245,6 +273,7 @@ bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
   fin.close();
   return true;
 }
+*/
 
 glm::mat4 Object::GetModel()
 {
