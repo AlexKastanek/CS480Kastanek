@@ -1,4 +1,5 @@
 #include "model.h"
+#include <Magick++.h>
 
 Model::Model()
 {
