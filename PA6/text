@@ -1,4 +1,0 @@
-IF(assimp_FOUND)
-      INCLUDE_DIRECTORIES(${assimp_INCLUDE_DIRS})
-      LINK_LIBRARIES(${assimp_LIBRARIES})
-  ENDIF(assimp_FOUND)
