@@ -37,6 +37,7 @@ void Model::LoadObject(void)
 {
     //default constructor creates default cube object
 
+    /*
     std::vector<Vertex> Vertices;
     std::vector<unsigned int> Indices;
 
@@ -89,12 +90,14 @@ void Model::LoadObject(void)
 
     Indices.clear();
     Vertices.clear();
+    */
 }
 
 void Model::LoadObject(string in_filename) {
     std::vector<Vertex> out_vertices;
     std::vector<unsigned int> out_indices;
     //Model* model = new Model();
+    std::string textureFilename;
 
     Assimp::Importer importer;
 
@@ -115,20 +118,32 @@ void Model::LoadObject(string in_filename) {
     out_indices.clear();
 
     for (int i = 0; i < scene->mNumMeshes; i++) {
+
         aiMesh *mesh = scene->mMeshes[i];
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
         aiString materialName;
+        aiString textureName;
+
         material->Get(AI_MATKEY_NAME, materialName);
         //uncomment to print which material is being used
-       // cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
+        cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
         //cout << "using material " << i << endl;
+
+        material->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE,0), textureName);
+        cout << "using texture: " << textureName.C_Str() << endl;
 
         for (int j = 0; j < mesh->mNumVertices; j++) {
             aiVector3D aiVec = mesh->mVertices[j];
             glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
 
-            aiColor4D aiColor;
-            glm::vec3 color;
+            //aiColor4D aiColor;
+            aiVector3D aiUV = mesh->mTextureCoords[0][j];
+            glm::vec2 uv;
+            uv.x = aiUV.x;
+            uv.y = aiUV.y;
+            //cout << "using texture coordinates: [" << uv.x << ", " << uv.y << "]" << endl;
+            
+            /*
             if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor)
                 && scene->mNumMaterials > 1) {
 
@@ -143,8 +158,9 @@ void Model::LoadObject(string in_filename) {
                 float default_color = (float) (((float) (rand() % 100 + 1)) / 100);
                 color = glm::vec3(default_color, default_color, default_color);
             }
+            */
 
-            Vertex *temp = new Vertex(vertex, color); //create the Vertex type to be pushed
+            Vertex *temp = new Vertex(vertex, uv); //create the Vertex type to be pushed
             out_vertices.push_back(*temp);
             delete temp;
         }
@@ -178,6 +194,17 @@ void Model::LoadObject(string in_filename) {
         glGenBuffers(1, &IB);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
+
+        //get the texture name
+        /*
+        if (AI_SUCCESS == material->Get(AI_MATKEY_TEXTURE(1,1), textureFilename))
+        {
+            cout << textureFilename << endl;
+        }
+        */
+        textureFilename = "..//assets//" + std::string(textureName.C_Str());
+        bool loadedOK = m_texture.LoadTexture(textureFilename);
+        //cout << loadedOK << endl;
 
         //cout << "loaded buffer data" << endl;
 
@@ -295,6 +322,11 @@ Model* Model::LoadObject(string in_filename) {
 // Created by mari on 10/2/18.
 //
 */
+
+void Model::BindTexture(void)
+{
+    m_texture.Bind(GL_TEXTURE0);
+}
 
 vector<GLuint> Model::get_VBs(void)
 {

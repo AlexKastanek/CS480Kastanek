@@ -30,6 +30,7 @@ bool Texture::LoadTexture(string filename)
 			 << endl;
 		return false;
 	}
+	cout << "Texture loaded" << endl;
 
 	glGenTextures(1, &m_TB);
 	glBindTexture(GL_TEXTURE_2D, m_TB);

@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include "graphics_headers.h"
+#include "texture.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ public:
     void LoadObject(string in_filename);
 
     //void Render();
+    void BindTexture(void);
 
     vector<GLuint> get_VBs(void);
     vector<GLuint> get_IBs(void);
@@ -30,6 +32,8 @@ public:
     void set_numIndices(vector<GLuint> numIndices);
 
 private:
+    Texture m_texture;
+
     vector<GLuint> m_VBs;
     vector<GLuint> m_IBs;
     vector<unsigned int> m_numIndices;
