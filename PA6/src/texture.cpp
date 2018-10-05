@@ -21,7 +21,6 @@ bool Texture::LoadTexture(string filename)
 	try
 	{
 		image = new Magick::Image(filename);
-		image->write(&m_blob, "RGBA");
 	}
 	catch (Magick::Error& error)
 	{
@@ -30,6 +29,9 @@ bool Texture::LoadTexture(string filename)
 			 << endl;
 		return false;
 	}
+
+	image->flop();
+	image->write(&m_blob, "RGBA");
 
 	glGenTextures(1, &m_TB);
 	glBindTexture(GL_TEXTURE_2D, m_TB);
