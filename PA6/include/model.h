@@ -17,8 +17,8 @@ public:
     Model();
     ~Model();
 
-    void LoadObject(void);
-    void LoadObject(string in_filename);
+    bool LoadObject(void);
+    bool LoadObject(string in_filename);
 
     //void Render();
     void BindTexture(void);

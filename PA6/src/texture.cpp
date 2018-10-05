@@ -30,7 +30,6 @@ bool Texture::LoadTexture(string filename)
 			 << endl;
 		return false;
 	}
-	cout << "Texture loaded" << endl;
 
 	glGenTextures(1, &m_TB);
 	glBindTexture(GL_TEXTURE_2D, m_TB);
@@ -50,6 +49,8 @@ bool Texture::LoadTexture(string filename)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	delete image;
+
+	return true;
 }
 
 void Texture::Bind(GLenum TextureUnit)

@@ -10,30 +10,7 @@ Model::~Model()
 
 }
 
-/*
-void Model::Render()
-{
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    for ( int i = 0; i<VBs.size();i++) {
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBs[i]);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, color));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBs[i]);
-
-
-
-        glDrawElements(GL_TRIANGLES, numIndices[i], GL_UNSIGNED_INT, 0);
-
-    }
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-*/
-
-void Model::LoadObject(void)
+bool Model::LoadObject(void)
 {
     //default constructor creates default cube object
 
@@ -91,28 +68,24 @@ void Model::LoadObject(void)
     Indices.clear();
     Vertices.clear();
     */
+
+    return false;
 }
 
-void Model::LoadObject(string in_filename) {
+bool Model::LoadObject(string in_filename) 
+{
+    Assimp::Importer importer;
     std::vector<Vertex> out_vertices;
     std::vector<unsigned int> out_indices;
-    //Model* model = new Model();
-    std::string textureFilename;
 
-    Assimp::Importer importer;
-
-    const aiScene *scene = importer.ReadFile(in_filename.c_str(),
-                                             aiProcess_Triangulate);//read in vertices, with triangulation
-     //uncomment to print how many meshes and materials are found
+    //read in vertices, with triangulation
+    const aiScene *scene = importer.ReadFile(
+        in_filename.c_str(),
+        aiProcess_Triangulate);
     //cout << scene->mNumMeshes << " meshes found" << endl;
     //cout << scene->mNumMaterials << " materials found" << endl;
 
-
     aiMesh *mesh = scene->mMeshes[0];
-
-    //m_VBs.clear();
-    //m_IBs.clear();
-    //m_numIndices.clear();
 
     out_vertices.clear();
     out_indices.clear();
@@ -121,69 +94,72 @@ void Model::LoadObject(string in_filename) {
 
         aiMesh *mesh = scene->mMeshes[i];
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+
         aiString materialName;
-        aiString textureName;
+        aiString textureFileName;
+        std::string textureFilePath;
 
-        material->Get(AI_MATKEY_NAME, materialName);
-        //uncomment to print which material is being used
-        cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
-        //cout << "using material " << i << endl;
+        //get the material name, return false if it cannot be found
+        if (AI_SUCCESS != material->Get(AI_MATKEY_NAME, materialName))
+        {
+            cout << "ERROR: Mesh " << i << "is not using a material" << endl;
+            return false;
+        }
+        cout << "using material " 
+             << mesh->mMaterialIndex 
+             << ": " 
+             << materialName.C_Str() 
+             << endl;
 
-        material->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE,0), textureName);
-        cout << "using texture: " << textureName.C_Str() << endl;
+        //get the texture file name contained in the mateial
+        //return false if it cannot be found
+        if (AI_SUCCESS != material->Get(
+                            AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE,0), 
+                            textureFileName
+                            )
+            )
+        {
+            cout << "ERROR: Mesh " 
+                 << i 
+                 << "'s material does not contain a texture file name" 
+                 << endl;
+            return false;
+        }
+        cout << "using texture: " << textureFileName.C_Str() << endl;
 
-        for (int j = 0; j < mesh->mNumVertices; j++) {
+        for (int j = 0; j < mesh->mNumVertices; j++) 
+        {
             aiVector3D aiVec = mesh->mVertices[j];
             glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
 
-            //aiColor4D aiColor;
             aiVector3D aiUV = mesh->mTextureCoords[0][j];
             glm::vec2 uv;
             uv.x = aiUV.x;
             uv.y = aiUV.y;
-            //cout << "using texture coordinates: [" << uv.x << ", " << uv.y << "]" << endl;
-            
+
+            //uncomment to view the texture coordinate for each vertex
             /*
-            if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor)
-                && scene->mNumMaterials > 1) {
+            cout << "using texture coordinates: [" 
+                 << uv.x << ", " << uv.y << "]" 
+                 << endl;
+            //*/
 
-                //cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
-
-                //uncomment to print out the color
-               // cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
-
-                color = glm::vec3(aiColor.r, aiColor.g, aiColor.b);
-            } else {
-                //default setting is random colors
-                float default_color = (float) (((float) (rand() % 100 + 1)) / 100);
-                color = glm::vec3(default_color, default_color, default_color);
-            }
-            */
-
-            Vertex *temp = new Vertex(vertex, uv); //create the Vertex type to be pushed
+            //create the Vertex type to be pushed
+            Vertex *temp = new Vertex(vertex, uv); 
             out_vertices.push_back(*temp);
             delete temp;
         }
-        //cout << "loaded vertices" << endl;
 
         //cout << "Number of faces: " << mesh->mNumFaces << endl;
-        for (int j = 0; j < mesh->mNumFaces; j++) {
+        for (int j = 0; j < mesh->mNumFaces; j++) 
+        {
             aiFace face = mesh->mFaces[j];
 
             //push each vertex to create the index
             out_indices.push_back(face.mIndices[0]);
             out_indices.push_back(face.mIndices[1]);
             out_indices.push_back(face.mIndices[2]);
-
-            //cout << "loaded a face" << endl;
         }
-
-        /*for(unsigned int i = 0; i < Indices.size(); i++)
-        {
-            Indices[i] = Indices[i] - 1;
-        }*/
-
-        //cout << "loading a mesh..." << endl;
 
         GLuint VB;
         GLuint IB;
@@ -195,133 +171,20 @@ void Model::LoadObject(string in_filename) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
 
-        //get the texture name
-        /*
-        if (AI_SUCCESS == material->Get(AI_MATKEY_TEXTURE(1,1), textureFilename))
+        textureFilePath = "..//assets//" + std::string(textureFileName.C_Str());
+        if (!m_texture.LoadTexture(textureFilePath))
         {
-            cout << textureFilename << endl;
+            return false;
         }
-        */
-        textureFilename = "..//assets//" + std::string(textureName.C_Str());
-        bool loadedOK = m_texture.LoadTexture(textureFilename);
-        //cout << loadedOK << endl;
-
-        //cout << "loaded buffer data" << endl;
 
         m_IBs.push_back(IB);
-        //out << "pushed index buffer onto member buffer" << endl;
         m_VBs.push_back(VB);
-        //cout << "pushed vertex buffer onto member buffer" << endl;
         m_numIndices.push_back(out_indices.size());
-        //cout << "pushed num indeces onto member buffer" << endl;
-
-        //cout << "pushed buffer data onto member buffers" << endl;
 
         out_indices.clear();
         out_vertices.clear();
-
-       /* for(const GLuint& IB:IBs) {
-            IBs.push_back(IB);
-        }*/
-        //cout << "loaded a mesh" << endl;
     }
-    //cout << "model loaded" << endl;
-    //return model;
 }
-//
-// Created by mari on 10/2/18.
-//
-
-/*
-Model* Model::LoadObject(string in_filename) {
-    std::vector<Vertex> out_vertices;
-    std::vector<unsigned int> out_indices;
-    Model* model = new Model();
-
-    Assimp::Importer importer;
-
-    const aiScene *scene = importer.ReadFile(in_filename.c_str(),
-                                             aiProcess_Triangulate);//read in vertices, with triangulation
-    cout << scene->mNumMeshes << " meshes found" << endl;
-    cout << scene->mNumMaterials << " materials found" << endl;
-
-
-    aiMesh *mesh = scene->mMeshes[0];
-
-    out_vertices.clear();
-    out_indices.clear();
-
-    for (int i = 0; i < scene->mNumMeshes; i++) {
-        aiMesh *mesh = scene->mMeshes[i];
-        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        aiString materialName;
-        material->Get(AI_MATKEY_NAME, materialName);
-        cout << "using material " << mesh->mMaterialIndex << ": " << materialName.C_Str() << endl;
-        //cout << "using material " << i << endl;
-
-        for (int j = 0; j < mesh->mNumVertices; j++) {
-            aiVector3D aiVec = mesh->mVertices[j];
-            glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
-
-            aiColor4D aiColor;
-            glm::vec3 color;
-            if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor)
-                && scene->mNumMaterials > 1) {
-                //cout << "Color obtained: {" << aiColor.r << "," << aiColor.g << "," << aiColor.b << "}" << endl;
-                color = glm::vec3(aiColor.r, aiColor.g, aiColor.b);
-            } else {
-                //default setting is random colors
-                float default_color = (float) (((float) (rand() % 100 + 1)) / 100);
-                color = glm::vec3(default_color, default_color, default_color);
-            }
-
-            Vertex *temp = new Vertex(vertex, color); //create the Vertex type to be pushed
-            out_vertices.push_back(*temp);
-            delete temp;
-        }
-
-        //cout << "Number of faces: " << mesh->mNumFaces << endl;
-        for (int j = 0; j < mesh->mNumFaces; j++) {
-            aiFace face = mesh->mFaces[j];
-
-            //push each vertex to create the index
-            out_indices.push_back(face.mIndices[0]);
-            out_indices.push_back(face.mIndices[1]);
-            out_indices.push_back(face.mIndices[2]);
-        }
-        //for(unsigned int i = 0; i < Indices.size(); i++)
-        //{
-        //    Indices[i] = Indices[i] - 1;
-        //}
-        GLuint VB;
-        GLuint IB;
-        glGenBuffers(1, &VB);
-        glBindBuffer(GL_ARRAY_BUFFER, VB);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
-        glGenBuffers(1, &IB);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
-        model->IBs.push_back(IB);
-        model->VBs.push_back(VB);
-        model->numIndices.push_back(out_indices.size());
-        out_indices.clear();
-        out_vertices.clear();
-      //  for(const GLuint& VB:VBs){
-       //     VBs.push_back(VB);
-       // }
-
-
-        //for(const GLuint& IB:IBs) {
-        //    IBs.push_back(IB);
-        //}
-    }
-    return model;
-}
-//creating multiple models for each material
-//
-// Created by mari on 10/2/18.
-//
-*/
 
 void Model::BindTexture(void)
 {

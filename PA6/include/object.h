@@ -26,22 +26,12 @@ class Object
     ~Object();
     virtual void Update(unsigned int dt);
     void Render();
-    
-    /*
-    bool LoadObject(string in_filename, 
-                    vector<Vertex>* out_vertices, 
-                    vector<unsigned int>* out_indices);
-    bool LoadMaterial(string in_filename,
-                      vector<Material>* out_materials);
-    */
 
     glm::mat4 GetModel();
-    //glm::mat4* GetModelReference();
     glm::mat4 GetTranslation();
     glm::mat4 GetRotation();
     glm::mat4 GetScale();
 
-    //void SetParent(glm::mat4* parent);
     void SetParent(Object* parent);
     void AddChild(Object* child);
     void RemoveChild();
@@ -54,9 +44,6 @@ class Object
     void SetSpinDirection(unsigned int spin);
     void SetOrbitDirection(unsigned int orbit);
 
-  private:
-    //Model* m;
-
   protected:
     Object* m_parent;
     vector<Object*> m_children;
@@ -64,7 +51,6 @@ class Object
     Model* m_renderData;
 
     glm::mat4 model;
-    //glm::mat4* m_parent;
     glm::mat4 translation;
     glm::mat4 rotation;
     glm::mat4 scale;
