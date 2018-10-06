@@ -18,13 +18,13 @@ public:
     ~Texture();
 
     bool LoadTexture(string filename);
-    void Bind(GLenum TextureUnit);
+    void Bind(GLenum TextureUnit, int BufferIndex);
 
 private:
 	Magick::Image* m_image;
 	Magick::Blob m_blob;
 
-	GLuint m_TB;
+	vector<GLuint> m_TBs;
 };
 
 #endif //PA6_TEXTURE_H

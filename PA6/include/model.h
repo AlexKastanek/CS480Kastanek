@@ -21,7 +21,7 @@ public:
     bool LoadObject(string in_filename);
 
     //void Render();
-    void BindTexture(void);
+    void BindTexture(int index);
 
     vector<GLuint> get_VBs(void);
     vector<GLuint> get_IBs(void);

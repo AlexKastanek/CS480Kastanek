@@ -122,7 +122,7 @@ void Object::Render()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, uv));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBs[i]);
-    m_renderData->BindTexture();
+    m_renderData->BindTexture(i);
 
     glDrawElements(GL_TRIANGLES, numIndices[i], GL_UNSIGNED_INT, 0);
 

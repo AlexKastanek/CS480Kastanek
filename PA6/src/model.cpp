@@ -161,6 +161,12 @@ bool Model::LoadObject(string in_filename)
             out_indices.push_back(face.mIndices[2]);
         }
 
+        textureFilePath = "..//assets//" + std::string(textureFileName.C_Str());
+        if (!m_texture.LoadTexture(textureFilePath))
+        {
+            return false;
+        }
+
         GLuint VB;
         GLuint IB;
 
@@ -171,12 +177,6 @@ bool Model::LoadObject(string in_filename)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
 
-        textureFilePath = "..//assets//" + std::string(textureFileName.C_Str());
-        if (!m_texture.LoadTexture(textureFilePath))
-        {
-            return false;
-        }
-
         m_IBs.push_back(IB);
         m_VBs.push_back(VB);
         m_numIndices.push_back(out_indices.size());
@@ -186,9 +186,9 @@ bool Model::LoadObject(string in_filename)
     }
 }
 
-void Model::BindTexture(void)
+void Model::BindTexture(int index)
 {
-    m_texture.Bind(GL_TEXTURE0);
+    m_texture.Bind(GL_TEXTURE0, index);
 }
 
 vector<GLuint> Model::get_VBs(void)

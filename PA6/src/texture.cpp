@@ -17,6 +17,7 @@ bool Texture::LoadTexture(string filename)
 {
 
 	Magick::Image* image;
+	GLuint TB;
 
 	try
 	{
@@ -33,8 +34,8 @@ bool Texture::LoadTexture(string filename)
 	image->flop();
 	image->write(&m_blob, "RGBA");
 
-	glGenTextures(1, &m_TB);
-	glBindTexture(GL_TEXTURE_2D, m_TB);
+	glGenTextures(1, &TB);
+	glBindTexture(GL_TEXTURE_2D, TB);
 
 	glTexImage2D(
 		GL_TEXTURE_2D,
@@ -50,13 +51,15 @@ bool Texture::LoadTexture(string filename)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	m_TBs.push_back(TB);
+
 	delete image;
 
 	return true;
 }
 
-void Texture::Bind(GLenum TextureUnit)
+void Texture::Bind(GLenum TextureUnit, int BufferIndex)
 {
     glActiveTexture(TextureUnit);
-    glBindTexture(GL_TEXTURE_2D, m_TB);
+    glBindTexture(GL_TEXTURE_2D, m_TBs[BufferIndex]);
 }
