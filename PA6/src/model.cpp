@@ -81,7 +81,10 @@ bool Model::LoadObject(string in_filename)
     //read in vertices, with triangulation
     const aiScene *scene = importer.ReadFile(
         in_filename.c_str(),
-        aiProcess_Triangulate | aiProcess_FlipUVs);
+        aiProcess_Triangulate | 
+        aiProcess_FlipUVs |
+        aiProcess_JoinIdenticalVertices |
+        aiProcess_SortByPType);
     //cout << scene->mNumMeshes << " meshes found" << endl;
     //cout << scene->mNumMaterials << " materials found" << endl;
 
@@ -127,7 +130,7 @@ bool Model::LoadObject(string in_filename)
         }
         cout << "using texture: " << textureFileName.C_Str() << endl;
 
-        for (int j = 0; j < mesh->mNumVertices; j++) 
+        for (int j = 0; j < mesh->mNumVertices + 1; j++) 
         {
             aiVector3D aiVec = mesh->mVertices[j];
             glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
