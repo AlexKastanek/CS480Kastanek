@@ -81,7 +81,7 @@ bool Model::LoadObject(string in_filename)
     //read in vertices, with triangulation
     const aiScene *scene = importer.ReadFile(
         in_filename.c_str(),
-        aiProcess_Triangulate);
+        aiProcess_Triangulate | aiProcess_FlipUVs);
     //cout << scene->mNumMeshes << " meshes found" << endl;
     //cout << scene->mNumMaterials << " materials found" << endl;
 

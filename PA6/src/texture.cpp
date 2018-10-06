@@ -31,7 +31,7 @@ bool Texture::LoadTexture(string filename)
 		return false;
 	}
 
-	image->flop();
+	//image->flop();
 	image->write(&m_blob, "RGBA");
 
 	glGenTextures(1, &TB);
