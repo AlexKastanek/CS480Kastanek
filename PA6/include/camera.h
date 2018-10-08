@@ -9,6 +9,8 @@ class Camera
     Camera();
     ~Camera();
     bool Initialize(int w, int h);
+    void Update(unsigned int dt);
+
     glm::mat4 GetProjection();
     glm::mat4 GetView();
   

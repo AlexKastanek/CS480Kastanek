@@ -44,8 +44,11 @@ Object::Object(string filename)
 {
   m_renderData = new Model();
 
-  m_renderData->LoadObject(filename);
-
+  if (!m_renderData->LoadObject(filename))
+  {
+    delete m_renderData;
+    exit(1);
+  }
   //uncomment below to print all vertices
   /*
   cout << "Vertices:" << endl;
