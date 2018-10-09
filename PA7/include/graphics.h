@@ -34,6 +34,10 @@ class Graphics
     void SetMoonSpin(unsigned int spin);
     void SetMoonOrbit(unsigned int orbit);
 
+    void SetCameraVelocity(glm::vec3 velocity);
+    void SetCameraVelocity(float x, float y, float z);
+    void SetCameraVelocity(char axis, float value);
+
     void SetObjectFilename(string objectFilename);
 
   private:

@@ -123,6 +123,7 @@ void Graphics::Update(unsigned int dt)
   m_object->Update(dt);
   m_planet->Update(dt);
   m_moon->Update(dt);
+  m_camera->Update(dt);
 }
 
 void Graphics::Render()
@@ -191,6 +192,43 @@ void Graphics::SetPlanetSpin(unsigned int spin)
 void Graphics::SetPlanetOrbit(unsigned int orbit)
 {
   m_planet->SetOrbitDirection(orbit);
+}
+
+void Graphics::SetCameraVelocity(glm::vec3 velocity)
+{
+  m_camera->SetVelocity(velocity);
+}
+
+void Graphics::SetCameraVelocity(float x, float y, float z)
+{
+  m_camera->SetVelocity(x, y, z);
+}
+
+void Graphics::SetCameraVelocity(char axis, float value)
+{
+  switch (axis)
+  {
+    case 'x':
+      m_camera->SetVelocityX(value);
+      break;
+    case 'y':
+      m_camera->SetVelocityY(value);
+      break;
+    case 'z':
+      m_camera->SetVelocityZ(value);
+      break;
+    case 'X':
+      m_camera->SetVelocityX(value);
+      break;
+    case 'Y':
+      m_camera->SetVelocityY(value);
+      break;
+    case 'Z':
+      m_camera->SetVelocityZ(value);
+      break;
+    default:
+      cout << "ERROR: Invalid camera velocity axis" << endl;
+  }
 }
 
 void Graphics::SetObjectFilename(string objectFilename)

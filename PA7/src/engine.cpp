@@ -103,6 +103,65 @@ void Engine::Keyboard()
   {
     m_running = false;
   }
+  else
+  {
+  	switch (m_event.type)
+  	{
+  		case SDL_KEYDOWN:
+  			switch (m_event.key.keysym.sym)
+  			{
+  				case SDLK_ESCAPE:
+  					m_running = false;
+  					break;
+  				case SDLK_a:
+  					//set camera velocity left to 1
+  					m_graphics->SetCameraVelocity('x', -1);
+  					break;
+  				case SDLK_d:
+  					//set camera velocity right to 1
+  					m_graphics->SetCameraVelocity('x', 1);
+  					break;
+  				case SDLK_w:
+  					//set camera velocity forward to 1
+  					m_graphics->SetCameraVelocity('z', 1);
+  					break;
+  				case SDLK_s:
+  					//set camera velocity back to 1
+  					m_graphics->SetCameraVelocity('z', -1);
+  					break;
+  				default:
+  					break;
+  			}
+  			break;
+  		case SDL_KEYUP:
+  			switch (m_event.key.keysym.sym)
+  			{
+  				case SDLK_a:
+  					//set camera velocity left to 0
+  					m_graphics->SetCameraVelocity('x', 0);
+  					break;
+  				case SDLK_d:
+  					//set camera velocity right to 0
+  					m_graphics->SetCameraVelocity('x', 0);
+  					break;
+  				case SDLK_w:
+  					//set camera velocity forward to 0
+  					m_graphics->SetCameraVelocity('z', 0);
+  					break;
+  				case SDLK_s:
+  					//set camera velocity back to 0
+  					m_graphics->SetCameraVelocity('z', 0);
+  					break;
+  				default:
+  					break;
+  			}
+  			break;
+  		default:
+  			break;
+  	}
+  }
+
+  /*
   else if (m_event.type == SDL_KEYDOWN || m_event.type == SDL_MOUSEBUTTONDOWN)
   {
     // handle key down events here
@@ -171,6 +230,7 @@ void Engine::Keyboard()
       //cout << "SPIN: CLOCKWISE" << endl;
     }
   }
+  */
 }
 
 unsigned int Engine::getDT()
