@@ -113,14 +113,22 @@ void Engine::Keyboard()
   				case SDLK_ESCAPE:
   					m_running = false;
   					break;
-  				case SDLK_a:
-  					//set camera velocity left to 1
-  					m_graphics->SetCameraVelocity('x', -1);
-  					break;
   				case SDLK_d:
-  					//set camera velocity right to 1
+  					//set camera velocity left to 1
   					m_graphics->SetCameraVelocity('x', 1);
   					break;
+  				case SDLK_a:
+  					//set camera velocity right to 1
+  					m_graphics->SetCameraVelocity('x', -1);
+  					break;
+          case SDLK_UP:
+            //set camera velocity upwards to 1
+            m_graphics->SetCameraVelocity('y', 1);
+            break;
+          case SDLK_DOWN:
+            //set camera velocity downwards to 1
+            m_graphics->SetCameraVelocity('y', -1);
+            break;
   				case SDLK_w:
   					//set camera velocity forward to 1
   					m_graphics->SetCameraVelocity('z', 1);
@@ -136,14 +144,22 @@ void Engine::Keyboard()
   		case SDL_KEYUP:
   			switch (m_event.key.keysym.sym)
   			{
-  				case SDLK_a:
+  				case SDLK_d:
   					//set camera velocity left to 0
   					m_graphics->SetCameraVelocity('x', 0);
   					break;
-  				case SDLK_d:
+  				case SDLK_a:
   					//set camera velocity right to 0
   					m_graphics->SetCameraVelocity('x', 0);
   					break;
+          case SDLK_UP:
+            //set camera velocity upwards to 0
+            m_graphics->SetCameraVelocity('y', 0);
+            break;
+          case SDLK_DOWN:
+            //set camera velocity downwards to 0
+            m_graphics->SetCameraVelocity('y', 0);
+            break;
   				case SDLK_w:
   					//set camera velocity forward to 0
   					m_graphics->SetCameraVelocity('z', 0);

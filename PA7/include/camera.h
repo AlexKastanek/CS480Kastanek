@@ -1,13 +1,14 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "math.h"
 #include "graphics_headers.h"
 
 using namespace std;
 
 enum CameraMode {
-    Mode_Free = 0,
-    Mode_Focus = 1
+    MODE_FOCUS = 0,
+    MODE_FREE = 1
 };
 
 class Camera
@@ -54,8 +55,12 @@ class Camera
 
     glm::vec3 m_position;
     glm::vec3 m_velocity;
+    glm::vec3 m_focusPoint;
 
     float m_moveSpeed;
+    float m_maxHeight;
+    float m_moveAngleHrzt;
+    float m_moveAngleVert;
 
     unsigned int m_mode;
 };
