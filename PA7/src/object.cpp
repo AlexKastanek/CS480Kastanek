@@ -157,6 +157,11 @@ glm::mat4 Object::GetScale()
   return scale;
 }
 
+glm::vec3 Object::GetPosition()
+{
+  return position;
+}
+
 bool Object::IsPaused()
 {
   return m_paused;

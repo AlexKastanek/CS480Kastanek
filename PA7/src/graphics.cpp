@@ -47,7 +47,7 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Create the objects
-  m_object = new Object("..//assets//" + m_objectFilename);
+  m_object = new Planet("..//assets//" + m_objectFilename, 5.0, 5.0, 5.0);
   m_planet = new Planet(5.0, 5.0);
   m_moon = new Moon(30.0, 30.0);
 
@@ -123,6 +123,8 @@ void Graphics::Update(unsigned int dt)
   m_object->Update(dt);
   m_planet->Update(dt);
   m_moon->Update(dt);
+
+  m_camera->SetFocusPoint(m_object->GetPosition());
   m_camera->Update(dt);
 }
 

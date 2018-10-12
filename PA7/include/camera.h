@@ -34,10 +34,12 @@ class Camera
     float GetVelocityY();
     float GetVelocityZ();
 
+    void SetParent(glm::mat4 parent);
     void SetPosition(glm::vec3 position);
     void SetPosition(float x, float y, float z);
     void SetVelocity(glm::vec3 velocity);
     void SetVelocity(float x, float y, float z);
+    void SetFocusPoint(glm::vec3 focusPoint);
     void SetMoveSpeed(float moveSpeed);
     void SetMode(unsigned int mode);
 
@@ -53,11 +55,15 @@ class Camera
     glm::mat4 projection;
     glm::mat4 view;
 
+    glm::mat4 m_parent;
+
     glm::vec3 m_position;
     glm::vec3 m_velocity;
     glm::vec3 m_focusPoint;
 
     float m_moveSpeed;
+    float m_focusRadius;
+    float m_height;
     float m_maxHeight;
     float m_moveAngleHrzt;
     float m_moveAngleVert;

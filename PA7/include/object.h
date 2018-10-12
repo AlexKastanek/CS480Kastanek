@@ -32,6 +32,8 @@ class Object
     glm::mat4 GetRotation();
     glm::mat4 GetScale();
 
+    glm::vec3 GetPosition();
+
     void SetParent(Object* parent);
     void AddChild(Object* child);
     void RemoveChild();
@@ -54,6 +56,8 @@ class Object
     glm::mat4 translation;
     glm::mat4 rotation;
     glm::mat4 scale;
+
+    glm::vec3 position;
 
     //TODO: move these values to planet and moon implementations and their 
     //      respective get/set functions

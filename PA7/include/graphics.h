@@ -50,7 +50,7 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_object;
+    Planet *m_object;
     Planet *m_planet;
     Moon *m_moon;
 

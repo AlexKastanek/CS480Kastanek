@@ -30,6 +30,62 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed)
 	m_orbitSpeed = orbitSpeed;
 }
 
+Planet::Planet(string filename, float orbitRadius, float spinSpeed, float orbitSpeed)
+{
+	m_renderData = new Model();
+
+  if (!m_renderData->LoadObject(filename))
+  {
+    delete m_renderData;
+    exit(1);
+  }
+  //uncomment below to print all vertices
+  /*
+  cout << "Vertices:" << endl;
+  cout << "{" << endl;
+  for (int i = 0; i < Vertices.size(); i++)
+  {
+    cout << "{{"
+         << Vertices[i].vertex.x
+         << ", "
+         << Vertices[i].vertex.y
+         << ", "
+         << Vertices[i].vertex.z
+         << "}{"
+         << Vertices[i].color.x
+         << ", "
+         << Vertices[i].color.y
+         << ", "
+         << Vertices[i].color.z
+         << "}}" << endl;
+  }
+  cout << "}" << endl;
+  //*/
+
+  //uncomment below to print all indices
+  /*
+  cout << "Indices:" << endl;
+  cout << "{" << endl;
+  for (int i = 0; i < Indices.size(); i++)
+  {
+    cout << Indices[i] << " ";
+    if (((i + 1) % 3) == 0) cout << endl;
+  }
+  cout << "}" << endl;
+  //*/
+
+  angleTranslate = 0.0f;
+  angleRotate = 0.0f;
+
+  m_paused = 0; //not paused
+  m_spinDirection = 0; //spinning counter-clockwise
+  m_orbitDirection = 0; //orbiting counter-clockwise
+
+	m_orbitRadius = orbitRadius;
+	m_spinSpeed = spinSpeed;
+	m_orbitSpeed = orbitSpeed;
+}
+
 Planet::~Planet()
 {
 
@@ -67,14 +123,15 @@ void Planet::Update(unsigned int dt)
 
     angleRotate += dt * (M_PI/rotateMultiplier) * m_spinSpeed;
     angleTranslate += dt * (M_PI/translateMultiplier) * m_orbitSpeed;
-
-    translation = glm::translate(
-      glm::mat4(1.0), 
-      glm::vec3(
+    position = glm::vec3(
         m_orbitRadius * sin(angleTranslate), 
         0.0f, 
         m_orbitRadius * cos(angleTranslate)
-      )
+    );
+
+    translation = glm::translate(
+      glm::mat4(1.0), 
+      position
     );
 
     rotation = glm::rotate(
