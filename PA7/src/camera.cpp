@@ -2,12 +2,12 @@
 
 Camera::Camera()
 {
-  m_position = glm::vec3(0.0, 0.0, -16.0);
+  m_position = glm::vec3(-50.0, 0.0, -16.0);
   m_velocity = glm::vec3(0.0, 0.0, 0.0);
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
 
-  m_moveSpeed = 0.1f;
-  m_maxHeight = 3.0f;
+  m_moveSpeed = 10.0f;
+  m_maxHeight = 10.0f;
   m_moveAngleHrzt = -M_PI;
   m_moveAngleVert = -M_PI/2;
 
@@ -27,7 +27,7 @@ bool Camera::Initialize(int w, int h)
   //  for this project having them static will be fine
   view = glm::lookAt( m_position,                 //Eye Position
                       m_focusPoint,               //Focus point
-                      glm::vec3(0.0, 1.0, 0.0));  //Positive Y is up
+                      glm::vec3(-50.0, 1.0, 0.0));  //Positive Y is up
 
   projection = glm::perspective( 45.0f, //the FoV typically 90 degrees is good which is what this is set to
                                  float(w)/float(h), //Aspect Ratio, so Circles stay Circular

@@ -46,16 +46,16 @@ bool Graphics::Initialize(int width, int height)
     return false;
   }
 
-  /*// Create the objects
-  m_object = new Object("..//assets//" + m_objectFilename);
-  m_planet = new Planet(5.0, 5.0);
-  m_moon = new Moon(30.0, 30.0);
-
-  // Build the object hierarchy
-  m_planet->AddChild(m_moon);
-  m_moon->SetParent(m_planet);*/
-  
   CreatePlanets("planetData.txt");
+  // Create the objects
+//   m_object = new Object("..//assets//" + m_objectFilename);
+//   m_planet[0] = new Planet(5.0, 5.0, 5.0);
+//   m_moon = new Moon(30.0, 30.0);
+// 
+//   // Build the object hierarchy
+//   m_planet->AddChild(m_moon);
+//   m_moon->SetParent(m_planet);
+  
 
   // Set up the shaders
   m_shader = new Shader();
@@ -295,15 +295,15 @@ std::string Graphics::ErrorString(GLenum error)
     
     //create sun
     fin >> name;
-    m_Sun = new Object("..//assets//" + name + ".obj" );
+    m_Sun = new Object("..//assets//" + name + ".obj");
     
-    //create Planets
-    for(int i=0 ; i<1 ; i++)
+    for(int i=0 ; i<5 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd;
-        
-        m_planet[i] = new Planet( 5, rotSpd, orbSpd, "..//assets//" + name + ".obj" );
+        //m_planet[i] = new Planet( (orbDist * 35) + 1400, rotSpd, orbSpd, "..//assets//" + name + ".obj" );
+        m_planet[i] = new Planet( (orbDist * 35) + 1400, rotSpd * 2, orbSpd * 2, "..//assets//" + name + ".obj" );
     }
+    
     
     fin.close();
  }
@@ -312,22 +312,21 @@ std::string Graphics::ErrorString(GLenum error)
  {
      m_Sun->Update(dt);
      
-    for(int i=0 ; i<1 ; i++)
-    {
-        m_planet[i] -> Update(dt);
-    }
+     for(int i=0 ; i<5 ; i++)
+        m_planet[i]->Update(dt);
  }
  
  void Graphics::RenderPlanets()
  {
-    std::cout << "HERE" << std::endl;
+    //std::cout << "HERE" << std::endl;
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_Sun->GetModel()));
     m_Sun->Render();
-    
-    for(int i=0 ; i<1 ; i++)
+
+    for(int i=0 ; i<5 ; i++)
     {
         glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet[i]->GetModel()));
-        m_planet[i] -> Render();
+        m_planet[i]->Render();
     }
+    
  }
  

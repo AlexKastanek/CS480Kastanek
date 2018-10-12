@@ -1,11 +1,10 @@
-sun
-
-earth 1 2.6 1 1
+Sun
 
 Mercury 0 1 .02 4.14
 
 Venus 0 1.2 .01 1.6
 
+Earth 1 2.6 1 1
 
 Mars 2 3.5 1 .53
  

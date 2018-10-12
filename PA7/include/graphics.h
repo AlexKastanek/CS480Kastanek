@@ -55,11 +55,9 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_object;
-    //Planet *m_planet;
-    vector<Planet*> m_planet;
-    //Moon *m_moon;
-    vector<Moon*> m_moon;
+    //Object *m_object;
+    Planet *m_planet[9];
+    Moon *m_moon[1];
     Object *m_Sun;
 
     string m_objectFilename;
