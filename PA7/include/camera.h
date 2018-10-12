@@ -19,6 +19,11 @@ class Camera
     bool Initialize(int w, int h);
     void Update(unsigned int dt);
 
+    glm::mat4 CalculateFreeView (
+        glm::vec3 eye,
+        float pitch,
+        float yaw );
+
     glm::mat4 GetProjection();
     glm::mat4 GetView();
     glm::vec3 GetPosition();
@@ -60,6 +65,7 @@ class Camera
     glm::vec3 m_position;
     glm::vec3 m_velocity;
     glm::vec3 m_focusPoint;
+    glm::vec3 m_focusVector;
 
     float m_moveSpeed;
     float m_focusRadius;

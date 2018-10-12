@@ -5,6 +5,7 @@ Camera::Camera()
   m_position = glm::vec3(0.0, 0.0, -16.0);
   m_velocity = glm::vec3(0.0, 0.0, 0.0);
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
+  m_focusVector = m_position - m_focusPoint;
 
   m_moveSpeed = 0.1f;
   m_focusRadius = 8.0;
@@ -83,6 +84,8 @@ void Camera::Update(unsigned int dt)
     m_position.y += m_height;
     m_position.z -= m_focusRadius;
 
+    m_focusVector = m_focusPoint - m_position;
+
     /*
     if (m_velocity.x < 0)
     {
@@ -140,6 +143,12 @@ void Camera::Update(unsigned int dt)
     */
     
   }
+  else if (m_mode == MODE_FREE)
+  {
+    m_focusPoint = m_focusVector;
+
+    view = CalculateFreeView(m_position, 0.0, 0.0);
+  }
 
   cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;
 
@@ -150,6 +159,29 @@ void Camera::Update(unsigned int dt)
                       m_focusPoint,               //Focus point
                       glm::vec3(0.0, 1.0, 0.0));  //Positive Y is up
   
+}
+
+glm::mat4 Camera::CalculateFreeView(glm::vec3 eye, float pitch, float yaw)
+{
+  float pitchCos = cos(pitch);
+  float pitchSin = sin(pitch);
+  float yawCos = cos(yaw);
+  float yawSin = sin(yaw);
+
+  float viewMatrixData[16];
+
+  viewMatrixData[0];
+
+  glm::vec3 xAxis = glm::vec3(yawCos, 0, yawSin * -1);
+  glm::vec3 yAxis = glm::vec3(yawSin * pitchSin, pitchCos, yawCos * pitchSin);
+  glm::vec3 zAxis = glm::vec3(yawSin * pitchCos, pitchSin * -1, pitchCos * yawCos);
+
+  glm::vec4 x = glm::vec4(xAxis.x, yAxis.x, zAxis.x, 0);
+  glm::vec4 y = glm::vec4(xAxis.y, yAxis.y, zAxis.y, 0);
+  glm::vec4 z = glm::vec4(xAxis.z, yAxis.z, zAxis.z, 0);
+  glm::vec4 w = glm::vec4(glm::dot(xAxis, eye) * -1, glm::dot(yAxis, eye) * -1, glm::dot(zAxis, eye) * -1, 1);
+
+  glm::mat4 freeView(x,y,z,w);
 }
 
 glm::mat4 Camera::GetProjection()
@@ -175,6 +207,11 @@ glm::vec3 Camera::GetVelocity()
 float Camera::GetMoveSpeed()
 {
   return m_moveSpeed;
+}
+
+unsigned int Camera::GetMode()
+{
+  return m_mode;
 }
 
 float Camera::GetPositionX()
@@ -240,6 +277,11 @@ void Camera::SetFocusPoint(glm::vec3 focusPoint)
 void Camera::SetMoveSpeed(float moveSpeed)
 {
   m_moveSpeed = moveSpeed;
+}
+
+void Camera::SetMode(unsigned int mode)
+{
+  m_mode = mode;
 }
 
 void Camera::SetPositionX(float x)

@@ -37,6 +37,7 @@ class Graphics
     void SetCameraVelocity(glm::vec3 velocity);
     void SetCameraVelocity(float x, float y, float z);
     void SetCameraVelocity(char axis, float value);
+    void SwitchCameraMode(void);
 
     void SetObjectFilename(string objectFilename);
 

@@ -233,6 +233,18 @@ void Graphics::SetCameraVelocity(char axis, float value)
   }
 }
 
+void Graphics::SwitchCameraMode(void)
+{
+  if (m_camera->GetMode() == MODE_FOCUS)
+  {
+    m_camera->SetMode(MODE_FREE);
+  }
+  else
+  {
+    m_camera->SetMode(MODE_FOCUS);
+  }
+}
+
 void Graphics::SetObjectFilename(string objectFilename)
 {
   m_objectFilename = objectFilename;

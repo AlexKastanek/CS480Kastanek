@@ -113,6 +113,9 @@ void Engine::Keyboard()
   				case SDLK_ESCAPE:
   					m_running = false;
   					break;
+          case SDLK_m:
+            m_graphics->SwitchCameraMode();
+            break;
   				case SDLK_d:
   					//set camera velocity left to 1
   					m_graphics->SetCameraVelocity('x', 1);
