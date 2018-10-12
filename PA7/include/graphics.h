@@ -61,7 +61,6 @@ class Graphics
     //Moon *m_moon;
     vector<Moon*> m_moon;
     Object *m_Sun;
-    int numMoons;
 
     string m_objectFilename;
 };

@@ -54,6 +54,8 @@ bool Graphics::Initialize(int width, int height)
   // Build the object hierarchy
   m_planet->AddChild(m_moon);
   m_moon->SetParent(m_planet);*/
+  
+  CreatePlanets("planetData.txt");
 
   // Set up the shaders
   m_shader = new Shader();
@@ -124,6 +126,8 @@ void Graphics::Update(unsigned int dt)
   m_planet->Update(dt);
   m_moon->Update(dt);*/
   m_camera->Update(dt);
+  
+  UpdatePlanets(dt);
 }
 
 void Graphics::Render()
@@ -142,10 +146,11 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   // Render the objects
+  RenderPlanets();
 
   //Object specified at command line
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_object->GetModel()));
-  m_object->Render();
+//   glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_object->GetModel()));
+//   m_object->Render();
 
   //Planet
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet->GetModel()));
@@ -164,35 +169,35 @@ void Graphics::Render()
   }
 }
 
-bool Graphics::IsPlanetPaused()
-{
-  return m_planet->IsPaused();
-}
-
-unsigned int Graphics::GetPlanetSpin()
-{
-  return m_planet->GetSpinDirection();
-}
-
-unsigned int Graphics::GetPlanetOrbit()
-{
-  return m_planet->GetOrbitDirection();
-}
-
-void Graphics::SetPlanetPaused(bool paused)
-{
-  m_planet->SetPaused(paused);
-}
-
-void Graphics::SetPlanetSpin(unsigned int spin)
-{
-  m_planet->SetSpinDirection(spin);
-}
-
-void Graphics::SetPlanetOrbit(unsigned int orbit)
-{
-  m_planet->SetOrbitDirection(orbit);
-}
+// bool Graphics::IsPlanetPaused()
+// {
+//   return m_planet->IsPaused();
+// }
+// 
+// unsigned int Graphics::GetPlanetSpin()
+// {
+//   return m_planet->GetSpinDirection();
+// }
+// 
+// unsigned int Graphics::GetPlanetOrbit()
+// {
+//   return m_planet->GetOrbitDirection();
+// }
+// 
+// void Graphics::SetPlanetPaused(bool paused)
+// {
+//   m_planet->SetPaused(paused);
+// }
+// 
+// void Graphics::SetPlanetSpin(unsigned int spin)
+// {
+//   m_planet->SetSpinDirection(spin);
+// }
+// 
+// void Graphics::SetPlanetOrbit(unsigned int orbit)
+// {
+//   m_planet->SetOrbitDirection(orbit);
+// }
 
 void Graphics::SetCameraVelocity(glm::vec3 velocity)
 {
@@ -268,7 +273,7 @@ std::string Graphics::ErrorString(GLenum error)
   }
 }
 
- void CreatePlanets(string configFile)
+ void Graphics::CreatePlanets(string configFile)
  {
     //Source Code   
     /*// Create the objects
@@ -280,24 +285,49 @@ std::string Graphics::ErrorString(GLenum error)
     m_planet->AddChild(m_moon);
     m_moon->SetParent(m_planet);*/
     
-    std::ifstream fin;
-    fin.open(configFile.c_str());//open file
+    std::ifstream fin("..//assets//" + configFile);
+    if(!fin.good())
+        std::cerr << "ERROR OPENING CONFIG FILE" << std::endl;
     
-    char* format;
-    gbg = new char;
-    getline(fin, format);
+    string name;
+    float rotSpd, orbSpd, orbDist;
+    int numMoons;
     
-    for(int i=0 ; i<9 ; i++)
+    //create sun
+    fin >> name;
+    m_Sun = new Object("..//assets//" + name + ".obj" );
+    
+    //create Planets
+    for(int i=0 ; i<1 ; i++)
     {
+        fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd;
+        
+        m_planet[i] = new Planet( 5, rotSpd, orbSpd, "..//assets//" + name + ".obj" );
     }
- 
+    
+    fin.close();
  }
  
- void UpdatePlanets(unsigned int dt)
+ void Graphics::UpdatePlanets(unsigned int dt)
  {
+     m_Sun->Update(dt);
+     
+    for(int i=0 ; i<1 ; i++)
+    {
+        m_planet[i] -> Update(dt);
+    }
  }
  
- void RenderPlanets()
+ void Graphics::RenderPlanets()
  {
+    std::cout << "HERE" << std::endl;
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_Sun->GetModel()));
+    m_Sun->Render();
+    
+    for(int i=0 ; i<1 ; i++)
+    {
+        glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet[i]->GetModel()));
+        m_planet[i] -> Render();
+    }
  }
-
+ 

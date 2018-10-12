@@ -24,82 +24,82 @@ bool GUI::Initialize(SDL_Window* window, SDL_GLContext context)
 
 void GUI::Update(SDL_Window* window, Graphics* graphics)
 {
-    //bool buttonPressed = false;
-
-  	ImGui_ImplOpenGL3_NewFrame();
-  	ImGui_ImplSDL2_NewFrame(window);
-  	ImGui::NewFrame();
-
-    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize));
-    {
-      if (ImGui::Button("Play/Pause Planet"))
-      {
-        if (graphics->IsPlanetPaused())
-        {
-          graphics->SetPlanetPaused(0);
-        }
-        else
-        {
-          graphics->SetPlanetPaused(1);
-        }
-      }
-      if (ImGui::Button("Change Orbit Direction"))
-      {
-        if (graphics->GetPlanetOrbit() == 0)
-        {
-          graphics->SetPlanetOrbit(1);
-        }
-        else
-        {
-          graphics->SetPlanetOrbit(0);
-        }
-      }
-      if (ImGui::Button("Change Spin Direction"))
-      {
-        if (graphics->GetPlanetSpin() == 0)
-        {
-          graphics->SetPlanetSpin(1);
-        }
-        else
-        {
-          graphics->SetPlanetSpin(0);
-        }
-      }
-
-      ImGui::Separator();
-
-      ImGui::Text("Info");
-
-      if (graphics->IsPlanetPaused())
-      {
-        ImGui::Text("Paused");
-      }
-      else
-      {
-        ImGui::Text("Playing");
-      }
-
-      if (graphics->GetPlanetOrbit() == 0)
-      {
-        ImGui::Text("Planet Orbit Direction: Clockwise");
-      }
-      else
-      {
-        ImGui::Text("Planet Orbit Direction: Counter-Clockwise");
-      }
-
-      if (graphics->GetPlanetSpin() == 0)
-      {
-        ImGui::Text("Planet Spin Direction: Clockwise");
-      }
-      else
-      {
-        ImGui::Text("Planet Spin Direction: Counter-Clockwise");
-      }
-
-    }
-    ImGui::End();
-    
+//     //bool buttonPressed = false;
+// 
+//   	ImGui_ImplOpenGL3_NewFrame();
+//   	ImGui_ImplSDL2_NewFrame(window);
+//   	ImGui::NewFrame();
+// 
+//     if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize));
+//     {
+//       if (ImGui::Button("Play/Pause Planet"))
+//       {
+//         if (graphics->IsPlanetPaused())
+//         {
+//           graphics->SetPlanetPaused(0);
+//         }
+//         else
+//         {
+//           graphics->SetPlanetPaused(1);
+//         }
+//       }
+//       if (ImGui::Button("Change Orbit Direction"))
+//       {
+//         if (graphics->GetPlanetOrbit() == 0)
+//         {
+//           graphics->SetPlanetOrbit(1);
+//         }
+//         else
+//         {
+//           graphics->SetPlanetOrbit(0);
+//         }
+//       }
+//       if (ImGui::Button("Change Spin Direction"))
+//       {
+//         if (graphics->GetPlanetSpin() == 0)
+//         {
+//           graphics->SetPlanetSpin(1);
+//         }
+//         else
+//         {
+//           graphics->SetPlanetSpin(0);
+//         }
+//       }
+// 
+//       ImGui::Separator();
+// 
+//       ImGui::Text("Info");
+// 
+//       if (graphics->IsPlanetPaused())
+//       {
+//         ImGui::Text("Paused");
+//       }
+//       else
+//       {
+//         ImGui::Text("Playing");
+//       }
+// 
+//       if (graphics->GetPlanetOrbit() == 0)
+//       {
+//         ImGui::Text("Planet Orbit Direction: Clockwise");
+//       }
+//       else
+//       {
+//         ImGui::Text("Planet Orbit Direction: Counter-Clockwise");
+//       }
+// 
+//       if (graphics->GetPlanetSpin() == 0)
+//       {
+//         ImGui::Text("Planet Spin Direction: Clockwise");
+//       }
+//       else
+//       {
+//         ImGui::Text("Planet Spin Direction: Counter-Clockwise");
+//       }
+// 
+//     }
+//     ImGui::End();
+//     
 }
 
 void GUI::Render(SDL_Window* window, SDL_GLContext context)
