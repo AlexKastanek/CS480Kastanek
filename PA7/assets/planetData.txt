@@ -1,14 +1,14 @@
 Sun
 
-Mercury 0 1 .02 4.14
+Earth 1 2.6 1 1 70 .03 .03
 
-Venus 0 1.2 .01 1.6
+Mars 2 3.5 1 .53 70 .03 .03
 
-Earth 1 2.6 1 1
+Mercury 0 0.5 .02 4.14 0 0 0
 
-Mars 2 3.5 1 .53
- 
-Jupiter 4 14 2.7 .08
+Venus 0 1.2 .01 1.6 0 0 0
+
+Jupiter 4 14 2.7 .08 140 .03 .03
 
 Saturn 2 25 48 2.4 .036
 
@@ -18,4 +18,4 @@ Neptune 14 80 150 1.5 .006
 
 Pluto 5 3 104 .16 .004
 
-FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) (Sun Format: rotSpeed(in years))
+FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) moonDist, moonSpd, moonOrb (Sun Format: rotSpeed(in years))

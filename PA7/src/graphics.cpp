@@ -290,8 +290,11 @@ std::string Graphics::ErrorString(GLenum error)
         std::cerr << "ERROR OPENING CONFIG FILE" << std::endl;
     
     string name;
-    float rotSpd, orbSpd, orbDist;
-    int numMoons;
+    float rotSpd, orbSpd, orbDist, moonRot, moonOrb;
+    int numMoons, moonDist;
+    int moonMod = 0;
+    
+    int speedMod = 10;
     
     //create sun
     fin >> name;
@@ -299,9 +302,19 @@ std::string Graphics::ErrorString(GLenum error)
     
     for(int i=0 ; i<5 ; i++)
     {
-        fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd;
-        //m_planet[i] = new Planet( (orbDist * 35) + 1400, rotSpd, orbSpd, "..//assets//" + name + ".obj" );
-        m_planet[i] = new Planet( (orbDist * 35) + 1400, rotSpd * 2, orbSpd * 2, "..//assets//" + name + ".obj" );
+        fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> moonDist >> moonRot >> moonOrb;
+        m_planet[i] = new Planet( ((orbDist * 50) + 1400), rotSpd*speedMod, orbSpd*speedMod, "..//assets//" + name + ".obj" );
+       
+        std::cout << name << " dist: " << ((orbDist * 50) + 1400) << endl;
+        
+        for(int j=moonIndex ; j<(moonIndex + numMoons) ; j++)
+        {
+            m_moon[j] = new Moon(moonDist + (10*moonMod++), moonRot*speedMod , moonOrb*speedMod, "..//assets//Moon.obj");
+            m_planet[i]->AddChild(m_moon[j]);
+            m_moon[j]->SetParent(m_planet[i]);
+        }
+        moonIndex += numMoons;
+        moonMod = 0;
     }
     
     
@@ -314,6 +327,8 @@ std::string Graphics::ErrorString(GLenum error)
      
      for(int i=0 ; i<5 ; i++)
         m_planet[i]->Update(dt);
+     
+     m_moon[0]->Update(dt);
  }
  
  void Graphics::RenderPlanets()
@@ -328,5 +343,8 @@ std::string Graphics::ErrorString(GLenum error)
         m_planet[i]->Render();
     }
     
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[0]->GetModel()));
+    m_moon[0]->Render();
+
  }
  

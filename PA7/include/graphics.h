@@ -57,8 +57,9 @@ class Graphics
 
     //Object *m_object;
     Planet *m_planet[9];
-    Moon *m_moon[1];
+    Moon *m_moon[100];
     Object *m_Sun;
+    int moonIndex = 0;
 
     string m_objectFilename;
 };
