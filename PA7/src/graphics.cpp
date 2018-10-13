@@ -127,7 +127,7 @@ void Graphics::Update(unsigned int dt)
   m_moon->Update(dt);*/
   UpdatePlanets(dt);
 
-  m_camera->SetFocusPoint(m_object->GetPosition());
+  m_camera->SetFocusPoint(m_Sun->GetPosition());
   m_camera->Update(dt);
 }
 
@@ -243,7 +243,11 @@ void Graphics::SwitchCameraMode(void)
   {
     m_camera->SetMode(MODE_FREE);
   }
-  else
+  else if (m_camera->GetMode() == MODE_FREE)
+  {
+    m_camera->SetMode(MODE_OVERVIEW);
+  }
+  else if (m_camera->GetMode() == MODE_OVERVIEW)
   {
     m_camera->SetMode(MODE_FOCUS);
   }

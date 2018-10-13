@@ -42,6 +42,8 @@ bool Camera::Initialize(int w, int h)
 
 void Camera::Update(unsigned int dt)
 {
+  //cout << m_mode << endl;
+
   if (m_mode == MODE_FOCUS)
   {
 
@@ -86,7 +88,7 @@ void Camera::Update(unsigned int dt)
     m_position.y += m_height;
     m_position.z -= m_focusRadius;
 
-    m_focusVector = m_focusPoint - m_position;
+    //m_focusVector = m_focusPoint - m_position;
 
     /*
 
@@ -148,11 +150,34 @@ void Camera::Update(unsigned int dt)
   }
   else if (m_mode == MODE_FREE)
   {
+    /*
     glm::vec3 direction = glm::normalize(m_position - m_focusPoint);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 right = glm::normalize(glm::cross(up, direction));
     //glm::vec3 cameraUp = glm::cross(direction, cameraRight);
     glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
+    */
+  }
+  else if (m_mode == MODE_OVERVIEW)
+  {
+    
+    if (m_velocity.z < 0)
+    {
+      m_focusRadius -= m_velocity.z;
+    }
+    else if (m_velocity.z > 0)
+    {
+      //only move if far enough away
+      if (m_focusRadius > 2)
+      {
+        m_focusRadius -= m_velocity.z;
+      }
+    }
+
+    m_position = m_focusPoint;
+    m_position.y += m_focusRadius;
+    m_position.z = 1.0f;
+    
   }
 
   cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;

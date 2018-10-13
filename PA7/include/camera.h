@@ -8,7 +8,8 @@ using namespace std;
 
 enum CameraMode {
     MODE_FOCUS = 0,
-    MODE_FREE = 1
+    MODE_FREE,
+    MODE_OVERVIEW
 };
 
 class Camera
@@ -60,7 +61,7 @@ class Camera
   private:
     glm::mat4 projection;
     glm::mat4 view;
-    
+
     glm::mat4 m_parent;
 
     glm::vec3 m_position;
