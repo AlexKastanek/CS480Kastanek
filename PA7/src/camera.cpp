@@ -145,9 +145,11 @@ void Camera::Update(unsigned int dt)
   }
   else if (m_mode == MODE_FREE)
   {
-    m_focusPoint = m_focusVector;
-
-    view = CalculateFreeView(m_position, 0.0, 0.0);
+    glm::vec3 direction = glm::normalize(m_position - m_focusPoint);
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 right = glm::normalize(glm::cross(up, direction));
+    //glm::vec3 cameraUp = glm::cross(direction, cameraRight);
+    glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
   }
 
   cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;
