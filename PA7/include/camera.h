@@ -40,6 +40,7 @@ class Camera
     float GetVelocityZ();
 
     void SetParent(glm::mat4 parent);
+
     void SetPosition(glm::vec3 position);
     void SetPosition(float x, float y, float z);
     void SetVelocity(glm::vec3 velocity);
@@ -59,7 +60,7 @@ class Camera
   private:
     glm::mat4 projection;
     glm::mat4 view;
-
+    
     glm::mat4 m_parent;
 
     glm::vec3 m_position;

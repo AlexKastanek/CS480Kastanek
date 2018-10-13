@@ -14,7 +14,7 @@ public:
 	Planet(float orbitRadius);
 	Planet(float spinSpeed, float orbitSpeed);
 	Planet(float orbitRadius, float spinSpeed, float orbitSpeed);
-	Planet(string filename, float orbitRadius, float spinSpeed, float orbitSpeed);
+    Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name);
 	~Planet();
 
 	void Update(unsigned int dt);

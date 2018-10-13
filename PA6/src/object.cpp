@@ -49,6 +49,7 @@ Object::Object(string filename)
     delete m_renderData;
     exit(1);
   }
+
   //uncomment below to print all vertices
   /*
   cout << "Vertices:" << endl;

@@ -33,7 +33,6 @@ class Object
     glm::mat4 GetScale();
 
     glm::vec3 GetPosition();
-
     void SetParent(Object* parent);
     void AddChild(Object* child);
     void RemoveChild();

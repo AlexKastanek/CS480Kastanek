@@ -3,6 +3,7 @@
 
 #include "object.h"
 #include "graphics_headers.h"
+#include <string>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ public:
 	Moon(float orbitRadius);
 	Moon(float spinSpeed, float orbitSpeed);
 	Moon(float orbitRadius, float spinSpeed, float orbitSpeed);
+    Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name);
 	~Moon();
 
 	void Update(unsigned int dt);

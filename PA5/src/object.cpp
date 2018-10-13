@@ -129,6 +129,7 @@ void Object::Render()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBs[i]);
 
 
+<<<<<<< HEAD
 
     glDrawElements(GL_TRIANGLES, numIndices[i], GL_UNSIGNED_INT, 0);
 
@@ -216,6 +217,32 @@ void Object::Render()
       }
       
       for(int i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
+=======
+bool Object::LoadObject(string in_filename, vector<Vertex>* out_vertices, vector<unsigned int>* out_indices)
+{
+  Assimp::Importer importer;
+   
+  const aiScene *scene = importer.ReadFile(in_filename.c_str(), aiProcess_Triangulate);//read in vertices, with triangulation
+   
+  aiMesh *aiMesh = scene -> mMeshes[0];
+  
+  if(aiMesh -> mNumVertices > 0)
+  {
+      for(uint i=0; i<aiMesh->mNumVertices ; i++)//go through each vertex read in
+      {
+          aiVector3D aiVec = aiMesh -> mVertices[i];
+          
+          glm::vec3 vert = glm::vec3(aiVec.x, aiVec.y, aiVec.z);//set xyz of vertex
+          
+          glm::vec3 color = glm::vec3((rand() % 5), (rand() % 5), (rand() % 5));//random colors
+          
+          Vertex *temp = new Vertex(vert, color); //create the Vertex type to be pushed
+          
+          out_vertices -> push_back(*temp); //push vertex
+      }
+      
+      for(uint i=0 ; i<aiMesh->mNumFaces ; i++)//go through each index read in
+>>>>>>> Jordy
       {
           aiFace *face = &aiMesh -> mFaces[i];
           
@@ -224,12 +251,19 @@ void Object::Render()
           out_indices -> push_back(face -> mIndices[2]);
       }
   }
+<<<<<<< HEAD
   */
   
  // return true;
 //}
 
 /*
+=======
+  
+  return true;
+}
+
+>>>>>>> Jordy
 bool Object::LoadMaterial(string in_filename, vector<Material>* out_materials)
 {
   ifstream fin;

@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
+
 using namespace std;
 
 #include "graphics_headers.h"
@@ -38,8 +40,11 @@ class Graphics
     void SetCameraVelocity(float x, float y, float z);
     void SetCameraVelocity(char axis, float value);
     void SwitchCameraMode(void);
-
     void SetObjectFilename(string objectFilename);
+    
+    void CreatePlanets(string configFile);
+    void UpdatePlanets(unsigned int dt);
+    void RenderPlanets();
 
   private:
     std::string ErrorString(GLenum error);
@@ -51,9 +56,11 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Planet *m_object;
-    Planet *m_planet;
-    Moon *m_moon;
+    //Object *m_object;
+    Planet *m_planet[9];
+    Moon *m_moon[100];
+    Object *m_Sun;
+    int moonIndex = 0;
 
     string m_objectFilename;
 };

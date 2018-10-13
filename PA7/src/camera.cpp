@@ -7,10 +7,11 @@ Camera::Camera()
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
   m_focusVector = m_position - m_focusPoint;
 
-  m_moveSpeed = 0.1f;
+  m_moveSpeed = 10.0f;
   m_focusRadius = 8.0;
   m_height = 0;
-  m_maxHeight = 3.0f;
+  m_maxHeight = 100.0f;
+
   m_moveAngleHrzt = -M_PI;
   m_moveAngleVert = -M_PI/2;
 
@@ -43,6 +44,7 @@ void Camera::Update(unsigned int dt)
 {
   if (m_mode == MODE_FOCUS)
   {
+
     //float translateMultiplier = 50000;
     //float radius = glm::distance(m_position, m_focusPoint);
     //float xzRadius = glm::distance(glm::vec2(m_position.x, m_position.z),
@@ -87,6 +89,7 @@ void Camera::Update(unsigned int dt)
     m_focusVector = m_focusPoint - m_position;
 
     /*
+
     if (m_velocity.x < 0)
     {
       //moving left
@@ -184,6 +187,7 @@ glm::mat4 Camera::CalculateFreeView(glm::vec3 eye, float pitch, float yaw)
   glm::vec4 w = glm::vec4(glm::dot(xAxis, eye) * -1, glm::dot(yAxis, eye) * -1, glm::dot(zAxis, eye) * -1, 1);
 
   glm::mat4 freeView(x,y,z,w);
+
 }
 
 glm::mat4 Camera::GetProjection()
