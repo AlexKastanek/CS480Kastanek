@@ -121,27 +121,39 @@ void Engine::Keyboard()
             break;
   				case SDLK_d:
   					//set camera velocity left to 1
-  					m_graphics->SetCameraVelocity('x', 1);
+  					//m_graphics->SetCameraVelocity('x', 1);
+            m_graphics->HandleCameraInput("d");
   					break;
   				case SDLK_a:
   					//set camera velocity right to 1
-  					m_graphics->SetCameraVelocity('x', -1);
+  					//m_graphics->SetCameraVelocity('x', -1);
+            m_graphics->HandleCameraInput("a");
   					break;
           case SDLK_UP:
             //set camera velocity upwards to 1
-            m_graphics->SetCameraVelocity('y', 1);
+            //m_graphics->SetCameraVelocity('y', 1);
+            m_graphics->HandleCameraInput("up");
             break;
           case SDLK_DOWN:
             //set camera velocity downwards to 1
-            m_graphics->SetCameraVelocity('y', -1);
+            //m_graphics->SetCameraVelocity('y', -1);
+            m_graphics->HandleCameraInput("down");
+            break;
+          case SDLK_LEFT:
+            m_graphics->HandleCameraInput("left");
+            break;
+          case SDLK_RIGHT:
+            m_graphics->HandleCameraInput("right");
             break;
   				case SDLK_w:
   					//set camera velocity forward to 1
-  					m_graphics->SetCameraVelocity('z', 1);
+  					//m_graphics->SetCameraVelocity('z', 1);
+            m_graphics->HandleCameraInput("w");
   					break;
   				case SDLK_s:
   					//set camera velocity back to 1
-  					m_graphics->SetCameraVelocity('z', -1);
+  					//m_graphics->SetCameraVelocity('z', -1);
+            m_graphics->HandleCameraInput("s");
   					break;
   				default:
   					break;

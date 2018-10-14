@@ -178,6 +178,11 @@ void Graphics::Render()
   }
 }
 
+void Graphics::HandleCameraInput(string input)
+{
+  m_camera->HandleKeyboardInput(input);
+}
+
 // bool Graphics::IsPlanetPaused()
 // {
 //   return m_planet->IsPaused();

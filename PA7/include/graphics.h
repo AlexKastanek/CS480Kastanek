@@ -22,6 +22,8 @@ class Graphics
     void Update(unsigned int dt);
     void Render();
 
+    void HandleCameraInput(string input);
+
     bool IsPlanetPaused();
     unsigned int GetPlanetSpin();
     unsigned int GetPlanetOrbit();

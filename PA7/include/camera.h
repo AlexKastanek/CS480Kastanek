@@ -25,6 +25,9 @@ class Camera
         float pitch,
         float yaw );
 
+    //handle keyboard input
+    void HandleKeyboardInput(string input);
+
     glm::mat4 GetProjection();
     glm::mat4 GetView();
     glm::vec3 GetPosition();
@@ -70,11 +73,12 @@ class Camera
     glm::vec3 m_focusVector;
 
     float m_moveSpeed;
+    float m_rotateSpeed;
     float m_focusRadius;
     float m_height;
     float m_maxHeight;
-    float m_moveAngleHrzt;
-    float m_moveAngleVert;
+    float m_pitch;
+    float m_yaw;
 
     unsigned int m_mode;
 };

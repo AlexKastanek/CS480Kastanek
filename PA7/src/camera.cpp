@@ -8,12 +8,12 @@ Camera::Camera()
   m_focusVector = m_position - m_focusPoint;
 
   m_moveSpeed = 3.0f;
+  m_rotateSpeed = 5.0f;
   m_focusRadius = 1000.0;
   m_height = 0;
   m_maxHeight = 100.0f;
-
-  m_moveAngleHrzt = -M_PI;
-  m_moveAngleVert = -M_PI/2;
+  m_pitch = 0.0f;
+  m_yaw = 0.0f;
 
   m_mode = MODE_FOCUS;
 }
@@ -153,6 +153,11 @@ void Camera::Update(unsigned int dt)
     glm::vec3 localForward = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 localUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
+    localForward.x = cos(glm::radians(m_pitch)) * cos(glm::radians(m_yaw));
+    localForward.y = sin(glm::radians(m_pitch));
+    localForward.z = cos(glm::radians(m_pitch)) * sin(glm::radians(m_yaw));
+    localForward = glm::normalize(localForward);
+
     if (m_velocity.z > 0)
     {
       //move forward
@@ -236,6 +241,90 @@ glm::mat4 Camera::CalculateFreeView(glm::vec3 eye, float pitch, float yaw)
 
   glm::mat4 freeView(x,y,z,w);
 
+}
+
+void Camera::HandleKeyboardInput(string input)
+{
+  char input_key;
+
+  if (input == "up")
+  {
+    if (m_mode == MODE_FREE)
+    {
+      //increase pitch
+      m_pitch += m_rotateSpeed;
+
+      if (m_pitch > 89.0f)
+      {
+        m_pitch = 89.0f;
+      }
+    }
+    else
+    {
+      SetVelocityY(1);
+    }
+
+    return;
+  }
+  else if (input == "down")
+  {
+    if (m_mode == MODE_FREE)
+    {
+      //decrease pitch
+      m_pitch -= m_rotateSpeed;
+
+      if (m_pitch < -89.0f)
+      {
+        m_pitch = -89.0f;
+      }
+    }
+    else
+    {
+      SetVelocityY(-1);
+    }
+
+    return;
+  }
+  else if (input == "left")
+  {
+    if (m_mode == MODE_FREE)
+    {
+      //decrease yaw
+      m_yaw -= m_rotateSpeed;
+    }
+
+    return;
+  }
+  else if (input == "right")
+  {
+    if (m_mode == MODE_FREE)
+    {
+      //increase yaw
+      m_yaw += m_rotateSpeed;
+    }
+
+    return;
+  }
+
+  input_key = input[0];
+
+  switch(input_key)
+  {
+    case 'a':
+      SetVelocityX(-1);
+      break;
+    case 'd':
+      SetVelocityX(1);
+      break;
+    case 'w':
+      SetVelocityZ(1);
+      break;
+    case 's':
+      SetVelocityZ(-1);
+      break;
+    default:
+      break;
+  }
 }
 
 glm::mat4 Camera::GetProjection()
