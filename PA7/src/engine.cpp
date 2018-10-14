@@ -116,6 +116,9 @@ void Engine::Keyboard()
           case SDLK_m:
             m_graphics->SwitchCameraMode();
             break;
+          case SDLK_f:
+            m_graphics->ChangeFocusedObject();
+            break;
   				case SDLK_d:
   					//set camera velocity left to 1
   					m_graphics->SetCameraVelocity('x', 1);

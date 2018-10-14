@@ -2,7 +2,7 @@
 
 Graphics::Graphics()
 {
-
+  m_focusedObject = 0;
 }
 
 Graphics::~Graphics()
@@ -127,7 +127,15 @@ void Graphics::Update(unsigned int dt)
   m_moon->Update(dt);*/
   UpdatePlanets(dt);
 
-  m_camera->SetFocusPoint(m_Sun->GetPosition());
+  if (m_focusedObject == 0)
+  {
+    m_camera->SetFocusPoint(m_Sun->GetPosition());
+  }
+  else
+  {
+    m_camera->SetFocusPoint(m_planet[m_focusedObject-1]->GetPosition());
+  }
+  
   m_camera->Update(dt);
 }
 
@@ -290,6 +298,18 @@ std::string Graphics::ErrorString(GLenum error)
   }
 }
 
+void Graphics::ChangeFocusedObject(void)
+{
+  if (m_focusedObject == 5)
+  {
+    m_focusedObject = 0;
+  }
+  else
+  {
+    m_focusedObject++;
+  }
+}
+
  void Graphics::CreatePlanets(string configFile)
  {
     //Source Code   
@@ -320,9 +340,9 @@ std::string Graphics::ErrorString(GLenum error)
     for(int i=0 ; i<5 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> moonDist >> moonRot >> moonOrb;
-        m_planet[i] = new Planet( ((orbDist * 50) + 1400), rotSpd*speedMod, orbSpd*speedMod, "..//assets//" + name + ".obj" );
+        m_planet[i] = new Planet( (((orbDist * 50) + 1400)*2), rotSpd*speedMod, orbSpd*speedMod, "..//assets//" + name + ".obj" );
        
-        std::cout << name << " dist: " << ((orbDist * 50) + 1400) << endl;
+        std::cout << name << " dist: " << (((orbDist * 50) + 1400)*2) << endl;
         
         for(int j=moonIndex ; j<(moonIndex + numMoons) ; j++)
         {

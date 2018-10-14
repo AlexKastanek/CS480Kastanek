@@ -41,6 +41,7 @@ class Graphics
     void SetCameraVelocity(char axis, float value);
     void SwitchCameraMode(void);
     void SetObjectFilename(string objectFilename);
+    void ChangeFocusedObject(void);
     
     void CreatePlanets(string configFile);
     void UpdatePlanets(unsigned int dt);
@@ -60,6 +61,7 @@ class Graphics
     Planet *m_planet[9];
     Moon *m_moon[100];
     Object *m_Sun;
+    int m_focusedObject;
     int moonIndex = 0;
 
     string m_objectFilename;

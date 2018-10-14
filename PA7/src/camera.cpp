@@ -7,8 +7,8 @@ Camera::Camera()
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
   m_focusVector = m_position - m_focusPoint;
 
-  m_moveSpeed = 10.0f;
-  m_focusRadius = 8.0;
+  m_moveSpeed = 3.0f;
+  m_focusRadius = 1000.0;
   m_height = 0;
   m_maxHeight = 100.0f;
 
@@ -160,6 +160,8 @@ void Camera::Update(unsigned int dt)
   }
   else if (m_mode == MODE_OVERVIEW)
   {
+
+    m_focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
     
     if (m_velocity.z < 0)
     {
@@ -174,13 +176,13 @@ void Camera::Update(unsigned int dt)
       }
     }
 
-    m_position = m_focusPoint;
+    m_position = glm::vec3(0.0f, 1000.0f, 0.0f);
     m_position.y += m_focusRadius;
     m_position.z = 1.0f;
     
   }
 
-  cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;
+  //cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;
 
   //m_position += m_velocity;
 
