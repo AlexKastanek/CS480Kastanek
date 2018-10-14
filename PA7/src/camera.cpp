@@ -150,13 +150,34 @@ void Camera::Update(unsigned int dt)
   }
   else if (m_mode == MODE_FREE)
   {
-    /*
-    glm::vec3 direction = glm::normalize(m_position - m_focusPoint);
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 right = glm::normalize(glm::cross(up, direction));
-    //glm::vec3 cameraUp = glm::cross(direction, cameraRight);
-    glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
-    */
+    glm::vec3 localForward = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 localUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    if (m_velocity.z > 0)
+    {
+      //move forward
+      m_position += m_moveSpeed * localForward;
+    }
+    else if (m_velocity.z < 0)
+    {
+      //move back
+      m_position -= m_moveSpeed * localForward;
+    }
+
+    if (m_velocity.x > 0)
+    {
+      //move right
+      m_position += glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed;
+    }
+    else if (m_velocity.x < 0)
+    {
+      //move left
+      m_position -= glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed;
+    }
+
+    m_focusPoint = m_position + localForward;
+
+
   }
   else if (m_mode == MODE_OVERVIEW)
   {
