@@ -40,7 +40,7 @@ Object::Object()
   m_orbitDirection = 0; //orbiting counter-clockwise
 }
 
-Object::Object(string filename)
+Object::Object(string filename, float scaleV)
 {
   m_renderData = new Model();
 
@@ -90,6 +90,7 @@ Object::Object(string filename)
   m_paused = 0; //not paused
   m_spinDirection = 0; //spinning counter-clockwise
   m_orbitDirection = 0; //orbiting counter-clockwise
+  m_scaleVal = scaleV;
 }
 
 Object::~Object()
@@ -104,7 +105,11 @@ void Object::Update(unsigned int dt)
   angleRotate += dt * (M_PI/5000);
   model = glm::rotate(glm::mat4(1.0), angleRotate, glm::vec3(0.0,1.0,0.0));
   
-  model = glm::scale(model, glm::vec3(.2, .2, .2));
+ model = glm::scale(
+   	  model,
+   	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
+   	);
+
   
 }
 

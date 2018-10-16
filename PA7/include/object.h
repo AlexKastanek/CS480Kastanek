@@ -22,7 +22,7 @@ class Object
 
   public:
     Object();
-    Object(string filename);
+    Object(string filename, float scaleV);
     ~Object();
     virtual void Update(unsigned int dt);
     void Render();
@@ -65,6 +65,7 @@ class Object
     bool m_paused;
     unsigned int m_spinDirection;
     unsigned int m_orbitDirection;
+    float m_scaleVal;
 };
 
 #endif /* OBJECT_H */

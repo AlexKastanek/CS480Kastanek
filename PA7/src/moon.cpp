@@ -28,7 +28,7 @@ Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed)
 	m_orbitSpeed = orbitSpeed;
 }
 
-Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name)
+Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name, float scaleV)
 {
     m_renderData = new Model();
 
@@ -48,6 +48,8 @@ Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name)
     m_orbitRadius = orbitRadius;
     m_spinSpeed = spinSpeed;
     m_orbitSpeed = orbitSpeed;
+    
+    m_scaleVal = scaleV;
 }
 
 Moon::~Moon()
@@ -105,7 +107,7 @@ void Moon::Update(unsigned int dt)
 
     scale = glm::scale(
    	  glm::mat4(1.0f),
-   	  glm::vec3(0.27f, 0.27f, 0.27f)
+   	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
    	);
 
     //model = glm::translate(*m_parent, glm::vec3(radius * sin(angleTranslate), 0.0f, radius * cos(angleTranslate)));

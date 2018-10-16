@@ -3,6 +3,7 @@
 Graphics::Graphics()
 {
   m_focusedObject = 0;
+  moonIndex = 0;
 }
 
 Graphics::~Graphics()
@@ -305,7 +306,7 @@ std::string Graphics::ErrorString(GLenum error)
 
 void Graphics::ChangeFocusedObject(void)
 {
-  if (m_focusedObject == 5)
+  if (m_focusedObject == 9)
   {
     m_focusedObject = 0;
   }
@@ -332,31 +333,38 @@ void Graphics::ChangeFocusedObject(void)
         std::cerr << "ERROR OPENING CONFIG FILE" << std::endl;
     
     string name;
-    float rotSpd, orbSpd, orbDist, moonRot, moonOrb;
-    int numMoons, moonDist;
-    int moonMod = 0;
+    float rotSpd, orbSpd, orbDist, moonRot, moonOrb, moonDist, planetScale, sunScale;
+    int numMoons, moonMod;
     
-    int speedMod = 10;
+    float speedMod = 5;
     
     //create sun
-    fin >> name;
-    m_Sun = new Object("..//assets//" + name + ".obj");
+    fin >> name >> sunScale;
+    m_Sun = new Object("..//assets//" + name + ".obj", sunScale);
+    std::cout << std::endl;
     
-    for(int i=0 ; i<5 ; i++)
+    for(int i=0 ; i<9 ; i++)
     {
-        fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> moonDist >> moonRot >> moonOrb;
-        m_planet[i] = new Planet( (((orbDist * 50) + 1400)*2), rotSpd*speedMod, orbSpd*speedMod, "..//assets//" + name + ".obj" );
-       
-        std::cout << name << " dist: " << (((orbDist * 50) + 1400)*2) << endl;
-        
-        for(int j=moonIndex ; j<(moonIndex + numMoons) ; j++)
+        fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
+        m_planet[i] = new Planet((sunScale * orbDist * 35), rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale);
+        std::cout << name << "'s Distance from the Sun: About " << orbDist * 35 * 2 << " million miles" << std::endl;
+        std::cout << "One day on " << name << " is about " << rotSpd << " days on Earth" << std::endl;
+        std::cout << "One year for Earth is about " << orbSpd << " years for " << name << std::endl << std::endl;
+        moonMod = 0;
+    
+        for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
         {
-            m_moon[j] = new Moon(moonDist + (10*moonMod++), moonRot*speedMod , moonOrb*speedMod, "..//assets//Moon.obj");
+            m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod + (moonMod), .037 * speedMod + (moonMod), "..//assets//Moon.obj", .27);
+            std::cout << "Building Moon " << moonMod + 1 << " for " << name << " at index " << j << std::endl << std::endl; 
+            
             m_planet[i]->AddChild(m_moon[j]);
             m_moon[j]->SetParent(m_planet[i]);
+            
+            moonMod++;
         }
-        moonIndex += numMoons;
-        moonMod = 0;
+        
+        if(numMoons > 0)
+            moonIndex += numMoons;
     }
     
     
@@ -367,25 +375,29 @@ void Graphics::ChangeFocusedObject(void)
  {
      m_Sun->Update(dt);
      
-     for(int i=0 ; i<5 ; i++)
+     for(int i=0 ; i<9 ; i++)
         m_planet[i]->Update(dt);
      
-     m_moon[0]->Update(dt);
+     for(int i=0 ; i<moonIndex ; i++)
+         m_moon[i]->Update(dt);
+     
  }
  
  void Graphics::RenderPlanets()
  {
-    //std::cout << "HERE" << std::endl;
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_Sun->GetModel()));
     m_Sun->Render();
 
-    for(int i=0 ; i<5 ; i++)
+    for(int i=0 ; i<9 ; i++)
     {
         glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_planet[i]->GetModel()));
         m_planet[i]->Render();
     }
     
-    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[0]->GetModel()));
-    m_moon[0]->Render();
+     for(int i=0 ; i<moonIndex ; i++)
+     {
+        glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[i]->GetModel()));
+        m_moon[i]->Render();
+     }
 
  }

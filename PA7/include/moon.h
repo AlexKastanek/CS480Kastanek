@@ -14,7 +14,7 @@ public:
 	Moon(float orbitRadius);
 	Moon(float spinSpeed, float orbitSpeed);
 	Moon(float orbitRadius, float spinSpeed, float orbitSpeed);
-    Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name);
+    Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name, float scaleV);
 	~Moon();
 
 	void Update(unsigned int dt);

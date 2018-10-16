@@ -30,7 +30,7 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed)
 	m_orbitSpeed = orbitSpeed;
 }
 
-Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name)
+Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name, float scaleV)
 {
     m_renderData = new Model();
 
@@ -85,6 +85,8 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name
     m_orbitRadius = orbitRadius;
     m_spinSpeed = spinSpeed;
     m_orbitSpeed = orbitSpeed;
+    
+    m_scaleVal = scaleV;
 }
 
 Planet::~Planet()
@@ -144,6 +146,11 @@ void Planet::Update(unsigned int dt)
       angleRotate,
       glm::vec3(0.0, 1.0, 0.0)
     );
+    
+    scale = glm::scale(
+   	  glm::mat4(1.0f),
+   	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
+   	);
 
     //model = glm::translate(*m_parent, glm::vec3(radius * sin(angleTranslate), 0.0f, radius * cos(angleTranslate)));
     //model *= glm::rotate(glm::mat4(1.0f), (angleRotate), glm::vec3(0.0, 1.0, 0.0));

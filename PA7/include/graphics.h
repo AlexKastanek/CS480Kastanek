@@ -64,7 +64,7 @@ class Graphics
     Moon *m_moon[100];
     Object *m_Sun;
     int m_focusedObject;
-    int moonIndex = 0;
+    int moonIndex;
 
     string m_objectFilename;
 };
