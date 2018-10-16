@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include <stdlib.h>
 
 Graphics::Graphics()
 {
@@ -354,7 +355,10 @@ void Graphics::ChangeFocusedObject(void)
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
         {
-            m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod + (moonMod), .037 * speedMod + (moonMod), "..//assets//Moon.obj", .27);
+            if(moonMod > 0)
+                m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod + (rand() % 10), .037 * speedMod + (rand() % 10), "..//assets//Moon.obj", .27);
+            else
+                m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod, .037 * speedMod, "..//assets//Moon.obj", .27);
             std::cout << "Building Moon " << moonMod + 1 << " for " << name << " at index " << j << std::endl << std::endl; 
             
             m_planet[i]->AddChild(m_moon[j]);
