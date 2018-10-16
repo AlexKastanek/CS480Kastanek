@@ -187,6 +187,8 @@ bool Model::LoadObject(string in_filename)
         out_indices.clear();
         out_vertices.clear();
     }
+
+    return true;
 }
 
 void Model::BindTexture(int index)

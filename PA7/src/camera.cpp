@@ -7,7 +7,7 @@ Camera::Camera()
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
   m_focusVector = m_position - m_focusPoint;
 
-  m_moveSpeed = 30.0f;
+  m_moveSpeed = 1.0f;
   m_rotateSpeed = 5.0f;
   m_focusRadius = 1000.0;
   m_height = 0;
@@ -36,7 +36,7 @@ bool Camera::Initialize(int w, int h)
   projection = glm::perspective( 45.0f, //the FoV typically 90 degrees is good which is what this is set to
                                  float(w)/float(h), //Aspect Ratio, so Circles stay Circular
                                  0.01f, //Distance to the near plane, normally a small value like this
-                                 10000.0f); //Distance to the far plane, 
+                                 100000.0f); //Distance to the far plane, 
   return true;
 }
 
