@@ -338,16 +338,18 @@ void Graphics::ChangeFocusedObject(void)
     int numMoons, moonMod;
     
     float speedMod = 5;
+
+    float scaleDown = 10;
     
     //create sun
     fin >> name >> sunScale;
-    m_Sun = new Object("..//assets//" + name + ".obj", sunScale);
+    m_Sun = new Object("..//assets//" + name + ".obj", sunScale/scaleDown);
     std::cout << std::endl;
     
     for(int i=0 ; i<9 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
-        m_planet[i] = new Planet((sunScale * orbDist * 35), rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale);
+        m_planet[i] = new Planet((sunScale * orbDist * 35)/scaleDown, (rotSpd * speedMod)/scaleDown, (orbSpd * speedMod)/scaleDown, "..//assets//" + name + ".obj", planetScale/scaleDown);
         std::cout << name << "'s Distance from the Sun: About " << orbDist * 35 * 2 << " million miles" << std::endl;
         std::cout << "One day on " << name << " is about " << rotSpd << " days on Earth" << std::endl;
         std::cout << "One year for Earth is about " << orbSpd << " years for " << name << std::endl << std::endl;
