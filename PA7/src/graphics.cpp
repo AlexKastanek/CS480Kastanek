@@ -338,19 +338,20 @@ void Graphics::ChangeFocusedObject(void)
     int numMoons, moonMod;
     
     float speedMod = 5;
+    float scaleMod = .05;
     
     //create sun
     fin >> name >> sunScale;
-    m_Sun = new Object("..//assets//" + name + ".obj", sunScale);
+    m_Sun = new Object("..//assets//" + name + ".obj", sunScale * scaleMod);
     std::cout << std::endl;
     
     for(int i=0 ; i<9 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
-        m_planet[i] = new Planet((sunScale * orbDist * 35), rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale);
-        std::cout << name << "'s Distance from the Sun: About " << orbDist * 35 * 2 << " million miles" << std::endl;
-        std::cout << "One day on " << name << " is about " << rotSpd << " days on Earth" << std::endl;
-        std::cout << "One year for Earth is about " << orbSpd << " years for " << name << std::endl << std::endl;
+        m_planet[i] = new Planet((orbDist * sunScale * 25) * scaleMod , rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale * scaleMod);
+//         std::cout << name << "'s Distance from the Sun: About " << orbDist * 35 * 2 << " million miles" << std::endl;
+//         std::cout << "One day on " << name << " is about " << rotSpd << " days on Earth" << std::endl;
+//         std::cout << "One year for Earth is about " << orbSpd << " years for " << name << std::endl << std::endl;
         moonMod = 0;
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
@@ -382,8 +383,8 @@ void Graphics::ChangeFocusedObject(void)
      for(int i=0 ; i<9 ; i++)
         m_planet[i]->Update(dt);
      
-     for(int i=0 ; i<moonIndex ; i++)
-         m_moon[i]->Update(dt);
+//      for(int i=0 ; i<moonIndex ; i++)
+//          m_moon[i]->Update(dt);
      
  }
  
@@ -398,10 +399,10 @@ void Graphics::ChangeFocusedObject(void)
         m_planet[i]->Render();
     }
     
-     for(int i=0 ; i<moonIndex ; i++)
-     {
-        glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[i]->GetModel()));
-        m_moon[i]->Render();
-     }
+//      for(int i=0 ; i<moonIndex ; i++)
+//      {
+//         glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[i]->GetModel()));
+//         m_moon[i]->Render();
+//      }
 
  }
