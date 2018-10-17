@@ -6,7 +6,7 @@ Graphics::Graphics()
   m_focusedObject = 0;
   moonIndex = 0;
 
-  m_cameraSpeedFactor = 100;
+  m_cameraSpeedFactor = 1;
   m_cameraDistanceOffset = 0.03;
   m_cameraDistanceFactor = 4;
   m_minCameraDistanceOffset = 0.05;
@@ -157,13 +157,13 @@ void Graphics::Update(unsigned int dt)
   }
   else if (m_camera->GetMode() == MODE_OVERVIEW)
   {
-    m_camera->SetMoveSpeed(0.1f);
+    m_camera->SetMoveSpeed(5.0f);
     m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
     m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
   }
   else
   {
-    m_camera->SetMoveSpeed(0.1f);
+    m_camera->SetMoveSpeed(5.0f);
   }
   
   m_camera->Update(dt);
@@ -369,7 +369,7 @@ void Graphics::ChangeFocusedObject(void)
         std::cerr << "ERROR OPENING CONFIG FILE" << std::endl;
     
     string name;
-    float rotSpd, orbSpd, orbDist, moonRot, moonOrb, moonDist, planetScale, sunScale, moonScale;
+    float rotSpd, orbSpd, orbDist, moonRot, moonOrb, moonDist, planetScale, sunScale, moonScale, starScale;
     string moonName;
     int numMoons, moonMod;
     
@@ -379,6 +379,11 @@ void Graphics::ChangeFocusedObject(void)
     //create sun
     fin >> name >> sunScale;
     m_Sun = new Object("..//assets//" + name + ".obj", sunScale * scaleMod);
+    std::cout << std::endl;
+
+    //create stars
+    fin >> name >> starScale;
+    m_Star = new Object("..//assets//" + name + ".obj", starScale * scaleMod);
     std::cout << std::endl;
     
     //create each planet
@@ -426,7 +431,7 @@ void Graphics::ChangeFocusedObject(void)
  void Graphics::UpdatePlanets(unsigned int dt)
  {
      m_Sun->Update(dt);
-     
+     m_Star->Update(dt);
      for(int i=0 ; i<9 ; i++)
         m_planet[i]->Update(dt);
      
@@ -441,6 +446,9 @@ void Graphics::ChangeFocusedObject(void)
  {
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_Sun->GetModel()));
     m_Sun->Render();
+
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_Star->GetModel()));
+    m_Star->Render();
 
     for(int i=0 ; i<9 ; i++)
     {

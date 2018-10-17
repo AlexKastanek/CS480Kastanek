@@ -61,6 +61,7 @@ class Graphics
 
     //Object *m_object;
     Object *m_Sun;
+    Object *m_Star;
     Planet *m_planet[9];
     Moon *m_moon[100];
     Moon *m_SatRing;
