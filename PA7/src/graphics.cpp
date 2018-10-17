@@ -334,11 +334,12 @@ void Graphics::ChangeFocusedObject(void)
         std::cerr << "ERROR OPENING CONFIG FILE" << std::endl;
     
     string name;
-    float rotSpd, orbSpd, orbDist, moonRot, moonOrb, moonDist, planetScale, sunScale;
+    float rotSpd, orbSpd, orbDist, moonRot, moonOrb, moonDist, planetScale, sunScale, moonScale;
+    string moonName;
     int numMoons, moonMod;
     
-    float speedMod = 5;
-    float scaleMod = .05;
+    float speedMod = 1;
+    float scaleMod = .1;
     
     //create sun
     fin >> name >> sunScale;
@@ -361,11 +362,16 @@ void Graphics::ChangeFocusedObject(void)
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
         {
-            if(moonMod > 0)
+            fin >> moonName >> moonScale >> moonRot >> moonOrb >> moonDist;
+            m_moon[j] = new Moon((planetScale * scaleMod * moonDist), moonRot * speedMod, moonOrb * speedMod, "..//assets//Moon.obj", planetScale * scaleMod * moonScale);
+            
+            //code for random moons
+            /*if(moonMod > 0)
                 m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1);
             else
-                m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod);
-            //std::cout << "Building Moon " << moonMod + 1 << " for " << name << " at index " << j << std::endl << std::endl; 
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod);*/
+            
+            
             
             m_planet[i]->AddChild(m_moon[j]);
             m_moon[j]->SetParent(m_planet[i]);
