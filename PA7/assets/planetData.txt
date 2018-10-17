@@ -1,8 +1,8 @@
-Sun 100
+Sun 80
 
-Mercury 0 0.5 .02 4.14 .38
+Mercury 0 0.8 .02 4.14 .38
 
-Venus 0 1.2 .01 1.6 .815
+Venus 0 1.5 .01 1.6 .815
 
 Earth 1 2.6 1 1 1
 
@@ -19,4 +19,5 @@ Neptune 14 79.8 1.5 .006 3.9
 Pluto 5 104 .156 .004 .189
 
 FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
-Sun FORMAT scale(to earth)
+Sun FORMAT: scale(to earth)
+
