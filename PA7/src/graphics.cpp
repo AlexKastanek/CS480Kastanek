@@ -349,27 +349,32 @@ void Graphics::ChangeFocusedObject(void)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
         m_planet[i] = new Planet((orbDist * sunScale * 25) * scaleMod , rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale * scaleMod);
-//         std::cout << name << "'s Distance from the Sun: About " << orbDist * 35 * 2 << " million miles" << std::endl;
-//         std::cout << "One day on " << name << " is about " << rotSpd << " days on Earth" << std::endl;
-//         std::cout << "One year for Earth is about " << orbSpd << " years for " << name << std::endl << std::endl;
+
+        if(name == "Saturn")
+        {
+            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRings.obj", planetScale * scaleMod * 2);
+            m_planet[i]->AddChild(m_SatRing);
+            m_SatRing->SetParent(m_planet[i]);
+        }
+        
         moonMod = 0;
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
         {
             if(moonMod > 0)
-                m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod + (rand() % 10), .037 * speedMod + (rand() % 10), "..//assets//Moon.obj", .27);
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1);
             else
-                m_moon[j] = new Moon((planetScale * 60) + (moonMod * 30), .033 * speedMod, .037 * speedMod, "..//assets//Moon.obj", .27);
-            std::cout << "Building Moon " << moonMod + 1 << " for " << name << " at index " << j << std::endl << std::endl; 
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod);
+            //std::cout << "Building Moon " << moonMod + 1 << " for " << name << " at index " << j << std::endl << std::endl; 
             
             m_planet[i]->AddChild(m_moon[j]);
             m_moon[j]->SetParent(m_planet[i]);
             
             moonMod++;
         }
-        
         if(numMoons > 0)
             moonIndex += numMoons;
+        
     }
     
     
@@ -383,8 +388,10 @@ void Graphics::ChangeFocusedObject(void)
      for(int i=0 ; i<9 ; i++)
         m_planet[i]->Update(dt);
      
-//      for(int i=0 ; i<moonIndex ; i++)
-//          m_moon[i]->Update(dt);
+     for(int i=0 ; i<moonIndex ; i++)
+         m_moon[i]->Update(dt);
+     
+     m_SatRing -> Update(dt);
      
  }
  
@@ -399,10 +406,13 @@ void Graphics::ChangeFocusedObject(void)
         m_planet[i]->Render();
     }
     
-//      for(int i=0 ; i<moonIndex ; i++)
-//      {
-//         glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[i]->GetModel()));
-//         m_moon[i]->Render();
-//      }
+     for(int i=0 ; i<moonIndex ; i++)
+     {
+        glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_moon[i]->GetModel()));
+        m_moon[i]->Render();
+     }
+     
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_SatRing->GetModel()));
+    m_SatRing->Render();
 
  }

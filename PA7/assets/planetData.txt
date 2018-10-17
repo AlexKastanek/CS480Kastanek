@@ -19,4 +19,5 @@ Neptune 14 79.8 1.5 .006 3.9
 Pluto 5 104 .156 .004 .189
 
 FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
-Sun FORMAT scale(to earth)
+Sun FORMAT: scale(to earth)
+

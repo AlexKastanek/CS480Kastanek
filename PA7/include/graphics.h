@@ -63,7 +63,10 @@ class Graphics
     Planet *m_planet[9];
     Moon *m_moon[100];
     Object *m_Sun;
+    Moon *m_SatRing;
+    
     int m_focusedObject;
+    
     int moonIndex;
 
     string m_objectFilename;

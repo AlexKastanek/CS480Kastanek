@@ -7,7 +7,7 @@ Camera::Camera()
   m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
   m_focusVector = m_position - m_focusPoint;
 
-  m_moveSpeed = 5.0f;
+  m_moveSpeed = 2.0f;
   m_rotateSpeed = 5.0f;
   m_focusRadius = 1000.0;
   m_height = 0;
