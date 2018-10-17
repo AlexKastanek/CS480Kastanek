@@ -100,10 +100,7 @@ void Camera::Update(unsigned int dt)
     m_position.y += m_height;
     m_position.z -= m_focusRadius;
 
-    //m_focusVector = m_focusPoint - m_position;
-
     /*
-
     if (m_velocity.x < 0)
     {
       //moving left
@@ -111,8 +108,6 @@ void Camera::Update(unsigned int dt)
       m_position.x = xzRadius * sin(m_moveAngleHrzt) + m_focusPoint.x;
       m_position.z = xzRadius * cos(m_moveAngleHrzt) + m_focusPoint.z;
       //cout << m_moveAngleHrzt << endl;
-
-      //cout << "(X:" << m_position.x << ",Z: " << m_position.z << ")" << endl;
     }
     else if (m_velocity.x > 0)
     {
@@ -121,41 +116,6 @@ void Camera::Update(unsigned int dt)
       m_position.x = xzRadius * sin(m_moveAngleHrzt) + m_focusPoint.x;
       m_position.z = xzRadius * cos(m_moveAngleHrzt) + m_focusPoint.z;
       //cout << m_moveAngleHrzt << endl;
-
-      //cout << "(X:" << m_position.x << ",Z: " << m_position.z << ")" << endl;
-    }
-
-    if (m_velocity.y < 0)
-    {
-      //moving down
-      if (m_position.y > m_maxHeight * -1)
-      {
-        m_position.y += m_velocity.y;
-      }
-    }
-    else if (m_velocity.y > 0)
-    {
-      //moving up
-      if (m_position.y < m_maxHeight)
-      {
-        m_position.y += m_velocity.y;
-      }
-    }
-    
-    //if moving forward/backward:
-    //create a vector pointing from camera position to origin position
-    //move along this vector
-    if (m_velocity.z < 0)
-    {
-      m_position += glm::normalize(m_position - m_focusPoint) * m_moveSpeed;
-    }
-    else if (m_velocity.z > 0)
-    {
-      //only move if far enough away
-      if (radius > 2)
-      {
-        m_position -= glm::normalize(m_position - m_focusPoint) * m_moveSpeed;
-      }
     }
     */
     
@@ -227,9 +187,6 @@ void Camera::Update(unsigned int dt)
   }
 
   //cout << "(X: " << m_position.x << ", Y:" << m_position.y << ", Z: " << m_position.z << ")" << endl;
-
-  //m_position += m_velocity;
-
   
   view = glm::lookAt( m_position,                 //Eye Position
                       m_focusPoint,               //Focus point
