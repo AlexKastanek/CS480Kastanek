@@ -65,7 +65,7 @@ class Graphics
     Planet *m_planet[9];
     Moon *m_moon[500];
     Moon *m_SatRing;
-
+    Moon *m_UranRing;
     //Planet *m_focusedObject;
     int m_focusedObject;
 
