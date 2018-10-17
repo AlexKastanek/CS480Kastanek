@@ -408,7 +408,7 @@ void Graphics::ChangeFocusedObject(void)
             
             //code for random moons
             if(moonMod > 0)
-                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1 * planetScale * .5);
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 5) * .1 * planetScale);
             else
                 m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod * planetScale * .75);
             
