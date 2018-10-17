@@ -93,9 +93,9 @@ W - Zoom in
 S - Zoom out  
 
 ## Extra Credit
-This program implements the extra credit portion of the assignment:
+This program implements the extra credit portion of the assignment:  
 -This program uses a config file called "planetData.txt" located in the assets folder to determine scales for the planets  
 
-Other items that could be considered for extra credit:
--Advanced camera controls
--Correct amount of satellites for each planet
+Other items that could be considered for extra credit:  
+-Advanced camera controls  
+-Correct amount of satellites for each planet  
