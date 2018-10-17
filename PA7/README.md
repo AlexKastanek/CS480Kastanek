@@ -52,7 +52,7 @@ After building the project, the executable can be ran. This program requires a c
 #### Format of planetData.txt
 all items in the config file must be formatted specifically for the program to run. 
 
-The first line must read: Sun <scale of sun copared to earth>
+The first line must read: Sun {scale of sun copared to earth}
 
 The next 9 lines must be formatted as such: 
 Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
