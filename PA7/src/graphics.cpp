@@ -394,11 +394,17 @@ void Graphics::ChangeFocusedObject(void)
 
         if(name == "Saturn")
         {
-            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRings.obj", planetScale * scaleMod * 2);
+            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 2);
             m_planet[i]->AddChild(m_SatRing);
             m_SatRing->SetParent(m_planet[i]);
         }
-        
+
+        if(name == "Uranus")
+        {
+            m_UranRing = new Moon(0, .033 * speedMod, 0, "..//assets//UranusRing.obj", planetScale * scaleMod * 2);
+            m_planet[i]->AddChild(m_UranRing);
+            m_UranRing->SetParent(m_planet[i]);
+        }
         moonMod = 0;
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
@@ -439,7 +445,7 @@ void Graphics::ChangeFocusedObject(void)
          m_moon[i]->Update(dt);
      
      m_SatRing -> Update(dt);
-     
+     m_UranRing -> Update(dt);
  }
  
  void Graphics::RenderPlanets()
@@ -465,4 +471,6 @@ void Graphics::ChangeFocusedObject(void)
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_SatRing->GetModel()));
     m_SatRing->Render();
 
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_UranRing->GetModel()));
+    m_UranRing->Render();
  }
