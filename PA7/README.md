@@ -43,31 +43,38 @@ mkdir build
 cd build
 cmake ..
 make
-./Tutorial objectfilename.obj
-```
-
-### Makefile Instructions 
-The makefile works as expected and must be updated with new files added in.
-
-```bash
-mkdir build
-cd build
-cp ../makefile .
-make
-./Tutorial objectfilename.obj
+./SolarSystem
 ```
 
 ### Run Instructions
-After building the project, the executable can be ran. The program requires a single command-line argument that is the name of the .obj it needs to load. The program will not accept no command-line arguments or more than one command-line argument. The location of this .obj file must be placed in the PA5/assets directory along with .mtl files and image files associated with the .obj file. For this project to load, it is required that .mtl files and image files are used and place in this directory. For example, if you want to load an object called "dragon.obj" and a material file associated with that file called "dragon.mtl" which depends on an image file "dragon.jpg", you would place all of these files in the PA5/assets directory. Then, you would run the program using the command "./Tutorial dragon.obj" in the build directory you created. 
+After building the project, the executable can be ran. This program requires a config file to run. The file must be placed in PA7/assets and must be named "planetData.txt"
+
+#### Format of planetData.txt
+all items in the config file must be formatted specifically for the program to run. 
+
+The first line must read: Sun <scale of sun copared to earth>
+
+The next 9 lines must be formatted as such: 
+Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
+
+These formatting rules are also described within "planetData.txt" included with the program
 
 ## Ubuntu.cse.unr.edu
 OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) website. To do so follow the build instructions, but when running the Tutorial executable use this line to execute.
 ```bash
-/usr/NX/scripts/vgl/vglrun ./Tutorial objectfilename.obj
+/usr/NX/scripts/vgl/vglrun ./SolarSystem
 ```
 
 ## Keyboard/Mouse Input Guide
 ESC - must be pressed to close the window (or right-click on the task bar and select close).
+W- Zoom in on current focus point
+S- Zoom out from current focus point
+UpArrow - tilt camera up
+DownArrow - tilt camera down
+F- focus on a planet (only visible in Normal Mode)
+M- toggle camera mode (1. Normal mode, 2. Free Mode, 3. Top-Down Mode)
+
 
 ## Extra Credit
-This program implements the extra credit portion of the assignment. Please see "Run Instructions" on how to use the .mtl file associated with the .obj file.
+This program implements the extra credit portion of the assignment:
+-This program uses a config file called "planetData.txt" located in the assets folder to determine scales for the planets
