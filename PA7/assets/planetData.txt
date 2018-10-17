@@ -5,36 +5,19 @@ Mercury 0 0.8 .02 4.14 .38
 Venus 0 1.5 .01 1.6 .815
 
 Earth 1 2.6 1 1 1
-Moon .27 .33 9.86 238
 
 Mars 2 3.5 1 .53 .533
-Deimos .01 2 28 23
-Phobos .02 2 28 5.8
 
-Jupiter 3 13.8 2.7 .08 11
-Io .025 0 20.6 32.1
-Europa .042 0 10.4 41.4
-Ganymede .072 0 5.1 66.5
+Jupiter 4 13.8 2.7 .08 11
 
 Saturn 2 25.45 2.4 .03 9.5
-Titan .044 0 22.8 75.9
-Enceladus .01 1.37 26.5 43.8
 
-Uranus 3 51 1.4 .012 4
-Umbria .025 0 20.6 32.1
-Titania .042 0 10.4 41.4
-Miranda .072 0 5.1 66.5
+Uranus 27 51 1.4 .012 4
 
-Neptune 2 79.8 1.5 .006 3.9
-Triton .044 0 22.8 75.9
-Proteus .01 1.37 26.5 43.8
+Neptune 14 79.8 1.5 .006 3.9
 
-Pluto 3 104 .156 .004 .189
-Stix .025 0 20.6 32.1
-Nyx .072 0 5.1 66.5
-Charon .5 0 10.4 100.4
+Pluto 5 104 .156 .004 .189
 
 FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
 Sun FORMAT: scale(to earth)
-Moon FORMAT: scale(compared to their planet) rotSpd(in days) orbSpd(in years) orbDist
 

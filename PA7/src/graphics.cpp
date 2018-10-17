@@ -398,14 +398,14 @@ void Graphics::ChangeFocusedObject(void)
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
         {
-            fin >> moonName >> moonScale >> moonRot >> moonOrb >> moonDist;
-            m_moon[j] = new Moon((planetScale * scaleMod * moonDist), moonRot * speedMod, moonOrb * speedMod, "..//assets//Moon.obj", planetScale * scaleMod * moonScale);
+            //fin >> moonName >> moonScale >> moonRot >> moonOrb >> moonDist;
+            //m_moon[j] = new Moon((planetScale * scaleMod * moonDist), moonRot * speedMod, moonOrb * speedMod, "..//assets//Moon.obj", planetScale * scaleMod * moonScale);
             
             //code for random moons
-            /*if(moonMod > 0)
-                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1);
+            if(moonMod > 0)
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1 * planetScale * .5);
             else
-                m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod);*/
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod * planetScale * .75);
             
             
             
