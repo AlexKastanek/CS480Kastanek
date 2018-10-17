@@ -5,6 +5,13 @@ Graphics::Graphics()
 {
   m_focusedObject = 0;
   moonIndex = 0;
+
+  m_cameraSpeedFactor = 100;
+  m_cameraDistanceOffset = 0.03;
+  m_cameraDistanceFactor = 4;
+  m_minCameraDistanceOffset = 0.05;
+  m_minCameraDistanceFactor = 4;
+  m_cameraHeightFactor = 20;
 }
 
 Graphics::~Graphics()
@@ -129,13 +136,34 @@ void Graphics::Update(unsigned int dt)
   m_moon->Update(dt);*/
   UpdatePlanets(dt);
 
-  if (m_focusedObject == 0)
+  if (m_camera->GetMode() == MODE_FOCUS)
   {
-    m_camera->SetFocusPoint(m_Sun->GetPosition());
+    if (m_focusedObject == 0)
+    {
+      m_camera->SetFocusPoint(m_Sun->GetPosition());
+      m_camera->SetMoveSpeed(m_Sun->GetScaleVal() / m_cameraSpeedFactor);
+      m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
+      m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetMaxHeight(m_Sun->GetScaleVal() * m_cameraHeightFactor);
+    }
+    else
+    {
+      m_camera->SetFocusPoint(m_planet[m_focusedObject-1]->GetPosition());
+      m_camera->SetMoveSpeed(m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraSpeedFactor);
+      m_camera->SetDefaultFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraDistanceOffset));
+      m_camera->SetMinFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetMaxHeight(m_planet[m_focusedObject-1]->GetScaleVal() * m_cameraHeightFactor);
+    }
+  }
+  else if (m_camera->GetMode() == MODE_OVERVIEW)
+  {
+    m_camera->SetMoveSpeed(0.1f);
+    m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
+    m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
   }
   else
   {
-    m_camera->SetFocusPoint(m_planet[m_focusedObject-1]->GetPosition());
+    m_camera->SetMoveSpeed(0.1f);
   }
   
   m_camera->Update(dt);
@@ -261,10 +289,14 @@ void Graphics::SwitchCameraMode(void)
   else if (m_camera->GetMode() == MODE_FREE)
   {
     m_camera->SetMode(MODE_OVERVIEW);
+    m_camera->SetFocusChanged(true);
+    m_focusedObject = 0; //camera focused on sun
   }
   else if (m_camera->GetMode() == MODE_OVERVIEW)
   {
     m_camera->SetMode(MODE_FOCUS);
+    m_camera->SetFocusChanged(true);
+    m_focusedObject = 0; //camera focused on sun
   }
 }
 
@@ -310,11 +342,14 @@ void Graphics::ChangeFocusedObject(void)
   if (m_focusedObject == 9)
   {
     m_focusedObject = 0;
+    //m_focusedObject = m_Sun;
   }
   else
   {
     m_focusedObject++;
+    //m_focusedObject = m_planet[m_focusedObject];
   }
+  m_camera->SetFocusChanged(true);
 }
 
  void Graphics::CreatePlanets(string configFile)
@@ -345,6 +380,7 @@ void Graphics::ChangeFocusedObject(void)
     m_Sun = new Object("..//assets//" + name + ".obj", sunScale * scaleMod);
     std::cout << std::endl;
     
+    //create each planet
     for(int i=0 ; i<9 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;

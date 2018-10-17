@@ -40,6 +40,7 @@ class Object
     bool IsPaused();
     unsigned int GetSpinDirection();
     unsigned int GetOrbitDirection();
+    float GetScaleVal();
 
     void SetPaused(bool paused);
     void SetSpinDirection(unsigned int spin);

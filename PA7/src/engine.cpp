@@ -130,13 +130,9 @@ void Engine::Keyboard()
             m_graphics->HandleCameraInput("a");
   					break;
           case SDLK_UP:
-            //set camera velocity upwards to 1
-            //m_graphics->SetCameraVelocity('y', 1);
             m_graphics->HandleCameraInput("up");
             break;
           case SDLK_DOWN:
-            //set camera velocity downwards to 1
-            //m_graphics->SetCameraVelocity('y', -1);
             m_graphics->HandleCameraInput("down");
             break;
           case SDLK_LEFT:

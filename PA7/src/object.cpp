@@ -184,6 +184,11 @@ unsigned int Object::GetOrbitDirection()
   return m_orbitDirection;
 }
 
+float Object::GetScaleVal()
+{
+  return m_scaleVal;
+}
+
 void Object::SetParent(Object* parent)
 {
   m_parent = parent;

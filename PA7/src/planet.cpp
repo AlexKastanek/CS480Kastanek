@@ -85,7 +85,6 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name
     m_orbitRadius = orbitRadius;
     m_spinSpeed = spinSpeed;
     m_orbitSpeed = orbitSpeed;
-    
     m_scaleVal = scaleV;
 }
 

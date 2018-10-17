@@ -60,12 +60,20 @@ class Graphics
     GLint m_modelMatrix;
 
     //Object *m_object;
+    Object *m_Sun;
     Planet *m_planet[9];
     Moon *m_moon[100];
-    Object *m_Sun;
     Moon *m_SatRing;
-    
+
+    //Planet *m_focusedObject;
     int m_focusedObject;
+
+    float m_cameraSpeedFactor;
+    float m_cameraDistanceOffset;
+    float m_cameraDistanceFactor;
+    float m_minCameraDistanceOffset;
+    float m_minCameraDistanceFactor;
+    float m_cameraHeightFactor;
     
     int moonIndex;
 

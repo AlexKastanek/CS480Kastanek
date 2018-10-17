@@ -16,6 +16,8 @@ Camera::Camera()
   m_yaw = 0.0f;
 
   m_mode = MODE_FOCUS;
+
+  m_focusChanged = true;
 }
 
 Camera::~Camera()
@@ -44,6 +46,9 @@ void Camera::Update(unsigned int dt)
 {
   //cout << m_mode << endl;
 
+  //cout << m_moveSpeed << endl;
+  //cout << m_defaultFocusRadius << endl;
+
   if (m_mode == MODE_FOCUS)
   {
 
@@ -53,6 +58,13 @@ void Camera::Update(unsigned int dt)
     //                              glm::vec2(m_focusPoint.x, m_focusPoint.z));
 
     //cout << radius << endl;
+
+    if (m_focusChanged)
+    {
+      m_focusRadius = m_defaultFocusRadius;
+      m_height = 0;
+      m_focusChanged = false;
+    }
 
     if (m_velocity.y < 0)
     {
@@ -78,7 +90,7 @@ void Camera::Update(unsigned int dt)
     else if (m_velocity.z > 0)
     {
       //only move if far enough away
-      if (m_focusRadius > 2)
+      if (m_focusRadius > m_minFocusRadius)
       {
         m_focusRadius -= m_velocity.z;
       }
@@ -187,6 +199,12 @@ void Camera::Update(unsigned int dt)
   else if (m_mode == MODE_OVERVIEW)
   {
 
+    if (m_focusChanged)
+    {
+      m_focusRadius = m_defaultFocusRadius;
+      m_focusChanged = false;
+    }
+
     m_focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
     
     if (m_velocity.z < 0)
@@ -196,13 +214,13 @@ void Camera::Update(unsigned int dt)
     else if (m_velocity.z > 0)
     {
       //only move if far enough away
-      if (m_focusRadius > 2)
+      if (m_focusRadius > m_minFocusRadius)
       {
         m_focusRadius -= m_velocity.z;
       }
     }
 
-    m_position = glm::vec3(0.0f, 1000.0f, 0.0f);
+    m_position = glm::vec3(0.0f, 0.0f, 0.0f);
     m_position.y += m_focusRadius;
     m_position.z = 1.0f;
     
@@ -422,9 +440,34 @@ void Camera::SetMoveSpeed(float moveSpeed)
   m_moveSpeed = moveSpeed;
 }
 
+void Camera::SetFocusRadius(float focusRadius)
+{
+  m_focusRadius = focusRadius;
+}
+
+void Camera::SetDefaultFocusRadius(float defaultFocusRadius)
+{
+  m_defaultFocusRadius = defaultFocusRadius;
+}
+
+void Camera::SetMinFocusRadius(float minFocusRadius)
+{
+  m_minFocusRadius = minFocusRadius;
+}
+
+void Camera::SetMaxHeight(float maxHeight)
+{
+  m_maxHeight = maxHeight;
+}
+
 void Camera::SetMode(unsigned int mode)
 {
   m_mode = mode;
+}
+
+void Camera::SetFocusChanged(bool focusChanged)
+{
+  m_focusChanged = focusChanged;
 }
 
 void Camera::SetPositionX(float x)
