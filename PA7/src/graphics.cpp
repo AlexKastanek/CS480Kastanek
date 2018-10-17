@@ -208,9 +208,9 @@ void Graphics::Render()
   }
 }
 
-void Graphics::HandleCameraInput(string input)
+void Graphics::HandleCameraInput(string input, bool isPressed)
 {
-  m_camera->HandleKeyboardInput(input);
+  m_camera->HandleKeyboardInput(input, isPressed);
 }
 
 // bool Graphics::IsPlanetPaused()

@@ -26,7 +26,7 @@ class Camera
         float yaw );
 
     //handle keyboard input
-    void HandleKeyboardInput(string input);
+    void HandleKeyboardInput(string input, bool isPressed);
 
     glm::mat4 GetProjection();
     glm::mat4 GetView();

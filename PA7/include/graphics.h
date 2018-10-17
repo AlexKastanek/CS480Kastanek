@@ -22,7 +22,7 @@ class Graphics
     void Update(unsigned int dt);
     void Render();
 
-    void HandleCameraInput(string input);
+    void HandleCameraInput(string input, bool isPressed);
 
     bool IsPlanetPaused();
     unsigned int GetPlanetSpin();

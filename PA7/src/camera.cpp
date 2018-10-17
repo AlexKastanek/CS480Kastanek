@@ -261,7 +261,7 @@ glm::mat4 Camera::CalculateFreeView(glm::vec3 eye, float pitch, float yaw)
 
 }
 
-void Camera::HandleKeyboardInput(string input)
+void Camera::HandleKeyboardInput(string input, bool isPressed)
 {
   char input_key;
 
@@ -269,17 +269,27 @@ void Camera::HandleKeyboardInput(string input)
   {
     if (m_mode == MODE_FREE)
     {
-      //increase pitch
-      m_pitch += m_rotateSpeed;
-
-      if (m_pitch > 89.0f)
+      if (isPressed)
       {
-        m_pitch = 89.0f;
+        //increase pitch
+        m_pitch += m_rotateSpeed;
+
+        if (m_pitch > 89.0f)
+        {
+          m_pitch = 89.0f;
+        }
       }
     }
     else
     {
-      SetVelocityY(1);
+      if (isPressed)
+      {
+        SetVelocityY(1);
+      }
+      else
+      {
+        SetVelocityY(0);
+      }
     }
 
     return;
@@ -288,17 +298,27 @@ void Camera::HandleKeyboardInput(string input)
   {
     if (m_mode == MODE_FREE)
     {
-      //decrease pitch
-      m_pitch -= m_rotateSpeed;
-
-      if (m_pitch < -89.0f)
+      if (isPressed)
       {
-        m_pitch = -89.0f;
+        //decrease pitch
+        m_pitch -= m_rotateSpeed;
+
+        if (m_pitch < -89.0f)
+        {
+          m_pitch = -89.0f;
+        }
       }
     }
     else
     {
-      SetVelocityY(-1);
+      if (isPressed)
+      {
+        SetVelocityY(-1);
+      }
+      else
+      {
+        SetVelocityY(0);
+      }
     }
 
     return;
@@ -307,8 +327,11 @@ void Camera::HandleKeyboardInput(string input)
   {
     if (m_mode == MODE_FREE)
     {
-      //decrease yaw
-      m_yaw -= m_rotateSpeed;
+      if (isPressed)
+      {
+        //decrease yaw
+        m_yaw -= m_rotateSpeed;
+      }
     }
 
     return;
@@ -317,8 +340,11 @@ void Camera::HandleKeyboardInput(string input)
   {
     if (m_mode == MODE_FREE)
     {
-      //increase yaw
-      m_yaw += m_rotateSpeed;
+      if (isPressed)
+      {
+        //increase yaw
+        m_yaw += m_rotateSpeed;
+      }
     }
 
     return;
@@ -329,16 +355,44 @@ void Camera::HandleKeyboardInput(string input)
   switch(input_key)
   {
     case 'a':
-      SetVelocityX(-1);
+      if (isPressed)
+      {
+        SetVelocityX(-1);
+      }
+      else
+      {
+        SetVelocityX(0);
+      }
       break;
     case 'd':
-      SetVelocityX(1);
+      if (isPressed)
+      {
+        SetVelocityX(1);
+      }
+      else
+      {
+        SetVelocityX(0);
+      }
       break;
     case 'w':
-      SetVelocityZ(1);
+      if (isPressed)
+      {
+        SetVelocityZ(1);
+      }
+      else
+      {
+        SetVelocityZ(0);
+      }
       break;
     case 's':
-      SetVelocityZ(-1);
+      if (isPressed)
+      {
+        SetVelocityZ(-1);
+      }
+      else
+      {
+        SetVelocityZ(0);
+      }
       break;
     default:
       break;
