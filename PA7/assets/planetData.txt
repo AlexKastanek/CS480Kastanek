@@ -27,3 +27,4 @@ CameraSpeed FORMAT: first value is speed factor (larger means slower) for focus 
 Sun FORMAT: scale(to earth)
 Star FORMAT: scale(to earth)
 
+NOTE: These values cannot be less than 0. Only moonNums and orbitRadii can be equal to 0.
