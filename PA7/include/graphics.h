@@ -24,6 +24,9 @@ class Graphics
 
     void HandleCameraInput(string input, bool isPressed);
 
+    void SimulationSpeedUp();
+    void SimulationSpeedDown();
+
     bool IsPlanetPaused();
     unsigned int GetPlanetSpin();
     unsigned int GetPlanetOrbit();
@@ -71,6 +74,8 @@ class Graphics
     //Planet *m_focusedObject;
     int m_focusedObject;
 
+    int m_simulationSpeed;
+    float m_simulationSpeedFactor;
     float m_cameraSpeed;
     float m_cameraSpeedFactor;
     float m_cameraDistanceOffset;

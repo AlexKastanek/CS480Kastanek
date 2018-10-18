@@ -41,6 +41,7 @@ class Object
     unsigned int GetSpinDirection();
     unsigned int GetOrbitDirection();
     float GetScaleVal();
+    float GetRotateFactor();
 
     void SetRotationVector(glm::vec3 rot);
     void SetPaused(bool paused);

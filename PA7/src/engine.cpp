@@ -119,6 +119,11 @@ void Engine::Keyboard()
           case SDLK_f:
             m_graphics->ChangeFocusedObject();
             break;
+          case SDLK_EQUALS:
+            m_graphics->SimulationSpeedUp();
+            break;
+          case SDLK_MINUS:
+            m_graphics->SimulationSpeedDown();
   				case SDLK_d:
   					//set camera velocity left to 1
   					//m_graphics->SetCameraVelocity('x', 1);

@@ -191,6 +191,11 @@ float Object::GetScaleVal()
   return m_scaleVal;
 }
 
+float Object::GetRotateFactor()
+{
+  return m_rotateFactor;
+}
+
 void Object::SetParent(Object* parent)
 {
   m_parent = parent;
