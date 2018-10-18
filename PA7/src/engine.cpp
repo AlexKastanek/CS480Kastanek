@@ -124,6 +124,7 @@ void Engine::Keyboard()
             break;
           case SDLK_MINUS:
             m_graphics->SimulationSpeedDown();
+            break;
   				case SDLK_d:
   					//set camera velocity left to 1
   					//m_graphics->SetCameraVelocity('x', 1);
