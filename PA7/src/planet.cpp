@@ -208,10 +208,16 @@ void Planet::UpdateUran(unsigned int dt)
 
     rotation = glm::rotate(
       glm::mat4(1.0f),
-      angleRotate,
-      glm::vec3(1.0, 0.0, 0.0)
+      -90.0f,
+      glm::vec3(0.0, 0.0, 1.0)
     );
-    
+
+    rotation *= glm::rotate(
+      glm::mat4(1.0f),
+      angleRotate,
+      glm::vec3(0.0, 1.0, 0.0)
+    );
+
     scale = glm::scale(
    	  glm::mat4(1.0f),
    	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)

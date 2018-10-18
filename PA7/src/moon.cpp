@@ -161,8 +161,14 @@ void Moon::UpdateUranRing(unsigned int dt)
 
     rotation = glm::rotate(
       glm::mat4(1.0f),
+      -90.0f,
+      glm::vec3(0.0, 0.0, 1.0)
+    );
+
+    rotation *= glm::rotate(
+      glm::mat4(1.0f),
       angleRotate,
-      glm::vec3(1.0, 0.0, 0.0)
+      glm::vec3(0.0, 1.0, 0.0)
     );
 
     scale = glm::scale(

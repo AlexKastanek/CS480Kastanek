@@ -474,7 +474,7 @@ void Graphics::ChangeFocusedObject(void)
         }
         else if (name == "Neptune")
         {
-          m_NepRing = new Moon(0, .033 * speedMod, 0, "..//assets//UranusRing.obj", planetScale * scaleMod * 0.65);
+          m_NepRing = new Moon(0, .033 * speedMod, 0, "..//assets//NeptuneRing.obj", planetScale * scaleMod * 0.65);
           m_planet[i]->AddChild(m_UranRing);
           m_NepRing->SetParent(m_planet[i]);
         }
@@ -526,7 +526,7 @@ void Graphics::ChangeFocusedObject(void)
      
      m_SatRing -> Update(dt);
      m_JupRing -> Update(dt);
-     m_UranRing -> Update(dt);
+     m_UranRing -> UpdateUranRing(dt);
      m_NepRing -> Update(dt);
  }
  
