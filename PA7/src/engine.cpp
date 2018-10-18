@@ -24,6 +24,12 @@ Engine::~Engine()
   m_window = NULL;
   m_graphics = NULL;
 }
+int Engine:: getHeight(){
+    return m_WINDOW_HEIGHT;
+}
+int Engine:: getWidth(){
+    return m_WINDOW_WIDTH;
+}
 
 bool Engine::Initialize()
 {
@@ -45,7 +51,7 @@ bool Engine::Initialize()
   }
 
   // Start the GUI
-  m_gui = new GUI();
+  m_gui = new GUI(m_graphics->m_camera, m_graphics->m_planet, m_WINDOW_WIDTH, m_WINDOW_HEIGHT);
   if (!m_gui->Initialize(m_window->GetWindow(), m_window->GetContext()))
   {
     printf("The graphics failed to initialize.\n");
@@ -89,8 +95,8 @@ void Engine::Run()
     m_graphics->Render();
 
     // Update and render the GUI
-    //m_gui->Update(m_window->GetWindow(), m_graphics);
-    //m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+    m_gui->Update(m_window->GetWindow(), m_graphics);
+    m_gui->Render(m_window->GetWindow(), m_window->GetContext());
 
     // Swap to the Window
     m_window->Swap();

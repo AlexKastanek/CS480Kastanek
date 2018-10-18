@@ -51,11 +51,12 @@ class Graphics
     void CreatePlanets(string configFile);
     void UpdatePlanets(unsigned int dt);
     void RenderPlanets();
-
+    Planet *m_planet[9];
+    Camera *m_camera;
   private:
     std::string ErrorString(GLenum error);
 
-    Camera *m_camera;
+
     Shader *m_shader;
 
     GLint m_projectionMatrix;
@@ -65,7 +66,7 @@ class Graphics
     //Object *m_object;
     Object *m_Sun;
     Object *m_Star;
-    Planet *m_planet[9];
+
     Moon *m_moon[500];
     Moon *m_SatRing;
     Moon *m_JupRing;
