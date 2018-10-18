@@ -18,6 +18,7 @@ public:
 	~Moon();
 
 	void Update(unsigned int dt);
+        void UpdateUranRing(unsigned int dt);
 
 	float GetOrbitRadius();
 	float GetSpinSpeed();
