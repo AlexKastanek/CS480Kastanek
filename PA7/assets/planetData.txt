@@ -1,3 +1,5 @@
+CameraSpeed 5 5
+
 Sun 100
 
 Star 30000
@@ -21,6 +23,7 @@ Neptune 13 79.8 1.5 .006 3.9
 Pluto 5 104 .156 .004 .189
 
 FORMAT: Name moonsNum orbitRadius(per 35mil miles) rotSpeed(in days) orbitSpeed(in years) planetScale(scale to earth)
+CameraSpeed FORMAT: first value is speed factor (larger means slower) for focus mode, second is speed for free and overview mode (larger means faster)
 Sun FORMAT: scale(to earth)
 Star FORMAT: scale(to earth)
 

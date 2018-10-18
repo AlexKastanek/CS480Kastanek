@@ -69,6 +69,7 @@ class Graphics
     //Planet *m_focusedObject;
     int m_focusedObject;
 
+    float m_cameraSpeed;
     float m_cameraSpeedFactor;
     float m_cameraDistanceOffset;
     float m_cameraDistanceFactor;

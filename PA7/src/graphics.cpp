@@ -6,7 +6,8 @@ Graphics::Graphics()
   m_focusedObject = 0;
   moonIndex = 0;
 
-  m_cameraSpeedFactor = 1;
+  m_cameraSpeed = 5;
+  m_cameraSpeedFactor = 5;
   m_cameraDistanceOffset = 0.03;
   m_cameraDistanceFactor = 4;
   m_minCameraDistanceOffset = 0.05;
@@ -157,13 +158,13 @@ void Graphics::Update(unsigned int dt)
   }
   else if (m_camera->GetMode() == MODE_OVERVIEW)
   {
-    m_camera->SetMoveSpeed(5.0f);
+    m_camera->SetMoveSpeed(m_cameraSpeed);
     m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
     m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
   }
   else
   {
-    m_camera->SetMoveSpeed(5.0f);
+    m_camera->SetMoveSpeed(m_cameraSpeed);
   }
   
   m_camera->Update(dt);
@@ -375,6 +376,9 @@ void Graphics::ChangeFocusedObject(void)
     
     float speedMod = 1;
     float scaleMod = .1;
+
+    //get camera speed factor
+    fin >> name >> m_cameraSpeedFactor >> m_cameraSpeed;
     
     //create sun
     fin >> name >> sunScale;
