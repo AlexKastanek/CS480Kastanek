@@ -467,7 +467,7 @@ void Graphics::ChangeFocusedObject(void)
         }
         else if (name == "Jupiter")
         {
-            m_JupRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 0.9);
+            m_JupRing = new Moon(0, .033 * speedMod, 0, "..//assets//JupiterRing.obj", planetScale * scaleMod * 0.9);
             m_planet[i]->AddChild(m_JupRing);
             m_JupRing->SetParent(m_planet[i]);
         }
