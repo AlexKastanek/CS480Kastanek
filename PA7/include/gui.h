@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <iostream>
+#include <stdio.h>
 using namespace std;
 
 #include "imgui.h"

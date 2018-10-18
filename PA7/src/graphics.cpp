@@ -247,7 +247,7 @@ void Graphics::SimulationSpeedUp()
   m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
   m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
 
-  cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
 }
 
 void Graphics::SimulationSpeedDown()
@@ -275,7 +275,7 @@ void Graphics::SimulationSpeedDown()
   m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
   m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
 
-  cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
 }
 
 // bool Graphics::IsPlanetPaused()
@@ -307,6 +307,21 @@ void Graphics::SimulationSpeedDown()
 // {
 //   m_planet->SetOrbitDirection(orbit);
 // }
+
+unsigned int Graphics::GetCameraMode()
+{
+  return m_camera->GetMode();
+}
+
+int Graphics::GetFocusedObject()
+{
+  return m_focusedObject;
+}
+
+int Graphics::GetSimulationSpeed()
+{
+  return m_simulationSpeed;
+}
 
 void Graphics::SetCameraVelocity(glm::vec3 velocity)
 {
@@ -447,29 +462,38 @@ void Graphics::ChangeFocusedObject(void)
     //create sun
     fin >> name >> sunScale;
     m_Sun = new Object("..//assets//" + name + ".obj", sunScale * scaleMod);
+    cout << "Loaded the Sun" << endl;
 
     //create stars
     fin >> name >> starScale;
     m_Star = new Object("..//assets//" + name + ".obj", starScale * scaleMod);
     m_Star->SetRotateFactor(0.1);
+    cout << "Loaded the stars" << endl;
     
     //create each planet
     for(int i=0 ; i<9 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
         m_planet[i] = new Planet((orbDist * sunScale * 25) * scaleMod , rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale * scaleMod);
+        cout << "Loaded " << name << endl;
 
         if(name == "Saturn")
         {
-            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 0.75);
+            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 0.9);
             m_planet[i]->AddChild(m_SatRing);
             m_SatRing->SetParent(m_planet[i]);
+
+            m_planet[i]->SetSpinAngle(-60.0f);
+            m_SatRing->SetSpinAngle(-60.f);
+
+            cout << "Loaded Saturn's Rings" << endl;
         }
         else if (name == "Jupiter")
         {
-            m_JupRing = new Moon(0, .033 * speedMod, 0, "..//assets//JupiterRing.obj", planetScale * scaleMod * 0.9);
+            m_JupRing = new Moon(0, .033 * speedMod, 0, "..//assets//JupiterRing.obj", planetScale * scaleMod * 1.0);
             m_planet[i]->AddChild(m_JupRing);
             m_JupRing->SetParent(m_planet[i]);
+            cout << "Loaded Jupiter's Rings" << endl;
         }
 
         if(name == "Uranus")
@@ -477,12 +501,18 @@ void Graphics::ChangeFocusedObject(void)
             m_UranRing = new Moon(0, .033 * speedMod, 0, "..//assets//UranusRing.obj", planetScale * scaleMod * 0.75);
             m_planet[i]->AddChild(m_UranRing);
             m_UranRing->SetParent(m_planet[i]);
+
+            m_planet[i]->SetSpinAngle(-90.0f);
+            m_UranRing->SetSpinAngle(-90.f);
+
+            cout << "Loaded Uranus' Rings" << endl;
         }
         else if (name == "Neptune")
         {
-          m_NepRing = new Moon(0, .033 * speedMod, 0, "..//assets//NeptuneRing.obj", planetScale * scaleMod * 0.65);
+          m_NepRing = new Moon(0, .033 * speedMod, 0, "..//assets//NeptuneRing.obj", planetScale * scaleMod * 0.7);
           m_planet[i]->AddChild(m_UranRing);
           m_NepRing->SetParent(m_planet[i]);
+          cout << "Loaded Neptune's Rings" << endl;
         }
 
         moonMod = 0;
@@ -498,12 +528,12 @@ void Graphics::ChangeFocusedObject(void)
             else
                 m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod * planetScale * .75);
             
-            
-            
             m_planet[i]->AddChild(m_moon[j]);
             m_moon[j]->SetParent(m_planet[i]);
             
             moonMod++;
+
+            cout << "Loaded moon #" << j+1 << endl;
         }
         if(numMoons > 0)
             moonIndex += numMoons;
@@ -520,9 +550,9 @@ void Graphics::ChangeFocusedObject(void)
      m_Star->Update(dt);
      for(int i=0 ; i<9 ; i++)
      {
-        if(i == 6)
-            m_planet[i]->UpdateUran(dt);
-        else
+        //if(i == 6)
+        //    m_planet[i]->UpdateUran(dt);
+        //else
             m_planet[i]->Update(dt);
         
      }
@@ -532,7 +562,7 @@ void Graphics::ChangeFocusedObject(void)
      
      m_SatRing -> Update(dt);
      m_JupRing -> Update(dt);
-     m_UranRing -> UpdateUranRing(dt);
+     m_UranRing -> Update(dt);
      m_NepRing -> Update(dt);
  }
  
