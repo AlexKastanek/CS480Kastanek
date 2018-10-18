@@ -92,10 +92,16 @@ If in Top-Down/Overview Mode:
 W - Zoom in  
 S - Zoom out  
 
+'+' - Increase simulation speed (no need to hold shift)
+'-' - Decrease simulation speed
+
 ## Extra Credit
 This program implements the extra credit portion of the assignment:  
 -This program uses a config file called "planetData.txt" located in the assets folder to determine scales for the planets  
+-This program allows the user to increase/decrease the simulation speed  
+-This program has rings for all planets that have rings (Jupiter, Saturn, Uranus, and Neptune)  
 
 Other items that could be considered for extra credit:  
 -Advanced camera controls  
 -Correct amount of satellites for each planet  
+-Uranus and its rings are on their side  
