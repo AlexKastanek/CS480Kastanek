@@ -10,7 +10,7 @@ Graphics::Graphics()
   m_simulationSpeedFactor = 0.1; //must be between 0 and 1
   m_cameraSpeed = 5;
   m_cameraSpeedFactor = 5;
-  m_cameraDistanceOffset = 0.03;
+  m_cameraDistanceOffset = 0.02;
   m_cameraDistanceFactor = 4;
   m_minCameraDistanceOffset = 0.05;
   m_minCameraDistanceFactor = 4;
@@ -151,6 +151,7 @@ void Graphics::Update(unsigned int dt)
       m_camera->SetMoveSpeed(m_Sun->GetScaleVal() / m_cameraSpeedFactor);
       m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
       m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetDefaultHeight(m_Sun->GetScaleVal() * m_cameraHeightFactor / 3);
       m_camera->SetMaxHeight(m_Sun->GetScaleVal() * m_cameraHeightFactor);
     }
     else
@@ -159,6 +160,7 @@ void Graphics::Update(unsigned int dt)
       m_camera->SetMoveSpeed(m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraSpeedFactor);
       m_camera->SetDefaultFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraDistanceOffset));
       m_camera->SetMinFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetDefaultHeight(m_planet[m_focusedObject-1]->GetScaleVal() * m_cameraHeightFactor / 3);
       m_camera->SetMaxHeight(m_planet[m_focusedObject-1]->GetScaleVal() * m_cameraHeightFactor);
     }
   }

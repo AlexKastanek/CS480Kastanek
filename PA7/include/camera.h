@@ -55,6 +55,7 @@ class Camera
     void SetFocusRadius(float focusRadius);
     void SetDefaultFocusRadius(float defaultFocusRadius);
     void SetMinFocusRadius(float minFocusRadius);
+    void SetDefaultHeight(float defaultHeight);
     void SetMaxHeight(float maxHeight);
     void SetMode(unsigned int mode);
     void SetFocusChanged(bool focusChanged);
@@ -84,6 +85,7 @@ class Camera
     float m_defaultFocusRadius;
     float m_minFocusRadius;
     float m_height;
+    float m_defaultHeight;
     float m_maxHeight;
     float m_pitch;
     float m_yaw;

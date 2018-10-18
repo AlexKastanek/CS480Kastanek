@@ -62,7 +62,7 @@ void Camera::Update(unsigned int dt)
     if (m_focusChanged)
     {
       m_focusRadius = m_defaultFocusRadius;
-      m_height = 0;
+      m_height = m_defaultHeight;
       m_focusChanged = false;
     }
 
@@ -464,6 +464,11 @@ void Camera::SetDefaultFocusRadius(float defaultFocusRadius)
 void Camera::SetMinFocusRadius(float minFocusRadius)
 {
   m_minFocusRadius = minFocusRadius;
+}
+
+void Camera::SetDefaultHeight(float defaultHeight)
+{
+  m_defaultHeight = defaultHeight;
 }
 
 void Camera::SetMaxHeight(float maxHeight)
