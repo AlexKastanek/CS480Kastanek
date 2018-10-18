@@ -455,7 +455,13 @@ void Graphics::ChangeFocusedObject(void)
      m_Sun->Update(dt);
      m_Star->Update(dt);
      for(int i=0 ; i<9 ; i++)
-        m_planet[i]->Update(dt);
+     {
+        if(i == 6)
+            m_planet[i]->UpdateUran(dt);
+        else
+            m_planet[i]->Update(dt);
+        
+     }
      
      for(int i=0 ; i<moonIndex ; i++)
          m_moon[i]->Update(dt);
