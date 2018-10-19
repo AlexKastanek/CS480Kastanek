@@ -247,7 +247,7 @@ void Graphics::SimulationSpeedUp()
   m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
   m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
 
-  cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
 }
 
 void Graphics::SimulationSpeedDown()
@@ -275,7 +275,7 @@ void Graphics::SimulationSpeedDown()
   m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
   m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
 
-  cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
 }
 
 // bool Graphics::IsPlanetPaused()
@@ -307,6 +307,21 @@ void Graphics::SimulationSpeedDown()
 // {
 //   m_planet->SetOrbitDirection(orbit);
 // }
+
+unsigned int Graphics::GetCameraMode()
+{
+  return m_camera->GetMode();
+}
+
+int Graphics::GetFocusedObject()
+{
+  return m_focusedObject;
+}
+
+int Graphics::GetSimulationSpeed()
+{
+  return m_simulationSpeed;
+}
 
 void Graphics::SetCameraVelocity(glm::vec3 velocity)
 {

@@ -34,6 +34,10 @@ class Graphics
     unsigned int GetMoonSpin();
     unsigned int GetMoonOrbit();
 
+    unsigned int GetCameraMode();
+    int GetFocusedObject();
+    int GetSimulationSpeed();
+
     void SetPlanetPaused(bool paused);
     void SetPlanetSpin(unsigned int spin);
     void SetPlanetOrbit(unsigned int orbit);
