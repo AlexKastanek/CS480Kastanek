@@ -5,6 +5,7 @@ Moon::Moon()
 	m_orbitRadius = 5.0f;
 	m_spinSpeed = 1;
 	m_orbitSpeed = 1;
+  m_spinAngle = 0.0f;
 }
 
 Moon::Moon(float orbitRadius)
@@ -12,6 +13,7 @@ Moon::Moon(float orbitRadius)
 	m_orbitRadius = orbitRadius;
 	m_spinSpeed = 1;
 	m_orbitSpeed = 1;
+  m_spinAngle = 0.0f;
 }
 
 Moon::Moon(float spinSpeed, float orbitSpeed)
@@ -19,6 +21,7 @@ Moon::Moon(float spinSpeed, float orbitSpeed)
 	m_orbitRadius = 5.0f;
 	m_spinSpeed = spinSpeed;
 	m_orbitSpeed = orbitSpeed;
+  m_spinAngle = 0.0f;
 }
 
 Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed)
@@ -26,6 +29,7 @@ Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed)
 	m_orbitRadius = orbitRadius;
 	m_spinSpeed = spinSpeed;
 	m_orbitSpeed = orbitSpeed;
+  m_spinAngle = 0.0f;
 }
 
 Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name, float scaleV)
@@ -49,6 +53,7 @@ Moon::Moon(float orbitRadius, float spinSpeed, float orbitSpeed, string name, fl
     m_spinSpeed = spinSpeed;
     m_orbitSpeed = orbitSpeed;
     m_scaleVal = scaleV;
+    m_spinAngle = 0.0f;
 }
 
 Moon::~Moon()
@@ -100,6 +105,12 @@ void Moon::Update(unsigned int dt)
 
     rotation = glm::rotate(
       glm::mat4(1.0f),
+      m_spinAngle,
+      glm::vec3(0.0, 0.0, 1.0)
+    );
+
+    rotation *= glm::rotate(
+      glm::mat4(1.0f),
       angleRotate,
       glm::vec3(0.0, 1.0, 0.0)
     );
@@ -117,6 +128,7 @@ void Moon::Update(unsigned int dt)
   }
 }
 
+/*
 void Moon::UpdateUranRing(unsigned int dt)
 {
   //cout << "CHECK MOON UPDATE" << endl;
@@ -183,6 +195,7 @@ void Moon::UpdateUranRing(unsigned int dt)
     model = translation * rotation * scale;    
   }
 }
+*/
 
 float Moon::GetOrbitRadius()
 {
@@ -212,4 +225,9 @@ void Moon::SetSpinSpeed(float spinSpeed)
 void Moon::SetOrbitSpeed(float orbitSpeed)
 {
 	m_orbitSpeed = orbitSpeed;
+}
+
+void Moon::SetSpinAngle(float spinAngle)
+{
+  m_spinAngle = spinAngle;
 }

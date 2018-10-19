@@ -5,6 +5,7 @@ Planet::Planet()
 	m_orbitRadius = 5.0f;
 	m_spinSpeed = 1;
 	m_orbitSpeed = 1;
+  m_spinAngle = 0.0f;
 }
 
 Planet::Planet(float orbitRadius)
@@ -14,6 +15,7 @@ Planet::Planet(float orbitRadius)
 	m_orbitRadius = orbitRadius;
 	m_spinSpeed = 1;
 	m_orbitSpeed = 1;
+  m_spinAngle = 0.0f;
 }
 
 Planet::Planet(float spinSpeed, float orbitSpeed)
@@ -21,6 +23,7 @@ Planet::Planet(float spinSpeed, float orbitSpeed)
 	m_orbitRadius = 5.0f;
 	m_spinSpeed = spinSpeed;
 	m_orbitSpeed = orbitSpeed;
+  m_spinAngle = 0.0f;
 }
 
 Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed)
@@ -28,6 +31,7 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed)
 	m_orbitRadius = orbitRadius;
 	m_spinSpeed = spinSpeed;
 	m_orbitSpeed = orbitSpeed;
+  m_spinAngle = 0.0f;
 }
 
 Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name, float scaleV)
@@ -86,6 +90,7 @@ Planet::Planet(float orbitRadius, float spinSpeed, float orbitSpeed, string name
     m_spinSpeed = spinSpeed;
     m_orbitSpeed = orbitSpeed;
     m_scaleVal = scaleV;
+    m_spinAngle = 0.0f;
 }
 
 Planet::~Planet()
@@ -142,6 +147,12 @@ void Planet::Update(unsigned int dt)
 
     rotation = glm::rotate(
       glm::mat4(1.0f),
+      m_spinAngle,
+      glm::vec3(0.0, 0.0, 1.0)
+    );
+
+    rotation *= glm::rotate(
+      glm::mat4(1.0f),
       angleRotate,
       glm::vec3(0.0, 1.0, 0.0)
     );
@@ -159,6 +170,7 @@ void Planet::Update(unsigned int dt)
   }
 }
 
+/*
 void Planet::UpdateUran(unsigned int dt)
 {
   //cout << "CHECK PLANET UPDATE" << endl;
@@ -230,6 +242,7 @@ void Planet::UpdateUran(unsigned int dt)
     model = translation * rotation * scale;    
   }
 }
+*/
 
 float Planet::GetOrbitRadius()
 {
@@ -259,4 +272,9 @@ void Planet::SetSpinSpeed(float spinSpeed)
 void Planet::SetOrbitSpeed(float orbitSpeed)
 {
 	m_orbitSpeed = orbitSpeed;
+}
+
+void Planet::SetSpinAngle(float spinAngle)
+{
+  m_spinAngle = spinAngle;
 }
