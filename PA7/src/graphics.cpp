@@ -224,58 +224,64 @@ void Graphics::HandleCameraInput(string input, bool isPressed)
 
 void Graphics::SimulationSpeedUp()
 {
-  float factor = 1 + m_simulationSpeedFactor;
-  m_simulationSpeed++;
-
-  m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
-  m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
-
-  for (int i = 0; i < 9; i++)
+  if (m_simulationSpeed < 50)
   {
-    m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
-    m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
+    float factor = 1 + m_simulationSpeedFactor;
+    m_simulationSpeed++;
+
+    m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
+    m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
+
+    for (int i = 0; i < 9; i++)
+    {
+      m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
+      m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
+    }
+
+    for (int i = 0; i < moonIndex; i++)
+    {
+      m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
+      m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
+    }
+
+    m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
+    m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
+    m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
+    m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
+
+    //cout << "Simulation speed set to " << m_simulationSpeed << endl;
   }
-
-  for (int i = 0; i < moonIndex; i++)
-  {
-    m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
-    m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
-  }
-
-  m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
-  m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
-  m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
-  m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
-
-  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
 }
 
 void Graphics::SimulationSpeedDown()
 {
-  float factor = 1 - m_simulationSpeedFactor;
-  m_simulationSpeed--;
-
-  m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
-  m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
-
-  for (int i = 0; i < 9; i++)
+  if (m_simulationSpeed > -50)
   {
-    m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
-    m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
-  }
+    float factor = 1 - m_simulationSpeedFactor;
+    m_simulationSpeed--;
 
-  for (int i = 0; i < moonIndex; i++)
-  {
-    m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
-    m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
-  }
+    m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
+    m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
 
-  m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
-  m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
-  m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
-  m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
+    for (int i = 0; i < 9; i++)
+    {
+      m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
+      m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
+    }
 
-  //cout << "Simulation speed set to " << m_simulationSpeed << endl;
+    for (int i = 0; i < moonIndex; i++)
+    {
+      m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
+      m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
+    }
+
+    m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
+    m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
+    m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
+    m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
+
+    //cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  } 
 }
 
 // bool Graphics::IsPlanetPaused()

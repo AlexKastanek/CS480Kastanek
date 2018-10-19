@@ -1,4 +1,4 @@
-CameraSpeed 50 0.01
+CameraSpeed 5 5
 
 Sun 100
 

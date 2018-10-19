@@ -42,120 +42,46 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
     ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs);
     for(int i = 0; i < 9 ; i++) {
         glm::vec4 v = camera->GetProjection() * camera->GetView() * planet[i]->GetModel() * glm::vec4(0, 0, 0, 1.0);
-        v /= v.w;
-        v += glm::vec4(1, 1, 1, 1);
-        ImGui::SetCursorPos(ImVec2(v.x * width / 2.0, height - v.y * height / 2.0));
-        if(i == 0) {
-            ImGui::Text("Mecury");
+        //if (i == 0) cout << v.x << ", " << v.y << ", " << v.z << endl;
+        if (v.z > 0)
+        {
+          v /= v.w;
+          v += glm::vec4(1, 1, 1, 1);
+          ImGui::SetCursorPos(ImVec2(v.x * width / 2.0, height - v.y * height / 2.0));
+          if(i == 0) {
+              ImGui::Text("Mercury");
+              //cout << v.x << endl;
+          }
+          if(i == 1) {
+              ImGui::Text("Venus");
+          }
+          if(i == 2) {
+              ImGui::Text("Earth");
+          }
+          if(i == 3) {
+              ImGui::Text("Mars");
+          }
+          if(i == 4) {
+              ImGui::Text("Jupiter");
+          }
+          if(i == 5) {
+              ImGui::Text("Saturn");
+          }
+          if(i == 6) {
+              ImGui::Text("Uranus");
+          }
+          if(i == 7) {
+              ImGui::Text("Neptune");
+          }
+          if(i == 8) {
+              ImGui::Text("Pluto");
+          }
         }
-        if(i == 1) {
-            ImGui::Text("Venus");
-        }
-        if(i == 2) {
-            ImGui::Text("Earth");
-        }
-        if(i == 3) {
-            ImGui::Text("Mars");
-        }
-        if(i == 4) {
-            ImGui::Text("Jupiter");
-        }
-        if(i == 5) {
-            ImGui::Text("Saturn");
-        }
-        if(i == 6) {
-            ImGui::Text("Uranus");
-        }
-        if(i == 7) {
-            ImGui::Text("Neptune");
-        }
-        if(i == 8) {
-            ImGui::Text("Pluto");
-        }
-
     }
 
 
      ImGui::End();
      ImGui::PopStyleColor(1);
-
-//     //bool buttonPressed = false;
-//
-//   	ImGui_ImplOpenGL3_NewFrame();
-//   	ImGui_ImplSDL2_NewFrame(window);
-//   	ImGui::NewFrame();
-//
-//     if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize));
-//     {
-//       if (ImGui::Button("Play/Pause Planet"))
-//       {
-//         if (graphics->IsPlanetPaused())
-//         {
-//           graphics->SetPlanetPaused(0);
-//         }
-//         else
-//         {
-//           graphics->SetPlanetPaused(1);
-//         }
-//       }
-//       if (ImGui::Button("Change Orbit Direction"))
-//       {
-//         if (graphics->GetPlanetOrbit() == 0)
-//         {
-//           graphics->SetPlanetOrbit(1);
-//         }
-//         else
-//         {
-//           graphics->SetPlanetOrbit(0);
-//         }
-//       }
-//       if (ImGui::Button("Change Spin Direction"))
-//       {
-//         if (graphics->GetPlanetSpin() == 0)
-//         {
-//           graphics->SetPlanetSpin(1);
-//         }
-//         else
-//         {
-//           graphics->SetPlanetSpin(0);
-//         }
-//       }
-//
-//       ImGui::Separator();
-//
-//       ImGui::Text("Info");
-//
-//       if (graphics->IsPlanetPaused())
-//       {
-//         ImGui::Text("Paused");
-//       }
-//       else
-//       {
-//         ImGui::Text("Playing");
-//       }
-//
-//       if (graphics->GetPlanetOrbit() == 0)
-//       {
-//         ImGui::Text("Planet Orbit Direction: Clockwise");
-//       }
-//       else
-//       {
-//         ImGui::Text("Planet Orbit Direction: Counter-Clockwise");
-//       }
-//
-//       if (graphics->GetPlanetSpin() == 0)
-//       {
-//         ImGui::Text("Planet Spin Direction: Clockwise");
-//       }
-//       else
-//       {
-//         ImGui::Text("Planet Spin Direction: Counter-Clockwise");
-//       }
-//
-//     }
-//     ImGui::End();
-//
-
 
   if (ImGui::Begin("HUD", NULL))
   {
