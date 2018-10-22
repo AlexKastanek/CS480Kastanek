@@ -18,7 +18,7 @@ public:
 	~Planet();
 
 	void Update(unsigned int dt);
-    void UpdateUran(unsigned int dt);
+    //void UpdateUran(unsigned int dt);
 
 	float GetOrbitRadius();
 	float GetSpinSpeed();
