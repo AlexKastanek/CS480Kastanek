@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
 
   // Start an engine
-  Engine *engine = new Engine("Jordy Kastanek and Trombley PA8", 640, 480);
+  Engine *engine = new Engine("Jordy Kastanek and Trombley PA8", 960, 540);
 
   if(!engine->Initialize())
   {

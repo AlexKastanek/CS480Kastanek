@@ -22,7 +22,8 @@ class Object
 {
   public:
     Object();
-    Object(string filename, float scaleV);
+    Object(string filename);
+    Object(string filename, float scale);
     ~Object();
     virtual void Update(unsigned int dt);
     void Render();
@@ -32,7 +33,7 @@ class Object
     glm::mat4 GetRotation();
     glm::mat4 GetScale();
     glm::vec3 GetPosition();
-    
+
     void SetParent(Object* parent);
     void AddChild(Object* child);
     void RemoveChild();

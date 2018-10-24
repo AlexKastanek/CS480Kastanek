@@ -48,6 +48,7 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Init the objects
+  m_object = new Object("..//assets//Board.obj", 13.0f);
 
   // Set up the shaders
   m_shader = new Shader();
@@ -107,8 +108,8 @@ bool Graphics::Initialize(int width, int height)
   glDepthFunc(GL_LESS);
 
   //enable transparency
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  //glEnable(GL_BLEND);
+  //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   return true;
 }
@@ -116,9 +117,7 @@ bool Graphics::Initialize(int width, int height)
 void Graphics::Update(unsigned int dt)
 {
   // Update the objects and camera
-
-  
-  
+  m_object->Update(dt);
   m_camera->Update(dt);
 }
 
@@ -138,7 +137,8 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   // Render the objects
-  
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_object->GetModel()));
+  m_object->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();

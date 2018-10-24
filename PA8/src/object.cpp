@@ -2,80 +2,46 @@
 Object::Object()
 { 
   m_parent = NULL;
-
-  /*
-    # Blender File for a Cube
-    o Cube
-    v 1.000000 -1.000000 -1.000000
-    v 1.000000 -1.000000 1.000000
-    v -1.000000 -1.000000 1.000000
-    v -1.000000 -1.000000 -1.000000
-    v 1.000000 1.000000 -0.999999
-    v 0.999999 1.000000 1.000001
-    v -1.000000 1.000000 1.000000
-    v -1.000000 1.000000 -1.000000
-    s off
-    f 2 3 4
-    f 8 7 6
-    f 1 5 6
-    f 2 6 7
-    f 7 8 4
-    f 1 4 8
-    f 1 2 4
-    f 5 8 6
-    f 2 1 6
-    f 3 2 7
-    f 3 7 4
-    f 5 1 8        */
-
   m_renderData = new Model();
+  if (!m_renderData->LoadObject())
+  {
+    delete m_renderData;
+    exit(1);
+  }
 
-  m_renderData->LoadObject();
+  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-Object::Object(string filename, float scaleV)
+Object::Object(string filename)
 {
+  m_parent = NULL;
   m_renderData = new Model();
-
   if (!m_renderData->LoadObject(filename))
   {
     delete m_renderData;
     exit(1);
   }
-  //uncomment below to print all vertices
-  /*
-  cout << "Vertices:" << endl;
-  cout << "{" << endl;
-  for (int i = 0; i < Vertices.size(); i++)
-  {
-    cout << "{{"
-         << Vertices[i].vertex.x
-         << ", "
-         << Vertices[i].vertex.y
-         << ", "
-         << Vertices[i].vertex.z
-         << "}{"
-         << Vertices[i].color.x
-         << ", "
-         << Vertices[i].color.y
-         << ", "
-         << Vertices[i].color.z
-         << "}}" << endl;
-  }
-  cout << "}" << endl;
-  //*/
 
-  //uncomment below to print all indices
-  /*
-  cout << "Indices:" << endl;
-  cout << "{" << endl;
-  for (int i = 0; i < Indices.size(); i++)
+  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
+}
+
+Object::Object(string filename, float scale)
+{
+  m_parent = NULL;
+  m_renderData = new Model();
+  if (!m_renderData->LoadObject(filename))
   {
-    cout << Indices[i] << " ";
-    if (((i + 1) % 3) == 0) cout << endl;
+    delete m_renderData;
+    exit(1);
   }
-  cout << "}" << endl;
-  //*/
+
+  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
 }
 
 Object::~Object()
@@ -95,6 +61,16 @@ void Object::Update(unsigned int dt)
    	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
    	);
   */
+
+  m_translationMatrix = glm::mat4(1.0f);
+
+  m_rotationMatrix = glm::mat4(1.0f);
+
+  m_scaleMatrix = glm::scale(
+    glm::mat4(1.0),
+    m_scale);
+
+  model = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
 }
 
 void Object::Render()
