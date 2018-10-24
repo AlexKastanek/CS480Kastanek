@@ -8,6 +8,7 @@
 using namespace std;
 
 #include "graphics_headers.h"
+#include <btBulletDynamicsCommon.h>
 #include "camera.h"
 #include "shader.h"
 #include "object.h"
