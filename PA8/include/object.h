@@ -12,14 +12,14 @@
 
 using namespace std;
 
+struct Material
+{
+  string name;
+  glm::vec3 color;
+};
+
 class Object
 {
-    struct Material
-    {
-        string name;
-        glm::vec3 color;
-    };
-
   public:
     Object();
     Object(string filename, float scaleV);
@@ -31,23 +31,11 @@ class Object
     glm::mat4 GetTranslation();
     glm::mat4 GetRotation();
     glm::mat4 GetScale();
-
     glm::vec3 GetPosition();
+    
     void SetParent(Object* parent);
     void AddChild(Object* child);
     void RemoveChild();
-
-    bool IsPaused();
-    unsigned int GetSpinDirection();
-    unsigned int GetOrbitDirection();
-    float GetScaleVal();
-    float GetRotateFactor();
-
-    void SetRotationVector(glm::vec3 rot);
-    void SetPaused(bool paused);
-    void SetSpinDirection(unsigned int spin);
-    void SetOrbitDirection(unsigned int orbit);
-    void SetRotateFactor(float rotateFactor);
 
   protected:
     Object* m_parent;
@@ -56,21 +44,13 @@ class Object
     Model* m_renderData;
 
     glm::mat4 model;
-    glm::mat4 translation;
-    glm::mat4 rotation;
-    glm::mat4 scale;
+    glm::mat4 m_translationMatrix;
+    glm::mat4 m_rotationMatrix;
+    glm::mat4 m_scaleMatrix;
 
-    glm::vec3 position;;
-
-    //TODO: move these values to planet and moon implementations and their 
-    //      respective get/set functions
-    float angleTranslate;
-    float angleRotate;
-    bool m_paused;
-    unsigned int m_spinDirection;
-    unsigned int m_orbitDirection;
-    float m_rotateFactor;
-    float m_scaleVal;
+    glm::vec3 m_position;
+    glm::vec3 m_rotation;
+    glm::vec3 m_scale;
 };
 
 #endif /* OBJECT_H */

@@ -31,14 +31,6 @@ Object::Object()
   m_renderData = new Model();
 
   m_renderData->LoadObject();
-
-  angleTranslate = 0.0f;
-  angleRotate = 0.0f;
-
-  m_paused = 0; //not paused
-  m_spinDirection = 0; //spinning counter-clockwise
-  m_orbitDirection = 0; //orbiting counter-clockwise
-  m_rotateFactor = 1;
 }
 
 Object::Object(string filename, float scaleV)
@@ -84,15 +76,6 @@ Object::Object(string filename, float scaleV)
   }
   cout << "}" << endl;
   //*/
-
-  angleTranslate = 0.0f;
-  angleRotate = 0.0f;
-
-  m_paused = 0; //not paused
-  m_spinDirection = 0; //spinning counter-clockwise
-  m_orbitDirection = 0; //orbiting counter-clockwise
-  m_scaleVal = scaleV;
-  m_rotateFactor = 1;
 }
 
 Object::~Object()
@@ -103,24 +86,19 @@ Object::~Object()
 
 void Object::Update(unsigned int dt)
 {
-
+  /*
   angleRotate += dt * (M_PI/5000) * m_rotateFactor;
   model = glm::rotate(glm::mat4(1.0), angleRotate, glm::vec3(0.0,1.0,0.0));
   
- model = glm::scale(
+  model = glm::scale(
    	  model,
    	  glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
    	);
-
-  
+  */
 }
 
 void Object::Render()
 {
-  //m_renderData->Render();
-
-  //cout << "render function entry" << endl;
-
   vector<GLuint> VBs = m_renderData->get_VBs();
   vector<GLuint> IBs = m_renderData->get_IBs();
   vector<unsigned int> numIndices = m_renderData->get_numIndices();
@@ -153,47 +131,22 @@ glm::mat4 Object::GetModel()
 
 glm::mat4 Object::GetTranslation()
 {
-  return translation;
+  return m_translationMatrix;
 }
 
 glm::mat4 Object::GetRotation()
 {
-  return rotation;
+  return m_rotationMatrix;
 }
 
 glm::mat4 Object::GetScale()
 {
-  return scale;
+  return m_scaleMatrix;
 }
 
 glm::vec3 Object::GetPosition()
 {
-  return position;
-}
-
-bool Object::IsPaused()
-{
-  return m_paused;
-}
-
-unsigned int Object::GetSpinDirection()
-{
-  return m_spinDirection;
-}
-
-unsigned int Object::GetOrbitDirection()
-{
-  return m_orbitDirection;
-}
-
-float Object::GetScaleVal()
-{
-  return m_scaleVal;
-}
-
-float Object::GetRotateFactor()
-{
-  return m_rotateFactor;
+  return m_position;
 }
 
 void Object::SetParent(Object* parent)
@@ -212,24 +165,4 @@ void Object::RemoveChild()
   {
     m_children.pop_back();
   }
-}
-
-void Object::SetPaused(bool paused)
-{
-  m_paused = paused;
-}
-
-void Object::SetSpinDirection(unsigned int spinDirection)
-{
-  m_spinDirection = spinDirection;
-}
-
-void Object::SetOrbitDirection(unsigned int orbitDirection)
-{
-  m_orbitDirection = orbitDirection;
-}
-
-void Object::SetRotateFactor(float rotateFactor)
-{
-  m_rotateFactor = rotateFactor;
 }
