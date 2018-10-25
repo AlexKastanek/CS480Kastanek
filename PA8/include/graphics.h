@@ -8,17 +8,19 @@
 using namespace std;
 
 #include "graphics_headers.h"
-#include "physics.h"
+//#include "physics.h"
+#include "world.h"
 #include "camera.h"
 #include "shader.h"
 //#include "object.h"
-#include "board.h"
+//#include "board.h"
 
 class Graphics
 {
   public:
     Graphics();
     ~Graphics();
+
     bool Initialize(int width, int height);
     void Update(unsigned int dt);
     void Render();
@@ -26,7 +28,8 @@ class Graphics
   private:
     std::string ErrorString(GLenum error);
 
-    Physics *m_physics;
+    //Physics *m_physics;
+    World *m_world;
 
     Camera *m_camera;
 
@@ -34,9 +37,7 @@ class Graphics
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
-    GLint m_modelMatrix;
-
-    Board *m_board;
+    GLint m_modelMatrix;    
 };
 
 #endif /* GRAPHICS_H */

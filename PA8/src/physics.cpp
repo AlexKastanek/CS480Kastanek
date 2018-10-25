@@ -60,9 +60,11 @@ void Physics::Update(unsigned int dt)
   m_dynamicsWorld->stepSimulation(dt, 10);
 }
 
+/*
 void Physics::AddRigidBody(btRigidBody* rigidBody)
 {
   m_dynamicsWorld->addRigidBody(
     rigidBody
     );
 }
+*/
