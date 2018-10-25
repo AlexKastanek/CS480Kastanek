@@ -8,10 +8,11 @@
 using namespace std;
 
 #include "graphics_headers.h"
-#include <btBulletDynamicsCommon.h>
+#include "physics.h"
 #include "camera.h"
 #include "shader.h"
-#include "object.h"
+//#include "object.h"
+#include "board.h"
 
 class Graphics
 {
@@ -25,6 +26,8 @@ class Graphics
   private:
     std::string ErrorString(GLenum error);
 
+    Physics *m_physics;
+
     Camera *m_camera;
 
     Shader *m_shader;
@@ -33,7 +36,7 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix;
 
-    Object *m_object;
+    Board *m_board;
 };
 
 #endif /* GRAPHICS_H */

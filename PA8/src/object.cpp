@@ -31,6 +31,8 @@ Object::Object(string filename)
 
 Object::Object(string filename, float scale)
 {
+  cout << "CHECK OBJECT CONSTRUCTOR" << endl;
+
   m_parent = NULL;
   m_renderData = new Model();
   if (!m_renderData->LoadObject(filename))
@@ -42,6 +44,8 @@ Object::Object(string filename, float scale)
   m_position = glm::vec3(0.0f, 0.0f, 0.0f);
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+
+  cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
 
 Object::~Object()

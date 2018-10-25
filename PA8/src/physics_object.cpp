@@ -1,66 +1,61 @@
 #include "physics_object.h"
 
-PhysicsObject::PhysicsObject()
+PhysicsObject::PhysicsObject() : Object()
 {
-  m_parent = NULL;
-  m_renderData = new Model();
-  if (!m_renderData->LoadObject())
-  {
-    delete m_renderData;
-    exit(1);
-  }
 
-  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-PhysicsObject::PhysicsObject(string filename)
+PhysicsObject::PhysicsObject(string filename) : Object(filename)
 {
-  m_parent = NULL;
-  m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename))
-  {
-    delete m_renderData;
-    exit(1);
-  }
 
-  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-PhysicsObject::PhysicsObject(string filename, float scale)
+PhysicsObject::PhysicsObject(string filename, float scale) : Object(filename, scale)
 {
-  m_parent = NULL;
-  m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename))
-  {
-    delete m_renderData;
-    exit(1);
-  }
+  cout << "CHECK PHYSICS OBJECT CONSTRUCTOR" << endl;
 
-  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+  cout << "CHECK FINISHED PHYSICS OBJECT CONSTRUCTOR" << endl;
 }
 
 PhysicsObject::~PhysicsObject()
 {
   delete m_renderData;
   m_children.clear();
+  delete m_collider;
+  m_collider = NULL;
+  delete m_rigidBody;
+  m_rigidBody = NULL;
 }
 
-/*
 void PhysicsObject::Update(unsigned int dt)
 {
-  btTransform transform;
-  btScalar modelUpdate[16];
+  /*
+  angleRotate += dt * (M_PI/5000) * m_rotateFactor;
+  model = glm::rotate(glm::mat4(1.0), angleRotate, glm::vec3(0.0,1.0,0.0));
+  
+  model = glm::scale(
+      model,
+      glm::vec3(m_scaleVal, m_scaleVal, m_scaleVal)
+    );
+  */
 
-  //assign value to transform based on rigid body's new world status
-  //then update model with transform
-  m_rigidBody->getMotionState()->getWorldTransform(transform);
-  transform.getOpenGLMatrix(modelUpdate);
-  model = glm::make_mat4(modelUpdate);
+  m_translationMatrix = glm::mat4(1.0f);
+
+  m_rotationMatrix = glm::mat4(1.0f);
+
+  m_scaleMatrix = glm::scale(
+    glm::mat4(1.0),
+    m_scale);
+
+  model = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
 }
-*/
+
+btCollisionShape* PhysicsObject::GetCollider()
+{
+  return m_collider;
+}
+
+btRigidBody* PhysicsObject::GetRigidBody()
+{
+  return m_rigidBody;
+}

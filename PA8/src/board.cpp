@@ -1,7 +1,11 @@
 #include "board.h"
 
-Board::Board()
+Board::Board() : PhysicsObject()
 {
+  cout << "CHECK BOARD CONSTRUCTOR" << endl;
+
+  /*
+
   m_parent = NULL;
   m_renderData = new Model();
   if (!m_renderData->LoadObject())
@@ -14,6 +18,8 @@ Board::Board()
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
+  */
+
   /*Physics*/
 
   //create the collider
@@ -45,14 +51,18 @@ Board::Board()
   m_rigidBody = new btRigidBody(ci);
 
   delete motionState;
-
+  motionState = NULL;
 }
 
-Board::Board(string filename)
+Board::Board(string filename) : PhysicsObject(filename)
 {
+  cout << "CHECK BOARD PARAMETERIZED CONSTRUCTOR 1" << endl;
+
+  /*
+
   m_parent = NULL;
   m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename))
+  if (!m_renderData->LoadObject())
   {
     delete m_renderData;
     exit(1);
@@ -62,6 +72,8 @@ Board::Board(string filename)
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 
+  */
+
   /*Physics*/
 
   //create the collider
@@ -93,13 +105,18 @@ Board::Board(string filename)
   m_rigidBody = new btRigidBody(ci);
 
   delete motionState;
+  motionState = NULL;
 }
 
-Board::Board(string filename, float scale)
+Board::Board(string filename, float scale) : PhysicsObject(filename, scale)
 {
+  cout << "CHECK BOARD PARAMETERIZED CONSTRUCTOR 2" << endl;
+
+  /*
+
   m_parent = NULL;
   m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename))
+  if (!m_renderData->LoadObject())
   {
     delete m_renderData;
     exit(1);
@@ -107,7 +124,9 @@ Board::Board(string filename, float scale)
 
   m_position = glm::vec3(0.0f, 0.0f, 0.0f);
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-  m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+  m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+  */
 
   /*Physics*/
 
@@ -140,6 +159,7 @@ Board::Board(string filename, float scale)
   m_rigidBody = new btRigidBody(ci);
 
   delete motionState;
+  motionState = NULL;
 }
 
 Board::~Board()
@@ -154,12 +174,20 @@ Board::~Board()
 
 void Board::Update(unsigned int dt)
 {
+  cout << "CHECK BOARD UPDATE" << endl;
+
   btTransform transform;
   btScalar modelUpdate[16];
+  const btMotionState* motionState = m_rigidBody->getMotionState();
 
   //assign value to transform based on rigid body's new world status
   //then update model with transform
-  m_rigidBody->getMotionState()->getWorldTransform(transform);
+  motionState->getWorldTransform(transform);
+  
+  cout << "check 1" << endl;
   transform.getOpenGLMatrix(modelUpdate);
+  cout << "check 2" << endl;
   model = glm::make_mat4(modelUpdate);
+
+  cout << "CHECK BOARD UPDATE FINISHED" << endl;
 }

@@ -39,6 +39,11 @@ bool Graphics::Initialize(int width, int height)
   glGenVertexArrays(1, &vao);
   glBindVertexArray(vao);
 
+  //Init Physics
+  m_physics = new Physics();
+
+  cout << "CHECK GRAPHICS FINISHED PHYSICS ALLOC" << endl;
+
   // Init Camera
   m_camera = new Camera();
   if(!m_camera->Initialize(width, height))
@@ -47,8 +52,12 @@ bool Graphics::Initialize(int width, int height)
     return false;
   }
 
+  cout << "CHECK GRAPHICS FINISHED CAMERA ALLOC" << endl;
+
   // Init the objects
-  m_object = new Object("..//assets//Board.obj", 13.0f);
+  m_board = new Board("..//assets//Board.obj", 13.0f);
+
+  cout << "CHECK GRAPHICS FINISHED BOARD ALLOC" << endl;
 
   // Set up the shaders
   m_shader = new Shader();
@@ -78,6 +87,9 @@ bool Graphics::Initialize(int width, int height)
     printf("Program to Finalize\n");
     return false;
   }
+
+  // Add the objects' rigid bodies to the physics world
+  m_physics->AddRigidBody(m_board->GetRigidBody());
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_shader->GetUniformLocation("projectionMatrix");
@@ -116,8 +128,15 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt)
 {
-  // Update the objects and camera
-  m_object->Update(dt);
+  //cout << "CHECK GRAPHICS UPDATE" << endl;
+
+  // Update the physics world
+  m_physics->Update(dt);
+
+  // Update the objects
+  m_board->Update(dt);
+
+  // Update the camera
   m_camera->Update(dt);
 }
 
@@ -137,8 +156,8 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   // Render the objects
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_object->GetModel()));
-  m_object->Render();
+  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
+  m_board->Render();
 
   // Get any errors from OpenGL
   auto error = glGetError();

@@ -14,6 +14,11 @@ public:
   PhysicsObject(string filename, float scale);
   ~PhysicsObject();
 
+  virtual void Update(unsigned int dt);
+
+  btCollisionShape* GetCollider();
+  btRigidBody* GetRigidBody();
+
 protected:
   btCollisionShape *m_collider;
   btRigidBody *m_rigidBody;
