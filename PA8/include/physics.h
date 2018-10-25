@@ -12,8 +12,9 @@ class Physics
 public:
   Physics();
   Physics(glm::vec3 gravity);
-  ~Physics();
+  virtual ~Physics();
 
+  virtual bool Initialize();
   virtual void Update(unsigned int dt);
   //void AddRigidBody(btRigidBody* rigidBody);
 
@@ -23,6 +24,7 @@ protected:
   btSequentialImpulseConstraintSolver *m_solver;
 
   btDiscreteDynamicsWorld *m_dynamicsWorld;
+  glm::vec3 m_gravity;
 };
 
 #endif /* PHYSICS_H */

@@ -12,9 +12,7 @@ PhysicsObject::PhysicsObject(string filename) : Object(filename)
 
 PhysicsObject::PhysicsObject(string filename, float scale) : Object(filename, scale)
 {
-  cout << "CHECK PHYSICS OBJECT CONSTRUCTOR" << endl;
 
-  cout << "CHECK FINISHED PHYSICS OBJECT CONSTRUCTOR" << endl;
 }
 
 PhysicsObject::~PhysicsObject()
@@ -50,6 +48,7 @@ void PhysicsObject::Update(unsigned int dt)
   model = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
 }
 
+/*
 btCollisionShape* PhysicsObject::GetCollider()
 {
   return m_collider;
@@ -59,3 +58,4 @@ btRigidBody* PhysicsObject::GetRigidBody()
 {
   return m_rigidBody;
 }
+*/

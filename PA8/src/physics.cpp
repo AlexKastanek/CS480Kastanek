@@ -2,25 +2,27 @@
 
 Physics::Physics()
 {
-  btDefaultCollisionConfiguration *collisionConfig;
-
-  m_broadphase = new btDbvtBroadphase();
-  collisionConfig = new btDefaultCollisionConfiguration();
-  m_dispatcher = new btCollisionDispatcher(collisionConfig);
-  m_solver = new btSequentialImpulseConstraintSolver();
-
-  m_dynamicsWorld = new btDiscreteDynamicsWorld(
-    m_dispatcher,
-    m_broadphase,
-    m_solver,
-    collisionConfig);
-  m_dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
-
-  delete collisionConfig;
-  collisionConfig = NULL;
+  m_gravity = glm::vec3(0.0f, -9.81f, 0.0f);
 }
 
 Physics::Physics(glm::vec3 gravity)
+{
+  m_gravity = gravity;
+}
+
+Physics::~Physics()
+{
+  delete m_broadphase;
+  m_broadphase = NULL;
+  delete m_dispatcher;
+  m_dispatcher = NULL;
+  delete m_solver;
+  m_solver = NULL;
+  delete m_dynamicsWorld;
+  m_dynamicsWorld = NULL;
+}
+
+bool Physics::Initialize()
 {
   btDefaultCollisionConfiguration *collisionConfig;
 
@@ -35,24 +37,12 @@ Physics::Physics(glm::vec3 gravity)
     m_solver,
     collisionConfig);
   m_dynamicsWorld->setGravity(btVector3(
-    gravity.x,
-    gravity.y,
-    gravity.z));
+    m_gravity.x,
+    m_gravity.y,
+    m_gravity.z));
 
   delete collisionConfig;
   collisionConfig = NULL;
-}
-
-Physics::~Physics()
-{
-  delete m_broadphase;
-  m_broadphase = NULL;
-  delete m_dispatcher;
-  m_dispatcher = NULL;
-  delete m_solver;
-  m_solver = NULL;
-  delete m_dynamicsWorld;
-  m_dynamicsWorld = NULL;
 }
 
 void Physics::Update(unsigned int dt)

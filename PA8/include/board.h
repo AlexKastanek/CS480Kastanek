@@ -13,6 +13,7 @@ public:
   Board(string filename, float scale);
   ~Board();
 
+  bool Initialize();
   void Update(unsigned int dt);
 
 private:

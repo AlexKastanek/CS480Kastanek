@@ -25,7 +25,8 @@ class Object
     Object();
     Object(string filename);
     Object(string filename, float scale);
-    ~Object();
+    virtual ~Object();
+
     virtual void Update(unsigned int dt);
     void Render();
 
