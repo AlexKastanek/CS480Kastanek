@@ -1,21 +1,21 @@
-#include "board.h"
+#include "ball.h"
 
-Board::Board() : PhysicsObject()
+Ball::Ball() : PhysicsObject()
 {
 
 }
 
-Board::Board(string filename) : PhysicsObject(filename)
+Ball::Ball(string filename) : PhysicsObject(filename)
 {
 
 }
 
-Board::Board(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
+Ball::Ball(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
 
 }
 
-Board::~Board()
+Ball::~Ball()
 {
   delete m_renderData;
   m_children.clear();
@@ -25,19 +25,27 @@ Board::~Board()
   m_rigidBody = NULL;
 }
 
-bool Board::Initialize()
+bool Ball::Initialize()
 {
-  cout << "CHECK BOARD INITIALIZE" << endl;
+  cout << "CHECK BALL INITIALIZE" << endl;
 
   //create the collider
-  m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
+  m_collider = new btSphereShape(btScalar(0.5f));
 
+  //create with correct transform info
   //create the motion state
+  /*
+  btDefaultMotionState *motionState = NULL;
+  motionState = new btDefaultMotionState(
+    btTransform(
+      btQuaternion(0, 0, 0, 0),
+      btVector3(0, 0, 0)));
+  */
   btDefaultMotionState *motionState = NULL;
   motionState = new btDefaultMotionState();
 
   //set mass and inertia
-  btScalar mass(0);
+  btScalar mass(1);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -56,10 +64,20 @@ bool Board::Initialize()
   //delete motionState;
   //motionState = NULL;
 
+  cout << m_position.y << endl;
+
+  //set the initial translation
+  /*
+  m_translationMatrix = glm::translate(
+    glm::mat4(1.0f),
+    m_position);
+  model = m_translationMatrix;
+  */
+
   return true;
 }
 
-void Board::Update(unsigned int dt)
+void Ball::Update(unsigned int dt)
 {
   btTransform transform;
   btScalar modelUpdate[16];

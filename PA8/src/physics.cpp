@@ -40,9 +40,6 @@ bool Physics::Initialize()
     m_gravity.x,
     m_gravity.y,
     m_gravity.z));
-
-  delete collisionConfig;
-  collisionConfig = NULL;
 }
 
 void Physics::Update(unsigned int dt)

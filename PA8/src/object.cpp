@@ -29,7 +29,7 @@ Object::Object(string filename)
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-Object::Object(string filename, float scale)
+Object::Object(string filename, float scale, glm::vec3 position)
 {
   cout << "CHECK OBJECT CONSTRUCTOR" << endl;
 
@@ -41,7 +41,7 @@ Object::Object(string filename, float scale)
     exit(1);
   }
 
-  m_position = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_position = position;
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
 
@@ -66,7 +66,9 @@ void Object::Update(unsigned int dt)
    	);
   */
 
-  m_translationMatrix = glm::mat4(1.0f);
+  m_translationMatrix = glm::translate(
+    glm::mat4(1.0f),
+    m_position);
 
   m_rotationMatrix = glm::mat4(1.0f);
 

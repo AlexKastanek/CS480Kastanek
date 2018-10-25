@@ -10,7 +10,7 @@ PhysicsObject::PhysicsObject(string filename) : Object(filename)
 
 }
 
-PhysicsObject::PhysicsObject(string filename, float scale) : Object(filename, scale)
+PhysicsObject::PhysicsObject(string filename, float scale, glm::vec3 position) : Object(filename, scale, position)
 {
 
 }
@@ -37,7 +37,9 @@ void PhysicsObject::Update(unsigned int dt)
     );
   */
 
-  m_translationMatrix = glm::mat4(1.0f);
+  m_translationMatrix = glm::translate(
+    glm::mat4(1.0f),
+    m_position);
 
   m_rotationMatrix = glm::mat4(1.0f);
 

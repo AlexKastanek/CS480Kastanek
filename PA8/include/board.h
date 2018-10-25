@@ -10,7 +10,7 @@ class Board : public PhysicsObject
 public:
   Board();
   Board(string filename);
-  Board(string filename, float scale);
+  Board(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
   ~Board();
 
   bool Initialize();

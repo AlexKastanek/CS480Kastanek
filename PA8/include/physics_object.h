@@ -11,7 +11,7 @@ class PhysicsObject : public Object
 public:
   PhysicsObject();
   PhysicsObject(string filename);
-  PhysicsObject(string filename, float scale);
+  PhysicsObject(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
   virtual ~PhysicsObject();
 
   virtual void Update(unsigned int dt);

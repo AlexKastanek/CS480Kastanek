@@ -167,8 +167,11 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   // Render the objects
-  glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
-  m_world->Render();
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
+  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
+  m_world->Render(m_modelMatrix);
+
+  //cout << "finished rendering objects" << endl;
 
   // Get any errors from OpenGL
   auto error = glGetError();
