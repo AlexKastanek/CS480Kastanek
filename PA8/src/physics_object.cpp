@@ -13,8 +13,6 @@ PhysicsObject::PhysicsObject()
   m_position = glm::vec3(0.0f, 0.0f, 0.0f);
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
-
-  //TODO: Allocate physics stuff! (lookup function definitions and parameters)
 }
 
 PhysicsObject::PhysicsObject(string filename)
@@ -53,6 +51,7 @@ PhysicsObject::~PhysicsObject()
   m_children.clear();
 }
 
+/*
 void PhysicsObject::Update(unsigned int dt)
 {
   btTransform transform;
@@ -64,3 +63,4 @@ void PhysicsObject::Update(unsigned int dt)
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate);
 }
+*/

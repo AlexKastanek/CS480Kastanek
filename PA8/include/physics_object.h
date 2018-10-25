@@ -14,11 +14,9 @@ public:
   PhysicsObject(string filename, float scale);
   ~PhysicsObject();
 
-  void Update(unsigned int dt);
-
-private:
+protected:
   btCollisionShape *m_collider;
   btRigidBody *m_rigidBody;
 };
 
-#endif
+#endif /* PHYSICS_OBJECT_H */
