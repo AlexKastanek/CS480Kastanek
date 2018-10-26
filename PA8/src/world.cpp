@@ -38,7 +38,7 @@ bool World::Initialize()
   m_board->Initialize();
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 1.0f, glm::vec3(0.0f, 3.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 1.0f, glm::vec3(0.0f, 20.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
@@ -49,7 +49,7 @@ void World::Update(unsigned int dt)
 {
   //cout << "entered world update function" << endl;
 
-  m_dynamicsWorld->stepSimulation(dt, 10);
+  m_dynamicsWorld->stepSimulation(dt, 1);
 
   //cout << "updating objects" << endl;
   m_board->Update(dt);

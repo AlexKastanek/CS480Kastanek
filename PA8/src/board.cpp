@@ -33,8 +33,7 @@ bool Board::Initialize()
   m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
 
   //create the motion state
-  btDefaultMotionState *motionState = NULL;
-  motionState = new btDefaultMotionState();
+  m_motionState = new btDefaultMotionState();
 
   //set mass and inertia
   btScalar mass(0);
@@ -44,7 +43,7 @@ bool Board::Initialize()
   //set the construction info
   btRigidBody::btRigidBodyConstructionInfo ci (
     mass,
-    motionState,
+    m_motionState,
     m_collider,
     inertia
     );

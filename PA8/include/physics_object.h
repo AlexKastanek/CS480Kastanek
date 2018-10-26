@@ -20,6 +20,7 @@ public:
   //btRigidBody* GetRigidBody();
 
   btCollisionShape *m_collider;
+  btMotionState *m_motionState;
   btRigidBody *m_rigidBody;
 
 protected:

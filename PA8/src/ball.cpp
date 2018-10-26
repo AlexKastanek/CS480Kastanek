@@ -29,6 +29,9 @@ bool Ball::Initialize()
 {
   cout << "CHECK BALL INITIALIZE" << endl;
 
+  btTransform transform;
+  btScalar m[16];
+
   //create the collider
   m_collider = new btSphereShape(btScalar(0.5f));
 
@@ -41,18 +44,34 @@ bool Ball::Initialize()
       btQuaternion(0, 0, 0, 0),
       btVector3(0, 0, 0)));
   */
-  btDefaultMotionState *motionState = NULL;
-  motionState = new btDefaultMotionState();
+  //btDefaultMotionState *motionState = NULL;
+  //motionState = new btDefaultMotionState();
+
+  /*
+  //assign this to the transform
+  memset(m, '\0', 16);
+  memcpy(m, &model, 16);
+  transform.setFromOpenGLMatrix(m);
+  */
+
+  //set the transform
+  transform.setOrigin(btVector3(
+    m_position.x,
+    m_position.y,
+    m_position.z));
+
+  //create the motion state
+  m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(1);
+  btScalar mass(0.01f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
   //set the construction info
   btRigidBody::btRigidBodyConstructionInfo ci (
     mass,
-    motionState,
+    m_motionState,
     m_collider,
     inertia
     );
