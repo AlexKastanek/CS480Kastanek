@@ -34,11 +34,11 @@ bool World::Initialize()
     m_gravity.y,
     m_gravity.z));
 
-  m_board = new Board("..//assets//Board.obj", 13.0f);
+  m_board = new Board("..//assets//Board.obj", 100.0f);
   m_board->Initialize();
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 1.0f, glm::vec3(0.0f, 20.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 5.0f, glm::vec3(0.0f, 100.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 

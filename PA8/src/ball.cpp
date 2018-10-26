@@ -28,12 +28,24 @@ Ball::~Ball()
 bool Ball::Initialize()
 {
   cout << "CHECK BALL INITIALIZE" << endl;
+  cout << m_position.y << endl;
 
-  btTransform transform;
+  btTransform transform(
+    btQuaternion::getIdentity(),
+    btVector3(
+      m_position.x,
+      m_position.y,
+      m_position.z));
   btScalar m[16];
 
+  //set the initial translation
+  m_translationMatrix = glm::translate(
+    glm::mat4(1.0f),
+    m_position);
+  
+
   //create the collider
-  m_collider = new btSphereShape(btScalar(0.5f));
+  m_collider = new btSphereShape(btScalar(m_scale.x/2));
 
   //create with correct transform info
   //create the motion state
@@ -55,16 +67,18 @@ bool Ball::Initialize()
   */
 
   //set the transform
+  /*
   transform.setOrigin(btVector3(
     m_position.x,
     m_position.y,
     m_position.z));
+  */
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.01f);
+  btScalar mass(0.001f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -83,15 +97,7 @@ bool Ball::Initialize()
   //delete motionState;
   //motionState = NULL;
 
-  cout << m_position.y << endl;
-
-  //set the initial translation
-  /*
-  m_translationMatrix = glm::translate(
-    glm::mat4(1.0f),
-    m_position);
   model = m_translationMatrix;
-  */
 
   return true;
 }
