@@ -7,7 +7,7 @@ using namespace std;
 
 class Flipper : public PhysicsObject
 {
-  public:
+public:
   Flipper();
   Flipper(string filename);
   Flipper(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
@@ -19,4 +19,4 @@ class Flipper : public PhysicsObject
   private:
 };
 
-#endif
+#endif /* FLIPPER_H */

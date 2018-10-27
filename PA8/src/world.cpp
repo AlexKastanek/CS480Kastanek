@@ -42,6 +42,10 @@ bool World::Initialize()
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
+  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(0.0f, 2.5f, -50.0f));
+  m_flipperRight->Initialize();
+  m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
+
   return true;
 }
 
@@ -54,6 +58,7 @@ void World::Update(unsigned int dt)
   //cout << "updating objects" << endl;
   m_board->Update(dt);
   m_ball->Update(dt);
+  m_flipperRight->Update(dt);
   //cout << "finished updating objects" << endl;
 }
 
@@ -63,6 +68,8 @@ void World::Render(GLint& modelMatrix)
   m_board->Render();
   glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
   m_ball->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
+  m_flipperRight->Render();
 }
 
 Board& World::GetBoard()
@@ -73,4 +80,9 @@ Board& World::GetBoard()
 Ball& World::GetBall()
 {
   return *m_ball;
+}
+
+Flipper& World::GetFlipperRight()
+{
+  return *m_flipperRight;
 }

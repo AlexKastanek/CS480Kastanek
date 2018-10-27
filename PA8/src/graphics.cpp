@@ -43,7 +43,7 @@ bool Graphics::Initialize(int width, int height)
   //m_physics = new Physics();
 
   //Init the world
-  m_world = new World(glm::vec3(0.0f, -1.0f, 0.0f));
+  m_world = new World(glm::vec3(0.0f, -0.9f, -0.1f));
   if (!m_world->Initialize())
   {
     printf("World Failed to Initialize\n");

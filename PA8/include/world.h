@@ -5,6 +5,7 @@
 #include "physics.h"
 #include "board.h"
 #include "ball.h"
+#include "flipper.h"
 
 using namespace std;
 
@@ -21,10 +22,12 @@ public:
 
   Board& GetBoard();
   Ball& GetBall();
+  Flipper& GetFlipperRight();
 
 private:
   Board *m_board;
   Ball *m_ball;
+  Flipper *m_flipperRight;
 
 };
 
