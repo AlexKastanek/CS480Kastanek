@@ -113,6 +113,9 @@ void Engine::Keyboard()
   				case SDLK_ESCAPE:
   					m_running = false;
   					break;
+                                case SDLK_w:
+                                        break;
+                                        
           default:
             break;
         }

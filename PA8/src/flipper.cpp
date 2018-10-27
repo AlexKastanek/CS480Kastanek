@@ -88,6 +88,7 @@ void Flipper::Update(unsigned int dt)
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+  
 }
 
 void Flipper::Flip()
@@ -95,7 +96,15 @@ void Flipper::Flip()
   float x = 0.0f;
   float y = 0.5f;
   float z = 0.0f;
+  
+  //m_rigidBody->applyCentralImpulse(btVector3(.0, 0.0, 6.0));
 
-  m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
+  //m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
   //m_rigidBody->getWorldTransform()*btVector3(x,y,z);
+  //m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
+}
+
+void Flipper::moveUp()
+{
+   m_rigidBody->applyCentralImpulse(btVector3(0.0, 0.0, 3.0));
 }

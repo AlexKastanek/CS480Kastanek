@@ -18,6 +18,11 @@ public:
 
   void Flip();
 
+  void moveUp();
+  void moveDown();
+  void moveRight();
+  void moveLeft();
+
   private:
 };
 
