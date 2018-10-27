@@ -65,7 +65,7 @@ bool Flipper::Initialize()
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
-  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+  //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
   model = m_translationMatrix;
 
@@ -88,4 +88,13 @@ void Flipper::Update(unsigned int dt)
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+}
+
+void Flipper::Flip()
+{
+  float x = 0.0f;
+  float y = 1.5f;
+  float z = 0.0f;
+
+  m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
 }

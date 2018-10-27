@@ -16,6 +16,8 @@ public:
   bool Initialize();
   void Update(unsigned int dt);
 
+  void Flip();
+
   private:
 };
 

@@ -46,6 +46,8 @@ bool World::Initialize()
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
+  
+
   return true;
 }
 
@@ -60,6 +62,12 @@ void World::Update(unsigned int dt)
   m_ball->Update(dt);
   m_flipperRight->Update(dt);
   //cout << "finished updating objects" << endl;
+
+  if (!flipped)
+  {
+    m_flipperRight->Flip();
+    flipped = true;
+  }
 }
 
 void World::Render(GLint& modelMatrix)

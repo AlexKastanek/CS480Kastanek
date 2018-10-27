@@ -29,6 +29,8 @@ private:
   Ball *m_ball;
   Flipper *m_flipperRight;
 
+  bool flipped = false;
+
 };
 
 #endif /* WORLD_H */
