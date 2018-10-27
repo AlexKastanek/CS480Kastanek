@@ -31,6 +31,25 @@ private:
 
   bool flipped = false;
 
+  btCollisionShape *m_bottomWall;
+  btCollisionShape *m_topWall;
+  btCollisionShape *m_leftWall;
+  btCollisionShape *m_rightWall;
+  btCollisionShape *m_lid;
+
+  btDefaultMotionState *m_bottomWallMotion;
+  btDefaultMotionState *m_topWallMotion;
+  btDefaultMotionState *m_leftWallMotion;
+  btDefaultMotionState *m_rightWallMotion;
+  btDefaultMotionState *m_lidMotion;
+
+  btRigidBody *m_bottomWallRigid;
+  btRigidBody *m_topWallRigid;
+  btRigidBody *m_leftWallRigid;
+  btRigidBody *m_rightWallRigid;
+  btRigidBody *m_lidRigid;
+  
+
 };
 
 #endif /* WORLD_H */

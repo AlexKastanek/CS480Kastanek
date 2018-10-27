@@ -7,6 +7,7 @@
 #include "window.h"
 #include "gui.h"
 #include "graphics.h"
+#include "world.h"
 
 class Engine
 {
