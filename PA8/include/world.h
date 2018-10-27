@@ -24,6 +24,12 @@ public:
   Ball& GetBall();
   Flipper& GetFlipperRight();
 
+  void moveFlipperUp();
+  void moveFlipperDown();
+  void moveFlipperRight();
+  void moveFlipperLeft();
+
+
 private:
   Board *m_board;
   Ball *m_ball;

@@ -50,7 +50,7 @@ bool World::Initialize()
     //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
-  m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-75)));
+  m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-65)));
   btRigidBody::btRigidBodyConstructionInfo bottomCI(0, m_bottomWallMotion, m_bottomWall, btVector3(0,0,0));
   m_bottomWallRigid = new btRigidBody(bottomCI);
   m_bottomWallRigid -> setActivationState(DISABLE_DEACTIVATION);
@@ -137,4 +137,24 @@ Ball& World::GetBall()
 Flipper& World::GetFlipperRight()
 {
   return *m_flipperRight;
+}
+
+void World::moveFlipperUp()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, 5.0));
+}
+
+void World::moveFlipperDown()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, -5.0));
+}
+
+void World::moveFlipperRight()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(-5.0, 0.0, 0.0));
+}
+
+void World::moveFlipperLeft()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(5.0, 0.0, 0.0));
 }
