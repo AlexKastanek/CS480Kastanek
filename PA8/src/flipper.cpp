@@ -103,8 +103,3 @@ void Flipper::Flip()
   //m_rigidBody->getWorldTransform()*btVector3(x,y,z);
   //m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
 }
-
-void Flipper::moveUp()
-{
-   m_rigidBody->applyCentralImpulse(btVector3(0.0, 0.0, 3.0));
-}

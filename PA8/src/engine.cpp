@@ -114,6 +114,16 @@ void Engine::Keyboard()
   					m_running = false;
   					break;
                                 case SDLK_w:
+                                        m_graphics -> moveFlipper('w');
+                                        break;
+                                case SDLK_s:
+                                        m_graphics -> moveFlipper('s');
+                                        break;
+                                case SDLK_a:
+                                        m_graphics -> moveFlipper('a');
+                                        break;
+                                case SDLK_d:
+                                        m_graphics -> moveFlipper('d');
                                         break;
                                         
           default:

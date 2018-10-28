@@ -25,6 +25,8 @@ class Graphics
     void Update(unsigned int dt);
     void Render();
 
+    void moveFlipper(char input);
+
   private:
     std::string ErrorString(GLenum error);
 
