@@ -6,6 +6,7 @@
 #include "board.h"
 #include "ball.h"
 #include "flipper.h"
+#include "cylinder.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
   Board& GetBoard();
   Ball& GetBall();
   Flipper& GetFlipperRight();
+  Cylinder& GetCylinder();
 
   void moveFlipperUp();
   void moveFlipperDown();
@@ -34,6 +36,7 @@ private:
   Board *m_board;
   Ball *m_ball;
   Flipper *m_flipperRight;
+  Cylinder *m_cylinder;
 
   bool flipped = false;
 

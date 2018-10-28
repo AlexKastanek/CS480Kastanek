@@ -52,7 +52,7 @@ link_directories    ( ${BULLET_LIBRARY_DIRS} )
 
 # Set sources
 FILE(GLOB_RECURSE SOURCES "src/*.cpp")
-ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES} src/model.cpp include/model.h)
+ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES} src/model.cpp include/model.h src/cylinder.cpp include/cylinder.h)
 
 
 add_custom_target("${PROJECT_NAME}_SUCCESSFUL" ALL
