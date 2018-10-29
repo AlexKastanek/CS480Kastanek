@@ -95,10 +95,12 @@ void Flipper::Update(unsigned int dt)
 void Flipper::Flip()
 {
   float x = 0.0f;
-  float y = 1.5f;
+  float y = 0.5f;
   float z = 0.0f;
   
   //m_rigidBody->applyCentralImpulse(btVector3(.0, 0.0, 6.0));
 
+  //m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
+  //m_rigidBody->getWorldTransform()*btVector3(x,y,z);
   //m_rigidBody->applyTorqueImpulse(btVector3(x,y,z));
 }
