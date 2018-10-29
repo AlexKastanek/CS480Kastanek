@@ -65,6 +65,7 @@ bool Flipper::Initialize()
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
+  m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
   //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
   model = m_translationMatrix;
