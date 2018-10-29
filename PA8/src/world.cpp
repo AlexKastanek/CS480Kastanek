@@ -121,29 +121,21 @@ Cylinder& World::GetCylinder()
 
 void World::moveFlipperUp()
 {
-<<<<<<< HEAD
+
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, 10.0));
-=======
-   m_flipperRight -> m_rigidBody -> applyCentralForce(btVector3(0.0, 0.0, 100.0));
->>>>>>> f534485cd5d98c725e5126f8c3b7e3eb178b553b
+
 }
 
 void World::moveFlipperDown()
 {
-<<<<<<< HEAD
+
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, -10.0));
-=======
-   m_flipperRight -> m_rigidBody -> applyCentralForce(btVector3(0.0, 0.0, -100.0));
->>>>>>> f534485cd5d98c725e5126f8c3b7e3eb178b553b
+
 }
 
 void World::moveFlipperRight()
 {
-<<<<<<< HEAD
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(-10.0, 0.0, 0.0));
-=======
-   m_flipperRight -> m_rigidBody -> applyCentralForce(btVector3(-100.0, 0.0, 0.0));
->>>>>>> f534485cd5d98c725e5126f8c3b7e3eb178b553b
 }
 
 void World::moveFlipperLeft()
