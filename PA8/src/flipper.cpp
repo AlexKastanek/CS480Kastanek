@@ -88,6 +88,7 @@ void Flipper::Update(unsigned int dt)
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+  model[3].y = 3.0f;
   
 }
 

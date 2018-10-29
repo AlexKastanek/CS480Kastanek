@@ -29,6 +29,8 @@ public:
   void moveFlipperRight();
   void moveFlipperLeft();
 
+  void createWalls();
+
 
 private:
   Board *m_board;

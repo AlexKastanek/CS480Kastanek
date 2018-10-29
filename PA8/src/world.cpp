@@ -12,7 +12,7 @@ World::World(glm::vec3 gravity) : Physics(gravity)
 
 World::~World()
 {
-
+  
 }
 
 bool World::Initialize()
@@ -47,7 +47,84 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
   
   
-    //bottom collision wall
+  createWalls();
+  
+
+  return true;
+}
+
+void World::Update(unsigned int dt)
+{
+  //cout << "entered world update function" << endl;
+
+  m_dynamicsWorld->stepSimulation(dt, 1);
+
+  //cout << "updating objects" << endl;
+  
+  m_board->Update(dt);
+  m_ball->Update(dt);
+  m_flipperRight->Update(dt);
+  
+  
+  m_ball -> m_rigidBody -> clearForces();
+  m_flipperRight -> m_rigidBody -> clearForces();
+  //cout << "finished updating objects" << endl;
+
+//   if (!flipped)
+//   {
+//     m_flipperRight->Flip();
+//     flipped = true;
+//   }
+}
+
+void World::Render(GLint& modelMatrix)
+{
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
+  m_board->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
+  m_ball->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
+  m_flipperRight->Render();
+}
+
+Board& World::GetBoard()
+{
+  return *m_board;
+}
+
+Ball& World::GetBall()
+{
+  return *m_ball;
+}
+
+Flipper& World::GetFlipperRight()
+{
+  return *m_flipperRight;
+}
+
+void World::moveFlipperUp()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, 10.0));
+}
+
+void World::moveFlipperDown()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, -10.0));
+}
+
+void World::moveFlipperRight()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(-10.0, 0.0, 0.0));
+}
+
+void World::moveFlipperLeft()
+{
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(10.0, 0.0, 0.0));
+}
+
+void World::createWalls()
+{
+        //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
   m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-65)));
@@ -90,71 +167,4 @@ bool World::Initialize()
   m_lidRigid = new btRigidBody(lidCI);
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_lidRigid);
-  
-
-  return true;
-}
-
-void World::Update(unsigned int dt)
-{
-  //cout << "entered world update function" << endl;
-
-  m_dynamicsWorld->stepSimulation(dt, 1);
-
-  //cout << "updating objects" << endl;
-  m_board->Update(dt);
-  m_ball->Update(dt);
-  m_flipperRight->Update(dt);
-  //cout << "finished updating objects" << endl;
-
-  if (!flipped)
-  {
-    m_flipperRight->Flip();
-    flipped = true;
-  }
-}
-
-void World::Render(GLint& modelMatrix)
-{
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
-  m_board->Render();
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
-  m_ball->Render();
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
-  m_flipperRight->Render();
-}
-
-Board& World::GetBoard()
-{
-  return *m_board;
-}
-
-Ball& World::GetBall()
-{
-  return *m_ball;
-}
-
-Flipper& World::GetFlipperRight()
-{
-  return *m_flipperRight;
-}
-
-void World::moveFlipperUp()
-{
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, 5.0));
-}
-
-void World::moveFlipperDown()
-{
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, -5.0));
-}
-
-void World::moveFlipperRight()
-{
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(-5.0, 0.0, 0.0));
-}
-
-void World::moveFlipperLeft()
-{
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(5.0, 0.0, 0.0));
 }
