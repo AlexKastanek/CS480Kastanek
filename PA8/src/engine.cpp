@@ -75,6 +75,11 @@ void Engine::Run()
     // Update the DT
     m_DT = getDT();
 
+
+    // Update and render the graphics
+    m_graphics->Update(m_DT);
+    m_graphics->Render();
+    
     while(SDL_PollEvent(&m_event) != 0)
     {
       if (!ImGui::IsMouseHoveringAnyWindow())
@@ -83,10 +88,6 @@ void Engine::Run()
         Keyboard();
       }
     }
-
-    // Update and render the graphics
-    m_graphics->Update(m_DT);
-    m_graphics->Render();
 
     // Update and render the GUI
     //m_gui->Update(m_window->GetWindow(), m_graphics);
@@ -126,10 +127,10 @@ void Engine::Keyboard()
                                         m_graphics -> moveFlipper('d');
                                         break;
                                         
-          default:
-            break;
-        }
-  			break;
+                                default:
+                                        break;
+                            }
+  			
   		default:
   			break;
   	}
