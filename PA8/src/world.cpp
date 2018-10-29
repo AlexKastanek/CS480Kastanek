@@ -48,7 +48,7 @@ bool World::Initialize()
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
-    m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(2.0f, 2.0f, 50.0f));
+    m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 50.0f));
     m_cylinder->Initialize();
     m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
   
@@ -157,7 +157,8 @@ Cylinder& World::GetCylinder()
 
 void World::moveFlipperUp()
 {
-   m_flipperRight -> m_rigidBody -> applyCentralForce(btVector3(0.0, 0.0, 100.0));
+   //m_flipperRight -> m_rigidBody -> applyCentralForce(btVector3(0.0, 0.0, 100.0));
+  m_flipperRight->m_rigidBody->setLinearVelocity(btVector3(0.0,0.0,5.0));
 }
 
 void World::moveFlipperDown()
@@ -172,5 +173,5 @@ void World::moveFlipperRight()
 
 void World::moveFlipperLeft()
 {
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(5.0, 0.0, 0.0));
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(100.0, 0.0, 0.0));
 }
