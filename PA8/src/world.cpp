@@ -184,7 +184,7 @@ void World::createWalls()
   
    m_lid = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
   m_lidMotion = NULL;
-  m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,12,0)));
+  m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,7,0)));
   btRigidBody::btRigidBodyConstructionInfo lidCI(0, m_lidMotion, m_lid, btVector3(0,0,0));
   m_lidRigid = new btRigidBody(lidCI);
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
