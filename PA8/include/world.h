@@ -41,6 +41,7 @@ private:
   Cylinder *m_cylinder;
 
   bool flipped = false;
+  float moveForce;
 
   btCollisionShape *m_bottomWall;
   btCollisionShape *m_topWall;

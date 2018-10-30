@@ -2,12 +2,12 @@
 
 World::World() : Physics()
 {
-
+  moveForce = 1000;
 }
 
 World::World(glm::vec3 gravity) : Physics(gravity)
 {
-
+  moveForce = 1000;
 }
 
 World::~World()
@@ -121,25 +121,27 @@ Cylinder& World::GetCylinder()
 
 void World::moveFlipperUp()
 {
-
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, 10.0));
+  cout << "move flipper up" << endl;
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, moveForce));
 }
 
 void World::moveFlipperDown()
 {
-
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, -10.0));
+  cout << "move flipper down" << endl;
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, moveForce * -1));
 
 }
 
 void World::moveFlipperRight()
 {
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(-10.0, 0.0, 0.0));
+  cout << "move flipper right" << endl;
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(moveForce * -1, 0.0, 0.0));
 }
 
 void World::moveFlipperLeft()
 {
-   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(10.0, 0.0, 0.0));
+  cout << "move flipper left" << endl;
+   m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(moveForce, 0.0, 0.0));
 }
 
 void World::createWalls()

@@ -65,6 +65,7 @@ bool Flipper::Initialize()
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
+  m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
   //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
   model = m_translationMatrix;
@@ -88,7 +89,7 @@ void Flipper::Update(unsigned int dt)
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
-  model[3].y = 3.0f;
+  //model[3].y = 3.0f;
   
 }
 
