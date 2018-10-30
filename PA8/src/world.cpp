@@ -121,32 +121,32 @@ Cylinder& World::GetCylinder()
 
 void World::moveFlipperUp()
 {
-  cout << "move flipper up" << endl;
+  //cout << "move flipper up" << endl;
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, moveForce));
 }
 
 void World::moveFlipperDown()
 {
-  cout << "move flipper down" << endl;
+  //cout << "move flipper down" << endl;
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(0.0, 0.0, moveForce * -1));
 
 }
 
 void World::moveFlipperRight()
 {
-  cout << "move flipper right" << endl;
+  //cout << "move flipper right" << endl;
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(moveForce * -1, 0.0, 0.0));
 }
 
 void World::moveFlipperLeft()
 {
-  cout << "move flipper left" << endl;
+  //cout << "move flipper left" << endl;
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(moveForce, 0.0, 0.0));
 }
 
 void World::createWalls()
 {
-        //bottom collision wall
+  //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
   m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-70)));
@@ -182,7 +182,8 @@ void World::createWalls()
   m_topWallRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_topWallRigid);
   
-   m_lid = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
+  //collision wall to keep objects from flying out 
+  m_lid = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
   m_lidMotion = NULL;
   m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,7,0)));
   btRigidBody::btRigidBodyConstructionInfo lidCI(0, m_lidMotion, m_lid, btVector3(0,0,0));
