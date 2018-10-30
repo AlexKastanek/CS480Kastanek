@@ -2,12 +2,12 @@
 
 World::World() : Physics()
 {
-  moveForce = 1;
+  moveForce = 0.5f;
 }
 
 World::World(glm::vec3 gravity) : Physics(gravity)
 {
-  moveForce = 1;
+  moveForce = 0.5f;
 }
 
 World::~World()
@@ -48,7 +48,7 @@ bool World::Initialize()
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
-    m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 50.0f));
+    m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
     m_cylinder->Initialize();
     m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
   
@@ -149,7 +149,7 @@ void World::createWalls()
         //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
-  m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-65)));
+  m_bottomWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,-70)));
   btRigidBody::btRigidBodyConstructionInfo bottomCI(0, m_bottomWallMotion, m_bottomWall, btVector3(0,0,0));
   m_bottomWallRigid = new btRigidBody(bottomCI);
   m_bottomWallRigid -> setActivationState(DISABLE_DEACTIVATION);
@@ -158,7 +158,7 @@ void World::createWalls()
   //left collision wall
   m_leftWall = new btStaticPlaneShape(btVector3(-1, 0, 0), 1);
   m_leftWallMotion = NULL;
-  m_leftWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(25,0,0)));
+  m_leftWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(50,0,0)));
   btRigidBody::btRigidBodyConstructionInfo leftCI(0, m_leftWallMotion, m_leftWall, btVector3(0,0,0));
   m_leftWallRigid = new btRigidBody(leftCI);
   m_leftWallRigid -> setActivationState(DISABLE_DEACTIVATION);
@@ -167,7 +167,7 @@ void World::createWalls()
   //right collision wall
   m_rightWall = new btStaticPlaneShape(btVector3(1, 0, 0), 1);
   m_rightWallMotion = NULL;
-  m_rightWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(-25,0,0)));
+  m_rightWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(-50,0,0)));
   btRigidBody::btRigidBodyConstructionInfo rightCI(0, m_rightWallMotion, m_rightWall, btVector3(0,0,0));
   m_rightWallRigid = new btRigidBody(rightCI);
   m_rightWallRigid -> setActivationState(DISABLE_DEACTIVATION);
@@ -176,7 +176,7 @@ void World::createWalls()
   //top collision wall
   m_topWall = new btStaticPlaneShape(btVector3(0, 0, -1), 1);
   m_topWallMotion = NULL;
-  m_topWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,75)));
+  m_topWallMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,0,90)));
   btRigidBody::btRigidBodyConstructionInfo topCI(0, m_topWallMotion, m_topWall, btVector3(0,0,0));
   m_topWallRigid = new btRigidBody(topCI);
   m_topWallRigid -> setActivationState(DISABLE_DEACTIVATION);
