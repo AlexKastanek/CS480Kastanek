@@ -2,12 +2,12 @@
 
 World::World() : Physics()
 {
-  moveForce = 1000;
+  moveForce = 1;
 }
 
 World::World(glm::vec3 gravity) : Physics(gravity)
 {
-  moveForce = 1000;
+  moveForce = 1;
 }
 
 World::~World()

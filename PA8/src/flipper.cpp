@@ -41,11 +41,16 @@ bool Flipper::Initialize()
     glm::mat4(1.0f),
     m_position);
 
+  //set the scale
+  m_scaleMatrix = glm::scale(
+    glm::mat4(1.0),
+    m_scale);
+
   //create the collider
   m_collider = new btBoxShape(btVector3(
-    m_scale.x/2,
-    m_scale.y/2,
-    m_scale.z/2));
+    (m_scale.x) * 1,
+    (m_scale.y) * 0.25,
+    (m_scale.z) * 0.25));
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);
@@ -78,10 +83,7 @@ void Flipper::Update(unsigned int dt)
   btTransform transform;
   btScalar modelUpdate[16];
 
-  //set the scale
-  m_scaleMatrix = glm::scale(
-    glm::mat4(1.0),
-    m_scale);
+  
 
   //assign value to transform based on rigid body's new world status
   //then update model with transform
