@@ -10,7 +10,7 @@ Use Alex's Repository for Grading, Located At: https://github.com/AlexKastanek/C
 # Dependencies, Building, and Running
 
 ## Dependency Instructions
-For both of the operating systems to run this project installation of these five programs are required [GLEW](http://glew.sourceforge.net/), [GLM](http://glm.g-truc.net/0.9.7/index.html), [SDL2](https://wiki.libsdl.org/Tutorials), [assimp](http://www.assimp.org/index.php), and [ImageMagick++](http://www.imagemagick.org/Magick++/). [Bullet]
+For both of the operating systems to run this project installation of these five programs are required [GLEW](http://glew.sourceforge.net/), [GLM](http://glm.g-truc.net/0.9.7/index.html), [SDL2](https://wiki.libsdl.org/Tutorials), [assimp](http://www.assimp.org/index.php), and [ImageMagick++](http://www.imagemagick.org/Magick++/) [Bullet](https://pybullet.org/Bullet/BulletFull/index.html)
 
 To install assimp, the linux terminal command is 
 ```
@@ -24,11 +24,22 @@ sudo apt-get update
 sudo apt-get install libmagick++-dev
 ```
 
+To install Bullet, the linux terminal command is
+```
+sudo apt-get update
+sudo apt-get install libbullet-dev
+```
+
 This project uses OpenGL 3.3. Some computers, such as virtual machines in the ECC, can not run this version. In in order to run OpenGL 2.7 follow the instructions at [Using OpenGL 2.7](https://github.com/HPC-Vis/computer-graphics/wiki/Using-OpenGL-2.7)
 
 ## Building and Running
 To build this project there are two options. One is to use CMake which makes including new libraries easier, and handles new files added automatically to the src and include directory. CMake is a small new learning curve but makes things easier in the future.
-The second option is to use the provided Makefile which is used as usual.
+
+To install Cmake, the linux terminal command is
+```
+sudo apt-get update
+sudo apt-get install cmake
+```
 
 Running the make in a separate directory will allow easy cleanup of the build data, and an easy way to prevent unnecessary data to be added to the git repository.  
 
