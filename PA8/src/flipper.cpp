@@ -2,20 +2,41 @@
 
 Flipper::Flipper() : PhysicsObject()
 {
-  m_angle = 0.0f;
-  m_angleStep = 0.01f;
+  m_left = false;
+  m_flipping = false;
+  m_resetting = false;
+
+  m_initialAngle = -0.785f; //pi/4
+  m_flipAngleStep = 0.005f;
+  m_resetAngleStep = -0.001f;
+
+  m_pivotPosition = glm::vec3(-0.5f, 0.0f, 0.0f);
 }
 
 Flipper::Flipper(string filename) : PhysicsObject(filename)
 {
-  m_angle = 0.0f;
-  m_angleStep = 0.01f;
+  m_left = false;
+  m_flipping = false;
+  m_resetting = false;
+
+  m_initialAngle = -0.785f;
+  m_flipAngleStep = 0.005f;
+  m_resetAngleStep = -0.001f;
+
+  m_pivotPosition = glm::vec3(-0.5f, 0.0f, 0.0f);
 }
 
-Flipper::Flipper(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
+Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : PhysicsObject(filename, scale, position)
 {
-  m_angle = 0.0f;
-  m_angleStep = 0.01f;
+  m_left = left;
+  m_flipping = false;
+  m_resetting = false;
+
+  m_initialAngle = -0.785f;
+  m_flipAngleStep = 0.005f;
+  m_resetAngleStep = -0.001f;
+
+  m_pivotPosition = glm::vec3(-0.5f, 0.0f, 0.0f);
 }
 
 Flipper::~Flipper()
@@ -40,6 +61,15 @@ bool Flipper::Initialize()
       m_position.z));
   btScalar m[16];
 
+  //left flipper is opposite angle and steps
+  if (m_left)
+  {
+    m_initialAngle *= -1;
+    m_flipAngleStep *= -1;
+    m_resetAngleStep *= -1;
+  }
+
+  //set translation
   m_translationMatrix = glm::translate(
     glm::mat4(1.0f),
     m_position);
@@ -85,16 +115,59 @@ bool Flipper::Initialize()
 
 void Flipper::Update(unsigned int dt)
 {
-  btTransform transform, newTransform(
-    btQuaternion(m_angle, 0, 0),
+  btTransform transform;
+  btTransform* newTransform;
+  btScalar modelUpdate[16];
+
+  btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+  btQuaternion rotation;
+  basis.getRotation(rotation);
+  btVector3 axis = rotation.getAxis();
+  btVector3 offset = btVector3(
+    m_pivotPosition.x * axis.getX(),
+    m_pivotPosition.y * axis.getY(),
+    m_pivotPosition.z * axis.getZ());
+
+  m_rigidBody->translate(offset);
+
+  if (m_flipping)
+  {
+    //set newTransform to next flip step
+  }
+  else if (m_resetting)
+  {
+    //set newTransform to next reset step
+  }
+  else
+  {
+    m_initialAngle += m_flipAngleStep;
+
+    //set newTransform to initial
+    /*
+    btTransform newTransform(
+    btQuaternion(m_initialAngle, 0, 0),
     btVector3(
       m_position.x,
       m_position.y,
       m_position.z));
-  btScalar modelUpdate[16];
+    */
 
-  m_angle += m_angleStep;
-  m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+    basis *= btMatrix3x3(btQuaternion(m_initialAngle, 0, 0));
+
+    newTransform = new btTransform(basis, btVector3(
+      m_position.x,
+      m_position.y,
+      m_position.z));
+
+    //set the rigid body's new basis
+    m_rigidBody->getMotionState()->setWorldTransform(*newTransform);
+    //m_rigidBody->getMotionState()->getWorldTransform().setBasis(basis);
+  }
+
+  //btTransform newTransform(btQuaternion(m_initialAngle, 0, 0), btVector3(0,0,0));
+  newTransform->setOrigin(btVector3(0,0,0));
+  offset = *newTransform * offset;
+  m_rigidBody->translate(offset * -1);
 
   //assign value to transform based on rigid body's new world status
   //then update model with transform

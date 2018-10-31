@@ -48,7 +48,7 @@ bool World::Initialize()
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
-  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-25.0f, 2.5f, -50.0f));
+  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-25.0f, 2.5f, -50.0f), true);
   m_flipperLeft->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
