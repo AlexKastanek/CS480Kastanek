@@ -19,6 +19,9 @@ public:
   void Flip();
 
   private:
+
+  float m_angle;
+  float m_angleStep;
 };
 
 #endif /* FLIPPER_H */

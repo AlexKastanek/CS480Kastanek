@@ -2,17 +2,20 @@
 
 Flipper::Flipper() : PhysicsObject()
 {
-
+  m_angle = 0.0f;
+  m_angleStep = 0.01f;
 }
 
 Flipper::Flipper(string filename) : PhysicsObject(filename)
 {
-
+  m_angle = 0.0f;
+  m_angleStep = 0.01f;
 }
 
 Flipper::Flipper(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
-
+  m_angle = 0.0f;
+  m_angleStep = 0.01f;
 }
 
 Flipper::~Flipper()
@@ -71,7 +74,7 @@ bool Flipper::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-  //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
   model = m_translationMatrix;
 
@@ -82,10 +85,16 @@ bool Flipper::Initialize()
 
 void Flipper::Update(unsigned int dt)
 {
-  btTransform transform;
+  btTransform transform, newTransform(
+    btQuaternion(m_angle, 0, 0),
+    btVector3(
+      m_position.x,
+      m_position.y,
+      m_position.z));
   btScalar modelUpdate[16];
 
-  
+  m_angle += m_angleStep;
+  m_rigidBody->getMotionState()->setWorldTransform(newTransform);
 
   //assign value to transform based on rigid body's new world status
   //then update model with transform
