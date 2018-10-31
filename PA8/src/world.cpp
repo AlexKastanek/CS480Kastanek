@@ -39,14 +39,18 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-3.0f, 1.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-22.0f, 1.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
 
-  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(0.0f, 2.5f, -50.0f));
+  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(25.0f, 2.5f, -50.0f));
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
+
+  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-25.0f, 2.5f, -50.0f));
+  m_flipperLeft->Initialize();
+  m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
     m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
     m_cylinder->Initialize();
@@ -67,9 +71,10 @@ void World::Update(unsigned int dt)
   //cout << "updating objects" << endl;
   
   m_board->Update(dt);
-    m_cylinder->Update(dt);
+  m_cylinder->Update(dt);
   m_ball->Update(dt);
-  m_flipperRight->Update(dt);  
+  m_flipperRight->Update(dt);
+  m_flipperLeft->Update(dt);  
   
   m_ball -> m_rigidBody -> clearForces();
   m_flipperRight -> m_rigidBody -> clearForces();
@@ -96,6 +101,8 @@ void World::Render(GLint& modelMatrix)
 
   glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
   m_flipperRight->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
+  m_flipperLeft->Render();
 
 }
 
@@ -112,6 +119,11 @@ Ball& World::GetBall()
 Flipper& World::GetFlipperRight()
 {
   return *m_flipperRight;
+}
+
+Flipper& World::GetFlipperLeft()
+{
+  return *m_flipperLeft;
 }
 
 Cylinder& World::GetCylinder()
@@ -142,6 +154,16 @@ void World::moveFlipperLeft()
 {
   //cout << "move flipper left" << endl;
    m_flipperRight -> m_rigidBody -> applyCentralImpulse(btVector3(moveForce, 0.0, 0.0));
+}
+
+void World::FlipRight()
+{
+  m_flipperRight->Flip();
+}
+
+void World::FlipLeft()
+{
+  m_flipperLeft->Flip();
 }
 
 void World::createWalls()

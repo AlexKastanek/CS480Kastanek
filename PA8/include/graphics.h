@@ -27,12 +27,13 @@ class Graphics
 
     void moveFlipper(char input);
 
+    World *m_world;
+
   private:
     std::string ErrorString(GLenum error);
 
     //Physics *m_physics;
-    World *m_world;
-
+    
     Camera *m_camera;
 
     Shader *m_shader;

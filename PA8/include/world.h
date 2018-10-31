@@ -24,12 +24,16 @@ public:
   Board& GetBoard();
   Ball& GetBall();
   Flipper& GetFlipperRight();
+  Flipper& GetFlipperLeft();
   Cylinder& GetCylinder();
 
+  //flipper controls
   void moveFlipperUp();
   void moveFlipperDown();
   void moveFlipperRight();
   void moveFlipperLeft();
+  void FlipRight();
+  void FlipLeft();
 
   void createWalls();
 
@@ -38,6 +42,7 @@ private:
   Board *m_board;
   Ball *m_ball;
   Flipper *m_flipperRight;
+  Flipper *m_flipperLeft;
   Cylinder *m_cylinder;
 
   bool flipped = false;
@@ -60,8 +65,6 @@ private:
   btRigidBody *m_leftWallRigid;
   btRigidBody *m_rightWallRigid;
   btRigidBody *m_lidRigid;
-  
-
 };
 
 #endif /* WORLD_H */
