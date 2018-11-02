@@ -126,8 +126,11 @@ void Engine::Keyboard()
           case SDLK_d:
             m_graphics -> moveFlipper('d');
             break;
-          case SDLK_SPACE:
+          case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();
+            break;
+          case SDLK_RSHIFT:
+            m_graphics->m_world->FlipRight();
             break;
           default:
             break;

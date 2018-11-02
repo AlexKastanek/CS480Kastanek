@@ -24,6 +24,7 @@ private:
   bool m_resetting;
 
   float m_initialAngle;
+  float m_thresholdAngle;
   float m_currentAngle;
   float m_flipAngleStep;
   float m_resetAngleStep;

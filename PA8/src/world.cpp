@@ -44,13 +44,13 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
 
-  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(25.0f, 2.5f, -50.0f));
-  m_flipperRight->Initialize();
-  m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
-
-  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-25.0f, 2.5f, -50.0f), true);
+  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(25.0f, 2.5f, -50.0f));
   m_flipperLeft->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
+
+  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-25.0f, 2.5f, -50.0f), true);
+  m_flipperRight->Initialize();
+  m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
     m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
     m_cylinder->Initialize();
@@ -66,7 +66,7 @@ void World::Update(unsigned int dt)
 {
   //cout << "entered world update function" << endl;
 
-  m_dynamicsWorld->stepSimulation(dt, 1);
+  m_dynamicsWorld->stepSimulation(dt, 0.5f);
 
   //cout << "updating objects" << endl;
   
