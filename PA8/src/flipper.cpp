@@ -10,8 +10,6 @@ Flipper::Flipper() : PhysicsObject()
   m_currentAngle = m_initialAngle;
   m_flipAngleStep = 0.003f;
   m_resetAngleStep = -0.001f;
-
-  m_pivotPosition = glm::vec3(-2.0f, -2.0f, -2.0f);
 }
 
 Flipper::Flipper(string filename) : PhysicsObject(filename)
@@ -24,8 +22,6 @@ Flipper::Flipper(string filename) : PhysicsObject(filename)
   m_currentAngle = m_initialAngle;
   m_flipAngleStep = 0.003f;
   m_resetAngleStep = -0.001f;
-
-  m_pivotPosition = glm::vec3(-5.0f, -5.0f, -5.0f);
 }
 
 Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : PhysicsObject(filename, scale, position)
@@ -38,8 +34,6 @@ Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : 
   m_currentAngle = m_initialAngle;
   m_flipAngleStep = 0.003f;
   m_resetAngleStep = -0.001f;
-
-  m_pivotPosition = glm::vec3(-0.01f, 0.0f, 0.0f);
 }
 
 Flipper::~Flipper()
@@ -141,65 +135,28 @@ bool Flipper::Initialize()
 
 void Flipper::Update(unsigned int dt)
 {
-  /*
-  btTransform transform;
-  btTransform newTransform;
-  btScalar modelUpdate[16];
-
-  btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
-  btQuaternion rotation;
-  basis.getRotation(rotation);
-
-  btVector3 offset = btVector3(
-    m_pivotPosition.x,
-    m_pivotPosition.y,
-    m_pivotPosition.z);
-
-  
-  btVector3 axis = rotation.getAxis();
-  btVector3 offset = btVector3(
-    m_pivotPosition.x * axis.getX(),
-    m_pivotPosition.y * axis.getY(),
-    m_pivotPosition.z * axis.getZ());
-  
-
-  cout << "offset: "
-       << "("
-       << offset.x() << ", "
-       << offset.y() << ", "
-       << offset.z() << ")"
-       << endl;
-
-  m_rigidBody->translate(offset);
-  //m_rigidBody->getWorldTransform().setOrigin(m_pivotPosition);
-  //m_rigidBody->getMotionState()->getWorldTransform(newTransform);
-  */
-
   btTransform transform, newTransform;
-  btMatrix3x3 basis;
   btVector3 origin;
+  btMatrix3x3 basis;
   btScalar modelUpdate[16];
+  float distanceToPivot;
 
-  origin = btVector3(m_position.x, m_position.y, m_position.z);
+  //get original origin and basis from transform
+  origin = m_rigidBody->getWorldTransform().getOrigin();
   basis = m_rigidBody->getWorldTransform().getBasis();
 
-  //set origin to pivot
-  ///*
-  newTransform.setBasis(basis);
-  newTransform.setOrigin(btVector3(
-    m_pivotPosition.x,
-    m_pivotPosition.y,
-    m_pivotPosition.z));
-  m_rigidBody->getMotionState()->setWorldTransform(newTransform);
-  //*/
-  /*
-  m_rigidBody->getWorldTransform().setOrigin(btVector3(
-    m_pivotPosition.x,
-    m_pivotPosition.y,
-    m_pivotPosition.z));
-  //*/
+  //set position to origin
+  m_position = glm::vec3(
+    origin.x(),
+    origin.y(),
+    origin.z());
+  //cout << distanceToPivot << endl;
 
-  //rotate by correct step size
+  //get the distance from origin to pivot
+  distanceToPivot = glm::distance(m_position, m_pivotPosition);
+
+  /*rotate on object pivot by correct step size*/
+
   if (m_flipping)
   {
     //set newTransform to next flip step
@@ -210,6 +167,8 @@ void Flipper::Update(unsigned int dt)
   }
   else
   {
+    //default
+
     m_currentAngle += m_flipAngleStep;
 
     basis.setRotation(btQuaternion(
@@ -217,47 +176,26 @@ void Flipper::Update(unsigned int dt)
       0,
       0));
 
-    newTransform.setBasis(basis);
     newTransform.setOrigin(btVector3(
-      m_pivotPosition.x,
+      m_pivotPosition.x + distanceToPivot * sin(m_currentAngle),
       m_pivotPosition.y,
-      m_pivotPosition.z));
+      m_pivotPosition.z + distanceToPivot * cos(m_currentAngle)));
+    newTransform.setBasis(basis);
     m_rigidBody->getMotionState()->setWorldTransform(newTransform);
   }
 
-  //set origin to new origin
-  //(using original for now)
-  //newTransform.setBasis(basis);
-  newTransform.setOrigin(origin);
-  m_rigidBody->getMotionState()->setWorldTransform(newTransform);
-
-  //btTransform newTransform(btQuaternion(m_initialAngle, 0, 0), btVector3(0,0,0));
-  //newTransform->setOrigin(btVector3(0,0,0));
-
-  /*  
-  btTransform invRot(btQuaternion(m_flipAngleStep, 0, 0), 
-    btVector3(0,0,0));
-  //offset = invRot * offset;
-  btVector3 invTrans = invRot * offset;
-  m_rigidBody->translate(-invTrans);
-  //m_rigidBody->getWorldTransform().setOrigin(offset);
-  m_pivotPosition.x = invTrans.x();
-  m_pivotPosition.y = invTrans.y();
-  m_pivotPosition.x = invTrans.z();
-  */
-
-  //m_rigidBody->getMotionState()->setWorldTransform(newTransform);
-
-  //assign value to transform based on rigid body's new world status
-  //then update model with transform
+  //get the new transform of the rigid body
   m_rigidBody->getMotionState()->getWorldTransform(transform);
-  
-  transform.getOpenGLMatrix(modelUpdate);
-  model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
-  //model[3].y = 3.0f;
 
-  //delete newTransform;
+  //rotate 90 degrees
+  m_rotationMatrix = glm::rotate(
+    glm::mat4(1.0f),
+    (float) M_PI/2,
+    glm::vec3(0.0f, 1.0f, 0.0f));
   
+  //apply all transformations
+  transform.getOpenGLMatrix(modelUpdate);
+  model = glm::make_mat4(modelUpdate) * m_rotationMatrix * m_scaleMatrix;
 }
 
 void Flipper::Flip()
