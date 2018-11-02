@@ -28,6 +28,8 @@
 #include <assimp/postprocess.h>
 #include <assimp/color4.h>
 
+#include <math.h>
+
 struct Vertex
 {
   glm::vec3 vertex;
