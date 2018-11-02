@@ -78,7 +78,7 @@ bool Ball::Initialize()
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.001f);
+  btScalar mass(0.1f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -89,6 +89,10 @@ bool Ball::Initialize()
     m_collider,
     inertia
     );
+
+  ci.m_restitution = 20;
+  ci.m_friction = 20;
+  //ci.m_rollingFriction = 0.001;
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
