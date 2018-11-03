@@ -114,25 +114,29 @@ void Engine::Keyboard()
   				case SDLK_ESCAPE:
   					m_running = false;
   					break;
-                                case SDLK_w:
-                                        m_graphics -> moveFlipper('w');
-                                        break;
-                                case SDLK_s:
-                                        m_graphics -> moveFlipper('s');
-                                        break;
-                                case SDLK_a:
-                                        m_graphics -> moveFlipper('a');
-                                        break;
-                                case SDLK_d:
-                                        m_graphics -> moveFlipper('d');
-                                        break;
-                                        
-                                default:
-                                        break;
-                            }
-  			
-  		default:
-  			break;
+          case SDLK_w:
+            m_graphics -> moveFlipper('w');
+            break;
+          case SDLK_s:
+            m_graphics -> moveFlipper('s');
+            break;
+          case SDLK_a:
+            m_graphics -> moveFlipper('a');
+            break;
+          case SDLK_d:
+            m_graphics -> moveFlipper('d');
+            break;
+          case SDLK_LSHIFT:
+            m_graphics->m_world->FlipLeft();
+            break;
+          case SDLK_RSHIFT:
+            m_graphics->m_world->FlipRight();
+            break;
+          default:
+            break;
+        } 			
+  		  default:
+  			 break;
   	}
   }
 }
