@@ -32,29 +32,41 @@ bool Shader::Initialize()
   return true;
 }
 
-std::string Shader::LoadShader(GLenum ShaderType)
+std::string Shader::LoadShader(GLenum ShaderType, int type)
 {
   std::ifstream fin;
   std::stringstream file_buffer;
   std::string shader;
 
-  if (ShaderType == GL_VERTEX_SHADER)
+  if (ShaderType == GL_VERTEX_SHADER && type == 0)
   {
     fin.open("..//shaders//shader.vert");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open vertex shader file");
     }
+
   }
-  else
+  else if (ShaderType == GL_VERTEX_SHADER && type == 1)
   {
-    fin.open("..//shaders//shader.frag");
+    fin.open("..//shaders//lighting.vert");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open fragment shader file");
     }
   }
-
+  else if (ShaderType == GL_FRAGMENT_SHADER && type == 0){
+    fin.open("..//shaders//shader.frag");
+    {
+      throw std::runtime_error("Could not open fragment shader file");
+    }
+  }
+  else if (ShaderType == GL_FRAGMENT_SHADER && type == 1){
+    fin.open("..//shaders//lighting.frag");
+    {
+      throw std::runtime_error("Could not open fragment shader file");
+    }
+  }
   //store pointer to the file buffer in stringstream and get the string
   file_buffer << fin.rdbuf();
   shader = file_buffer.str();

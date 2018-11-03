@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="PA9"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/mari/CS480Kastanek/PA9/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/mari/CS480Kastanek/PA9/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/mari/CS480Kastanek/PA9/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PA9">
+				<Option output="/home/mari/CS480Kastanek/PA9/cmake-build-debug/PA9" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mari/CS480Kastanek/PA9/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/mari/CS480Kastanek/PA9/."/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 PA9"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PA9/fast">
+				<Option output="/home/mari/CS480Kastanek/PA9/cmake-build-debug/PA9" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mari/CS480Kastanek/PA9/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/mari/CS480Kastanek/PA9/."/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 PA9/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/mari/CS480Kastanek/PA9/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/ball.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/board.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/camera.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/cylinder.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/engine.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/flipper.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/graphics.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/graphics_headers.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/gui.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imconfig.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imgui.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imgui_impl_opengl3.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imgui_impl_sdl.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imgui_internal.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imstb_rectpack.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imstb_textedit.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/imstb_truetype.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/model.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/object.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/physics.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/physics_object.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/shader.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/texture.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/window.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/include/world.h">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/ball.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/board.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/camera.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/cylinder.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/engine.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/flipper.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/graphics.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/gui.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui_demo.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui_draw.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui_impl_opengl3.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui_impl_sdl.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/imgui_widgets.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/main.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/model.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/object.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/physics.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/physics_object.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/shader.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/texture.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/window.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/src/world.cpp">
+			<Option target="PA9"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA9/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

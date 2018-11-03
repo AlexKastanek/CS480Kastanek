@@ -1,67 +1,56 @@
-PROJECT(BulletTutorial)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+cmake_minimum_required(VERSION 3.12)
+project(PA9)
 
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/CMakeModules")
-FIND_PACKAGE(OpenGL REQUIRED)
-FIND_PACKAGE(SDL2 REQUIRED)
-FIND_PACKAGE(GLEW REQUIRED)
-FIND_PACKAGE(GLM REQUIRED)
-FIND_PACKAGE(assimp REQUIRED)
-FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
-FIND_PACKAGE(Bullet REQUIRED)
-SET(CXX11_FLAGS -std=gnu++11)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_FLAGS}")
-SET(TARGET_LIBRARIES "${OPENGL_LIBRARY} ${SDL2_LIBRARY} ${ASSIMP_LIBRARIES} ${ImageMagick_LIBRARIES}")
+set(CMAKE_CXX_STANDARD 14)
 
-# Set Includes
-SET(INCLUDES ${PROJECT_SOURCE_DIR}/include)
-INCLUDE_DIRECTORIES(${INCLUDES})
+include_directories(.)
 
-add_definitions     ( ${BULLET_DEFINITIONS} )
-
-IF(UNIX)
-  ADD_DEFINITIONS(-DUNIX)
-ENDIF(UNIX)
-
-IF(NOT APPLE)
-  IF(GLEW_FOUND)
-      INCLUDE_DIRECTORIES(${GLEW_INCLUDE_DIRS})
-      LINK_LIBRARIES(${GLEW_LIBRARIES})
-  ENDIF(GLEW_FOUND)
-  IF(assimp_FOUND)
-  		INCLUDE_DIRECTORIES(${assimp_INCLUDE_DIRS})
-      LINK_LIBRARIES(${assimp_LIBRARIES})
-  ENDIF(assimp_FOUND)
-	IF(ImageMagick_FOUND)
-			INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
-			LINK_LIBRARIES(${ImageMagick_LIBRARIES})
-	ENDIF(ImageMagick_FOUND)
-ENDIF(NOT APPLE)
-
-INCLUDE_DIRECTORIES(
-  "${PROJECT_SOURCE_DIR}/include"
-  ${SDL2_INCLUDE_DIR}
-  ${GLM_INCLUDE_DIRS}
-  ${assimp_INCLUDE_DIRS}
-	${ImageMagick_INDLUDE_DIRS}
-)
-
-include_directories ( ${BULLET_INCLUDE_DIRS} )
-
-link_directories    ( ${BULLET_LIBRARY_DIRS} )
-
-# Set sources
-FILE(GLOB_RECURSE SOURCES "src/*.cpp")
-ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES} src/model.cpp include/model.h src/cylinder.cpp include/cylinder.h)
-
-
-add_custom_target("${PROJECT_NAME}_SUCCESSFUL" ALL
-                  DEPENDS ${PROJECT_NAME}
-                  COMMAND ${CMAKE_COMMAND} -E echo ""
-                  COMMAND ${CMAKE_COMMAND} -E echo "====================="
-                  COMMAND ${CMAKE_COMMAND} -E echo "  Compile complete!"
-                  COMMAND ${CMAKE_COMMAND} -E echo "====================="
-                  COMMAND ${CMAKE_COMMAND} -E echo "${CMAKE_CURRENT_BINARY_DIR}"
-                 )
-
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${OPENGL_LIBRARY} ${SDL2_LIBRARY} ${ASSIMP_LIBRARY} ${ImageMagick_LIBRARIES} ${BULLET_LIBRARIES})
+add_executable(PA9
+        include/ball.h
+        include/board.h
+        include/camera.h
+        include/cylinder.h
+        include/engine.h
+        include/flipper.h
+        include/graphics.h
+        include/graphics_headers.h
+        include/gui.h
+        include/imconfig.h
+        include/imgui.h
+        include/imgui_impl_opengl3.h
+        include/imgui_impl_sdl.h
+        include/imgui_internal.h
+        include/imstb_rectpack.h
+        include/imstb_textedit.h
+        include/imstb_truetype.h
+        include/model.h
+        include/object.h
+        include/physics.h
+        include/physics_object.h
+        include/shader.h
+        include/texture.h
+        include/window.h
+        include/world.h
+        src/ball.cpp
+        src/board.cpp
+        src/camera.cpp
+        src/cylinder.cpp
+        src/engine.cpp
+        src/flipper.cpp
+        src/graphics.cpp
+        src/gui.cpp
+        src/imgui.cpp
+        src/imgui_demo.cpp
+        src/imgui_draw.cpp
+        src/imgui_impl_opengl3.cpp
+        src/imgui_impl_sdl.cpp
+        src/imgui_widgets.cpp
+        src/main.cpp
+        src/model.cpp
+        src/object.cpp
+        src/physics.cpp
+        src/physics_object.cpp
+        src/shader.cpp
+        src/texture.cpp
+        src/window.cpp
+        src/world.cpp)

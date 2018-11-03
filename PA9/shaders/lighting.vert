@@ -1,21 +1,30 @@
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
+#version 330
 
+in vec4 v_position;
+in vec2 TexCoords;
+in vec3 v_normal;
 
-glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-glEnableVertexAttribArray(0);
+out vec2 texCoords;
+out vec3 fN;
+out vec3 fE;
+out vec3 fL;
 
 uniform mat4:: projection;
 uniform mat4:: model;
 uniform mat4:: view;
 
-out vec3 Normal;
-out vec3 FragPos;
+uniform vec4 lightPos;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos, 1.0);
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = aNormal; 
+    fN = v_normal;
+    fE = v_position.xyz;
+    fL = lightPos.xyz;
+
+    if(lightPos.w != 0.0){
+        fL = lightPos.xyz - v_position.xyz;
+    }
+
+    texCoords = TexCoords;
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix * v_position;
 } 
