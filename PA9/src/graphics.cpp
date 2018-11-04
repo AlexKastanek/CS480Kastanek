@@ -169,7 +169,39 @@ void Graphics::Render()
   // Render the objects
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
-  m_world->Render(m_modelMatrix);
+  
+  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
+  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod, ambientMod, ambientMod, 1);
+  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), 1,1,1,1);
+  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1,1,1,1);
+  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+  m_world->Render(m_modelMatrix, 't');
+  
+  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
+  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod, ambientMod, ambientMod, 1);
+  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), 1, 1, 1,1);
+  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1, 1, 1,1);
+  glUniform1f(m_shader->GetUniformLocation("Shininess"), .0005);
+  glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
+  m_world->Render(m_modelMatrix, 'b');
+  glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
+  
+  
+  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
+  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod,ambientMod,ambientMod,1);
+  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), .25,.25,.25,1);
+  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1,1,1,1);
+  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+  m_world->Render(m_modelMatrix, 'f');
+  
+  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
+  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod,ambientMod,ambientMod,1);
+  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), .05, .05, .05, 1);
+  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), .05, .05, .05,1);
+  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+  m_world->Render(m_modelMatrix, 'c');
+  
+ 
 
   //cout << "finished rendering objects" << endl;
 
@@ -234,3 +266,13 @@ void Graphics::moveFlipper(char input)
             break;
     }
 }
+
+void Graphics::increaseBrightness()
+{
+    ambientMod += .05;
+}
+void Graphics::decreaseBrightness()
+{
+    ambientMod -= .05;
+}
+

@@ -40,7 +40,7 @@ std::string Shader::LoadShader(GLenum ShaderType)
 
   if (ShaderType == GL_VERTEX_SHADER)
   {
-    fin.open("..//shaders//shader.vert");
+    fin.open("..//shaders//perVertex.vert");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open vertex shader file");
@@ -48,7 +48,7 @@ std::string Shader::LoadShader(GLenum ShaderType)
   }
   else
   {
-    fin.open("..//shaders//shader.frag");
+    fin.open("..//shaders//perVertex.frag");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open fragment shader file");

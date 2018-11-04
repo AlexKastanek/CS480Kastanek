@@ -19,7 +19,7 @@ public:
 
   bool Initialize();
   void Update(unsigned int dt);
-  void Render(GLint &modelMatrix);
+  void Render(GLint &modelMatrix, char obj);
 
   Board& GetBoard();
   Ball& GetBall();

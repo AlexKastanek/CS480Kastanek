@@ -28,6 +28,9 @@ class Graphics
     void moveFlipper(char input);
 
     World *m_world;
+    
+    void increaseBrightness();
+    void decreaseBrightness();
 
   private:
     std::string ErrorString(GLenum error);
@@ -40,7 +43,9 @@ class Graphics
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
-    GLint m_modelMatrix;    
+    GLint m_modelMatrix; 
+    
+    float ambientMod = .5;
 };
 
 #endif /* GRAPHICS_H */

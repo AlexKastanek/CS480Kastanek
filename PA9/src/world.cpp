@@ -1,4 +1,5 @@
 #include "world.h"
+#include "graphics.h"
 
 World::World() : Physics()
 {
@@ -90,19 +91,33 @@ void World::Update(unsigned int dt)
 //   }
 }
 
-void World::Render(GLint& modelMatrix)
+void World::Render(GLint& modelMatrix, char obj)
 {
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
-  m_board->Render();
-    glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
-    m_cylinder->Render();
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
-  m_ball->Render();
+  
+  switch(obj)
+  {
+      case 't':
+          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
+          m_board->Render();
+          break;
+      case 'b':
+          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
+          m_ball->Render();
+          break;
+      case 'f':
+          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
+          m_flipperRight->Render();
+          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
+          m_flipperLeft->Render();
+          break;
+      case 'c':
+          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
+          m_cylinder->Render();
+          break;
+  }
+  
+    
 
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
-  m_flipperRight->Render();
-  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
-  m_flipperLeft->Render();
 
 }
 

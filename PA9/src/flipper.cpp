@@ -248,12 +248,12 @@ void Flipper::Update(unsigned int dt)
     //default do nothing
   }
 
-  cout << "initial origin: "
-       << "("
-       << m_rigidBody->getWorldTransform().getOrigin().x() << ", "
-       << m_rigidBody->getWorldTransform().getOrigin().y() << ", "
-       << m_rigidBody->getWorldTransform().getOrigin().z() << ")"
-       << endl;
+//   cout << "initial origin: "
+//        << "("
+//        << m_rigidBody->getWorldTransform().getOrigin().x() << ", "
+//        << m_rigidBody->getWorldTransform().getOrigin().y() << ", "
+//        << m_rigidBody->getWorldTransform().getOrigin().z() << ")"
+//        << endl;
 
   //get the new transform of the rigid body
   m_rigidBody->getMotionState()->getWorldTransform(transform);

@@ -115,10 +115,10 @@ void Engine::Keyboard()
   					m_running = false;
   					break;
           case SDLK_w:
-            m_graphics -> moveFlipper('w');
+            m_graphics -> increaseBrightness();
             break;
           case SDLK_s:
-            m_graphics -> moveFlipper('s');
+            m_graphics -> decreaseBrightness();
             break;
           case SDLK_a:
             m_graphics -> moveFlipper('a');
@@ -132,6 +132,7 @@ void Engine::Keyboard()
           case SDLK_RSHIFT:
             m_graphics->m_world->FlipRight();
             break;
+          
           default:
             break;
         } 			
