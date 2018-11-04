@@ -38,7 +38,7 @@ class Engine
     long long m_currentTimeMillis;
     bool m_running;
 
-    int state = 1;
+    int state = 0;
 };
 
 #endif // ENGINE_H

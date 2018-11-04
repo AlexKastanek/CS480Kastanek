@@ -126,6 +126,27 @@ void Engine::Keyboard()
           case SDLK_RSHIFT:
             m_graphics->m_world->FlipRight();
             break;
+
+          case SDLK_SPACE:
+            if(state == 0){
+              m_graphics->m_shader->Initialize();
+              m_graphics->m_shader->LoadShader(GL_VERTEX_SHADER, 1);
+              m_graphics->m_shader->LoadShader(GL_FRAGMENT_SHADER, 1);
+                m_graphics->m_shader->AddShader(GL_VERTEX_SHADER, 1);
+                m_graphics->m_shader->AddShader(GL_FRAGMENT_SHADER, 1);
+              m_graphics->m_shader->Finalize();
+              m_graphics->m_shader->Enable();
+              state = 1;
+            } else if(state == 1){
+              m_graphics->m_shader->Initialize();
+              m_graphics->m_shader->LoadShader(GL_VERTEX_SHADER, 0);
+              m_graphics->m_shader->LoadShader(GL_FRAGMENT_SHADER, 0);
+                m_graphics->m_shader->AddShader(GL_VERTEX_SHADER, 0);
+                m_graphics->m_shader->AddShader(GL_FRAGMENT_SHADER, 0);
+              m_graphics->m_shader->Finalize();
+              m_graphics->m_shader->Enable();
+              state = 0;
+            }
           
           default:
             break;

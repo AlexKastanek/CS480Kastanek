@@ -2,7 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="PA9" targetName="PA9" />
+      <config projectName="BulletTutorial" targetName="BulletTutorial_SUCCESSFUL" />
+      <config projectName="BulletTutorial" targetName="BulletTutorial" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -13,13 +14,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1294fcd9-c0fa-4c06-9b4a-217af892e45c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../PA8/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PA8/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/shader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shaders/lighting.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/lighting.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shaders/lighting.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/lighting.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shaders/shader.frag" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/shader.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shaders/shader.vert" beforeDir="false" afterPath="$PROJECT_DIR$/shaders/shader.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/shader.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/engine.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/engine.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,15 +60,16 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="check_cache" value="1" />
-          <entry key="cpp" value="1" />
+          <entry key="cpp" value="2" />
           <entry key="frag" value="2" />
-          <entry key="h" value="1" />
+          <entry key="h" value="2" />
           <entry key="md" value="1" />
           <entry key="txt" value="2" />
           <entry key="vert" value="2" />
@@ -82,21 +79,21 @@
         <counts>
           <entry key="CMakeCache.txt" value="1" />
           <entry key="CMakeLists.txt" value="1" />
-          <entry key="ObjectiveC" value="2" />
+          <entry key="ObjectiveC" value="4" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="212" />
+          <entry key="cpp" value="433" />
           <entry key="frag" value="883" />
-          <entry key="h" value="10" />
+          <entry key="h" value="11" />
           <entry key="vert" value="2001" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="222" />
+          <entry key="ObjectiveC" value="444" />
           <entry key="PLAIN_TEXT" value="2884" />
         </counts>
       </usages-collector>
@@ -105,90 +102,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shaders/lighting.frag">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shaders/lighting.vert">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/shader.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="54" selection-start-line="19" selection-start-column="54" selection-end-line="19" selection-end-column="54" />
-              <folding>
-                <element signature="e#35#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shader.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="64" column="35" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
+            <state relative-caret-position="2025">
+              <caret line="135" selection-start-line="135" selection-end-line="135" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+        <entry file="file://$PROJECT_DIR$/src/engine.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/CMakeCache.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/CMakeFiles/cmake.check_cache">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="180">
+              <caret line="133" column="68" selection-start-line="133" selection-start-column="68" selection-end-line="133" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+        <entry file="file://$PROJECT_DIR$/include/engine.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shaders/shader.vert">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shaders/shader.frag">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+            <state relative-caret-position="390">
+              <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -225,6 +160,8 @@
         <option value="$PROJECT_DIR$/shaders/lighting.vert" />
         <option value="$PROJECT_DIR$/include/shader.h" />
         <option value="$PROJECT_DIR$/src/shader.cpp" />
+        <option value="$PROJECT_DIR$/src/engine.cpp" />
+        <option value="$PROJECT_DIR$/include/engine.h" />
       </list>
     </option>
   </component>
@@ -234,8 +171,8 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="67" />
+  <component name="ProjectFrameBounds" extendedState="4">
+    <option name="x" value="993" />
     <option name="y" value="25" />
     <option name="width" value="927" />
     <option name="height" value="1055" />
@@ -307,20 +244,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.PA9">
+  <component name="RunManager" selected="Application.BulletTutorial">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PA9" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PA9" TARGET_NAME="PA9" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PA9" RUN_TARGET_NAME="PA9">
+    <configuration name="BulletTutorial" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BulletTutorial" TARGET_NAME="BulletTutorial" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="BulletTutorial" RUN_TARGET_NAME="BulletTutorial">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BulletTutorial_SUCCESSFUL" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="BulletTutorial" TARGET_NAME="BulletTutorial_SUCCESSFUL" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Application.Build All" />
-      <item itemvalue="Application.PA9" />
+      <item itemvalue="Application.BulletTutorial" />
+      <item itemvalue="Application.BulletTutorial_SUCCESSFUL" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -335,17 +278,18 @@
       <updated>1540655704046</updated>
       <workItem from="1540655705465" duration="4333000" />
       <workItem from="1541093139231" duration="8427000" />
+      <workItem from="1541331927998" duration="1902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12760000" />
+    <option name="totallyTimeSpent" value="14662000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="993" y="25" width="927" height="1055" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.160487" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3325766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -375,11 +319,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/include/flipper.h">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/engine.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-524" />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor" />
@@ -414,9 +353,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-330">
           <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-          <folding>
-            <element signature="e#33#62#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -487,9 +423,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding>
-            <element signature="e#212#261#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -500,20 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shaders/shader.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shaders/shader.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -534,17 +453,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shader.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="64" column="35" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -554,14 +466,49 @@
     <entry file="file://$PROJECT_DIR$/build/CMakeFiles/cmake.check_cache">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shaders/shader.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="58" column="22" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shaders/shader.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="465">
+          <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/engine.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="133" column="68" selection-start-line="133" selection-start-column="68" selection-end-line="133" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shader.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2025">
+          <caret line="135" selection-start-line="135" selection-end-line="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/engine.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
         </state>
       </provider>
     </entry>
