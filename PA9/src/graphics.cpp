@@ -76,14 +76,14 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Add the vertex shader
-  if(!m_shader->AddShader(GL_VERTEX_SHADER))
+  if(!m_shader->AddShader(GL_VERTEX_SHADER, 0))
   {
     printf("Vertex Shader failed to Initialize\n");
     return false;
   }
 
   // Add the fragment shader
-  if(!m_shader->AddShader(GL_FRAGMENT_SHADER))
+  if(!m_shader->AddShader(GL_FRAGMENT_SHADER, 0))
   {
     printf("Fragment Shader failed to Initialize\n");
     return false;
@@ -170,35 +170,35 @@ void Graphics::Render()
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
   
-  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
-  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod, ambientMod, ambientMod, 1);
-  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), 1,1,1,1);
-  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1,1,1,1);
-  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+  glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
+  glUniform4f(m_shader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
+  glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
+  glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
+  glUniform1f(m_shader->GetUniformLocation("shine"), 10);
   m_world->Render(m_modelMatrix, 't');
   
-  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
-  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod, ambientMod, ambientMod, 1);
-  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), 1, 1, 1,1);
-  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1, 1, 1,1);
-  glUniform1f(m_shader->GetUniformLocation("Shininess"), .0005);
+//   glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
+//   glUniform4f(m_shader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
+//   glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
+//   glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
+//   glUniform1f(m_shader->GetUniformLocation("shine"), 10);
   glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
   m_world->Render(m_modelMatrix, 'b');
   glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
   
   
-  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
-  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod,ambientMod,ambientMod,1);
-  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), .25,.25,.25,1);
-  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), 1,1,1,1);
-  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+//   glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
+//   glUniform4f(m_shader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
+//   glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
+//   glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
+//   glUniform1f(m_shader->GetUniformLocation("shine"), 10);
   m_world->Render(m_modelMatrix, 'f');
   
-  glUniform4f(m_shader->GetUniformLocation("LightPosition"), 0,2,0,0);
-  glUniform4f(m_shader->GetUniformLocation("AmbientProduct"), ambientMod,ambientMod,ambientMod,1);
-  glUniform4f(m_shader->GetUniformLocation("DiffuseProduct"), .05, .05, .05, 1);
-  glUniform4f(m_shader->GetUniformLocation("SpecularProduct"), .05, .05, .05,1);
-  glUniform1f(m_shader->GetUniformLocation("Shininess"), 10);
+//  glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
+//   glUniform4f(m_shader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
+//   glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
+//   glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
+//   glUniform1f(m_shader->GetUniformLocation("shine"), 10);
   m_world->Render(m_modelMatrix, 'c');
   
  

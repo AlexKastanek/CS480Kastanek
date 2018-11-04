@@ -31,6 +31,8 @@ class Graphics
     
     void increaseBrightness();
     void decreaseBrightness();
+    
+    Shader *m_shader;
 
   private:
     std::string ErrorString(GLenum error);
@@ -38,8 +40,6 @@ class Graphics
     //Physics *m_physics;
     
     Camera *m_camera;
-
-    Shader *m_shader;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;

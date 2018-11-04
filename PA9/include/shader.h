@@ -17,8 +17,8 @@ class Shader
     ~Shader();
     bool Initialize();
     void Enable();
-    std::string LoadShader(GLenum ShaderType);
-    bool AddShader(GLenum ShaderType);
+    std::string LoadShader(GLenum ShaderType, int type);
+    bool AddShader(GLenum ShaderType, int type);
     bool Finalize();
     GLint GetUniformLocation(const char* pUniformName);
 

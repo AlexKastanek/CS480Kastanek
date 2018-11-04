@@ -37,6 +37,8 @@ class Engine
     unsigned int m_DT;
     long long m_currentTimeMillis;
     bool m_running;
+
+    int state = 1;
 };
 
 #endif // ENGINE_H

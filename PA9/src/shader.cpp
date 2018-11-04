@@ -32,29 +32,47 @@ bool Shader::Initialize()
   return true;
 }
 
-std::string Shader::LoadShader(GLenum ShaderType)
+std::string Shader::LoadShader(GLenum ShaderType, int type)
 {
   std::ifstream fin;
   std::stringstream file_buffer;
   std::string shader;
+  
+  
+  
+   
 
-  if (ShaderType == GL_VERTEX_SHADER)
+  if (ShaderType == GL_VERTEX_SHADER && type == 0)
   {
-    fin.open("..//shaders//perVertex.vert");
+    fin.open("..//shaders//shader.vert");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open vertex shader file");
     }
+
   }
-  else
+  else if (ShaderType == GL_VERTEX_SHADER && type == 1)
   {
-    fin.open("..//shaders//perVertex.frag");
+    fin.open("..//shaders//lighting.vert");
     if (!fin.is_open())
     {
       throw std::runtime_error("Could not open fragment shader file");
     }
   }
-
+  if (ShaderType == GL_FRAGMENT_SHADER && type == 0){
+    fin.open("..//shaders//shader.frag");
+    if (!fin.is_open())
+    {
+      throw std::runtime_error("Could not open fragment shader file");
+    }
+  }
+  else if (ShaderType == GL_FRAGMENT_SHADER && type == 1){
+    fin.open("..//shaders//lighting.frag");
+    if (!fin.is_open())
+    {
+      throw std::runtime_error("Could not open fragment shader file");
+    }
+  }
   //store pointer to the file buffer in stringstream and get the string
   file_buffer << fin.rdbuf();
   shader = file_buffer.str();
@@ -64,15 +82,17 @@ std::string Shader::LoadShader(GLenum ShaderType)
 }
 
 // Use this method to add shaders to the program. When finished - call finalize()
-bool Shader::AddShader(GLenum ShaderType)
+bool Shader::AddShader(GLenum ShaderType, int type)
 {
   std::string s;
 
+  
+  //type 0 is per vertex, type 1 is per fragment
   try
   {
     if(ShaderType == GL_VERTEX_SHADER)
     {
-      s = LoadShader(GL_VERTEX_SHADER);
+      s = LoadShader(GL_VERTEX_SHADER, type);
       /*s = "#version 330\n \
             \
             layout (location = 0) in vec3 v_position; \
@@ -94,7 +114,7 @@ bool Shader::AddShader(GLenum ShaderType)
     }
     else if(ShaderType == GL_FRAGMENT_SHADER)
     {
-      s = LoadShader(GL_FRAGMENT_SHADER);
+      s = LoadShader(GL_FRAGMENT_SHADER, type);
       /*s = "#version 330\n \
             \
             smooth in vec3 color; \

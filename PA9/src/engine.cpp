@@ -120,12 +120,6 @@ void Engine::Keyboard()
           case SDLK_s:
             m_graphics -> decreaseBrightness();
             break;
-          case SDLK_a:
-            m_graphics -> moveFlipper('a');
-            break;
-          case SDLK_d:
-            m_graphics -> moveFlipper('d');
-            break;
           case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();
             break;
