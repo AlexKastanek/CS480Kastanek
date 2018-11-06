@@ -216,35 +216,39 @@ void Graphics::Render()
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
   
-  m_world->Render(m_modelMatrix, 't');//render board
+  
   glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
   glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
+  m_world->Render(m_modelMatrix, 't');//render board
   
-  glUniform1f(m_currentShader->GetUniformLocation("ball"), 1.0);
-  m_world->Render(m_modelMatrix, 'b'); //render ball
+  
   glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
   glUniform1f(m_currentShader->GetUniformLocation("shine"), .0005);
+  glUniform1f(m_currentShader->GetUniformLocation("ball"), 1.0);
+  m_world->Render(m_modelMatrix, 'b'); //render ball
   glUniform1f(m_currentShader->GetUniformLocation("ball"), 0.0);
   
-  m_world->Render(m_modelMatrix, 'f'); //render flippers
+  
   glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
   glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
+  m_world->Render(m_modelMatrix, 'f'); //render flippers
   
-  m_world->Render(m_modelMatrix, 'c');//render cylinder
+  
   glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), cylDiffMod,cylDiffMod,cylDiffMod,1);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), cylSpecMod,cylSpecMod,cylSpecMod,1);
   glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
+  m_world->Render(m_modelMatrix, 'c');//render cylinder
   
  
 
