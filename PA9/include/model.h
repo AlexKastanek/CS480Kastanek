@@ -41,7 +41,7 @@ private:
 	
     GLuint VB;
     GLuint IB;	
-    GLuint m_normal;
+    //GLuint m_normal;
 
 };
 #endif //TUTORIAL_MODEL_H

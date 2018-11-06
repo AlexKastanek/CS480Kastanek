@@ -93,7 +93,7 @@ void World::Update(unsigned int dt)
 
 void World::Render(GLint& modelMatrix, char obj)
 {
-  
+  /*
   switch(obj)
   {
       case 't':
@@ -116,10 +116,18 @@ void World::Render(GLint& modelMatrix, char obj)
           break;
           
   }
-  
+  */
     
-
-
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
+  m_board->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
+  m_ball->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
+  m_flipperRight->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
+  m_flipperLeft->Render();
+  glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
+  m_cylinder->Render();
 }
 
 Board& World::GetBoard()

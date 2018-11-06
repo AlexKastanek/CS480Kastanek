@@ -1,8 +1,8 @@
 #version 330
 
-in vec4 v_position;
-in vec2 TexCoords;
-in vec3 v_normal;
+layout (location = 0) in vec4 v_position;
+layout (location = 1) in vec2 TexCoords;
+layout (location = 2) in vec3 v_normal;
 
 out vec2 TexCoord;
 out vec3 fN;
@@ -26,5 +26,5 @@ void main()
     }
 
     TexCoord = TexCoords;
-    gl_Position = projectionMatrix * viewMatrix * modelMatrix * v_position;
+    gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v_position;
 } 

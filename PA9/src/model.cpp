@@ -159,8 +159,15 @@ bool Model::LoadObject(string in_filename)
             }
             else
                 Norm = glm::vec3(0.0,0.0,0.0);
-                 
-                 
+            
+            /*
+            cout << endl;
+            cout << "("
+                 << Norm.x << ", "
+                 << Norm.y << ", "
+                 << Norm.z << ")"
+                 << endl;
+            */
                  
             //create the Vertex type to be pushed
             Vertex *temp = new Vertex(vertex, uv, Norm); 
@@ -199,9 +206,9 @@ bool Model::LoadObject(string in_filename)
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
         
         //normal buffer
-        glGenBuffers(1, &m_normal);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_normal);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
+        //glGenBuffers(1, &m_normal);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_normal);
+        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
 
         m_IBs.push_back(IB);
         m_VBs.push_back(VB);

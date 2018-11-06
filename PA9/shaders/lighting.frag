@@ -21,9 +21,9 @@ uniform sampler2D gSampler;
 
 void main()
 {
-    vec3 N = normalize((viewMatrix * modelMatrix) * vec4(fN, 0.0)).xyz;
-    vec3 E = normalize(fE);
-    vec3 L = normalize(fL);
+    vec3 N = normalize((viewMatrix * modelMatrix) * vec4(fN, 1.0)).xyz;
+    vec3 E = normalize((viewMatrix * modelMatrix) * vec4(fE, 1.0)).xyz;
+    vec3 L = normalize((viewMatrix * modelMatrix) * vec4(fL, 1.0)).xyz;
 
     vec3 H = normalize(L + E);
     vec4 ambient = ambientProduct;

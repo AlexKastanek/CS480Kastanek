@@ -1,8 +1,8 @@
+#version 330
 
-
-attribute vec4 v_position;
-attribute vec2 v_texture;
-attribute vec3 normal;
+layout (location = 0) in vec4 v_position;
+layout (location = 1) in vec2 v_texture;
+layout (location = 2) in vec3 normal;
 
 varying vec2 TexCoord;
 varying vec4 color;
@@ -15,10 +15,11 @@ uniform vec4 ambientProduct, diffuseProduct, specularProduct;
 uniform vec4 lightPos;
 uniform float shine;
 
-uniform float ball;
+//uniform float ball;
 
 void main(void)
 {
+/*
     if(ball == 1.0){
         vec4 light = vec4( 0, 1, 1, 1) * (viewMatrix * modelMatrix);
         vec3 lightDirection = light.xyz;
@@ -37,12 +38,14 @@ void main(void)
 
     } 
      else{
+*/
         vec3 pos = ((viewMatrix * modelMatrix) * v_position).xyz;
-        vec3 L = normalize(lightPos.xyz - pos);
+        vec3 L_pos = ((viewMatrix * modelMatrix) * lightPos).xyz;
+        vec3 L = normalize(L_pos.xyz - pos);
         vec3 E = normalize(-pos);
         vec3 H = normalize(L + E);
 
-        vec3 N = normalize( (viewMatrix * modelMatrix) * vec4(normal, 0.0)).xyz;
+        vec3 N = normalize( (viewMatrix * modelMatrix) * vec4(normal, 1.0)).xyz;
         vec4 ambient = ambientProduct;
 
         float Kd = max(dot(L, N), 0.0);
@@ -52,12 +55,12 @@ void main(void)
         vec4 specular = Ks * specularProduct;
 
         if(dot(L, N) < 0.0) 
-		specular = vec4(0.0, 0.0, 0.0, 1.0);
+		    specular = vec4(0.0, 0.0, 0.0, 1.0);
 
-        gl_Position = (projectionMatrix * viewMatrix * modelMatrix * v_position);
+        gl_Position = ((projectionMatrix * viewMatrix * modelMatrix) * v_position);
 
         TexCoord = v_texture;
         color = ambient + diffuse + specular;
         color.a = 1.0;
-    }
+//    }
 }

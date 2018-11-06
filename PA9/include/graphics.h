@@ -15,6 +15,15 @@ using namespace std;
 //#include "object.h"
 //#include "board.h"
 
+struct Light
+{
+  glm::vec4 position;
+  glm::vec4 ambient;
+  glm::vec4 diffuse;
+  glm::vec4 specular;
+  float shininess;
+};
+
 class Graphics
 {
   public:
@@ -50,6 +59,8 @@ class Graphics
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix; 
+
+    Light gLight;
     
     float ambientMod = .5;
  
