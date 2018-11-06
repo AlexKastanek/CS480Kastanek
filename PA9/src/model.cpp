@@ -154,20 +154,18 @@ bool Model::LoadObject(string in_filename)
             
             if(mesh->HasNormals())
             {
-                aiVector3D n = mesh->mNormals[i];
+                aiVector3D n = mesh->mNormals[j];
                 Norm = glm::vec3(n.x, n.y, n.z);
             }
             else
                 Norm = glm::vec3(0.0,0.0,0.0);
             
-            /*
-            cout << endl;
+            //cout << endl;
             cout << "("
                  << Norm.x << ", "
                  << Norm.y << ", "
                  << Norm.z << ")"
                  << endl;
-            */
                  
             //create the Vertex type to be pushed
             Vertex *temp = new Vertex(vertex, uv, Norm); 

@@ -146,10 +146,10 @@ bool Graphics::Initialize(int width, int height)
   m_currentShaderID = 0;
 
   //set light data
-  gLight.position = glm::vec4(0.0f, 5.0f, 5.0f, 1.0f);
-  gLight.ambient = glm::vec4(0.50f, 0.50f, 0.50f, 1.0f);
-  gLight.diffuse = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  gLight.specular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  gLight.position = glm::vec4(0.0f, 2.0f, 0.0f, 1.0f);
+  gLight.ambient = glm::vec4(0.0, 0.0, 0.0, 1.0f);
+  gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   gLight.shininess = 50;
 
   // Locate the projection matrix in the shader
@@ -223,11 +223,13 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
-  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), gLight.position.x, gLight.position.y, gLight.position.z, 1.0);
+  glUniform4f(m_currentShader->GetUniformLocation("lightPosition"), gLight.position.x, gLight.position.y, gLight.position.z, 1.0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x, gLight.ambient.y, gLight.ambient.z, gLight.ambient.w);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x, gLight.diffuse.y, gLight.diffuse.z, gLight.diffuse.w);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), gLight.specular.x, gLight.specular.y, gLight.specular.z, gLight.specular.w);
-  glUniform1f(m_currentShader->GetUniformLocation("shine"), gLight.shininess);
+  glUniform1f(m_currentShader->GetUniformLocation("shininess"), gLight.shininess);
+
+  glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
   // Render the objects
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));

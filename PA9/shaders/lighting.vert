@@ -1,30 +1,51 @@
 #version 330
 
-layout (location = 0) in vec4 v_position;
-layout (location = 1) in vec2 TexCoords;
+layout (location = 0) in vec3 v_position;
+layout (location = 1) in vec2 v_texture;
 layout (location = 2) in vec3 v_normal;
 
-out vec2 TexCoord;
 out vec3 fN;
 out vec3 fE;
 out vec3 fL;
+out vec2 texture;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 
-uniform vec4 lightPos;
+uniform vec4 lightPosition;
 
 void main()
 {
-    fN = v_normal;
-    fE = v_position.xyz;
-    fL = lightPos.xyz;
+	/*
+	vec4 v = (viewMatrix * modelMatrix) * vec4(v_position, 1.0);
 
-    if(lightPos.w != 0.0){
-        fL = lightPos.xyz - v_position.xyz;
+
+    fN = ((viewMatrix * modelMatrix) * vec4(v_normal, 0.0)).xyz;
+    fE = v.xyz * -1;
+    fL = lightPosition.xyz;
+
+    if(lightPosition.w != 0.0){
+        fL = lightPosition.xyz - v.xyz;
     }
 
-    TexCoord = TexCoords;
-    gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v_position;
+    texture = v_texture;
+
+    gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v;
+    */
+
+    vec4 v = vec4(v_position, 1.0);
+    vec3 pos = ((viewMatrix * modelMatrix) * v).xyz;
+
+    fN = ((viewMatrix * modelMatrix) * vec4(v_normal, 0.0)).xyz;
+    fE = -pos;
+    fL = lightPosition.xyz;
+    if(lightPosition.w != 0.0)
+    {
+        fL = lightPosition.xyz - pos;
+    }
+
+    texture = v_texture;
+
+    gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v;
 } 
