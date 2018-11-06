@@ -77,8 +77,7 @@ void Engine::Run()
 
 
     // Update and render the graphics
-    m_graphics->Update(m_DT);
-    m_graphics->Render();
+    
     
     while(SDL_PollEvent(&m_event) != 0)
     {
@@ -88,6 +87,9 @@ void Engine::Run()
         Keyboard();
       }
     }
+    
+    m_graphics->Update(m_DT);
+    m_graphics->Render();
 
     // Update and render the GUI
     //m_gui->Update(m_window->GetWindow(), m_graphics);
@@ -119,6 +121,12 @@ void Engine::Keyboard()
             break;
           case SDLK_s:
             m_graphics -> decreaseBrightness();
+            break;
+          case SDLK_a:
+            m_graphics -> decreaseCylSpecDiff();
+            break;
+          case SDLK_d:
+            m_graphics -> increaseCylSpecDiff();
             break;
           case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();

@@ -149,8 +149,21 @@ bool Model::LoadObject(string in_filename)
                  << endl;
             //*/
 
+            //Add Normals
+            glm::vec3 Norm;
+            
+            if(mesh->HasNormals())
+            {
+                aiVector3D n = mesh->mNormals[i];
+                Norm = glm::vec3(n.x, n.y, n.z);
+            }
+            else
+                Norm = glm::vec3(0.0,0.0,0.0);
+                 
+                 
+                 
             //create the Vertex type to be pushed
-            Vertex *temp = new Vertex(vertex, uv); 
+            Vertex *temp = new Vertex(vertex, uv, Norm); 
             out_vertices.push_back(*temp);
             delete temp;
         }
@@ -172,15 +185,23 @@ bool Model::LoadObject(string in_filename)
             return false;
         }
 
-        GLuint VB;
-        GLuint IB;
+//         GLuint VB;
+//         GLuint IB;
 
+        //vertice buffer
         glGenBuffers(1, &VB);
         glBindBuffer(GL_ARRAY_BUFFER, VB);
         glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
+        
+        //Indice buffer
         glGenBuffers(1, &IB);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
+        
+        //normal buffer
+        glGenBuffers(1, &m_normal);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_normal);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
 
         m_IBs.push_back(IB);
         m_VBs.push_back(VB);

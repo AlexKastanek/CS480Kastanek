@@ -87,6 +87,7 @@ void Object::Render()
 
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
+  glEnableVertexAttribArray(2);
 
   for ( int i = 0; i<VBs.size();i++) 
   {
@@ -94,6 +95,7 @@ void Object::Render()
     glBindBuffer(GL_ARRAY_BUFFER, VBs[i]);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, uv));
+    glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, normal));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBs[i]);
     m_renderData->BindTexture(i);
@@ -104,6 +106,7 @@ void Object::Render()
 
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
+   glDisableVertexAttribArray(2);
 }
 
 glm::mat4 Object::GetModel()

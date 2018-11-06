@@ -37,7 +37,11 @@ private:
     vector<GLuint> m_VBs;
     vector<GLuint> m_IBs;
     vector<unsigned int> m_numIndices;
- //   static bool LoadObject(string in_filename, vector <Vertex> *out_vertices, vector<unsigned int> *out_indices);
+
+	
+    GLuint VB;
+    GLuint IB;	
+    GLuint m_normal;
 
 };
 #endif //TUTORIAL_MODEL_H

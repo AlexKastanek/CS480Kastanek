@@ -32,6 +32,9 @@ class Graphics
     void changeShader();
     void increaseBrightness();
     void decreaseBrightness();
+
+    void increaseCylSpecDiff();
+    void decreaseCylSpecDiff();
     
     Shader *m_currentShader;
     Shader *m_vertexBasedShader;
@@ -49,6 +52,9 @@ class Graphics
     GLint m_modelMatrix; 
     
     float ambientMod = .5;
+ 
+    float cylSpecMod = 1;
+    float cylDiffMod = .25;
 
     unsigned int m_currentShaderID;
 };

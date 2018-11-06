@@ -114,6 +114,7 @@ void World::Render(GLint& modelMatrix, char obj)
           glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
           m_cylinder->Render();
           break;
+          
   }
   
     

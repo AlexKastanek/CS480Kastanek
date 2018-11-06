@@ -34,7 +34,9 @@ void main(void)
         TexCoord = v_texture;
 
         gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v_position;
-    } else{
+
+    } 
+     else{
         vec3 pos = ((viewMatrix * modelMatrix) * v_position).xyz;
         vec3 L = normalize(lightPos.xyz - pos);
         vec3 E = normalize(-pos);
