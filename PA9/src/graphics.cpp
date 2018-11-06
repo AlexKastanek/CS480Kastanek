@@ -68,39 +68,85 @@ bool Graphics::Initialize(int width, int height)
   //cout << "CHECK GRAPHICS FINISHED BOARD ALLOC" << endl;
 
   // Set up the shaders
+  /*
   m_shader = new Shader();
   if(!m_shader->Initialize())
   {
     printf("Shader Failed to Initialize\n");
     return false;
   }
+  */
+  m_vertexBasedShader = new Shader();
+  if (!m_vertexBasedShader->Initialize())
+  {
+    printf("Vertex based shader failed to initialize\n");
+    return false;
+  }
 
   // Add the vertex shader
-  if(!m_shader->AddShader(GL_VERTEX_SHADER, 0))
+  if(!m_vertexBasedShader->AddShader(GL_VERTEX_SHADER, 0))
   {
     printf("Vertex Shader failed to Initialize\n");
     return false;
   }
 
   // Add the fragment shader
-  if(!m_shader->AddShader(GL_FRAGMENT_SHADER, 0))
+  if(!m_vertexBasedShader->AddShader(GL_FRAGMENT_SHADER, 0))
   {
     printf("Fragment Shader failed to Initialize\n");
     return false;
   }
 
   // Connect the program
-  if(!m_shader->Finalize())
+  if(!m_vertexBasedShader->Finalize())
   {
     printf("Program to Finalize\n");
     return false;
   }
 
-  // Add the objects' rigid bodies to the physics world
-  //m_physics->AddRigidBody(m_board->GetRigidBody());
+  // Set up the shaders
+  /*
+  m_shader = new Shader();
+  if(!m_shader->Initialize())
+  {
+    printf("Shader Failed to Initialize\n");
+    return false;
+  }
+  */
+  m_fragmentBasedShader = new Shader();
+  if (!m_fragmentBasedShader->Initialize())
+  {
+    printf("Vertex based shader failed to initialize\n");
+    return false;
+  }
+
+  // Add the vertex shader
+  if(!m_fragmentBasedShader->AddShader(GL_VERTEX_SHADER, 1))
+  {
+    printf("Vertex Shader failed to Initialize\n");
+    return false;
+  }
+
+  // Add the fragment shader
+  if(!m_fragmentBasedShader->AddShader(GL_FRAGMENT_SHADER, 1))
+  {
+    printf("Fragment Shader failed to Initialize\n");
+    return false;
+  }
+
+  // Connect the program
+  if(!m_fragmentBasedShader->Finalize())
+  {
+    printf("Program to Finalize\n");
+    return false;
+  }
+
+  //set which lighting type is currently being used (default is vertex-based)
+  m_currentShader = m_vertexBasedShader;
+  m_currentShaderID = 0;
 
   // Locate the projection matrix in the shader
-  m_projectionMatrix = m_shader->GetUniformLocation("projectionMatrix");
+  m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
   if (m_projectionMatrix == INVALID_UNIFORM_LOCATION) 
   {
     printf("m_projectionMatrix not found\n");
@@ -108,7 +154,7 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Locate the view matrix in the shader
-  m_viewMatrix = m_shader->GetUniformLocation("viewMatrix");
+  m_viewMatrix = m_currentShader->GetUniformLocation("viewMatrix");
   if (m_viewMatrix == INVALID_UNIFORM_LOCATION) 
   {
     printf("m_viewMatrix not found\n");
@@ -116,7 +162,7 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Locate the model matrix in the shader
-  m_modelMatrix = m_shader->GetUniformLocation("modelMatrix");
+  m_modelMatrix = m_currentShader->GetUniformLocation("modelMatrix");
   if (m_modelMatrix == INVALID_UNIFORM_LOCATION) 
   {
     printf("m_modelMatrix not found\n");
@@ -160,7 +206,7 @@ void Graphics::Render()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Start the correct program
-  m_shader->Enable();
+  m_currentShader->Enable();
 
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
@@ -170,11 +216,11 @@ void Graphics::Render()
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
   //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
   
-  glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
-  glUniform4f(m_shader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
-  glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
-  glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
-  glUniform1f(m_shader->GetUniformLocation("shine"), 10);
+  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
+  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
+  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
+  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
+  glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
   m_world->Render(m_modelMatrix, 't');
   
 //   glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
@@ -182,9 +228,9 @@ void Graphics::Render()
 //   glUniform4f(m_shader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
 //   glUniform4f(m_shader->GetUniformLocation("specularProduct"), 1,1,1,1);
 //   glUniform1f(m_shader->GetUniformLocation("shine"), 10);
-  glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
+  glUniform1f(m_currentShader->GetUniformLocation("ball"), 0.0);
   m_world->Render(m_modelMatrix, 'b');
-  glUniform1f(m_shader->GetUniformLocation("ball"), 0.0);
+  glUniform1f(m_currentShader->GetUniformLocation("ball"), 0.0);
   
   
 //   glUniform4f(m_shader->GetUniformLocation("lightPos"), 0,2,0,0);
@@ -265,6 +311,46 @@ void Graphics::moveFlipper(char input)
         default:
             break;
     }
+}
+
+void Graphics::changeShader()
+{
+  if (m_currentShaderID == 0)
+  {
+    cout << "Changing to fragment based lighting" << endl;
+    m_currentShader = m_fragmentBasedShader;
+    m_currentShaderID = 1;
+  }
+  else
+  {
+    cout << "Changing to vertex based lighting" << endl;
+    m_currentShader = m_vertexBasedShader;
+    m_currentShaderID = 0;
+  }
+
+  // Locate the projection matrix in the shader
+  m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
+  if (m_projectionMatrix == INVALID_UNIFORM_LOCATION) 
+  {
+    printf("m_projectionMatrix not found\n");
+    //return;
+  }
+
+  // Locate the view matrix in the shader
+  m_viewMatrix = m_currentShader->GetUniformLocation("viewMatrix");
+  if (m_viewMatrix == INVALID_UNIFORM_LOCATION) 
+  {
+    printf("m_viewMatrix not found\n");
+    //return;
+  }
+
+  // Locate the model matrix in the shader
+  m_modelMatrix = m_currentShader->GetUniformLocation("modelMatrix");
+  if (m_modelMatrix == INVALID_UNIFORM_LOCATION) 
+  {
+    printf("m_modelMatrix not found\n");
+    //return;
+  }
 }
 
 void Graphics::increaseBrightness()

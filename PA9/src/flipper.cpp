@@ -187,7 +187,7 @@ void Flipper::Update(unsigned int dt)
 
   if (!m_left)
   {
-    cout << m_currentAngle << endl;
+    //cout << m_currentAngle << endl;
   }
 
   if (m_flipping)

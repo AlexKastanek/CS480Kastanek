@@ -29,10 +29,13 @@ class Graphics
 
     World *m_world;
     
+    void changeShader();
     void increaseBrightness();
     void decreaseBrightness();
     
-    Shader *m_shader;
+    Shader *m_currentShader;
+    Shader *m_vertexBasedShader;
+    Shader *m_fragmentBasedShader;
 
   private:
     std::string ErrorString(GLenum error);
@@ -46,6 +49,8 @@ class Graphics
     GLint m_modelMatrix; 
     
     float ambientMod = .5;
+
+    unsigned int m_currentShaderID;
 };
 
 #endif /* GRAPHICS_H */

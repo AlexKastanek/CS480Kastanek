@@ -128,6 +128,8 @@ void Engine::Keyboard()
             break;
 
           case SDLK_SPACE:
+            //cout << "current state: " << state << endl;
+          /*
             if(state == 0){
               m_graphics->m_shader->Initialize();
               m_graphics->m_shader->LoadShader(GL_VERTEX_SHADER, 1);
@@ -147,6 +149,9 @@ void Engine::Keyboard()
               m_graphics->m_shader->Enable();
               state = 0;
             }
+            */
+            m_graphics->changeShader();
+            break;
           
           default:
             break;
