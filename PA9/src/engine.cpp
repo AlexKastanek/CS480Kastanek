@@ -117,16 +117,22 @@ void Engine::Keyboard()
   					m_running = false;
   					break;
           case SDLK_w:
-            m_graphics -> increaseBrightness();
+            m_graphics -> moveLight('w');
             break;
           case SDLK_s:
-            m_graphics -> decreaseBrightness();
+            m_graphics -> moveLight('s');
             break;
           case SDLK_a:
-            m_graphics -> decreaseCylSpecDiff();
+            m_graphics -> moveLight('a');
             break;
           case SDLK_d:
-            m_graphics -> increaseCylSpecDiff();
+            m_graphics -> moveLight('d');
+            break;
+          case SDLK_EQUALS:
+            m_graphics->moveLight('+');
+            break;
+          case SDLK_MINUS:
+            m_graphics->moveLight('-');
             break;
           case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();

@@ -146,11 +146,14 @@ bool Graphics::Initialize(int width, int height)
   m_currentShaderID = 0;
 
   //set light data
-  gLight.position = glm::vec4(0.0f, 2.0f, 0.0f, 1.0f);
+  gLight.position = glm::vec4(0.0f, 20.0f, -100.0f, 1.0f);
   gLight.ambient = glm::vec4(0.0, 0.0, 0.0, 1.0f);
   gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  gLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  gLight.angle = 20.0f;
   gLight.shininess = 50;
+  gLight.attenuation = 0.00001f;
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -227,7 +230,10 @@ void Graphics::Render()
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x, gLight.ambient.y, gLight.ambient.z, gLight.ambient.w);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x, gLight.diffuse.y, gLight.diffuse.z, gLight.diffuse.w);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), gLight.specular.x, gLight.specular.y, gLight.specular.z, gLight.specular.w);
+  glUniform3f(m_currentShader->GetUniformLocation("lightDirection"), gLight.direction.x, gLight.direction.y, gLight.direction.z);
+  glUniform1f(m_currentShader->GetUniformLocation("lightAngle"), gLight.angle);
   glUniform1f(m_currentShader->GetUniformLocation("shininess"), gLight.shininess);
+  glUniform1f(m_currentShader->GetUniformLocation("attenuationProduct"), gLight.attenuation);
 
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
@@ -338,6 +344,32 @@ void Graphics::moveFlipper(char input)
         default:
             break;
     }
+}
+
+void Graphics::moveLight(char input)
+{
+  switch (input)
+  {
+    case 'w':
+      gLight.position.z -= 1;
+      break;
+    case 'a':
+      gLight.position.x -= 1;
+      break;
+    case 's':
+      gLight.position.z += 1;
+      break;
+    case 'd':
+      gLight.position.x += 1;
+      break;
+    case '+':
+      gLight.position.y += 1;
+      break;
+    case '-':
+      gLight.position.y -= 1;
+      break;
+    default: break;
+  }
 }
 
 void Graphics::changeShader()
