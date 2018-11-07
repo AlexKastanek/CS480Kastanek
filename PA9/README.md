@@ -1,4 +1,4 @@
-# PA8: Bullet
+# PA9: Lighting
 
 # Team Members
 Nick Jordy  
@@ -10,7 +10,7 @@ Use Alex's Repository for Grading, Located At: https://github.com/AlexKastanek/C
 # Dependencies, Building, and Running
 
 ## Dependency Instructions
-For both of the operating systems to run this project installation of these five programs are required [GLEW](http://glew.sourceforge.net/), [GLM](http://glm.g-truc.net/0.9.7/index.html), [SDL2](https://wiki.libsdl.org/Tutorials), [assimp](http://www.assimp.org/index.php), and [ImageMagick++](http://www.imagemagick.org/Magick++/) [Bullet](https://pybullet.org/Bullet/BulletFull/index.html)
+For both of the operating systems to run this project installation of these five programs are required [GLEW](http://glew.sourceforge.net/), [GLM](http://glm.g-truc.net/0.9.7/index.html), [SDL2](https://wiki.libsdl.org/Tutorials), [assimp](http://www.assimp.org/index.php), [ImageMagick++](http://www.imagemagick.org/Magick++/), and [Bullet](https://pybullet.org/Bullet/BulletFull/index.html)
 
 To install assimp, the linux terminal command is 
 ```
@@ -33,7 +33,7 @@ sudo apt-get install libbullet-dev
 This project uses OpenGL 3.3. Some computers, such as virtual machines in the ECC, can not run this version. In in order to run OpenGL 2.7 follow the instructions at [Using OpenGL 2.7](https://github.com/HPC-Vis/computer-graphics/wiki/Using-OpenGL-2.7)
 
 ## Building and Running
-To build this project there are two options. One is to use CMake which makes including new libraries easier, and handles new files added automatically to the src and include directory. CMake is a small new learning curve but makes things easier in the future.
+To build this project we use CMake which makes including new libraries easier, and handles new files added automatically to the src and include directory. CMake is a small new learning curve but makes things easier in the future.
 
 To install Cmake, the linux terminal command is
 ```
@@ -69,13 +69,15 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 ## Keyboard/Mouse Input Guide
 ESC - must be pressed to close the window (or right-click on the task bar and select close).
 
-w - move block foward
+q - increase brightness
 
-s - move block backward
+e - decrease brightness
 
-a - move block left
+Lshift - flip left flipper
 
-d - move block right
+Rshift - flip right flipper
+
+SpaceBar - Toggle Lighting Mode (default is Vertex Based)
 
 ## Extra Credit
 

@@ -66,7 +66,7 @@ class Graphics
 
     Light gLight;
     
-    float ambientMod = .5;
+    float ambientMod = 0;
  
     float cylSpecMod = 1;
     float cylDiffMod = .25;

@@ -147,7 +147,7 @@ bool Graphics::Initialize(int width, int height)
 
   //set light dataS
   gLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  gLight.ambient = glm::vec4(0.0, 0.0, 0.0, 1.0f);
+  gLight.ambient = glm::vec4(0.1, 0.1, 0.1, 1.0f);
   gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   gLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -207,6 +207,11 @@ void Graphics::Update(unsigned int dt)
   // Update the world
   m_world->Update(dt);
 
+  // Update the lights
+  glm::vec3 ballPos = m_world->GetBall().GetPosition();
+  gLight.position.x = ballPos.x;
+  gLight.position.z = ballPos.z;
+
   // Update the camera
   m_camera->Update(dt);
 }
@@ -214,11 +219,11 @@ void Graphics::Update(unsigned int dt)
 void Graphics::Render()
 {
   //cout << "CHECK GRAPHICS RENDER" << endl;
-  cout << "("
-       << gLight.direction.x << ", "
-       << gLight.direction.y << ", "
-       << gLight.direction.z << ")"
-       << endl;
+//   cout << "("
+//        << gLight.position.x << ", "
+//        << gLight.position.y << ", "
+//        << gLight.position.z << ")"
+//        << endl;
 
   //clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
