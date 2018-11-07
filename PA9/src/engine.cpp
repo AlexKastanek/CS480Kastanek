@@ -152,6 +152,12 @@ void Engine::Keyboard()
           case SDLK_RSHIFT:
             m_graphics->m_world->FlipRight();
             break;
+          case SDLK_q:
+            m_graphics->increaseBrightness();
+            break;
+          case SDLK_e:
+            m_graphics->decreaseBrightness();
+            break;
 
           case SDLK_SPACE:
             //cout << "current state: " << state << endl;

@@ -232,7 +232,7 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   glUniform4f(m_currentShader->GetUniformLocation("lightPosition"), gLight.position.x, gLight.position.y, gLight.position.z, 1.0);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x, gLight.ambient.y, gLight.ambient.z, gLight.ambient.w);
+  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x + ambientMod, gLight.ambient.y + ambientMod, gLight.ambient.z + ambientMod, gLight.ambient.w);
   glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x, gLight.diffuse.y, gLight.diffuse.z, gLight.diffuse.w);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), gLight.specular.x, gLight.specular.y, gLight.specular.z, gLight.specular.w);
   glUniform3f(m_currentShader->GetUniformLocation("lightDirection"), gLight.direction.x, gLight.direction.y, gLight.direction.z);
