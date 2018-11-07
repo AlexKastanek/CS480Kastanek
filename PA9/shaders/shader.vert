@@ -25,7 +25,7 @@ void main(void)
     vec4 v = vec4(v_position, 1.0);
     vec3 pos = ((viewMatrix * modelMatrix) * v).xyz;
 
-    vec3 L = normalize(lightPosition.xyz - pos);
+    vec3 L = normalize(lightPosition.xyz - (modelMatrix * vec4(v_position, 1.0)).xyz);
     vec3 E = normalize(-pos);
     vec3 H = normalize(L + E);
 
@@ -50,7 +50,7 @@ void main(void)
     //if object is outside the cone of influence, set attenuation to zero
     vec3 direction = normalize(lightDirection);
     float lightToSurfaceAngle = degrees(acos(dot(-L,direction)));
-    if (abs(lightToSurfaceAngle) > lightAngle)
+    if (lightToSurfaceAngle > lightAngle)
     {
         attenuation = 0.0;
     }

@@ -28,7 +28,7 @@ void main()
     fL = lightPosition.xyz;
 
     if(lightPosition.w != 0.0){
-        fL = lightPosition.xyz - v.xyz;
+        fL = lightPosition.xyz - (modelMatrix * vec4(v_position, 1.0)).xyz;
     }
 
     texture = v_texture;
@@ -44,7 +44,7 @@ void main()
     fL = lightPosition.xyz;
     if(lightPosition.w != 0.0)
     {
-        fL = lightPosition.xyz - pos;
+        fL = lightPosition.xyz - (modelMatrix * vec4(v_position, 1.0)).xyz;
     }
     fP = (modelMatrix * v).xyz;
 

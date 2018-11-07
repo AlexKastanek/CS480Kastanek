@@ -134,6 +134,18 @@ void Engine::Keyboard()
           case SDLK_MINUS:
             m_graphics->moveLight('-');
             break;
+          case SDLK_UP:
+            m_graphics->moveLight('^');
+            break;
+          case SDLK_DOWN:
+            m_graphics->moveLight('v');
+            break;
+          case SDLK_LEFT:
+            m_graphics->moveLight('<');
+            break;
+          case SDLK_RIGHT:
+            m_graphics->moveLight('>');
+            break;
           case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();
             break;

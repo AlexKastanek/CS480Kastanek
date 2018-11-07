@@ -40,6 +40,7 @@ void main()
         specular = vec4(0.0, 0.0, 0.0, 1.0);
     }
 
+    //calculate attenuation
     float distanceToLight = length(lightPosition.xyz - fP);
     float attenuation = 1.0 / (1.0 + attenuationProduct * pow(distanceToLight, 2));
 
@@ -59,4 +60,3 @@ void main()
     gl_FragColor.a = 1.0;
 
 }
-

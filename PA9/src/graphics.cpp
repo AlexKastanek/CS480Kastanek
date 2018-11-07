@@ -145,8 +145,8 @@ bool Graphics::Initialize(int width, int height)
   m_currentShader = m_vertexBasedShader;
   m_currentShaderID = 0;
 
-  //set light data
-  gLight.position = glm::vec4(0.0f, 20.0f, -100.0f, 1.0f);
+  //set light dataS
+  gLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
   gLight.ambient = glm::vec4(0.0, 0.0, 0.0, 1.0f);
   gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
@@ -214,6 +214,11 @@ void Graphics::Update(unsigned int dt)
 void Graphics::Render()
 {
   //cout << "CHECK GRAPHICS RENDER" << endl;
+  cout << "("
+       << gLight.direction.x << ", "
+       << gLight.direction.y << ", "
+       << gLight.direction.z << ")"
+       << endl;
 
   //clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
@@ -351,22 +356,34 @@ void Graphics::moveLight(char input)
   switch (input)
   {
     case 'w':
-      gLight.position.z -= 1;
-      break;
-    case 'a':
-      gLight.position.x -= 1;
-      break;
-    case 's':
       gLight.position.z += 1;
       break;
-    case 'd':
+    case 'a':
       gLight.position.x += 1;
+      break;
+    case 's':
+      gLight.position.z -= 1;
+      break;
+    case 'd':
+      gLight.position.x -= 1;
       break;
     case '+':
       gLight.position.y += 1;
       break;
     case '-':
       gLight.position.y -= 1;
+      break;
+    case '^':
+      gLight.direction.z += 0.1;
+      break;
+    case 'v':
+      gLight.direction.z -= 0.1;
+      break;
+    case '<':
+      gLight.direction.x += 0.1;
+      break;
+    case '>':
+      gLight.direction.x -= 0.1;
       break;
     default: break;
   }
