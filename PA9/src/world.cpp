@@ -4,11 +4,27 @@
 World::World() : Physics()
 {
   moveForce = 0.5f;
+
+  /*
+  m_boardSpecular = 1.0f;
+  m_ballSpecular = 1.0f;
+  m_flipperRightSpecular = 1.0f;
+  m_flipperLeftSpecular = 1.0f;
+  m_cylinderSpecular = 1.0f;
+  */
 }
 
 World::World(glm::vec3 gravity) : Physics(gravity)
 {
   moveForce = 0.5f;
+
+  /*
+  m_boardSpecular = 1.0f;
+  m_ballSpecular = 1.0f;
+  m_flipperRightSpecular = 1.0f;
+  m_flipperLeftSpecular = 1.0f;
+  m_cylinderSpecular = 1.0f;
+  */
 }
 
 World::~World()
@@ -93,7 +109,6 @@ void World::Update(unsigned int dt)
 
 void World::Render(GLint& modelMatrix, char obj)
 {
-  /*
   switch(obj)
   {
       case 't':
@@ -116,8 +131,8 @@ void World::Render(GLint& modelMatrix, char obj)
           break;
           
   }
-  */
     
+  /*
   glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
   m_board->Render();
   glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
@@ -128,6 +143,7 @@ void World::Render(GLint& modelMatrix, char obj)
   m_flipperLeft->Render();
   glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
   m_cylinder->Render();
+  */
 }
 
 Board& World::GetBoard()
@@ -154,6 +170,58 @@ Cylinder& World::GetCylinder()
 {
   return *m_cylinder;
 }
+
+/*
+float World::GetBoardSpecular()
+{
+  return m_boardSpecular;
+}
+
+float World::GetBallSpecular()
+{
+  return m_ballSpecular;
+}
+
+float World::GetFlipperRightSpecular()
+{
+  return m_flipperRightSpecular;
+}
+
+float World::GetFlipperLeftSpecular()
+{
+  return m_flipperLeftSpecular;
+}
+
+float World::GetCylinderSpecular()
+{
+  return m_cylinderSpecular;
+}
+
+void World::SetBoardSpecular(float boardSpecular)
+{
+  m_boardSpecular = boardSpecular;
+}
+
+void World::SetBallSpecular(float ballSpecular)
+{
+  m_ballSpecular = ballSpecular;
+}
+
+void World::SetFlipperRightSpecular(float flipperRightSpecular)
+{
+  m_flipperRightSpecular = flipperRightSpecular;
+}
+
+void World::SetFlipperLeftSpecular(float flipperLeftSpecular)
+{
+  m_flipperLeftSpecular = flipperLeftSpecular;
+}
+
+void World::SetCylinderSpecular(float cylinderSpecular)
+{
+  m_cylinderSpecular = cylinderSpecular;
+}
+*/
 
 void World::moveFlipperUp()
 {

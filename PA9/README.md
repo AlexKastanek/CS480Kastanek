@@ -67,17 +67,33 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 ```
 
 ## Keyboard/Mouse Input Guide
-ESC - must be pressed to close the window (or right-click on the task bar and select close).
+ESC - must be pressed to close the window (or right-click on the task bar and select close).  
 
-q - increase brightness
+1 - decrease specular brightness of board  
+2 - increase specular brightness of board  
 
-e - decrease brightness
+3 - decrease specular brightness of ball  
+4 - increase specular brightness of ball  
 
-Lshift - flip left flipper
+5 - decrease specular brightness of flippers  
+6 - increase specular brightness of flippers  
 
-Rshift - flip right flipper
+7 - decrease specular brightness of cylinder obstacle  
+8 - increase specular brightness of cylinder obstacle  
 
-SpaceBar - Toggle Lighting Mode (default is Vertex Based)
+9 - decrease ambient brightness  
+0 - increase ambient brightness  
+
+w - increase spot light brightness  
+s - decrease spot light brightness  
+'=' - increase spot light angle (radius)  
+'-' - decrease spot light angle (radius)  
+
+Lshift - flip left flipper  
+
+Rshift - flip right flipper  
+
+SpaceBar - Toggle Lighting Mode (default is Vertex Based)  
 
 ## Extra Credit
 

@@ -35,8 +35,8 @@ Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : 
   m_initialAngle = -2.355f;
   m_thresholdAngle = -0.785f;
   m_currentAngle = m_initialAngle;
-  m_flipAngleStep = 0.2f;
-  m_resetAngleStep = -0.2f;
+  m_flipAngleStep = 0.003f;
+  m_resetAngleStep = -0.001f;
 }
 
 Flipper::~Flipper()

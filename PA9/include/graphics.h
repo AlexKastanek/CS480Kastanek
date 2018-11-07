@@ -37,21 +37,24 @@ class Graphics
     void Update(unsigned int dt);
     void Render();
 
-    void moveFlipper(char input);
     void moveLight(char input);
-
-    World *m_world;
     
     void changeShader();
     void increaseBrightness();
     void decreaseBrightness();
+    void increaseDiffuse();
+    void decreaseDiffuse();
+    void increaseSpecular(unsigned int object);
+    void decreaseSpecular(unsigned int object);
 
-    void increaseCylSpecDiff();
-    void decreaseCylSpecDiff();
+    void increaseSpotLightRadius();
+    void decreaseSpotLightRadius();
     
     Shader *m_currentShader;
     Shader *m_vertexBasedShader;
     Shader *m_fragmentBasedShader;
+
+    World *m_world;
 
   private:
     std::string ErrorString(GLenum error);
@@ -67,9 +70,14 @@ class Graphics
     Light gLight;
     
     float ambientMod = 0;
- 
-    float cylSpecMod = 1;
-    float cylDiffMod = .25;
+    float diffuseMod = 0;
+    float boardSpecularMod = 0;
+    float ballSpecularMod = 0;
+    float flipperSpecularMod = 0;
+    float cylinderSpecularMod = 0;
+
+    float diffuseAdj = 0.5f;
+    float specularAdj = 0.5f;
 
     unsigned int m_currentShaderID;
 };

@@ -117,34 +117,46 @@ void Engine::Keyboard()
   					m_running = false;
   					break;
           case SDLK_w:
-            m_graphics -> moveLight('w');
+            m_graphics->increaseDiffuse();
             break;
           case SDLK_s:
-            m_graphics -> moveLight('s');
+            m_graphics->decreaseDiffuse();
             break;
-          case SDLK_a:
-            m_graphics -> moveLight('a');
+          case SDLK_1:
+            m_graphics->decreaseSpecular(0);
             break;
-          case SDLK_d:
-            m_graphics -> moveLight('d');
+          case SDLK_2:
+            m_graphics->increaseSpecular(0);
+            break;
+          case SDLK_3:
+            m_graphics->decreaseSpecular(1);
+            break;
+          case SDLK_4:
+            m_graphics->increaseSpecular(1);
+            break;
+          case SDLK_5:
+            m_graphics->decreaseSpecular(2);
+            break;
+          case SDLK_6:
+            m_graphics->increaseSpecular(2);
+            break;
+          case SDLK_7:
+            m_graphics->decreaseSpecular(3);
+            break;
+          case SDLK_8:
+            m_graphics->increaseSpecular(3);
+            break;
+          case SDLK_9:
+            m_graphics->decreaseBrightness();
+            break;
+          case SDLK_0:
+            m_graphics->increaseBrightness();
             break;
           case SDLK_EQUALS:
-            m_graphics->moveLight('+');
+            m_graphics->increaseSpotLightRadius();
             break;
           case SDLK_MINUS:
-            m_graphics->moveLight('-');
-            break;
-          case SDLK_UP:
-            m_graphics->moveLight('^');
-            break;
-          case SDLK_DOWN:
-            m_graphics->moveLight('v');
-            break;
-          case SDLK_LEFT:
-            m_graphics->moveLight('<');
-            break;
-          case SDLK_RIGHT:
-            m_graphics->moveLight('>');
+            m_graphics->decreaseSpotLightRadius();
             break;
           case SDLK_LSHIFT:
             m_graphics->m_world->FlipLeft();
@@ -152,13 +164,6 @@ void Engine::Keyboard()
           case SDLK_RSHIFT:
             m_graphics->m_world->FlipRight();
             break;
-          case SDLK_q:
-            m_graphics->increaseBrightness();
-            break;
-          case SDLK_e:
-            m_graphics->decreaseBrightness();
-            break;
-
           case SDLK_SPACE:
             //cout << "current state: " << state << endl;
           /*

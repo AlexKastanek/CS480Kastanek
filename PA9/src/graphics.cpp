@@ -147,13 +147,13 @@ bool Graphics::Initialize(int width, int height)
 
   //set light dataS
   gLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  gLight.ambient = glm::vec4(0.1, 0.1, 0.1, 1.0f);
+  gLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
   gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   gLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  gLight.angle = 20.0f;
+  gLight.angle = 40.0f;
   gLight.shininess = 50;
-  gLight.attenuation = 0.00001f;
+  gLight.attenuation = 0.001f;
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -238,7 +238,7 @@ void Graphics::Render()
 
   glUniform4f(m_currentShader->GetUniformLocation("lightPosition"), gLight.position.x, gLight.position.y, gLight.position.z, 1.0);
   glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x + ambientMod, gLight.ambient.y + ambientMod, gLight.ambient.z + ambientMod, gLight.ambient.w);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x, gLight.diffuse.y, gLight.diffuse.z, gLight.diffuse.w);
+  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x + diffuseMod, gLight.diffuse.y + diffuseMod, gLight.diffuse.z + diffuseMod, gLight.diffuse.w);
   glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), gLight.specular.x, gLight.specular.y, gLight.specular.z, gLight.specular.w);
   glUniform3f(m_currentShader->GetUniformLocation("lightDirection"), gLight.direction.x, gLight.direction.y, gLight.direction.z);
   glUniform1f(m_currentShader->GetUniformLocation("lightAngle"), gLight.angle);
@@ -247,50 +247,45 @@ void Graphics::Render()
 
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
-  // Render the objects
-  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBoard().GetModel()));
-  //glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_world->GetBall().GetModel()));
-  
-  /*
-  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 2,5,-5,1);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), ambientMod,ambientMod,ambientMod,1);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
-  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
-  glUniform1f(m_currentShader->GetUniformLocation("shine"), 50);
-  */
+  //render board
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"), 
+    gLight.specular.x + boardSpecularMod, 
+    gLight.specular.y + boardSpecularMod, 
+    gLight.specular.z + boardSpecularMod, 
+    gLight.specular.w);
 
-  m_world->Render(m_modelMatrix, 't');//render board
+  m_world->Render(m_modelMatrix, 't');
+
+  //render ball
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"), 
+    gLight.specular.x + ballSpecularMod, 
+    gLight.specular.y + ballSpecularMod, 
+    gLight.specular.z + ballSpecularMod, 
+    gLight.specular.w);
+
+  m_world->Render(m_modelMatrix, 'b');
+
+  //render flippers
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"), 
+    gLight.specular.x + flipperSpecularMod, 
+    gLight.specular.y + flipperSpecularMod, 
+    gLight.specular.z + flipperSpecularMod, 
+    gLight.specular.w);
+
+  m_world->Render(m_modelMatrix, 'f');
   
-  /*
-  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), .75,.75, .75 ,1);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
-  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
-  glUniform1f(m_currentShader->GetUniformLocation("shine"), .0005);
-  glUniform1f(m_currentShader->GetUniformLocation("ball"), 1.0);
-  */
-  m_world->Render(m_modelMatrix, 'b'); //render ball
-  //glUniform1f(m_currentShader->GetUniformLocation("ball"), 0.0);
-  
-  /*
-  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), .75,.75, .75 ,1);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), cylDiffMod,cylDiffMod,cylDiffMod,1);
-  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), cylSpecMod,cylSpecMod,cylSpecMod,1);
-  glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
-  */
-  m_world->Render(m_modelMatrix, 'f'); //render flippers
-  
-  /*
-  glUniform4f(m_currentShader->GetUniformLocation("lightPos"), 0,2,0,0);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), .75,.75, .75 ,1);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), .25,.25,.25,1);
-  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), 1,1,1,1);
-  glUniform1f(m_currentShader->GetUniformLocation("shine"), 10);
-  */
-  m_world->Render(m_modelMatrix, 'c');//render cylinder
-  
- 
+  //render cylinder
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"), 
+    gLight.specular.x + cylinderSpecularMod, 
+    gLight.specular.y + cylinderSpecularMod, 
+    gLight.specular.z + cylinderSpecularMod, 
+    gLight.specular.w);
+
+  m_world->Render(m_modelMatrix, 'c');
 
   //cout << "finished rendering objects" << endl;
 
@@ -333,27 +328,6 @@ std::string Graphics::ErrorString(GLenum error)
   {
     return "None";
   }
-}
-
-void Graphics::moveFlipper(char input)
-{
-    switch(input)
-    {
-        case 'w':
-            m_world -> moveFlipperUp();
-            break;
-        case 's':
-            m_world -> moveFlipperDown();
-            break;
-        case 'a':
-            m_world -> moveFlipperLeft();
-            break;
-        case 'd':
-            m_world -> moveFlipperRight();
-            break;
-        default:
-            break;
-    }
 }
 
 void Graphics::moveLight(char input)
@@ -437,23 +411,89 @@ void Graphics::changeShader()
 void Graphics::increaseBrightness()
 {
     ambientMod += .05;
+    cout << "Scene brightness set to " << ambientMod << endl;
 }
 
 void Graphics::decreaseBrightness()
 {
     ambientMod -= .05;
+    cout << "Scene brightness set to " << ambientMod << endl;
 }
 
-void Graphics::increaseCylSpecDiff()
+void Graphics::increaseDiffuse()
 {
-    cylSpecMod += .05;
-    cylDiffMod += .05;
+  diffuseMod += diffuseAdj;
+  cout << "Spot light brightness set to " << diffuseMod << endl;
 }
 
-void Graphics::decreaseCylSpecDiff()
+void Graphics::decreaseDiffuse()
 {
-    cylSpecMod -= .05;
-    cylDiffMod -= .05;
-    
+  diffuseMod -= diffuseAdj;
+  cout << "Spot light brightness set to " << diffuseMod << endl;
 }
 
+void Graphics::increaseSpecular(unsigned int object)
+{
+  switch (object)
+  {
+    case 0:
+      boardSpecularMod += specularAdj;
+      cout << "Board specular set to " << boardSpecularMod << endl;
+      break;
+    case 1:
+      ballSpecularMod += specularAdj;
+      cout << "Ball specular set to " << ballSpecularMod << endl;
+      break;
+    case 2:
+      flipperSpecularMod += specularAdj;
+      cout << "Flipper specular set to " << flipperSpecularMod << endl;
+      break;
+    case 3:
+      cylinderSpecularMod += specularAdj;
+      cout << "Cylinder specular set to " << cylinderSpecularMod << endl;
+      break;
+    default: break;
+  }
+}
+
+void Graphics::decreaseSpecular(unsigned int object)
+{
+  switch (object)
+  {
+    case 0:
+      boardSpecularMod -= specularAdj;
+      cout << "Board specular set to " << boardSpecularMod << endl;
+      break;
+    case 1:
+      ballSpecularMod -= specularAdj;
+      cout << "Ball specular set to " << ballSpecularMod << endl;
+      break;
+    case 2:
+      flipperSpecularMod -= specularAdj;
+      cout << "Flipper specular set to " << flipperSpecularMod << endl;
+      break;
+    case 3:
+      cylinderSpecularMod -= specularAdj;
+      cout << "Cylinder specular set to " << cylinderSpecularMod << endl;
+      break;
+    default: break;
+  }
+}
+
+void Graphics::increaseSpotLightRadius()
+{
+  if (gLight.angle < 180.0f)
+  {
+    gLight.angle += 1.0f;
+  }
+  cout << "Spot light angle set to " << gLight.angle << " degrees" << endl;
+}
+
+void Graphics::decreaseSpotLightRadius()
+{
+  if (gLight.angle > 0.0f)
+  {
+    gLight.angle -= 1.0f;
+  }
+  cout << "Spot light angle set to " << gLight.angle << " degrees" << endl;
+}

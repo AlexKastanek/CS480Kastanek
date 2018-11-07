@@ -27,6 +27,20 @@ public:
   Flipper& GetFlipperLeft();
   Cylinder& GetCylinder();
 
+  /*
+  float GetBoardSpecular();
+  float GetBallSpecular();
+  float GetFlipperRightSpecular();
+  float GetFlipperLeftSpecular();
+  float GetCylinderSpecular();
+
+  void SetBoardSpecular(float boardSpecular);
+  void SetBallSpecular(float ballSpecular);
+  void SetFlipperRightSpecular(float flipperRightSpecular);
+  void SetFlipperLeftSpecular(float flipperLeftSpecular);
+  void SetCylinderSpecular(float cylinderSpecular);
+  */
+
   //flipper controls
   void moveFlipperUp();
   void moveFlipperDown();
@@ -44,6 +58,14 @@ private:
   Flipper *m_flipperRight;
   Flipper *m_flipperLeft;
   Cylinder *m_cylinder;
+
+  /*
+  float m_boardSpecular;
+  float m_ballSpecular;
+  float m_flipperRightSpecular;
+  float m_flipperLeftSpecular;
+  float m_cylinderSpecular;
+  */
 
   bool flipped = false;
   float moveForce;
