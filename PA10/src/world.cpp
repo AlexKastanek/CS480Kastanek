@@ -55,11 +55,9 @@ bool World::Initialize()
   m_board->Initialize();
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-20.0f, 1.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.0f, 1.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
-
 
   m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(19.0f, 2.5f, -50.0f), false);
   m_flipperLeft->Initialize();
@@ -69,67 +67,60 @@ bool World::Initialize()
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
-    m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
-    m_cylinder->Initialize();
-    m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
+  m_plunger = new Plunger("..//assets//Plunger.obj", 10.0f, glm::vec3(-45.0f, 2.5f, -60.0f));
+  m_plunger->Initialize();
+  m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
+
+  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
+  m_cylinder->Initialize();
+  m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
   
   createWalls();
-  
 
   return true;
 }
 
 void World::Update(unsigned int dt)
 {
-  //cout << "entered world update function" << endl;
-
   m_dynamicsWorld->stepSimulation(dt, 0.5f);
-
-  //cout << "updating objects" << endl;
   
   m_board->Update(dt);
-  m_cylinder->Update(dt);
   m_ball->Update(dt);
   m_flipperRight->Update(dt);
-  m_flipperLeft->Update(dt);  
+  m_flipperLeft->Update(dt);
+  m_plunger->Update(dt);
+  m_cylinder->Update(dt);  
   
   m_ball -> m_rigidBody -> clearForces();
-  m_flipperRight -> m_rigidBody -> clearForces();
-
-
-
-  //cout << "finished updating objects" << endl;
-
-//   if (!flipped)
-//   {
-//     m_flipperRight->Flip();
-//     flipped = true;
-//   }
 }
 
 void World::Render(GLint& modelMatrix, char obj)
 {
   switch(obj)
   {
-      case 't':
-          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
-          m_board->Render();
-          break;
-      case 'b':
-          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
-          m_ball->Render();
-          break;
-      case 'f':
-          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
-          m_flipperRight->Render();
-          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
-          m_flipperLeft->Render();
-          break;
-      case 'c':
-          glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
-          m_cylinder->Render();
-          break;
-          
+    case 't':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
+      m_board->Render();
+      break;
+    case 'b':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
+      m_ball->Render();
+      break;
+    case 'f':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
+      m_flipperRight->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperLeft->GetModel()));
+      m_flipperLeft->Render();
+      break;
+    case 'p':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_plunger->GetModel()));
+      m_plunger->Render();
+      break;
+    case 'c':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
+      m_cylinder->Render();
+      break; 
+    default: break;
   }
     
   /*
@@ -256,6 +247,16 @@ void World::FlipRight()
 void World::FlipLeft()
 {
   m_flipperLeft->Flip();
+}
+
+void World::PullPlunger()
+{
+  m_plunger->Pull();
+}
+
+void World::ReleasePlunger()
+{
+  m_plunger->Release();
 }
 
 void World::createWalls()

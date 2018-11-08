@@ -22,6 +22,12 @@ public:
 private:
   bool m_pulling;
   bool m_releasing;
+
+  float m_initialPosition;
+  float m_thresholdPosition;
+  float m_pullStep;
+  float m_releaseStep;
+  float m_pullDistance;
 };
 
 #endif /* PLUNGER_H */

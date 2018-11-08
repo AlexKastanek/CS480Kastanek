@@ -164,6 +164,10 @@ void Engine::Keyboard()
           case SDLK_RSHIFT:
             m_graphics->m_world->FlipRight();
             break;
+          case SDLK_RETURN:
+            //pull plunger
+            m_graphics->m_world->PullPlunger();
+            break;
           case SDLK_SPACE:
             //cout << "current state: " << state << endl;
           /*
@@ -188,13 +192,24 @@ void Engine::Keyboard()
             }
             */
             m_graphics->changeShader();
-            break;
-          
+            break; 
           default:
             break;
-        } 			
-  		  default:
-  			 break;
+        }
+        break;
+      case SDL_KEYUP:
+        switch(m_event.key.keysym.sym)
+        {
+          case SDLK_RETURN:
+            //release plunger
+            m_graphics->m_world->ReleasePlunger();
+            break;
+          default:
+            break;
+        }
+        break;			
+  		default:
+  			break;
   	}
   }
 }

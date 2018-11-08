@@ -6,6 +6,7 @@
 #include "board.h"
 #include "ball.h"
 #include "flipper.h"
+#include "plunger.h"
 #include "cylinder.h"
 
 using namespace std;
@@ -48,6 +49,8 @@ public:
   void moveFlipperLeft();
   void FlipRight();
   void FlipLeft();
+  void PullPlunger();
+  void ReleasePlunger();
 
   void createWalls();
 
@@ -57,6 +60,7 @@ private:
   Ball *m_ball;
   Flipper *m_flipperRight;
   Flipper *m_flipperLeft;
+  Plunger *m_plunger;
   Cylinder *m_cylinder;
 
   /*

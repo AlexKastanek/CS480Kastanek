@@ -276,6 +276,16 @@ void Graphics::Render()
     gLight.specular.w);
 
   m_world->Render(m_modelMatrix, 'f');
+
+  //render plunger
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"),
+    gLight.specular.x,
+    gLight.specular.y,
+    gLight.specular.z,
+    gLight.specular.w);
+
+  m_world->Render(m_modelMatrix, 'p');
   
   //render cylinder
   glUniform4f(
