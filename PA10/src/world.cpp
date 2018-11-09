@@ -74,6 +74,12 @@ bool World::Initialize()
   m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
   m_cylinder->Initialize();
   m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
+
+  m_launchArea = new TriggerObject(
+    glm::vec3(10.0f, 10.0f, 10.0f),
+    glm::vec3(-45.0f, 1.0f, 20.0f));
+  m_launchArea->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_launchArea->m_ghostObject);
   
   createWalls();
 
@@ -82,6 +88,19 @@ bool World::Initialize()
 
 void World::Update(unsigned int dt)
 {
+  /*
+  if (m_ball->m_rigidBody->checkCollideWith(m_launchArea->m_collisionObject))
+  {
+    cout << "COLLIDING" << endl;
+  }
+  else
+  {
+    cout << "NOT COLLIDING" << endl;
+  }
+  */
+  int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
+  cout << numManifolds << endl;
+
   m_dynamicsWorld->stepSimulation(dt, 0.5f);
   
   m_board->Update(dt);

@@ -8,6 +8,7 @@
 #include "flipper.h"
 #include "plunger.h"
 #include "cylinder.h"
+#include "trigger_object.h"
 
 using namespace std;
 
@@ -62,6 +63,7 @@ private:
   Flipper *m_flipperLeft;
   Plunger *m_plunger;
   Cylinder *m_cylinder;
+  TriggerObject *m_launchArea;
 
   /*
   float m_boardSpecular;

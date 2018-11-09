@@ -152,7 +152,7 @@ void Plunger::Update(unsigned int dt)
 
 void Plunger::Pull()
 {
-  cout << "Pull plunger" << endl;
+  //cout << "Pull plunger" << endl;
   if (!m_releasing)
   {
     m_pulling = true;
