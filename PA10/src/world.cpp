@@ -55,7 +55,7 @@ bool World::Initialize()
   m_board->Initialize();
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.0f, 1.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 20.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
@@ -75,11 +75,17 @@ bool World::Initialize()
   m_cylinder->Initialize();
   m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
 
+  m_launchBarrier = new LaunchBarrier("..//assets//LaunchBarrier.obj", 10.0, glm::vec3(-39.0f, 2.5f, -10.0f));
+  m_launchBarrier->Initialize();
+  m_dynamicsWorld->addRigidBody(m_launchBarrier->m_rigidBody);
+
   m_launchArea = new TriggerObject(
-    glm::vec3(10.0f, 10.0f, 10.0f),
-    glm::vec3(-45.0f, 1.0f, 20.0f));
+    glm::vec3(1.0f, 10.0f, 80.0f),
+    glm::vec3(-45.5f, 1.0f, -10.0f));
   m_launchArea->Initialize();
   m_dynamicsWorld->addCollisionObject(m_launchArea->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
   
   createWalls();
 
@@ -98,8 +104,9 @@ void World::Update(unsigned int dt)
     cout << "NOT COLLIDING" << endl;
   }
   */
-  int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
-  cout << numManifolds << endl;
+  /*int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
+  cout << numManifolds << endl;*/
+
 
   m_dynamicsWorld->stepSimulation(dt, 0.5f);
   
@@ -108,9 +115,96 @@ void World::Update(unsigned int dt)
   m_flipperRight->Update(dt);
   m_flipperLeft->Update(dt);
   m_plunger->Update(dt);
-  m_cylinder->Update(dt);  
-  
-  m_ball -> m_rigidBody -> clearForces();
+  m_cylinder->Update(dt);
+  m_launchBarrier->Update(dt);  
+
+  /*check if ball is inside launch area*/
+
+  bool collidingWithBall = false;
+
+  //get amount of objects inside launch area
+  int launchAreaCollisionAmount = m_launchArea->m_ghostObject->getNumOverlappingObjects();
+
+  //loop through each object
+  for (int i = 0; i < launchAreaCollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_launchArea->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      collidingWithBall = true;
+    }
+  }
+
+  //if colliding with ball
+  if (collidingWithBall)
+  {
+    /*
+    //cout << "COLLIDING WITH BALL" << endl;
+
+    //get the ball's position
+    btTransform ballTransform;
+    m_ball->m_rigidBody->getMotionState()->getWorldTransform(ballTransform);
+    btVector3 position = ballTransform.getOrigin();
+
+    //if this position is not centered between the two walls
+    if (position.x() > -46.0 && position.x() < -44.0)
+    {
+      //cout << "IN RANGE" << endl;
+      //if this ball was not in range in the previous frame
+      if (!m_ballInLaunchRange)
+      {
+        //reset velocity
+        cout << "RESETTING BALL VELOCITY" << endl;
+        m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+      }
+
+      m_ballInLaunchRange = true;
+    }
+    */
+
+    //if this ball was not in range in the previous frame
+    if (!m_ballInLaunchRange)
+    {
+      cout << "RESETTING BALL VELOCITY" << endl;
+      m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+      m_ball->CenterInLaunchArea();
+    }
+    m_ballInLaunchRange = true;
+    
+    /*
+    else if (position.x() < -46.0)
+    {
+      cout << "TO THE RIGHT" << endl;
+      m_ballInLaunchRange = false;
+      m_ball->m_rigidBody->applyCentralImpulse(btVector3(0.0001,0,0));
+    }
+    else
+    {
+      cout << "TO THE LEFT" << endl;
+      m_ballInLaunchRange = false;
+      m_ball->m_rigidBody->applyCentralImpulse(btVector3(-0.0001,0,0));
+    }
+    else
+    {
+      //set ball in range to false
+      m_ballInLaunchRange = false;
+    }
+    */
+
+    //keep ball inside launch area
+    m_ball->m_rigidBody->setLinearFactor(btVector3(0,1,1));
+  }
+  //if not in launch area, let forces be applied to the ball
+  else
+  {
+    //cout << "NOT COLLIDING WITH BALL" << endl;
+    m_ball->m_rigidBody->setLinearFactor(btVector3(1,1,1));
+    m_ballInLaunchRange = false;
+  }
 }
 
 void World::Render(GLint& modelMatrix, char obj)
@@ -138,6 +232,10 @@ void World::Render(GLint& modelMatrix, char obj)
     case 'c':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
       m_cylinder->Render();
+      break; 
+    case 'l':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_launchBarrier->GetModel()));
+      m_launchBarrier->Render();
       break; 
     default: break;
   }

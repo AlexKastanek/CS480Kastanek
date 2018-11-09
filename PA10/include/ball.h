@@ -16,7 +16,14 @@ public:
   bool Initialize();
   void Update(unsigned int dt);
 
+  void CenterInLaunchArea();
+
 private:
+
+  bool centeringInLaunchArea;
+  float leftLaunchThreshold = -45.25f;
+  float rightLaunchThreshold = -45.75f;
+  float centeringStep = 0.1f;
 
 };
 

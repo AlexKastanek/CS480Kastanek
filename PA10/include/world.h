@@ -8,6 +8,7 @@
 #include "flipper.h"
 #include "plunger.h"
 #include "cylinder.h"
+#include "launch_barrier.h"
 #include "trigger_object.h"
 
 using namespace std;
@@ -63,6 +64,7 @@ private:
   Flipper *m_flipperLeft;
   Plunger *m_plunger;
   Cylinder *m_cylinder;
+  LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
 
   /*
@@ -73,6 +75,7 @@ private:
   float m_cylinderSpecular;
   */
 
+  bool m_ballInLaunchRange = true;
   bool flipped = false;
   float moveForce;
 

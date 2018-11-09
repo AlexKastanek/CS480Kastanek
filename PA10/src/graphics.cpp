@@ -297,6 +297,16 @@ void Graphics::Render()
 
   m_world->Render(m_modelMatrix, 'c');
 
+  //render launch barrier
+  glUniform4f(
+    m_currentShader->GetUniformLocation("specularProduct"),
+    gLight.specular.x,
+    gLight.specular.y,
+    gLight.specular.z,
+    gLight.specular.w);
+
+  m_world->Render(m_modelMatrix, 'l');
+
   //cout << "finished rendering objects" << endl;
 
   // Get any errors from OpenGL
