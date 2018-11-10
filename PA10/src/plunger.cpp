@@ -17,8 +17,8 @@ Plunger::Plunger(string filename, float scale, glm::vec3 position) : PhysicsObje
 
   m_initialPosition = position.z;
   m_thresholdPosition = m_initialPosition - 20;
-  m_pullStep = 0.02f;
-  m_releaseStep = 0.035f;
+  m_pullStep = 0.2f;
+  m_releaseStep = 3.1f;
   m_pullDistance = 0.0f;
 }
 
