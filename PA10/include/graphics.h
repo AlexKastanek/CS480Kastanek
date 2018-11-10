@@ -67,7 +67,7 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix; 
 
-    Light gLight;
+    Light gLight[10];
     
     float ambientMod = 0;
     float diffuseMod = 0;
