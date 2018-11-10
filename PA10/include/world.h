@@ -59,11 +59,18 @@ public:
 
 private:
   Board *m_board;
+  btTriangleMesh *boardMesh;  
+
+
   Ball *m_ball;
   Flipper *m_flipperRight;
   Flipper *m_flipperLeft;
   Plunger *m_plunger;
+
+
   Cylinder *m_cylinder;
+  btTriangleMesh *cylMesh;
+
   LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
 
@@ -96,6 +103,7 @@ private:
   btRigidBody *m_leftWallRigid;
   btRigidBody *m_rightWallRigid;
   btRigidBody *m_lidRigid;
+
 };
 
 #endif /* WORLD_H */

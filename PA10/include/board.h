@@ -11,9 +11,10 @@ public:
   Board();
   Board(string filename);
   Board(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
+  Board(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
   ~Board();
 
-  bool Initialize();
+  bool Initialize(btTriangleMesh *triMesh);
   void Update(unsigned int dt);
 
 private:

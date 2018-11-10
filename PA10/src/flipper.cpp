@@ -9,8 +9,10 @@ Flipper::Flipper() : PhysicsObject()
   m_initialAngle = -2.355f; //-3pi/4
   m_thresholdAngle = -0.785f; //-pi/4
   m_currentAngle = m_initialAngle;
+
   m_flipAngleStep = 0.3f;
   m_resetAngleStep = -0.1f;
+
 }
 
 Flipper::Flipper(string filename) : PhysicsObject(filename)
@@ -22,8 +24,10 @@ Flipper::Flipper(string filename) : PhysicsObject(filename)
   m_initialAngle = -2.355f;
   m_thresholdAngle = -0.785f;
   m_currentAngle = m_initialAngle;
+
   m_flipAngleStep = 0.012f;
   m_resetAngleStep = -0.004f;
+
 }
 
 Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : PhysicsObject(filename, scale, position)
@@ -35,6 +39,7 @@ Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : 
   m_initialAngle = -2.355f;
   m_thresholdAngle = -0.785f;
   m_currentAngle = m_initialAngle;
+
   m_flipAngleStep = 0.012f;
   m_resetAngleStep = -0.004f;
 }
@@ -202,6 +207,7 @@ void Flipper::Update(unsigned int dt)
     //if not above threshold, set to next flip step
     else
     {
+
       m_currentAngle += m_flipAngleStep * dt;
 
       basis.setRotation(btQuaternion(
@@ -228,6 +234,7 @@ void Flipper::Update(unsigned int dt)
     //if not below resting point, set to next flip step
     else
     {
+
       m_currentAngle += m_resetAngleStep * dt;
 
       basis.setRotation(btQuaternion(

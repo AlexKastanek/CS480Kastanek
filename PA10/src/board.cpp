@@ -15,6 +15,11 @@ Board::Board(string filename, float scale, glm::vec3 position) : PhysicsObject(f
 
 }
 
+Board::Board(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+{
+
+}
+
 Board::~Board()
 {
   delete m_renderData;
@@ -25,12 +30,16 @@ Board::~Board()
   m_rigidBody = NULL;
 }
 
-bool Board::Initialize()
+
+bool Board::Initialize(btTriangleMesh *triMesh)
 {
   cout << "CHECK BOARD INITIALIZE" << endl;
 
   //create the collider
   m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
+  
+  //m_collider = new btBvhTriangleMeshShape(triMesh, false);
+
 
   //create the motion state
   m_motionState = new btDefaultMotionState();

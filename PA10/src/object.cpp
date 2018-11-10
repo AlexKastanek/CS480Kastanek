@@ -48,6 +48,26 @@ Object::Object(string filename, float scale, glm::vec3 position)
   cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
 
+
+Object::Object(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh)
+{
+  cout << "CHECK OBJECT CONSTRUCTOR" << endl;
+
+  m_parent = NULL;
+  m_renderData = new Model();
+  if (!m_renderData->LoadObject(filename, triMesh))
+  {
+    delete m_renderData;
+    exit(1);
+  }
+
+  m_position = position;
+  m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+  m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+
+  cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
+}
+
 Object::~Object()
 {
   delete m_renderData;

@@ -51,11 +51,13 @@ bool World::Initialize()
     m_gravity.y,
     m_gravity.z));
 
-  m_board = new Board("..//assets//Board.obj", 100.0f);
-  m_board->Initialize();
+  boardMesh = new btTriangleMesh();
+  m_board = new Board("..//assets//Board.obj", 100.0f, glm::vec3(0.0, 0.0, 0.0), boardMesh);
+  m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 20.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 30.0f, 0.0f));
+
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
@@ -71,8 +73,10 @@ bool World::Initialize()
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 
-  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
-  m_cylinder->Initialize();
+  cylMesh = new btTriangleMesh();
+  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh);
+  m_cylinder->Initialize(cylMesh);
+
   m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
 
   m_launchBarrier = new LaunchBarrier("..//assets//LaunchBarrier.obj", 10.0, glm::vec3(-39.0f, 2.5f, -10.0f));

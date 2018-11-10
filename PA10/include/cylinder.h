@@ -14,9 +14,11 @@ public:
     Cylinder();
     Cylinder(string filename);
     Cylinder(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
+    Cylinder(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
     ~Cylinder();
 
-    bool Initialize();
+    bool Initialize(btTriangleMesh *triMesh);
+
     void Update(unsigned int dt);
 
 private:

@@ -17,6 +17,7 @@ Plunger::Plunger(string filename, float scale, glm::vec3 position) : PhysicsObje
 
   m_initialPosition = position.z;
   m_thresholdPosition = m_initialPosition - 20;
+
   m_pullStep = 0.02f;
   m_releaseStep = 0.035f;
   m_pullDistance = 0.0f;
@@ -110,18 +111,18 @@ void Plunger::Update(unsigned int dt)
     {
       m_position.z -= abs(m_pullStep * (float) (dt+1));
       m_pullDistance += abs(m_pullStep * (float) (dt+1));
+
     }
     else
     {
       m_position.z = m_thresholdPosition;
     }
-
-    
   }
   else if (m_releasing)
   {
     if (origin.z() < m_initialPosition)
     {
+
       m_position.z += abs((m_releaseStep * m_pullDistance / 15) * (dt+1));
     }
     else

@@ -221,6 +221,173 @@ bool Model::LoadObject(string in_filename)
     return true;
 }
 
+
+bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh) 
+{
+    Assimp::Importer importer;
+    std::vector<Vertex> out_vertices;
+    std::vector<unsigned int> out_indices;
+
+    //read in vertices, with triangulation
+    const aiScene *scene = importer.ReadFile(
+        in_filename.c_str(),
+        aiProcess_Triangulate | 
+        aiProcess_FlipUVs |
+        aiProcess_JoinIdenticalVertices |
+        aiProcess_SortByPType);
+    //cout << scene->mNumMeshes << " meshes found" << endl;
+    //cout << scene->mNumMaterials << " materials found" << endl;
+
+    aiMesh *mesh = scene->mMeshes[0];
+
+    out_vertices.clear();
+    out_indices.clear();
+
+    for (int i = 0; i < scene->mNumMeshes; i++) {
+
+        aiMesh *mesh = scene->mMeshes[i];
+        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+
+        aiString materialName;
+        aiString textureFileName;
+        std::string textureFilePath;
+
+        //get the material name, return false if it cannot be found
+        if (AI_SUCCESS != material->Get(AI_MATKEY_NAME, materialName))
+        {
+            cout << "ERROR: Mesh " << i << "is not using a material" << endl;
+            return false;
+        }
+        /*
+        cout << "using material " 
+             << mesh->mMaterialIndex 
+             << ": " 
+             << materialName.C_Str() 
+             << endl;
+        */
+
+        //get the texture file name contained in the mateial
+        //return false if it cannot be found
+        if (AI_SUCCESS != material->Get(
+                            AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE,0), 
+                            textureFileName
+                            )
+            )
+        {
+            cout << "ERROR: Mesh " 
+                 << i 
+                 << "'s material does not contain a texture file name" 
+                 << endl;
+            return false;
+        }
+        //cout << "using texture: " << textureFileName.C_Str() << endl;
+
+        for (int j = 0; j < mesh->mNumVertices + 1; j++) 
+        {
+            aiVector3D aiVec = mesh->mVertices[j];
+            glm::vec3 vertex = glm::vec3(aiVec.x, aiVec.y, aiVec.z);
+
+            aiVector3D aiUV = mesh->mTextureCoords[0][j];
+            glm::vec2 uv;
+            uv.x = aiUV.x;
+            uv.y = aiUV.y;
+
+            //uncomment to view the texture coordinate for each vertex
+            /*
+            cout << "using texture coordinates: [" 
+                 << uv.x << ", " << uv.y << "]" 
+                 << endl;
+            //*/
+
+            //Add Normals
+            glm::vec3 Norm;
+            
+            if(mesh->HasNormals())
+            {
+                aiVector3D n = mesh->mNormals[j];
+                Norm = glm::vec3(n.x, n.y, n.z);
+            }
+            else
+                Norm = glm::vec3(0.0,0.0,0.0);
+            
+            //cout << endl;
+            /*
+            cout << "("
+                 << Norm.x << ", "
+                 << Norm.y << ", "
+                 << Norm.z << ")"
+                 << endl;
+            */
+                 
+            //create the Vertex type to be pushed
+            Vertex *temp = new Vertex(vertex, uv, Norm); 
+            out_vertices.push_back(*temp);
+            delete temp;
+        }
+
+        //cout << "Number of faces: " << mesh->mNumFaces << endl;
+        for (int j = 0; j < mesh->mNumFaces; j++) 
+        {
+            aiFace face = mesh->mFaces[j];
+
+            //push each vertex to create the index
+            out_indices.push_back(face.mIndices[0]);
+            out_indices.push_back(face.mIndices[1]);
+            out_indices.push_back(face.mIndices[2]);
+        }
+        
+        //Create Triangle Mesh**
+        btVector3 triArray[3];
+        
+        for(unsigned int k = 0 ; k < mesh->mNumFaces ; k++)
+        {
+            aiFace *triFace = &mesh->mFaces[k];
+            
+            for(unsigned int l=0 ; l<3 ; l++)
+            {
+                aiVector3D pos = mesh->mVertices[triFace->mIndices[l]];
+                triArray[l] = btVector3(pos.x, pos.y, pos.z);
+            }
+            
+            triMesh->addTriangle(triArray[0], triArray[1], triArray[2]);
+        }
+
+        textureFilePath = "..//assets//" + std::string(textureFileName.C_Str());
+        if (!m_texture.LoadTexture(textureFilePath))
+        {
+            return false;
+        }
+
+//         GLuint VB;
+//         GLuint IB;
+
+        //vertice buffer
+        glGenBuffers(1, &VB);
+        glBindBuffer(GL_ARRAY_BUFFER, VB);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
+        
+        //Indice buffer
+        glGenBuffers(1, &IB);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * out_indices.size(), &out_indices[0], GL_STATIC_DRAW);
+        
+        //normal buffer
+        //glGenBuffers(1, &m_normal);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_normal);
+        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Vertex) * out_vertices.size(), &out_vertices[0], GL_STATIC_DRAW);
+
+        m_IBs.push_back(IB);
+        m_VBs.push_back(VB);
+        m_numIndices.push_back(out_indices.size());
+
+        out_indices.clear();
+        out_vertices.clear();
+    }
+
+    return true;
+}
+
+
 void Model::BindTexture(int index)
 {
     m_texture.Bind(GL_TEXTURE0, index);

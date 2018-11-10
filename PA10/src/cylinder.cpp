@@ -19,6 +19,11 @@ Cylinder::Cylinder(string filename, float scale, glm::vec3 position) : PhysicsOb
 
 }
 
+Cylinder::Cylinder(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+{
+
+}
+
 Cylinder::~Cylinder()
 {
     delete m_renderData;
@@ -29,7 +34,8 @@ Cylinder::~Cylinder()
     m_rigidBody = NULL;
 }
 
-bool Cylinder::Initialize()
+bool Cylinder::Initialize(btTriangleMesh *triMesh)
+
 {
     cout << "CHECK Cylinder INITIALIZE" << endl;
 
@@ -50,6 +56,9 @@ bool Cylinder::Initialize()
             m_scale.x/2,
             m_scale.y/2,
             m_scale.z/2));
+
+    
+    //m_collider = new btBvhTriangleMeshShape(triMesh, false);
 
     //create the motion state
     m_motionState = new btDefaultMotionState(transform);
