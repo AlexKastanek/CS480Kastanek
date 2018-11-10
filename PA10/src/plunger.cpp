@@ -108,19 +108,21 @@ void Plunger::Update(unsigned int dt)
   {
     if (origin.z() > m_thresholdPosition)
     {
-      m_position.z -= m_pullStep;
-      m_pullDistance += m_pullStep;
+      m_position.z -= abs(m_pullStep * (float) (dt+1));
+      m_pullDistance += abs(m_pullStep * (float) (dt+1));
     }
     else
     {
       m_position.z = m_thresholdPosition;
     }
+
+    
   }
   else if (m_releasing)
   {
     if (origin.z() < m_initialPosition)
     {
-      m_position.z += (m_releaseStep * m_pullDistance / 15);
+      m_position.z += abs((m_releaseStep * m_pullDistance / 15) * (dt+1));
     }
     else
     {

@@ -137,7 +137,7 @@ void Ball::Update(unsigned int dt)
     */
 
     m_rigidBody->translate(btVector3(
-      (m_position.x - (-45.5f)) * -1,
+      (m_position.x - (-46.0f)) * -1,
       0,
       0));
     m_rigidBody->getMotionState()->getWorldTransform(transform);
@@ -145,7 +145,7 @@ void Ball::Update(unsigned int dt)
     centeringInLaunchArea = false;
   }
 
-  cout << transform.getOrigin().getX() << endl;
+  //cout << transform.getOrigin().getX() << endl;
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
