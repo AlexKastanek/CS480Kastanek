@@ -6,8 +6,11 @@ Graphics::Graphics()
   m_focusedObject = 0;
   moonIndex = 0;
 
-  m_cameraSpeedFactor = 1;
-  m_cameraDistanceOffset = 0.03;
+  m_simulationSpeed = 0;
+  m_simulationSpeedFactor = 0.1; //must be between 0 and 1
+  m_cameraSpeed = 5;
+  m_cameraSpeedFactor = 5;
+  m_cameraDistanceOffset = 0.02;
   m_cameraDistanceFactor = 4;
   m_minCameraDistanceOffset = 0.05;
   m_minCameraDistanceFactor = 4;
@@ -122,6 +125,10 @@ bool Graphics::Initialize(int width, int height)
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
+  //enable transparency
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   return true;
 }
 
@@ -144,6 +151,7 @@ void Graphics::Update(unsigned int dt)
       m_camera->SetMoveSpeed(m_Sun->GetScaleVal() / m_cameraSpeedFactor);
       m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
       m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetDefaultHeight(m_Sun->GetScaleVal() * m_cameraHeightFactor / 3);
       m_camera->SetMaxHeight(m_Sun->GetScaleVal() * m_cameraHeightFactor);
     }
     else
@@ -152,18 +160,19 @@ void Graphics::Update(unsigned int dt)
       m_camera->SetMoveSpeed(m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraSpeedFactor);
       m_camera->SetDefaultFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_cameraDistanceOffset));
       m_camera->SetMinFocusRadius(m_planet[m_focusedObject-1]->GetScaleVal() + (m_planet[m_focusedObject-1]->GetScaleVal() / m_minCameraDistanceOffset));
+      m_camera->SetDefaultHeight(m_planet[m_focusedObject-1]->GetScaleVal() * m_cameraHeightFactor / 3);
       m_camera->SetMaxHeight(m_planet[m_focusedObject-1]->GetScaleVal() * m_cameraHeightFactor);
     }
   }
   else if (m_camera->GetMode() == MODE_OVERVIEW)
   {
-    m_camera->SetMoveSpeed(5.0f);
+    m_camera->SetMoveSpeed(m_cameraSpeed);
     m_camera->SetDefaultFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_cameraDistanceOffset));
     m_camera->SetMinFocusRadius(m_Sun->GetScaleVal() + (m_Sun->GetScaleVal() / m_minCameraDistanceOffset));
   }
   else
   {
-    m_camera->SetMoveSpeed(5.0f);
+    m_camera->SetMoveSpeed(m_cameraSpeed);
   }
   
   m_camera->Update(dt);
@@ -213,6 +222,68 @@ void Graphics::HandleCameraInput(string input, bool isPressed)
   m_camera->HandleKeyboardInput(input, isPressed);
 }
 
+void Graphics::SimulationSpeedUp()
+{
+  if (m_simulationSpeed < 50)
+  {
+    float factor = 1 + m_simulationSpeedFactor;
+    m_simulationSpeed++;
+
+    m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
+    m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
+
+    for (int i = 0; i < 9; i++)
+    {
+      m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
+      m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
+    }
+
+    for (int i = 0; i < moonIndex; i++)
+    {
+      m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
+      m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
+    }
+
+    m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
+    m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
+    m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
+    m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
+
+    //cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  }
+}
+
+void Graphics::SimulationSpeedDown()
+{
+  if (m_simulationSpeed > -50)
+  {
+    float factor = 1 - m_simulationSpeedFactor;
+    m_simulationSpeed--;
+
+    m_Sun->SetRotateFactor(m_Sun->GetRotateFactor() * factor);
+    m_Star->SetRotateFactor(m_Star->GetRotateFactor() * factor);
+
+    for (int i = 0; i < 9; i++)
+    {
+      m_planet[i]->SetSpinSpeed(m_planet[i]->GetSpinSpeed() * factor);
+      m_planet[i]->SetOrbitSpeed(m_planet[i]->GetOrbitSpeed() * factor);
+    }
+
+    for (int i = 0; i < moonIndex; i++)
+    {
+      m_moon[i]->SetSpinSpeed(m_moon[i]->GetSpinSpeed() * factor);
+      m_moon[i]->SetOrbitSpeed(m_moon[i]->GetOrbitSpeed() * factor);
+    }
+
+    m_SatRing->SetSpinSpeed(m_SatRing->GetSpinSpeed() * factor);
+    m_JupRing->SetSpinSpeed(m_JupRing->GetSpinSpeed() * factor);
+    m_UranRing->SetSpinSpeed(m_UranRing->GetSpinSpeed() * factor);
+    m_NepRing->SetSpinSpeed(m_NepRing->GetSpinSpeed() * factor);
+
+    //cout << "Simulation speed set to " << m_simulationSpeed << endl;
+  } 
+}
+
 // bool Graphics::IsPlanetPaused()
 // {
 //   return m_planet->IsPaused();
@@ -242,6 +313,21 @@ void Graphics::HandleCameraInput(string input, bool isPressed)
 // {
 //   m_planet->SetOrbitDirection(orbit);
 // }
+
+unsigned int Graphics::GetCameraMode()
+{
+  return m_camera->GetMode();
+}
+
+int Graphics::GetFocusedObject()
+{
+  return m_focusedObject;
+}
+
+int Graphics::GetSimulationSpeed()
+{
+  return m_simulationSpeed;
+}
 
 void Graphics::SetCameraVelocity(glm::vec3 velocity)
 {
@@ -375,36 +461,66 @@ void Graphics::ChangeFocusedObject(void)
     
     float speedMod = 1;
     float scaleMod = .1;
-    
+
+    //get camera speed factor
+    fin >> name >> m_cameraSpeedFactor >> m_cameraSpeed;
+
     //create sun
     fin >> name >> sunScale;
     m_Sun = new Object("..//assets//" + name + ".obj", sunScale * scaleMod);
-    std::cout << std::endl;
+    cout << "Loaded the Sun" << endl;
 
     //create stars
     fin >> name >> starScale;
     m_Star = new Object("..//assets//" + name + ".obj", starScale * scaleMod);
-    std::cout << std::endl;
+    m_Star->SetRotateFactor(0.1);
+    cout << "Loaded the stars" << endl;
     
     //create each planet
     for(int i=0 ; i<9 ; i++)
     {
         fin >> name >> numMoons >> orbDist >> rotSpd >> orbSpd >> planetScale;
         m_planet[i] = new Planet((orbDist * sunScale * 25) * scaleMod , rotSpd * speedMod, orbSpd * speedMod, "..//assets//" + name + ".obj", planetScale * scaleMod);
+        cout << "Loaded " << name << endl;
 
         if(name == "Saturn")
         {
-            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 2);
+            m_SatRing = new Moon(0, .033 * speedMod, 0, "..//assets//SaturnRing.obj", planetScale * scaleMod * 0.9);
             m_planet[i]->AddChild(m_SatRing);
             m_SatRing->SetParent(m_planet[i]);
+
+            m_planet[i]->SetSpinAngle(-60.0f);
+            m_SatRing->SetSpinAngle(-60.f);
+
+            cout << "Loaded Saturn's Rings" << endl;
+        }
+        else if (name == "Jupiter")
+        {
+            m_JupRing = new Moon(0, .033 * speedMod, 0, "..//assets//JupiterRing.obj", planetScale * scaleMod * 1.0);
+            m_planet[i]->AddChild(m_JupRing);
+            m_JupRing->SetParent(m_planet[i]);
+            cout << "Loaded Jupiter's Rings" << endl;
         }
 
         if(name == "Uranus")
         {
-            m_UranRing = new Moon(0, .033 * speedMod, 0, "..//assets//UranusRing.obj", planetScale * scaleMod * 2);
+            m_UranRing = new Moon(0, .033 * speedMod, 0, "..//assets//UranusRing.obj", planetScale * scaleMod * 0.75);
             m_planet[i]->AddChild(m_UranRing);
             m_UranRing->SetParent(m_planet[i]);
+
+            m_planet[i]->SetSpinAngle(-90.0f);
+            m_UranRing->SetSpinAngle(-90.f);
+
+            cout << "Loaded Uranus' Rings" << endl;
         }
+        else if (name == "Neptune")
+        {
+          m_NepRing = new Moon(0, .033 * speedMod, 0, "..//assets//NeptuneRing.obj", planetScale * scaleMod * 0.7);
+          m_planet[i]->AddChild(m_UranRing);
+          m_NepRing->SetParent(m_planet[i]);
+          cout << "Loaded Neptune's Rings" << endl;
+        }
+
         moonMod = 0;
     
         for(int j = moonIndex ; j < (moonIndex + numMoons) ; j++)
@@ -414,16 +530,16 @@ void Graphics::ChangeFocusedObject(void)
             
             //code for random moons
             if(moonMod > 0)
-                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 10) * .1 * planetScale * .5);
+                m_moon[j] = new Moon((planetScale * 60 * scaleMod) + (moonMod * 20 * scaleMod), .1 * speedMod + (rand() % 50), .1 * speedMod + (rand() % 50), "..//assets//Moon.obj", .27 * scaleMod * (rand() % 5) * .1 * planetScale);
             else
                 m_moon[j] = new Moon((planetScale * 60 * scaleMod), .1 * speedMod, .1 * speedMod, "..//assets//Moon.obj", .27 * scaleMod * planetScale * .75);
-            
-            
             
             m_planet[i]->AddChild(m_moon[j]);
             m_moon[j]->SetParent(m_planet[i]);
             
             moonMod++;
+
+            cout << "Loaded moon #" << j+1 << endl;
         }
         if(numMoons > 0)
             moonIndex += numMoons;
@@ -439,13 +555,21 @@ void Graphics::ChangeFocusedObject(void)
      m_Sun->Update(dt);
      m_Star->Update(dt);
      for(int i=0 ; i<9 ; i++)
-        m_planet[i]->Update(dt);
+     {
+        //if(i == 6)
+        //    m_planet[i]->UpdateUran(dt);
+        //else
+            m_planet[i]->Update(dt);
+        
+     }
      
      for(int i=0 ; i<moonIndex ; i++)
          m_moon[i]->Update(dt);
      
      m_SatRing -> Update(dt);
+     m_JupRing -> Update(dt);
      m_UranRing -> Update(dt);
+     m_NepRing -> Update(dt);
  }
  
  void Graphics::RenderPlanets()
@@ -471,6 +595,12 @@ void Graphics::ChangeFocusedObject(void)
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_SatRing->GetModel()));
     m_SatRing->Render();
 
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_JupRing->GetModel()));
+    m_JupRing->Render();
+
     glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_UranRing->GetModel()));
     m_UranRing->Render();
+
+    glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(m_NepRing->GetModel()));
+    m_NepRing->Render();
  }
