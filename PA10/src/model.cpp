@@ -222,7 +222,7 @@ bool Model::LoadObject(string in_filename)
 }
 
 
-bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh) 
+bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh, float scale) 
 {
     Assimp::Importer importer;
     std::vector<Vertex> out_vertices;
@@ -347,6 +347,11 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh)
             {
                 aiVector3D pos = mesh->mVertices[triFace->mIndices[l]];
                 triArray[l] = btVector3(pos.x, pos.y, pos.z);
+                triArray[l] *= scale;
+                cout << "("
+                     << triArray[l].x() << ", "
+                     << triArray[l].y() << ", "
+                     << triArray[l].z() << ")" << endl;
             }
             
             triMesh->addTriangle(triArray[0], triArray[1], triArray[2]);

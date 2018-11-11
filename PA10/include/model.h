@@ -20,7 +20,7 @@ public:
 
     bool LoadObject(void);
     bool LoadObject(string in_filename);
-    bool LoadObject(string in_filename, btTriangleMesh *triMesh);
+    bool LoadObject(string in_filename, btTriangleMesh *triMesh, float scale);
 
     //void Render();
     void BindTexture(int index);
