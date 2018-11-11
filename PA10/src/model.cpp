@@ -222,7 +222,7 @@ bool Model::LoadObject(string in_filename)
 }
 
 
-bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh) 
+bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh, float scale) 
 {
     Assimp::Importer importer;
     std::vector<Vertex> out_vertices;

@@ -55,7 +55,7 @@ Object::Object(string filename, float scale, glm::vec3 position, btTriangleMesh 
 
   m_parent = NULL;
   m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename, triMesh))
+  if (!m_renderData->LoadObject(filename, triMesh, scale))
   {
     delete m_renderData;
     exit(1);
