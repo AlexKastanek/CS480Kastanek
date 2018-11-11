@@ -336,7 +336,7 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh, float scale)
             out_indices.push_back(face.mIndices[2]);
         }
         
-        //Create Triangle Mesh**
+        //Create Triangle Mesh
         btVector3 triArray[3];
         
         for(unsigned int k = 0 ; k < mesh->mNumFaces ; k++)
@@ -345,7 +345,7 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh, float scale)
             
             for(unsigned int l=0 ; l<3 ; l++)
             {
-                aiVector3D pos = mesh->mVertices[triFace->mIndices[l]];
+                aiVector3D pos = mesh->mVertices[triFace->mIndices[l]] * scale;
                 triArray[l] = btVector3(pos.x, pos.y, pos.z);
                 triArray[l] *= scale;
                 cout << "("
