@@ -145,7 +145,9 @@ bool Graphics::Initialize(int width, int height)
   m_currentShader = m_vertexBasedShader;
   m_currentShaderID = 0;
 
-  //set light dataS
+  /* set the light data */
+
+  /*
   gLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
   gLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
   gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -154,6 +156,25 @@ bool Graphics::Initialize(int width, int height)
   gLight.angle = 40.0f;
   gLight.shininess = 50;
   gLight.attenuation = 0.001f;
+  */
+
+  m_spotLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  m_spotLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  m_spotLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  m_spotLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  m_spotLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  m_spotLight.angle = 40.0f;
+  m_spotLight.shininess = 50;
+  m_spotLight.attenuation = 0.001f;
+
+  m_pointLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  m_pointLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  m_pointLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  m_pointLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  m_pointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  m_pointLight.angle = 180.0f;
+  m_pointLight.shininess = 50;
+  m_pointLight.attenuation = 0.001f;
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -209,8 +230,8 @@ void Graphics::Update(unsigned int dt)
 
   // Update the lights
   glm::vec3 ballPos = m_world->GetBall().GetPosition();
-  gLight.position.x = ballPos.x;
-  gLight.position.z = ballPos.z;
+  m_spotLight.position.x = ballPos.x;
+  m_spotLight.position.z = ballPos.z;
 
   // Update the camera
   m_camera->Update(dt);
@@ -236,74 +257,123 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
-  glUniform4f(m_currentShader->GetUniformLocation("lightPosition"), gLight.position.x, gLight.position.y, gLight.position.z, 1.0);
-  glUniform4f(m_currentShader->GetUniformLocation("ambientProduct"), gLight.ambient.x + ambientMod, gLight.ambient.y + ambientMod, gLight.ambient.z + ambientMod, gLight.ambient.w);
-  glUniform4f(m_currentShader->GetUniformLocation("diffuseProduct"), gLight.diffuse.x + diffuseMod, gLight.diffuse.y + diffuseMod, gLight.diffuse.z + diffuseMod, gLight.diffuse.w);
-  glUniform4f(m_currentShader->GetUniformLocation("specularProduct"), gLight.specular.x, gLight.specular.y, gLight.specular.z, gLight.specular.w);
-  glUniform3f(m_currentShader->GetUniformLocation("lightDirection"), gLight.direction.x, gLight.direction.y, gLight.direction.z);
-  glUniform1f(m_currentShader->GetUniformLocation("lightAngle"), gLight.angle);
-  glUniform1f(m_currentShader->GetUniformLocation("shininess"), gLight.shininess);
-  glUniform1f(m_currentShader->GetUniformLocation("attenuationProduct"), gLight.attenuation);
+  //spotlight
+  glUniform4f(m_currentShader->GetUniformLocation("lights[0].lightPosition"), 
+    m_spotLight.position.x, m_spotLight.position.y, m_spotLight.position.z, 1.0);
+
+  glUniform4f(m_currentShader->GetUniformLocation("lights[0].ambientProduct"),
+    m_spotLight.ambient.x + ambientMod, m_spotLight.ambient.y + ambientMod, 
+    m_spotLight.ambient.z + ambientMod, m_spotLight.ambient.w);
+  glUniform4f(m_currentShader->GetUniformLocation("lights[0].diffuseProduct"),
+    m_spotLight.diffuse.x + diffuseMod, m_spotLight.diffuse.y + diffuseMod, 
+    m_spotLight.diffuse.z + diffuseMod, m_spotLight.diffuse.w);
+  glUniform4f(m_currentShader->GetUniformLocation("lights[0].specularProduct"),
+    m_spotLight.specular.x, m_spotLight.specular.y, 
+    m_spotLight.specular.z, m_spotLight.specular.w);
+
+  glUniform3f(m_currentShader->GetUniformLocation("lights[0].lightDirection"),
+    m_spotLight.direction.x, m_spotLight.direction.y, m_spotLight.direction.z);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[0].lightAngle"),
+    m_spotLight.angle);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[0].shininess"),
+    m_spotLight.shininess);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[0].attenuationProduct"),
+    m_spotLight.attenuation);
+
+  //pointlight
+  glUniform4f(m_currentShader->GetUniformLocation("lights[1].lightPosition"), 
+    m_pointLight.position.x, m_pointLight.position.y, m_pointLight.position.z, 1.0);
+
+  glUniform4f(m_currentShader->GetUniformLocation("lights[1].ambientProduct"),
+    m_pointLight.ambient.x + ambientMod, m_pointLight.ambient.y + ambientMod, 
+    m_pointLight.ambient.z + ambientMod, m_pointLight.ambient.w);
+  glUniform4f(m_currentShader->GetUniformLocation("lights[1].diffuseProduct"),
+    m_pointLight.diffuse.x + diffuseMod, m_pointLight.diffuse.y + diffuseMod, 
+    m_pointLight.diffuse.z + diffuseMod, m_pointLight.diffuse.w);
+  glUniform4f(m_currentShader->GetUniformLocation("lights[1].specularProduct"),
+    m_pointLight.specular.x, m_pointLight.specular.y, 
+    m_pointLight.specular.z, m_pointLight.specular.w);
+
+  glUniform3f(m_currentShader->GetUniformLocation("lights[1].lightDirection"),
+    m_pointLight.direction.x, m_pointLight.direction.y, m_pointLight.direction.z);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[1].lightAngle"),
+    m_pointLight.angle);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[1].shininess"),
+    m_pointLight.shininess);
+  glUniform1f(m_currentShader->GetUniformLocation("lights[1].attenuationProduct"),
+    m_pointLight.attenuation);
 
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
   //render board
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"), 
     gLight.specular.x + boardSpecularMod, 
     gLight.specular.y + boardSpecularMod, 
     gLight.specular.z + boardSpecularMod, 
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 't');
 
   //render ball
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"), 
     gLight.specular.x + ballSpecularMod, 
     gLight.specular.y + ballSpecularMod, 
     gLight.specular.z + ballSpecularMod, 
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 'b');
 
   //render flippers
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"), 
     gLight.specular.x + flipperSpecularMod, 
     gLight.specular.y + flipperSpecularMod, 
     gLight.specular.z + flipperSpecularMod, 
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 'f');
 
   //render plunger
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"),
     gLight.specular.x,
     gLight.specular.y,
     gLight.specular.z,
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 'p');
   
   //render cylinder
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"), 
     gLight.specular.x + cylinderSpecularMod, 
     gLight.specular.y + cylinderSpecularMod, 
     gLight.specular.z + cylinderSpecularMod, 
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 'c');
 
   //render launch barrier
+  /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"),
     gLight.specular.x,
     gLight.specular.y,
     gLight.specular.z,
     gLight.specular.w);
+  */
 
   m_world->Render(m_modelMatrix, 'l');
 
@@ -350,6 +420,7 @@ std::string Graphics::ErrorString(GLenum error)
   }
 }
 
+/*
 void Graphics::moveLight(char input)
 {
   switch (input)
@@ -387,6 +458,7 @@ void Graphics::moveLight(char input)
     default: break;
   }
 }
+*/
 
 void Graphics::changeShader()
 {
@@ -502,18 +574,18 @@ void Graphics::decreaseSpecular(unsigned int object)
 
 void Graphics::increaseSpotLightRadius()
 {
-  if (gLight.angle < 180.0f)
+  if (m_spotLight.angle < 180.0f)
   {
-    gLight.angle += 1.0f;
+    m_spotLight.angle += 1.0f;
   }
-  cout << "Spot light angle set to " << gLight.angle << " degrees" << endl;
+  cout << "Spot light angle set to " << m_spotLight.angle << " degrees" << endl;
 }
 
 void Graphics::decreaseSpotLightRadius()
 {
-  if (gLight.angle > 0.0f)
+  if (m_spotLight.angle > 0.0f)
   {
-    gLight.angle -= 1.0f;
+    m_spotLight.angle -= 1.0f;
   }
-  cout << "Spot light angle set to " << gLight.angle << " degrees" << endl;
+  cout << "Spot light angle set to " << m_spotLight.angle << " degrees" << endl;
 }
