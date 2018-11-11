@@ -48,13 +48,14 @@ Object::Object(string filename, float scale, glm::vec3 position)
   cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
 
+
 Object::Object(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh)
 {
   cout << "CHECK OBJECT CONSTRUCTOR" << endl;
 
   m_parent = NULL;
   m_renderData = new Model();
-  if (!m_renderData->LoadObject(filename, triMesh, scale))
+  if (!m_renderData->LoadObject(filename, triMesh))
   {
     delete m_renderData;
     exit(1);
