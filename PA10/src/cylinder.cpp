@@ -52,13 +52,13 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
             m_position);
 
     //create the collider
-    m_collider = new btCylinderShape(btVector3(
+    /*m_collider = new btCylinderShape(btVector3(
             m_scale.x/2,
             m_scale.y/2,
-            m_scale.z/2));
+            m_scale.z/2));*/
 
     
-    //m_collider = new btBvhTriangleMeshShape(triMesh, false);
+    m_collider = new btBvhTriangleMeshShape(triMesh, false);
 
     //create the motion state
     m_motionState = new btDefaultMotionState(transform);
