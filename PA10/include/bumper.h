@@ -10,7 +10,7 @@ public:
     Bumper();
     Bumper(string filename);
     Bumper(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
-    Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, float initAngle, bool flipped);
+    Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy);
     ~Bumper();
 
     bool Initialize(btTriangleMesh *triMesh);
@@ -19,10 +19,7 @@ public:
 
 private:
     
-    glm::vec3 m_pivotPosition;
-    float m_initialAngle;
-    float m_currentAngle;
-    bool m_flipped;
+    bool m_isBouncy;
 
 };
 

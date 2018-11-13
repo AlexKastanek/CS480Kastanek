@@ -89,14 +89,16 @@ bool World::Initialize()
     setInternalGhostPairCallback(new btGhostPairCallback());
     
   bumpMeshL = new btTriangleMesh();
-  m_bumperL = new Bumper("..//assets//Bumper.obj", 10.0f, glm::vec3(20.0f, 2.0f, -22.0f), bumpMeshL, 0.0f, false);
+  m_bumperL = new Bumper("..//assets//Bumper.obj", 10.0f, glm::vec3(20.0f, 2.0f, -22.0f), bumpMeshL, true);
   m_bumperL->Initialize(bumpMeshL);
   m_dynamicsWorld->addRigidBody(m_bumperL->m_rigidBody);
   
   bumpMeshR = new btTriangleMesh();
-  m_bumperR = new Bumper("..//assets//Bumper2.obj", 10.0f, glm::vec3(-19.0f, 2.0f, -23.0f), bumpMeshR, 0.0f, false);
+  m_bumperR = new Bumper("..//assets//Bumper2.obj", 10.0f, glm::vec3(-19.0f, 2.0f, -23.0f), bumpMeshR, true);
   m_bumperR->Initialize(bumpMeshR);
   m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
+  
+  
     
   
   createWalls();

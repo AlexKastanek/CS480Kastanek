@@ -15,11 +15,9 @@ Bumper::Bumper(string filename, float scale, glm::vec3 position) : PhysicsObject
 
 }
 
-Bumper::Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, float initAngle, bool flipped) : PhysicsObject(filename, scale, position, triMesh)
+Bumper::Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy) : PhysicsObject(filename, scale, position, triMesh)
 {
-  m_initialAngle = initAngle;
-  m_currentAngle = m_initialAngle;
-  m_flipped = flipped;
+    m_isBouncy = isBouncy;
 }
 
 Bumper::~Bumper()
@@ -67,12 +65,15 @@ bool Bumper::Initialize(btTriangleMesh *triMesh)
             inertia
     );
     
-   ci.m_additionalDamping = true;
+   if(m_isBouncy) 
+        ci.m_additionalDamping = true;
 
     //create the rigid body
     m_rigidBody = new btRigidBody(ci);
     m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-    m_rigidBody->setRestitution(0.1);//elasticity!!!
+   
+   if(m_isBouncy)
+        m_rigidBody->setRestitution(0.1);//elasticity!!!
     //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
     model = m_translationMatrix;
