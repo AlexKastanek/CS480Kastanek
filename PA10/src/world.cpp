@@ -56,16 +56,16 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-32.5f, 30.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 30.0f, 0.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
-  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(19.0f, 2.5f, -50.0f), false);
+  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(28.0f, 2.5f, -50.0f), false);
   m_flipperLeft->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
-  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-19.0f, 2.5f, -50.0f), true);
+  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-10.0f, 2.5f, -50.0f), true);
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
