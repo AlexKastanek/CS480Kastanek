@@ -257,6 +257,8 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
+  glUniform1i(m_currentShader->GetUniformLocation("numLights"), 2);
+
   //spotlight
   glUniform4f(m_currentShader->GetUniformLocation("lights[0].lightPosition"), 
     m_spotLight.position.x, m_spotLight.position.y, m_spotLight.position.z, 1.0);
