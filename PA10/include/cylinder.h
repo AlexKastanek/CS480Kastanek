@@ -18,6 +18,7 @@ public:
     ~Cylinder();
 
     bool Initialize(btTriangleMesh *triMesh);
+
     void Update(unsigned int dt);
 
 private:

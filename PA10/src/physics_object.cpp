@@ -19,7 +19,6 @@ PhysicsObject::PhysicsObject(string filename, float scale, glm::vec3 position, b
 {
 
 }
-
 PhysicsObject::~PhysicsObject()
 {
   delete m_renderData;

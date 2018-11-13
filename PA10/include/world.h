@@ -10,6 +10,7 @@
 #include "cylinder.h"
 #include "launch_barrier.h"
 #include "trigger_object.h"
+#include "bumper.h"
 
 using namespace std;
 
@@ -61,16 +62,23 @@ private:
   Board *m_board;
   btTriangleMesh *boardMesh;  
 
+
   Ball *m_ball;
+  
   Flipper *m_flipperRight;
   Flipper *m_flipperLeft;
+ 
   Plunger *m_plunger;
+
 
   Cylinder *m_cylinder;
   btTriangleMesh *cylMesh;
 
   LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
+
+  Bumper *m_bumperL;
+  btTriangleMesh *bumpMeshL;
 
   /*
   float m_boardSpecular;

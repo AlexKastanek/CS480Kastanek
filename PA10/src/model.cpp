@@ -221,7 +221,8 @@ bool Model::LoadObject(string in_filename)
     return true;
 }
 
-bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh) 
+
+bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh, float scale) 
 {
     Assimp::Importer importer;
     std::vector<Vertex> out_vertices;
@@ -335,7 +336,7 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh)
             out_indices.push_back(face.mIndices[2]);
         }
         
-        //Create Triangle Mesh**
+        //Create Triangle Mesh
         btVector3 triArray[3];
         
         for(unsigned int k = 0 ; k < mesh->mNumFaces ; k++)
@@ -344,7 +345,7 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh)
             
             for(unsigned int l=0 ; l<3 ; l++)
             {
-                aiVector3D pos = mesh->mVertices[triFace->mIndices[l]];
+                aiVector3D pos = mesh->mVertices[triFace->mIndices[l]] * scale;
                 triArray[l] = btVector3(pos.x, pos.y, pos.z);
             }
             
@@ -385,6 +386,7 @@ bool Model::LoadObject(string in_filename, btTriangleMesh *triMesh)
 
     return true;
 }
+
 
 void Model::BindTexture(int index)
 {

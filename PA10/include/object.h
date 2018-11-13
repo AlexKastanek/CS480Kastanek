@@ -27,6 +27,7 @@ class Object
     Object(string filename);
     Object(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
     Object(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
+
     virtual ~Object();
 
     virtual void Update(unsigned int dt);

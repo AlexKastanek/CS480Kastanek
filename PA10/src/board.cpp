@@ -30,6 +30,7 @@ Board::~Board()
   m_rigidBody = NULL;
 }
 
+
 bool Board::Initialize(btTriangleMesh *triMesh)
 {
   cout << "CHECK BOARD INITIALIZE" << endl;
@@ -38,6 +39,7 @@ bool Board::Initialize(btTriangleMesh *triMesh)
   m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
   
   //m_collider = new btBvhTriangleMeshShape(triMesh, false);
+
 
   //create the motion state
   m_motionState = new btDefaultMotionState();

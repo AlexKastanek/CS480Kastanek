@@ -13,6 +13,7 @@ public:
   PhysicsObject(string filename);
   PhysicsObject(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
   PhysicsObject(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
+
   virtual ~PhysicsObject();
 
   virtual void Update(unsigned int dt);
@@ -29,3 +30,4 @@ protected:
 };
 
 #endif /* PHYSICS_OBJECT_H */
+

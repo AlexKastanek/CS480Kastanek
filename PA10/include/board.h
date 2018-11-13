@@ -18,6 +18,7 @@ public:
   void Update(unsigned int dt);
 
 private:
+
 };
 
 #endif /* BOARD_H */

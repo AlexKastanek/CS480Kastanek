@@ -145,7 +145,7 @@ void Ball::Update(unsigned int dt)
     centeringInLaunchArea = false;
   }
 
-  cout << transform.getOrigin().getX() << endl;
+  //cout << transform.getOrigin().getX() << endl;
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
