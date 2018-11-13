@@ -52,19 +52,19 @@ bool World::Initialize()
     m_gravity.z));
 
   boardMesh = new btTriangleMesh();
-  m_board = new Board("..//assets//Board.obj", 100.0f, glm::vec3(0.0, 0.0, 0.0), boardMesh);
+  m_board = new Board("..//assets//Board.obj", 20.0f, glm::vec3(10.0, 13.0, 20.0), boardMesh);
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-19.0f, 20.0f, 30.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.0f, 3.0f, 0.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
-  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(19.0f, 2.5f, -50.0f), false);
+  m_flipperLeft = new Flipper("..//assets//Flipper.obj", 15.0f, glm::vec3(28.0f, 2.5f, -50.0f), false);
   m_flipperLeft->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
-  m_flipperRight = new Flipper("..//assets//Flipper.obj", 10.0f, glm::vec3(-19.0f, 2.5f, -50.0f), true);
+  m_flipperRight = new Flipper("..//assets//Flipper.obj", 15.0f, glm::vec3(-10.0f, 2.5f, -50.0f), true);
   m_flipperRight->Initialize();
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
@@ -72,8 +72,10 @@ bool World::Initialize()
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 
-  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
+  cylMesh = new btTriangleMesh();
+  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh);
   m_cylinder->Initialize(cylMesh);
+
   m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
 
   m_launchBarrier = new LaunchBarrier("..//assets//LaunchBarrier.obj", 10.0, glm::vec3(-39.0f, 2.5f, -10.0f));
@@ -87,20 +89,17 @@ bool World::Initialize()
   m_dynamicsWorld->addCollisionObject(m_launchArea->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
     setInternalGhostPairCallback(new btGhostPairCallback());
-    
+  
   bumpMeshL = new btTriangleMesh();
-  m_bumperL = new Bumper("..//assets//Bumper.obj", 10.0f, glm::vec3(20.0f, 2.0f, -22.0f), bumpMeshL, true);
+  m_bumperL = new Bumper("..//assets//Bumper.obj", 10.0f, glm::vec3(29.0f, 2.0f, -25.0f), bumpMeshL, true);
   m_bumperL->Initialize(bumpMeshL);
   m_dynamicsWorld->addRigidBody(m_bumperL->m_rigidBody);
   
   bumpMeshR = new btTriangleMesh();
-  m_bumperR = new Bumper("..//assets//Bumper2.obj", 10.0f, glm::vec3(-19.0f, 2.0f, -23.0f), bumpMeshR, true);
+  m_bumperR = new Bumper("..//assets//Bumper2.obj", 10.0f, glm::vec3(-10.0f, 2.0f, -26.0f), bumpMeshR, true);
   m_bumperR->Initialize(bumpMeshR);
-  m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
-  
-  
+m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);  
     
-  
   createWalls();
 
   return true;
@@ -130,10 +129,9 @@ void World::Update(unsigned int dt)
   m_flipperLeft->Update(dt);
   m_plunger->Update(dt);
   m_cylinder->Update(dt);
-  m_launchBarrier->Update(dt); 
+  m_launchBarrier->Update(dt);  
   m_bumperL->Update(dt);
   m_bumperR->Update(dt);
-
   /*check if ball is inside launch area*/
 
   bool collidingWithBall = false;
@@ -258,7 +256,7 @@ void World::Render(GLint& modelMatrix, char obj)
       m_bumperL->Render();
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperR->GetModel()));
       m_bumperR->Render();
-      break;  
+      break;
     default: break;
   }
     
@@ -400,6 +398,7 @@ void World::ReleasePlunger()
 
 void World::createWalls()
 {
+  /*
   //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
@@ -434,14 +433,15 @@ void World::createWalls()
   btRigidBody::btRigidBodyConstructionInfo topCI(0, m_topWallMotion, m_topWall, btVector3(0,0,0));
   m_topWallRigid = new btRigidBody(topCI);
   m_topWallRigid -> setActivationState(DISABLE_DEACTIVATION);
-  m_dynamicsWorld->addRigidBody(m_topWallRigid);
+  m_dynamicsWorld->addRigidBody(m_topWallRigid);*/
   
   //collision wall to keep objects from flying out 
   m_lid = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
   m_lidMotion = NULL;
-  m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,7,0)));
+  m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,10,0)));
   btRigidBody::btRigidBodyConstructionInfo lidCI(0, m_lidMotion, m_lid, btVector3(0,0,0));
   m_lidRigid = new btRigidBody(lidCI);
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_lidRigid);
+  
 }

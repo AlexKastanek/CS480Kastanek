@@ -85,6 +85,15 @@ bool Flipper::Initialize()
     glm::mat4(1.0f),
     (float) M_PI/2,
     glm::vec3(0.0f, 1.0f, 0.0f));
+  //rotate 0 degrees
+  /*
+  m_rotationMatrix = glm::rotate(
+    glm::mat4(1.0f),
+    (float) 0.0f,
+    glm::vec3(0.0f, 1.0f, 0.0f));*/
+
+  m_scale.x *= -1;
+  m_scale.z *= -1;
 
   //set the scale
   m_scaleMatrix = glm::scale(
@@ -122,8 +131,8 @@ bool Flipper::Initialize()
   btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
 
   //set pivot position
-  float x_offset = sin(pi3Over2 + m_initialAngle) * (m_scale.x / 2);
-  float z_offset = cos(pi3Over2 + m_initialAngle) * (m_scale.z / 2);
+  float x_offset = sin(pi3Over2 + m_initialAngle) * (-m_scale.x / 4);
+  float z_offset = cos(pi3Over2 + m_initialAngle) * (-m_scale.z / 4);
   m_pivotPosition = glm::vec3(
     origin.x() + x_offset,
     origin.y(),
@@ -135,14 +144,12 @@ bool Flipper::Initialize()
     origin.y(),
     origin.z());
   float distanceToPivot = glm::distance(m_position, m_pivotPosition);
-  
   btTransform offsetTransform(
     btQuaternion(m_initialAngle,0,0),
     btVector3(
       m_position.x + distanceToPivot * sin(m_currentAngle),
       m_position.y,
       m_position.z + distanceToPivot * cos(m_currentAngle)));
-  
   m_rigidBody->getMotionState()->setWorldTransform(offsetTransform);
   
   //apply all transformations

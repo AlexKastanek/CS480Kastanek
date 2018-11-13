@@ -50,7 +50,7 @@ bool Ball::Initialize()
   
 
   //create the collider
-  m_collider = new btSphereShape(btScalar(m_scale.x/1.5));
+  m_collider = new btSphereShape(btScalar((m_scale.x/1.5) + 0.3));
 
   //create with correct transform info
   //create the motion state

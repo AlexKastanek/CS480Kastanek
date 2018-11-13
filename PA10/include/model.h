@@ -10,7 +10,6 @@
 #include "graphics_headers.h"
 #include "texture.h"
 #include <btBulletDynamicsCommon.h>
-#include <cmath>
 
 using namespace std;
 

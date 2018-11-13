@@ -19,7 +19,7 @@ Plunger::Plunger(string filename, float scale, glm::vec3 position) : PhysicsObje
   m_thresholdPosition = m_initialPosition - 20;
 
   m_pullStep = 0.02f;
-  m_releaseStep = 0.1f;
+  m_releaseStep = 0.04f;
   m_pullDistance = 0.0f;
 }
 
@@ -73,7 +73,6 @@ bool Plunger::Initialize()
     m_collider,
     inertia
     );
-  
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);

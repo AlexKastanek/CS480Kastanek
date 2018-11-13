@@ -35,6 +35,7 @@ Cylinder::~Cylinder()
 }
 
 bool Cylinder::Initialize(btTriangleMesh *triMesh)
+
 {
     cout << "CHECK Cylinder INITIALIZE" << endl;
 
@@ -51,10 +52,13 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
             m_position);
 
     //create the collider
-    m_collider = new btCylinderShape(btVector3(
+    /*m_collider = new btCylinderShape(btVector3(
             m_scale.x/2,
             m_scale.y/2,
-            m_scale.z/2));
+            m_scale.z/2));*/
+
+    
+    m_collider = new btBvhTriangleMeshShape(triMesh, false);
 
     //create the motion state
     m_motionState = new btDefaultMotionState(transform);
@@ -77,8 +81,9 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
     //create the rigid body
     m_rigidBody = new btRigidBody(ci);
     m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-    m_rigidBody->setRestitution(0.1);//elasticity!!!
     //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+    m_rigidBody->setRestitution(0.1);//elasticity!!!
+    
 
     model = m_translationMatrix;
 

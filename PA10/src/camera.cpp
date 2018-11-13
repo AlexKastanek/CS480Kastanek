@@ -2,8 +2,8 @@
 
 Camera::Camera()
 {
-  m_position = glm::vec3(0.0, 50.0, -100.0);
-  m_focusPoint = glm::vec3(0.0, 0.0, 0.0);
+  m_position = glm::vec3(10.0, 50.0, -100.0);
+  m_focusPoint = glm::vec3(10.0, 0.0, 0.0);
 }
 
 Camera::~Camera()

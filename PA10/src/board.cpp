@@ -35,14 +35,22 @@ bool Board::Initialize(btTriangleMesh *triMesh)
 {
   cout << "CHECK BOARD INITIALIZE" << endl;
 
+  //set transform
+  btTransform transform(
+    btQuaternion::getIdentity(),
+    btVector3(
+      m_position.x,
+      m_position.y,
+      m_position.z));
+
   //create the collider
-  m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
+ //m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
   
-  //m_collider = new btBvhTriangleMeshShape(triMesh, false);
+  m_collider = new btBvhTriangleMeshShape(triMesh, false);
 
 
   //create the motion state
-  m_motionState = new btDefaultMotionState();
+  m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
   btScalar mass(0);
@@ -60,6 +68,8 @@ bool Board::Initialize(btTriangleMesh *triMesh)
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+
+
 
   //don't delete motion state
   //delete motionState;

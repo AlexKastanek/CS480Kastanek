@@ -167,14 +167,14 @@ bool Graphics::Initialize(int width, int height)
   m_spotLight.shininess = 50;
   m_spotLight.attenuation = 0.001f;
 
-  m_pointLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  m_pointLight.position = glm::vec4(0.0f, 2.0f, 80.0f, 1.0f);
   m_pointLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
   m_pointLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   m_pointLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   m_pointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
   m_pointLight.angle = 180.0f;
   m_pointLight.shininess = 50;
-  m_pointLight.attenuation = 0.001f;
+  m_pointLight.attenuation = 0.00001f;
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -378,14 +378,6 @@ void Graphics::Render()
   */
 
   m_world->Render(m_modelMatrix, 'l');
-  
-//     glUniform4f(
-//     m_currentShader->GetUniformLocation("specularProduct"), 
-//     gLight.specular.x + cylinderSpecularMod, 
-//     gLight.specular.y + cylinderSpecularMod, 
-//     gLight.specular.z + cylinderSpecularMod, 
-//     gLight.specular.w);
-
   m_world->Render(m_modelMatrix, 'u');
 
   //cout << "finished rendering objects" << endl;
