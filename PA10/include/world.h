@@ -79,6 +79,8 @@ private:
 
   Bumper *m_bumperL;
   btTriangleMesh *bumpMeshL;
+  Bumper *m_bumperR;
+  btTriangleMesh *bumpMeshR;
 
   /*
   float m_boardSpecular;

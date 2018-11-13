@@ -73,6 +73,7 @@ bool Plunger::Initialize()
     m_collider,
     inertia
     );
+  
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);

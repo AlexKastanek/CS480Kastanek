@@ -56,7 +56,7 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 20.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-19.0f, 20.0f, 30.0f));
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
@@ -72,10 +72,8 @@ bool World::Initialize()
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 
-  cylMesh = new btTriangleMesh();
-  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh);
+  m_cylinder = new Cylinder("..//assets//cylinder.obj", 10.0f, glm::vec3(0.0f, 2.0f, 25.0f));
   m_cylinder->Initialize(cylMesh);
-
   m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
 
   m_launchBarrier = new LaunchBarrier("..//assets//LaunchBarrier.obj", 10.0, glm::vec3(-39.0f, 2.5f, -10.0f));
@@ -91,9 +89,15 @@ bool World::Initialize()
     setInternalGhostPairCallback(new btGhostPairCallback());
     
   bumpMeshL = new btTriangleMesh();
-  m_bumperL = new Bumper("..//assets//Bumper.obj", 12.0f, glm::vec3(15.0f, 2.0f, -25.0f), bumpMeshL, 1.0f);
+  m_bumperL = new Bumper("..//assets//Bumper.obj", 10.0f, glm::vec3(20.0f, 2.0f, -22.0f), bumpMeshL, 0.0f, false);
   m_bumperL->Initialize(bumpMeshL);
   m_dynamicsWorld->addRigidBody(m_bumperL->m_rigidBody);
+  
+  bumpMeshR = new btTriangleMesh();
+  m_bumperR = new Bumper("..//assets//Bumper2.obj", 10.0f, glm::vec3(-19.0f, 2.0f, -23.0f), bumpMeshR, 0.0f, false);
+  m_bumperR->Initialize(bumpMeshR);
+  m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
+    
   
   createWalls();
 
@@ -126,6 +130,7 @@ void World::Update(unsigned int dt)
   m_cylinder->Update(dt);
   m_launchBarrier->Update(dt); 
   m_bumperL->Update(dt);
+  m_bumperR->Update(dt);
 
   /*check if ball is inside launch area*/
 
@@ -249,6 +254,8 @@ void World::Render(GLint& modelMatrix, char obj)
     case 'u':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperL->GetModel()));
       m_bumperL->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperR->GetModel()));
+      m_bumperR->Render();
       break;  
     default: break;
   }
