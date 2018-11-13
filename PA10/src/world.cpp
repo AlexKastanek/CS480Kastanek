@@ -52,11 +52,11 @@ bool World::Initialize()
     m_gravity.z));
 
   boardMesh = new btTriangleMesh();
-  m_board = new Board("..//assets//Board.obj", 100.0f, glm::vec3(0.0, 0.0, 0.0), boardMesh);
+  m_board = new Board("..//assets//Board.obj", 20.0f, glm::vec3(10.0, 13.0, 20.0), boardMesh);
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-45.5f, 30.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-32.5f, 30.0f, 0.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
@@ -382,6 +382,7 @@ void World::ReleasePlunger()
 
 void World::createWalls()
 {
+  /*
   //bottom collision wall
   m_bottomWall = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
   m_bottomWallMotion = NULL;
@@ -426,4 +427,5 @@ void World::createWalls()
   m_lidRigid = new btRigidBody(lidCI);
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_lidRigid);
+  */
 }
