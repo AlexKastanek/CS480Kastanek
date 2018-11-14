@@ -1,0 +1,4 @@
+/home/alex/Documents/CS480Kastanek/PA10/include/CMakeFiles/edit_cache.dir
+/home/alex/Documents/CS480Kastanek/PA10/include/CMakeFiles/rebuild_cache.dir
+/home/alex/Documents/CS480Kastanek/PA10/include/CMakeFiles/Pinball.dir
+/home/alex/Documents/CS480Kastanek/PA10/include/CMakeFiles/Pinball_SUCCESSFUL.dir

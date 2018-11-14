@@ -5,6 +5,7 @@
 #include "physics.h"
 #include "board.h"
 #include "ball.h"
+#include "lane.h"
 #include "flipper_left.h"
 #include "flipper_right.h"
 #include "plunger.h"
@@ -65,6 +66,10 @@ private:
   btTriangleMesh *leftFlipperMesh;
 
   Ball *m_ball;
+  Lane *m_laneRight;
+  Lane *m_laneLeft;
+  btTriangleMesh *rightLaneMesh;
+  btTriangleMesh *leftLaneMesh;
   FlipperRight *m_flipperRight;
   FlipperLeft *m_flipperLeft;
   Plunger *m_plunger;

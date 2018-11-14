@@ -61,6 +61,16 @@ bool World::Initialize()
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
+  rightLaneMesh = new btTriangleMesh();
+  m_laneRight = new Lane("..//assets//LaneRight.obj", 10.0f, glm::vec3(-20.0f, 2.5f, -32.5f), rightLaneMesh);
+  m_laneRight->Initialize(rightLaneMesh);
+  m_dynamicsWorld->addRigidBody(m_laneRight->m_rigidBody);
+
+  leftLaneMesh = new btTriangleMesh();
+  m_laneLeft = new Lane("..//assets//LaneLeft.obj", 10.0f, glm::vec3(38.0f, 2.5f, -32.5f), leftLaneMesh);
+  m_laneLeft->Initialize(leftLaneMesh);
+  m_dynamicsWorld->addRigidBody(m_laneLeft->m_rigidBody);
+
   rightFlipperMesh = new btTriangleMesh();
   m_flipperRight = new FlipperRight("..//assets//Flipper.obj", 15.0f, glm::vec3(-5.0f, 2.5f, -50.0f), rightFlipperMesh);
   m_flipperRight->Initialize(rightFlipperMesh);
@@ -118,6 +128,8 @@ void World::Update(unsigned int dt)
   
   m_board->Update(dt);
   m_ball->Update(dt);
+  m_laneRight->Update(dt);
+  m_laneLeft->Update(dt);
   m_flipperRight->Update(dt);
   m_flipperLeft->Update(dt);
   m_plunger->Update(dt);
@@ -224,6 +236,12 @@ void World::Render(GLint& modelMatrix, char obj)
     case 'b':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
       m_ball->Render();
+      break;
+    case 'd':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneRight->GetModel()));
+      m_laneRight->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneLeft->GetModel()));
+      m_laneLeft->Render();
       break;
     case 'f':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));

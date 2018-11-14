@@ -331,6 +331,8 @@ void Graphics::Render()
 
   m_world->Render(m_modelMatrix, 'b');
 
+  m_world->Render(m_modelMatrix, 'd');
+
   //render flippers
   /*
   glUniform4f(
