@@ -19,7 +19,7 @@ FlipperRight::FlipperRight(string filename) : PhysicsObject(filename)
   m_resetting = false;
 
   m_initialAngle = -2.355f;
-  m_thresholdAngle = -0.785f;
+  m_thresholdAngle = -1.047197551;
   m_currentAngle = m_initialAngle;
 
   m_flipAngleStep = 0.012f;
@@ -32,7 +32,7 @@ FlipperRight::FlipperRight(string filename, float scale, glm::vec3 position) : P
   m_resetting = false;
 
   m_initialAngle = -2.355f;
-  m_thresholdAngle = -0.785f;
+  m_thresholdAngle = -1.047197551;
   m_currentAngle = m_initialAngle;
 
   m_flipAngleStep = 0.012f;
@@ -45,7 +45,7 @@ FlipperRight::FlipperRight(string filename, float scale, glm::vec3 position, btT
   m_resetting = false;
 
   m_initialAngle = -2.355f;
-  m_thresholdAngle = -0.785f;
+  m_thresholdAngle = -1.047197551;
   m_currentAngle = m_initialAngle;
 
   m_flipAngleStep = 0.02f;
