@@ -48,7 +48,7 @@ FlipperLeft::FlipperLeft(string filename, float scale, glm::vec3 position, btTri
   m_thresholdAngle = -0.785f;
   m_currentAngle = m_initialAngle;
 
-  m_flipAngleStep = 0.012f;
+  m_flipAngleStep = 0.02f;
   m_resetAngleStep = -0.004f;
 }
 

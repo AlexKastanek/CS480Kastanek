@@ -56,18 +56,18 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-10.5f, 30.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 3.0f, glm::vec3(-5.5f, 30.0f, 0.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
 
   rightFlipperMesh = new btTriangleMesh();
-  m_flipperRight = new FlipperRight("..//assets//FlipperLeft.obj", 15.0f, glm::vec3(-10.0f, 2.5f, -50.0f), rightFlipperMesh);
+  m_flipperRight = new FlipperRight("..//assets//Flipper.obj", 15.0f, glm::vec3(-5.0f, 2.5f, -50.0f), rightFlipperMesh);
   m_flipperRight->Initialize(rightFlipperMesh);
   m_dynamicsWorld->addRigidBody(m_flipperRight->m_rigidBody);
 
   leftFlipperMesh = new btTriangleMesh();
-  m_flipperLeft = new FlipperLeft("..//assets//FlipperLeft.obj", 15.0f, glm::vec3(28.0f, 2.5f, -50.0f), leftFlipperMesh);
+  m_flipperLeft = new FlipperLeft("..//assets//Flipper.obj", 15.0f, glm::vec3(23.0f, 2.5f, -50.0f), leftFlipperMesh);
   m_flipperLeft->Initialize(leftFlipperMesh);
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
@@ -114,7 +114,7 @@ void World::Update(unsigned int dt)
   cout << numManifolds << endl;*/
 
 
-  m_dynamicsWorld->stepSimulation(dt, 0.5f);
+  m_dynamicsWorld->stepSimulation(dt, 0.05f);
   
   m_board->Update(dt);
   m_ball->Update(dt);
