@@ -54,7 +54,7 @@ mkdir build
 cd build
 cmake ..
 make
-./BulletTutorial
+./Pinball
 ```
 
 ### Run Instructions
@@ -63,7 +63,7 @@ After building the project, the executable can be ran.
 ## Ubuntu.cse.unr.edu
 OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) website. To do so follow the build instructions, but when running the Tutorial executable use this line to execute.
 ```bash
-/usr/NX/scripts/vgl/vglrun ./BulletTutorial
+/usr/NX/scripts/vgl/vglrun ./Pinball
 ```
 
 ## Keyboard/Mouse Input Guide
@@ -92,6 +92,8 @@ s - decrease spot light brightness
 Lshift - flip left flipper  
 
 Rshift - flip right flipper  
+
+Enter - use the plunger (hold to pull, let go to release)  
 
 SpaceBar - Toggle Lighting Mode (default is Vertex Based)  
 
