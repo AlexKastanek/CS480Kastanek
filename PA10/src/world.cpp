@@ -56,7 +56,7 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(-7.0f, 10.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(-45.5f, 10.0f, 0.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
@@ -103,37 +103,23 @@ bool World::Initialize()
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
     setInternalGhostPairCallback(new btGhostPairCallback());
   
-  createWalls();
-  
   bumpMeshL = new btTriangleMesh();
-  m_bumperL = new Bumper("..//assets//Bumper.obj", 8.0f, glm::vec3(26.0f, 2.0f, -26.0f), bumpMeshL, true);
+  m_bumperL = new Bumper("..//assets//Bumper.obj", 8.0f, glm::vec3(24.0f, 2.0f, -26.0f), bumpMeshL, true);
   m_bumperL->Initialize(bumpMeshL);
   m_dynamicsWorld->addRigidBody(m_bumperL->m_rigidBody);
   
   bumpMeshR = new btTriangleMesh();
-  m_bumperR = new Bumper("..//assets//Bumper2.obj", 8.0f, glm::vec3(-7.0f, 2.0f, -26.0f), bumpMeshR, true);
+  m_bumperR = new Bumper("..//assets//Bumper2.obj", 8.0f, glm::vec3(-5.0f, 2.0f, -26.0f), bumpMeshR, true);
   m_bumperR->Initialize(bumpMeshR);
   m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
+
+  createWalls();
 
   return true;
 }
 
 void World::Update(unsigned int dt)
 {
-  /*
-  if (m_ball->m_rigidBody->checkCollideWith(m_launchArea->m_collisionObject))
-  {
-    cout << "COLLIDING" << endl;
-  }
-  else
-  {
-    cout << "NOT COLLIDING" << endl;
-  }
-  */
-  /*int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
-  cout << numManifolds << endl;*/
-
-
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
   
   m_board->Update(dt);
@@ -172,30 +158,6 @@ void World::Update(unsigned int dt)
   //if colliding with ball
   if (collidingWithBall)
   {
-    /*
-    //cout << "COLLIDING WITH BALL" << endl;
-
-    //get the ball's position
-    btTransform ballTransform;
-    m_ball->m_rigidBody->getMotionState()->getWorldTransform(ballTransform);
-    btVector3 position = ballTransform.getOrigin();
-
-    //if this position is not centered between the two walls
-    if (position.x() > -46.0 && position.x() < -44.0)
-    {
-      //cout << "IN RANGE" << endl;
-      //if this ball was not in range in the previous frame
-      if (!m_ballInLaunchRange)
-      {
-        //reset velocity
-        cout << "RESETTING BALL VELOCITY" << endl;
-        m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-      }
-
-      m_ballInLaunchRange = true;
-    }
-    */
-
     //if this ball was not in range in the previous frame
     if (!m_ballInLaunchRange)
     {
@@ -204,26 +166,6 @@ void World::Update(unsigned int dt)
       m_ball->CenterInLaunchArea();
     }
     m_ballInLaunchRange = true;
-    
-    /*
-    else if (position.x() < -46.0)
-    {
-      cout << "TO THE RIGHT" << endl;
-      m_ballInLaunchRange = false;
-      m_ball->m_rigidBody->applyCentralImpulse(btVector3(0.0001,0,0));
-    }
-    else
-    {
-      cout << "TO THE LEFT" << endl;
-      m_ballInLaunchRange = false;
-      m_ball->m_rigidBody->applyCentralImpulse(btVector3(-0.0001,0,0));
-    }
-    else
-    {
-      //set ball in range to false
-      m_ballInLaunchRange = false;
-    }
-    */
 
     //keep ball inside launch area
     m_ball->m_rigidBody->setLinearFactor(btVector3(0,1,1));
@@ -466,4 +408,13 @@ void World::createWalls()
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_lidRigid);
   */
+
+  //collision wall to keep objects from flying out 
+  m_lid = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
+  m_lidMotion = NULL;
+  m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,7,0)));
+  btRigidBody::btRigidBodyConstructionInfo lidCI(0, m_lidMotion, m_lid, btVector3(0,0,0));
+  m_lidRigid = new btRigidBody(lidCI);
+  m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
+  m_dynamicsWorld->addRigidBody(m_lidRigid);
 }

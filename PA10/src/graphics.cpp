@@ -167,9 +167,9 @@ bool Graphics::Initialize(int width, int height)
   m_spotLight.shininess = 50;
   m_spotLight.attenuation = 0.001f;
 
-  m_pointLight.position = glm::vec4(0.0f, 2.0f, 80.0f, 1.0f);
+  m_pointLight.position = glm::vec4(0.0f, 30.0f, 120.0f, 1.0f);
   m_pointLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  m_pointLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  m_pointLight.diffuse = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   m_pointLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   m_pointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
   m_pointLight.angle = 180.0f;
