@@ -1,30 +1,26 @@
-//
-// Created by mari on 10/27/18.
-//
+#include "bumper.h"
 
-#include "cylinder.h"
-
-Cylinder::Cylinder() : PhysicsObject()
+Bumper::Bumper() : PhysicsObject()
 {
 
 }
 
-Cylinder::Cylinder(string filename) : PhysicsObject(filename)
+Bumper::Bumper(string filename) : PhysicsObject(filename)
 {
 
 }
 
-Cylinder::Cylinder(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
+Bumper::Bumper(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
 
 }
 
-Cylinder::Cylinder(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+Bumper::Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy) : PhysicsObject(filename, scale, position, triMesh)
 {
-
+    m_isBouncy = isBouncy;
 }
 
-Cylinder::~Cylinder()
+Bumper::~Bumper()
 {
     delete m_renderData;
     m_children.clear();
@@ -34,10 +30,9 @@ Cylinder::~Cylinder()
     m_rigidBody = NULL;
 }
 
-bool Cylinder::Initialize(btTriangleMesh *triMesh)
-
+bool Bumper::Initialize(btTriangleMesh *triMesh)
 {
-    cout << "CHECK Cylinder INITIALIZE" << endl;
+    cout << "CHECK Bumper INITIALIZE" << endl;
 
     btTransform transform(
             btQuaternion::getIdentity(),
@@ -52,12 +47,6 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
             m_position);
 
     //create the collider
-    /*m_collider = new btCylinderShape(btVector3(
-            m_scale.x/2,
-            m_scale.y/2,
-            m_scale.z/2));*/
-
-    
     m_collider = new btBvhTriangleMeshShape(triMesh, false);
 
     //create the motion state
@@ -75,11 +64,14 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
             m_collider,
             inertia
     );
+    
 
     //create the rigid body
     m_rigidBody = new btRigidBody(ci);
     m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-    m_rigidBody->setRestitution(0.15);//elasticity!!!
+   
+   if(m_isBouncy)
+        m_rigidBody->setRestitution(0.15);//elasticity!!!
     //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
     model = m_translationMatrix;
@@ -87,7 +79,7 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
     return true;
 }
 
-void Cylinder::Update(unsigned int dt)
+void Bumper::Update(unsigned int dt)
 {
     btTransform transform;
     btScalar modelUpdate[16];

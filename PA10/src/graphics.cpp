@@ -43,7 +43,7 @@ bool Graphics::Initialize(int width, int height)
   //m_physics = new Physics();
 
   //Init the world
-  m_world = new World(glm::vec3(0.0f, -0.0005f, -0.0001f));
+  m_world = new World(glm::vec3(0.0f, -0.0005f, -0.00005f));
   if (!m_world->Initialize())
   {
     printf("World Failed to Initialize\n");
@@ -378,6 +378,7 @@ void Graphics::Render()
   */
 
   m_world->Render(m_modelMatrix, 'l');
+  m_world->Render(m_modelMatrix, 'u');
 
   //cout << "finished rendering objects" << endl;
 
