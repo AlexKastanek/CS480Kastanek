@@ -1,8 +1,7 @@
-#include "flipper.h"
+#include "flipper_right.h"
 
-Flipper::Flipper() : PhysicsObject()
+FlipperRight::FlipperRight() : PhysicsObject()
 {
-  m_left = false;
   m_flipping = false;
   m_resetting = false;
 
@@ -12,27 +11,10 @@ Flipper::Flipper() : PhysicsObject()
 
   m_flipAngleStep = 0.3f;
   m_resetAngleStep = -0.1f;
-
 }
 
-Flipper::Flipper(string filename) : PhysicsObject(filename)
+FlipperRight::FlipperRight(string filename) : PhysicsObject(filename)
 {
-  m_left = false;
-  m_flipping = false;
-  m_resetting = false;
-
-  m_initialAngle = -2.355f;
-  m_thresholdAngle = -0.785f;
-  m_currentAngle = m_initialAngle;
-
-  m_flipAngleStep = 0.012f;
-  m_resetAngleStep = -0.004f;
-
-}
-
-Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : PhysicsObject(filename, scale, position)
-{
-  m_left = left;
   m_flipping = false;
   m_resetting = false;
 
@@ -44,9 +26,8 @@ Flipper::Flipper(string filename, float scale, glm::vec3 position, bool left) : 
   m_resetAngleStep = -0.004f;
 }
 
-Flipper::Flipper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool left) : PhysicsObject(filename, scale, position, triMesh)
+FlipperRight::FlipperRight(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
-  m_left = left;
   m_flipping = false;
   m_resetting = false;
 
@@ -58,7 +39,20 @@ Flipper::Flipper(string filename, float scale, glm::vec3 position, btTriangleMes
   m_resetAngleStep = -0.004f;
 }
 
-Flipper::~Flipper()
+FlipperRight::FlipperRight(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+{
+  m_flipping = false;
+  m_resetting = false;
+
+  m_initialAngle = -2.355f;
+  m_thresholdAngle = -0.785f;
+  m_currentAngle = m_initialAngle;
+
+  m_flipAngleStep = 0.012f;
+  m_resetAngleStep = -0.004f;
+}
+
+FlipperRight::~FlipperRight()
 {
   delete m_renderData;
   m_children.clear();
@@ -68,7 +62,7 @@ Flipper::~Flipper()
   m_rigidBody = NULL;
 }
 
-bool Flipper::Initialize(btTriangleMesh *triMesh)
+bool FlipperRight::Initialize(btTriangleMesh *triMesh)
 {
   cout << "CHECK FLIPPER INITIALIZE" << endl;
 
@@ -86,6 +80,13 @@ bool Flipper::Initialize(btTriangleMesh *triMesh)
     pi3Over2 *= -1;
   }
   */
+
+  m_initialAngle *= -1;
+  m_thresholdAngle *= -1;
+  m_currentAngle = m_initialAngle;
+  m_flipAngleStep *= -1;
+  m_resetAngleStep *= -1;
+  pi3Over2 *= -1;
 
   //set transform
   btTransform transform(
@@ -195,7 +196,7 @@ bool Flipper::Initialize(btTriangleMesh *triMesh)
   return true;
 }
 
-void Flipper::Update(unsigned int dt)
+void FlipperRight::Update(unsigned int dt)
 {
   btTransform transform, newTransform;
   btVector3 origin;
@@ -218,11 +219,6 @@ void Flipper::Update(unsigned int dt)
   distanceToPivot = glm::distance(m_position, m_pivotPosition);
 
   /*rotate on object pivot by correct step size*/
-
-  if (!m_left)
-  {
-    //cout << m_currentAngle << endl;
-  }
 
   if (m_flipping)
   {
@@ -299,7 +295,7 @@ void Flipper::Update(unsigned int dt)
   model = glm::make_mat4(modelUpdate) * m_rotationMatrix * m_scaleMatrix;
 }
 
-void Flipper::Flip()
+void FlipperRight::Flip()
 {
   /*
   float x = 0.0f;

@@ -11,9 +11,10 @@ public:
   Flipper();
   Flipper(string filename);
   Flipper(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), bool left = false);
+  Flipper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool left = false);
   ~Flipper();
 
-  bool Initialize();
+  bool Initialize(btTriangleMesh *triMesh);
   void Update(unsigned int dt);
 
   void Flip();

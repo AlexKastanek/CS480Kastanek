@@ -5,7 +5,8 @@
 #include "physics.h"
 #include "board.h"
 #include "ball.h"
-#include "flipper.h"
+#include "flipper_left.h"
+#include "flipper_right.h"
 #include "plunger.h"
 #include "cylinder.h"
 #include "launch_barrier.h"
@@ -26,8 +27,8 @@ public:
 
   Board& GetBoard();
   Ball& GetBall();
-  Flipper& GetFlipperRight();
-  Flipper& GetFlipperLeft();
+  FlipperRight& GetFlipperRight();
+  FlipperLeft& GetFlipperLeft();
   Cylinder& GetCylinder();
 
   /*
@@ -60,13 +61,13 @@ public:
 private:
   Board *m_board;
   btTriangleMesh *boardMesh;  
-
+  btTriangleMesh *rightFlipperMesh;
+  btTriangleMesh *leftFlipperMesh;
 
   Ball *m_ball;
-  Flipper *m_flipperRight;
-  Flipper *m_flipperLeft;
+  FlipperRight *m_flipperRight;
+  FlipperLeft *m_flipperLeft;
   Plunger *m_plunger;
-
 
   Cylinder *m_cylinder;
   btTriangleMesh *cylMesh;
