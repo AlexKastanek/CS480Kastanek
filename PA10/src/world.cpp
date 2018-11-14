@@ -102,6 +102,14 @@ bool World::Initialize()
   m_dynamicsWorld->addCollisionObject(m_launchArea->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
     setInternalGhostPairCallback(new btGhostPairCallback());
+
+  m_outArea = new TriggerObject(
+    glm::vec3(50.0f, 10.0f, 5.0f),
+    glm::vec3(14.0f, 1.0f, -75.0f));
+  m_outArea->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_outArea->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
   
   bumpMeshL = new btTriangleMesh();
   m_bumperL = new Bumper("..//assets//Bumper.obj", 8.0f, glm::vec3(24.0f, 2.0f, -26.0f), bumpMeshL, true);
@@ -136,12 +144,14 @@ void World::Update(unsigned int dt)
 
   /*check if ball is inside launch area*/
 
-  bool collidingWithBall = false;
+  bool launchAreaCollidingWithBall = false;
+  bool outAreaCollidingWithBall = false;
 
   //get amount of objects inside launch area
   int launchAreaCollisionAmount = m_launchArea->m_ghostObject->getNumOverlappingObjects();
+  int outAreaCollisionAmount = m_outArea->m_ghostObject->getNumOverlappingObjects();
 
-  //loop through each object
+  //loop through each object in launch area
   for (int i = 0; i < launchAreaCollisionAmount; i++)
   {
     //get the object
@@ -151,12 +161,26 @@ void World::Update(unsigned int dt)
     //if this object is the ball, colliding with ball is true
     if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
     {
-      collidingWithBall = true;
+      launchAreaCollidingWithBall = true;
     }
   }
 
-  //if colliding with ball
-  if (collidingWithBall)
+  //loop through each object in launch area
+  for (int i = 0; i < outAreaCollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_outArea->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      outAreaCollidingWithBall = true;
+    }
+  }
+
+  //if launch area colliding with ball
+  if (launchAreaCollidingWithBall)
   {
     //if this ball was not in range in the previous frame
     if (!m_ballInLaunchRange)
@@ -177,6 +201,20 @@ void World::Update(unsigned int dt)
     m_ball->m_rigidBody->setLinearFactor(btVector3(1,1,1));
     m_ballInLaunchRange = false;
   }
+
+  //if out area colliding with ball
+  if (outAreaCollidingWithBall)
+  {
+    btTransform ballTransform(
+      btQuaternion::getIdentity(),
+      btVector3(-45.5f, 10.0f, 0.0f));
+
+    cout << "RESETTING BALL VELOCITY" << endl;
+    m_ball->m_rigidBody->setWorldTransform(ballTransform);
+    m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+    
+  }
+
 }
 
 void World::Render(GLint& modelMatrix, char obj)

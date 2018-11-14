@@ -80,6 +80,8 @@ private:
 
   LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
+
+  TriggerObject *m_outArea;
   
   Bumper *m_bumperL;
   btTriangleMesh *bumpMeshL;
