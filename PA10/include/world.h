@@ -12,6 +12,7 @@
 #include "cylinder.h"
 #include "launch_barrier.h"
 #include "trigger_object.h"
+#include "bumper.h"
 
 using namespace std;
 
@@ -79,6 +80,11 @@ private:
 
   LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
+  
+  Bumper *m_bumperL;
+  btTriangleMesh *bumpMeshL;
+  Bumper *m_bumperR;
+  btTriangleMesh *bumpMeshR;
 
   /*
   float m_boardSpecular;
