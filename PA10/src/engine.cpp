@@ -115,14 +115,45 @@ void Engine::Keyboard()
   			switch (m_event.key.keysym.sym)
   			{
   				case SDLK_ESCAPE:
-                                        generateScores();
+            generateScores();
   					m_running = false;
   					break;
           case SDLK_w:
-            m_graphics->increaseDiffuse();
+            m_graphics->m_camera->HandleKeyboardInput("w", true);
+            //m_graphics->increaseDiffuse();
+            break;
+          case SDLK_a:
+            m_graphics->m_camera->HandleKeyboardInput("a", true);
             break;
           case SDLK_s:
-            m_graphics->decreaseDiffuse();
+            m_graphics->m_camera->HandleKeyboardInput("s", true);
+            //m_graphics->decreaseDiffuse();
+            break;
+          case SDLK_d:
+            m_graphics->m_camera->HandleKeyboardInput("d", true);
+            break;
+          case SDLK_UP:
+            m_graphics->m_camera->HandleKeyboardInput("up", true);
+            break;
+          case SDLK_DOWN:
+            m_graphics->m_camera->HandleKeyboardInput("down", true);
+            break;
+          case SDLK_LEFT:
+            m_graphics->m_camera->HandleKeyboardInput("left", true);
+            break;
+          case SDLK_RIGHT:
+            m_graphics->m_camera->HandleKeyboardInput("right", true);
+            break;
+          case SDLK_m:
+            m_graphics->m_camera->Reset();
+            if (m_graphics->m_camera->GetMode() == MODE_GAME)
+            {
+              m_graphics->m_camera->SetMode(MODE_FREE);
+            }
+            else
+            {
+              m_graphics->m_camera->SetMode(MODE_GAME);
+            }
             break;
           case SDLK_1:
             m_graphics->decreaseSpecular(0);
@@ -202,6 +233,32 @@ void Engine::Keyboard()
       case SDL_KEYUP:
         switch(m_event.key.keysym.sym)
         {
+          case SDLK_w:
+            m_graphics->m_camera->HandleKeyboardInput("w", false);
+            //m_graphics->increaseDiffuse();
+            break;
+          case SDLK_a:
+            m_graphics->m_camera->HandleKeyboardInput("a", false);
+            break;
+          case SDLK_s:
+            m_graphics->m_camera->HandleKeyboardInput("s", false);
+            //m_graphics->decreaseDiffuse();
+            break;
+          case SDLK_d:
+            m_graphics->m_camera->HandleKeyboardInput("d", false);
+            break;
+          case SDLK_UP:
+            m_graphics->m_camera->HandleKeyboardInput("up", false);
+            break;
+          case SDLK_DOWN:
+            m_graphics->m_camera->HandleKeyboardInput("down", false);
+            break;
+          case SDLK_LEFT:
+            m_graphics->m_camera->HandleKeyboardInput("left", false);
+            break;
+          case SDLK_RIGHT:
+            m_graphics->m_camera->HandleKeyboardInput("right", false);
+            break;
           case SDLK_RETURN:
             //release plunger
             m_graphics->m_world->ReleasePlunger();

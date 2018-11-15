@@ -55,13 +55,10 @@ class Graphics
     Shader *m_fragmentBasedShader;
 
     World *m_world;
+    Camera *m_camera;
 
   private:
     std::string ErrorString(GLenum error);
-
-    //Physics *m_physics;
-    
-    Camera *m_camera;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
