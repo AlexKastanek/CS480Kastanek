@@ -115,7 +115,7 @@ void Engine::Keyboard()
   			switch (m_event.key.keysym.sym)
   			{
   				case SDLK_ESCAPE:
-                                        generateScores();
+            generateScores();
   					m_running = false;
   					break;
           case SDLK_w:
@@ -239,12 +239,15 @@ void Engine::generateScores()
     fin.open("..//assets//scoreLog.txt");
     topFin.open("..//assets//topScores.txt");
     
-    
+    struct TopPlayer
+    {
+      int score;
+      string name;
+    };
     
     int score = 0;
-    int temp = 0;
     
-    vector<int> topScores;
+    TopPlayer leaderBoard[11];
     
     while(!fin.eof())
         fin >> score;
@@ -253,24 +256,48 @@ void Engine::generateScores()
     
     for(int i=0 ; i<10 ; i++)
     {
-       topFin >> temp;
-       //cout << temp << endl;
-       topScores.push_back(temp);
+       topFin >> leaderBoard[i].score >> leaderBoard[i].name;
+       //cout << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
     }
+
+    string str;
+    cout << "Please Enter Your Name: ";
+    cin >> str;
+
+    leaderBoard[10].score = score;
+    leaderBoard[10].name = str;
+
     
-    topScores.push_back(score);
-    
-    sort(topScores.begin(), topScores.end());
+    //topScores.push_back(score);
     
     ofstream fout;
     fout.open("..//assets//topScores.txt");
+
+    //**SORT**
+
+    TopPlayer temp;
+    for(int i=0 ; i<11 ; i++)
+    {
+      for(int j=i+1 ; j<11 ; j++)
+      {
+        if(leaderBoard[i].score < leaderBoard[j].score)
+        {
+          //swap
+          temp = leaderBoard[i];
+          leaderBoard[i] = leaderBoard[j];
+          leaderBoard[j] = temp;
+        }
+      }
+    }
+
+    //********
     
     int rank = 1;
     cout << endl << "**TOP SCORES**" << endl;
-    for(int i=10; i>0 ; i--)
+    for(int i=0; i<10 ; i++)
     {
-        cout << rank++ << ") " << topScores[i] << endl;
-        fout << topScores[i] << endl; 
+        cout << rank++ << ") " << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
+        fout << leaderBoard[i].score << " " << leaderBoard[i].name << endl; 
     }
         
     fin.close();
