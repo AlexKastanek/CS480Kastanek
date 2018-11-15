@@ -75,8 +75,25 @@ private:
   FlipperLeft *m_flipperLeft;
   Plunger *m_plunger;
 
-  Cylinder *m_cylinder;
-  btTriangleMesh *cylMesh;
+  Cylinder *m_cylinder1;
+  btTriangleMesh *cylMesh1;
+  TriggerObject *m_cylTrigger1;
+  
+  Cylinder *m_cylinder2;
+  btTriangleMesh *cylMesh2;
+  TriggerObject *m_cylTrigger2;
+  
+  Cylinder *m_cylinder3;
+  btTriangleMesh *cylMesh3;
+  TriggerObject *m_cylTrigger3;
+  
+  Cylinder *m_cylinder4;
+  btTriangleMesh *cylMesh4;
+  TriggerObject *m_cylTrigger4;
+  
+  Cylinder *m_cylinder5;
+  btTriangleMesh *cylMesh5;
+  TriggerObject *m_cylTrigger5;
 
   LaunchBarrier *m_launchBarrier;
   TriggerObject *m_launchArea;
@@ -120,7 +137,11 @@ private:
   btRigidBody *m_leftWallRigid;
   btRigidBody *m_rightWallRigid;
   btRigidBody *m_lidRigid;
-
+  
+  int m_score = 0;
+  int m_scoreTimer = 0;
+  ofstream m_fout;
+  
 };
 
 #endif /* WORLD_H */

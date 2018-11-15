@@ -29,7 +29,7 @@ World::World(glm::vec3 gravity) : Physics(gravity)
 
 World::~World()
 {
-  
+    
 }
 
 bool World::Initialize()
@@ -56,7 +56,7 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(-45.5f, 10.0f, 0.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(20.0f, 2.0f, 30.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
@@ -85,11 +85,67 @@ bool World::Initialize()
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 
-  cylMesh = new btTriangleMesh();
-  m_cylinder = new Cylinder("..//assets//cylinder.obj", 8.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh);
-  m_cylinder->Initialize(cylMesh);
+  cylMesh1 = new btTriangleMesh();
+  m_cylinder1 = new Cylinder("..//assets//cylinder.obj", 8.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh1);
+  m_cylinder1->Initialize(cylMesh1);
+  m_cylTrigger1 = new TriggerObject(
+    glm::vec3(4.0f, 4.0f, 4.0f),
+    glm::vec3(0.0f, 2.0f, 25.0f));
+  m_cylTrigger1->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_cylTrigger1->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
+  m_dynamicsWorld->addRigidBody(m_cylinder1->m_rigidBody);
+    
+  cylMesh2 = new btTriangleMesh();
+  m_cylinder2 = new Cylinder("..//assets//cylinder.obj", 12.0f, glm::vec3(20.0f, 2.0f, 5.0f), cylMesh2);
+  m_cylinder2->Initialize(cylMesh2);
+  m_cylTrigger2 = new TriggerObject(
+    glm::vec3(6.0f, 6.0f, 6.0f),
+    glm::vec3(20.0f, 2.0f, 5.0f));
+  m_cylTrigger2->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_cylTrigger2->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
+  m_dynamicsWorld->addRigidBody(m_cylinder2->m_rigidBody);
+  
+  cylMesh3 = new btTriangleMesh();
+  m_cylinder3 = new Cylinder("..//assets//cylinder.obj", 8.0f, glm::vec3(30.0f, 2.0f, 50.0f), cylMesh3);
+  m_cylinder3->Initialize(cylMesh3);
+  m_cylTrigger3 = new TriggerObject(
+    glm::vec3(4.0f, 4.0f, 4.0f),
+    glm::vec3(30.0f, 2.0f, 50.0f));
+  m_cylTrigger3->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_cylTrigger3->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
+  m_dynamicsWorld->addRigidBody(m_cylinder3->m_rigidBody);
+  
+  cylMesh4 = new btTriangleMesh();
+  m_cylinder4 = new Cylinder("..//assets//cylinder.obj", 12.0f, glm::vec3(-25.0f, 2.0f, 65.0f), cylMesh4);
+  m_cylinder4->Initialize(cylMesh4);
+  m_cylTrigger4 = new TriggerObject(
+    glm::vec3(6.0f, 6.0f, 6.0f),
+    glm::vec3(-25.0f, 2.0f, 65.0f));
+  m_cylTrigger4->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_cylTrigger4->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
+  m_dynamicsWorld->addRigidBody(m_cylinder4->m_rigidBody);
+  
+  cylMesh5 = new btTriangleMesh();
+  m_cylinder5 = new Cylinder("..//assets//cylinder.obj", 5.0f, glm::vec3(20.0f, 2.0f, 100.0f), cylMesh5);
+  m_cylinder5->Initialize(cylMesh5);
+  m_cylTrigger5 = new TriggerObject(
+    glm::vec3(2.5f, 2.5f, 2.5f),
+    glm::vec3(20.0f, 2.0f, 100.0f));
+  m_cylTrigger5->Initialize();
+  m_dynamicsWorld->addCollisionObject(m_cylTrigger5->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
+    setInternalGhostPairCallback(new btGhostPairCallback());
+  m_dynamicsWorld->addRigidBody(m_cylinder5->m_rigidBody);
 
-  m_dynamicsWorld->addRigidBody(m_cylinder->m_rigidBody);
+  
 
   m_launchBarrier = new LaunchBarrier("..//assets//LaunchBarrier.obj", 10.0, glm::vec3(-39.0f, 2.5f, -10.0f));
   m_launchBarrier->Initialize();
@@ -122,6 +178,8 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
 
   createWalls();
+  
+  m_fout.open("..//assets//scoreLog.txt");
 
   return true;
 }
@@ -137,7 +195,11 @@ void World::Update(unsigned int dt)
   m_flipperRight->Update(dt);
   m_flipperLeft->Update(dt);
   m_plunger->Update(dt);
-  m_cylinder->Update(dt);
+  m_cylinder1->Update(dt);
+  m_cylinder2->Update(dt);
+  m_cylinder3->Update(dt);
+  m_cylinder4->Update(dt);
+  m_cylinder5->Update(dt);
   m_launchBarrier->Update(dt); 
   m_bumperL->Update(dt);
   m_bumperR->Update(dt);
@@ -146,10 +208,18 @@ void World::Update(unsigned int dt)
 
   bool launchAreaCollidingWithBall = false;
   bool outAreaCollidingWithBall = false;
+  bool cylTrigger100CollidingWithBall = false;
+  bool cylTrigger50CollidingWithBall = false;
+  bool cylTrigger500CollidingWithBall = false;
 
   //get amount of objects inside launch area
   int launchAreaCollisionAmount = m_launchArea->m_ghostObject->getNumOverlappingObjects();
   int outAreaCollisionAmount = m_outArea->m_ghostObject->getNumOverlappingObjects();
+  int cylTrigger1CollisionAmount = m_cylTrigger1->m_ghostObject->getNumOverlappingObjects();
+  int cylTrigger2CollisionAmount = m_cylTrigger2->m_ghostObject->getNumOverlappingObjects();
+  int cylTrigger3CollisionAmount = m_cylTrigger3->m_ghostObject->getNumOverlappingObjects();
+  int cylTrigger4CollisionAmount = m_cylTrigger4->m_ghostObject->getNumOverlappingObjects();
+  int cylTrigger5CollisionAmount = m_cylTrigger5->m_ghostObject->getNumOverlappingObjects();
 
   //loop through each object in launch area
   for (int i = 0; i < launchAreaCollisionAmount; i++)
@@ -178,6 +248,68 @@ void World::Update(unsigned int dt)
       outAreaCollidingWithBall = true;
     }
   }
+  //********************************************************************************88
+  for (int i = 0; i < cylTrigger1CollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_cylTrigger1->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      cylTrigger100CollidingWithBall = true;
+    }
+  }
+  for (int i = 0; i < cylTrigger2CollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_cylTrigger2->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      cylTrigger50CollidingWithBall = true;
+    }
+  }
+  for (int i = 0; i < cylTrigger3CollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_cylTrigger3->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      cylTrigger100CollidingWithBall = true;
+    }
+  } 
+  for (int i = 0; i < cylTrigger4CollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_cylTrigger4->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      cylTrigger50CollidingWithBall = true;
+    }
+  }
+    for (int i = 0; i < cylTrigger5CollisionAmount; i++)
+  {
+    //get the object
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(
+      m_cylTrigger5->m_ghostObject->getOverlappingObject(i));
+
+    //if this object is the ball, colliding with ball is true
+    if (collidingBody->getCompanionId() == m_ball->m_rigidBody->getCompanionId())
+    {
+      cylTrigger500CollidingWithBall = true;
+    }
+  }
+  //********************************************************************************
 
   //if launch area colliding with ball
   if (launchAreaCollidingWithBall)
@@ -229,6 +361,29 @@ void World::Update(unsigned int dt)
     }
     
   }
+  
+  m_scoreTimer += dt;
+  if(cylTrigger100CollidingWithBall && m_scoreTimer > 60)
+  {
+     m_score += 100;
+     m_fout << m_score << endl;
+     m_scoreTimer = 0;
+     //cout << "Hit Cyl 1" << endl;
+  }
+  if(cylTrigger50CollidingWithBall && m_scoreTimer > 60)
+  {
+     m_score += 50;
+     m_fout << m_score << endl;
+     m_scoreTimer = 0;
+     //cout << "Hit Cyl 2" << endl;
+  }
+  if(cylTrigger500CollidingWithBall && m_scoreTimer > 60)
+  {
+     m_score += 500;
+     m_fout << m_score << endl;
+     m_scoreTimer = 0;
+     //cout << "Hit Cyl 2" << endl;
+  }
 
 }
 
@@ -261,8 +416,16 @@ void World::Render(GLint& modelMatrix, char obj)
       m_plunger->Render();
       break;
     case 'c':
-      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder->GetModel()));
-      m_cylinder->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder1->GetModel()));
+      m_cylinder1->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder2->GetModel()));
+      m_cylinder2->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder3->GetModel()));
+      m_cylinder3->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder4->GetModel()));
+      m_cylinder4->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_cylinder5->GetModel()));
+      m_cylinder5->Render();
       break; 
     case 'l':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_launchBarrier->GetModel()));
@@ -313,7 +476,7 @@ FlipperLeft& World::GetFlipperLeft()
 
 Cylinder& World::GetCylinder()
 {
-  return *m_cylinder;
+  return *m_cylinder1;
 }
 
 int World::GetBallCounter()

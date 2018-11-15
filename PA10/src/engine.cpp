@@ -102,6 +102,10 @@ void Engine::Run()
 
 void Engine::Keyboard()
 {
+  ifstream fin;
+  fin.open("..//assets//scoreLog.txt");
+  int score = 0;
+  
   if(m_event.type == SDL_QUIT)
   {
     m_running = false;
@@ -114,6 +118,9 @@ void Engine::Keyboard()
   			switch (m_event.key.keysym.sym)
   			{
   				case SDLK_ESCAPE:
+                                        while(!fin.eof())
+                                            fin >> score;
+                                        cout << endl << "SCORE: " << score << endl;
   					m_running = false;
   					break;
           case SDLK_w:
