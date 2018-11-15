@@ -20,6 +20,12 @@ Bumper::Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh 
     m_isBouncy = isBouncy;
 }
 
+Bumper::Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy, float yRotation) : PhysicsObject(filename, scale, position, triMesh)
+{
+  m_isBouncy = isBouncy;
+  m_yRotation = yRotation;
+}
+
 Bumper::~Bumper()
 {
     delete m_renderData;
@@ -34,8 +40,11 @@ bool Bumper::Initialize(btTriangleMesh *triMesh)
 {
     cout << "CHECK Bumper INITIALIZE" << endl;
 
+    btQuaternion rot = btQuaternion::getIdentity();
+    rot.setRotation(btVector3(0,1,0), m_yRotation);
+
     btTransform transform(
-            btQuaternion::getIdentity(),
+            rot,
             btVector3(
                     m_position.x,
                     m_position.y,

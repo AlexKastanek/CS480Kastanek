@@ -32,6 +32,7 @@ public:
   FlipperRight& GetFlipperRight();
   FlipperLeft& GetFlipperLeft();
   Cylinder& GetCylinder();
+  int GetScore();
   int GetBallCounter();
 
   /*
@@ -105,6 +106,10 @@ private:
   btTriangleMesh *bumpMeshL;
   Bumper *m_bumperR;
   btTriangleMesh *bumpMeshR;
+  Bumper *m_bumperTL;
+  btTriangleMesh *bumpMeshTL;
+  Bumper *m_bumperTR;
+  btTriangleMesh *bumpMeshTR;
 
   int m_ballCounter = 4;
   int m_dtSinceLastBallLoss = 0;

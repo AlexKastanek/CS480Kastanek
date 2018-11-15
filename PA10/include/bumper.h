@@ -11,6 +11,7 @@ public:
     Bumper(string filename);
     Bumper(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
     Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy);
+    Bumper(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, bool isBouncy, float yRotation);
     ~Bumper();
 
     bool Initialize(btTriangleMesh *triMesh);
@@ -20,6 +21,7 @@ public:
 private:
     
     bool m_isBouncy;
+    float m_yRotation = 0.0f;
 
 };
 

@@ -23,7 +23,7 @@ int GUI::Initialize(SDL_Window* window, SDL_GLContext context)
  	return true;
 }
 
-void GUI::Update(SDL_Window* window, Graphics* graphics, int ballCounter)
+void GUI::Update(SDL_Window* window, Graphics* graphics)
 {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplSDL2_NewFrame(window);
@@ -31,7 +31,10 @@ void GUI::Update(SDL_Window* window, Graphics* graphics, int ballCounter)
 
   if (ImGui::Begin("HUD", NULL))
   {
-    string ballsLeftDisplay = "Balls Left: " + to_string(ballCounter);
+    string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
+    ImGui::Text(scoreDisplay.c_str());
+
+    string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
     ImGui::Text(ballsLeftDisplay.c_str());
   }
   ImGui::End();

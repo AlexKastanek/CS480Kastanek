@@ -95,8 +95,8 @@ bool Ball::Initialize()
     inertia
     );
 
-  ci.m_restitution = 20;
-  ci.m_friction = 20;
+  ci.m_restitution = 1;
+  ci.m_friction = 1;
   //ci.m_rollingFriction = 0.001;
 
   //create the rigid body

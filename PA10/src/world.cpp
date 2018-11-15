@@ -92,7 +92,7 @@ bool World::Initialize()
   m_cylinder1->Initialize(cylMesh1);
   m_cylTrigger1 = new TriggerObject(
     glm::vec3(4.0f, 4.0f, 4.0f),
-    glm::vec3(0.0f, 2.0f, 25.0f));
+    glm::vec3(-7.0f, 2.0f, 50.0f));
   m_cylTrigger1->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger1->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -104,7 +104,7 @@ bool World::Initialize()
   m_cylinder2->Initialize(cylMesh2);
   m_cylTrigger2 = new TriggerObject(
     glm::vec3(6.0f, 6.0f, 6.0f),
-    glm::vec3(20.0f, 2.0f, 5.0f));
+    glm::vec3(38.0f, 2.0f, 5.0f));
   m_cylTrigger2->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger2->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -116,7 +116,7 @@ bool World::Initialize()
   m_cylinder3->Initialize(cylMesh3);
   m_cylTrigger3 = new TriggerObject(
     glm::vec3(4.0f, 4.0f, 4.0f),
-    glm::vec3(30.0f, 2.0f, 50.0f));
+    glm::vec3(23.0f, 2.0f, 50.0f));
   m_cylTrigger3->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger3->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -128,7 +128,7 @@ bool World::Initialize()
   m_cylinder4->Initialize(cylMesh4);
   m_cylTrigger4 = new TriggerObject(
     glm::vec3(6.0f, 6.0f, 6.0f),
-    glm::vec3(-25.0f, 2.0f, 65.0f));
+    glm::vec3(-22.0f, 2.0f, 5.0f));
   m_cylTrigger4->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger4->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -140,7 +140,7 @@ bool World::Initialize()
   m_cylinder5->Initialize(cylMesh5);
   m_cylTrigger5 = new TriggerObject(
     glm::vec3(2.5f, 2.5f, 2.5f),
-    glm::vec3(7.0f, 2.0f, 90.0f));
+    glm::vec3(8.0f, 2.0f, 90.0f));
   m_cylTrigger5->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger5->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -173,11 +173,21 @@ bool World::Initialize()
   m_bumperL = new Bumper("..//assets//Bumper.obj", 8.0f, glm::vec3(24.0f, 2.0f, -26.0f), bumpMeshL, true);
   m_bumperL->Initialize(bumpMeshL);
   m_dynamicsWorld->addRigidBody(m_bumperL->m_rigidBody);
-  
+
+  bumpMeshTL = new btTriangleMesh();
+  m_bumperTL = new Bumper("..//assets//Bumper.obj", 8.0f, glm::vec3(53.0f, 2.0f, 40.0f), bumpMeshTL, true, 0.523598776f);
+  m_bumperTL->Initialize(bumpMeshTL);
+  m_dynamicsWorld->addRigidBody(m_bumperTL->m_rigidBody);
+
   bumpMeshR = new btTriangleMesh();
   m_bumperR = new Bumper("..//assets//Bumper2.obj", 8.0f, glm::vec3(-5.0f, 2.0f, -26.0f), bumpMeshR, true);
   m_bumperR->Initialize(bumpMeshR);
   m_dynamicsWorld->addRigidBody(m_bumperR->m_rigidBody);
+  
+  bumpMeshTR = new btTriangleMesh();
+  m_bumperTR = new Bumper("..//assets//Bumper2.obj", 8.0f, glm::vec3(-31.0f, 2.0f, 40.0f), bumpMeshTR, true, -0.523598776f);
+  m_bumperTR->Initialize(bumpMeshTR);
+  m_dynamicsWorld->addRigidBody(m_bumperTR->m_rigidBody);
 
   createWalls();
   
@@ -205,7 +215,9 @@ void World::Update(unsigned int dt)
   m_cylinder5->Update(dt);
   m_launchBarrier->Update(dt); 
   m_bumperL->Update(dt);
+  m_bumperTL->Update(dt);
   m_bumperR->Update(dt);
+  m_bumperTR->Update(dt);
 
   /*check if ball is inside launch area*/
 
@@ -366,21 +378,21 @@ void World::Update(unsigned int dt)
   }
   
   m_scoreTimer += dt;
-  if(cylTrigger100CollidingWithBall && m_scoreTimer > 60)
+  if(cylTrigger100CollidingWithBall && m_scoreTimer > 600)
   {
      m_score += 100;
      m_fout << m_score << endl;
      m_scoreTimer = 0;
      //cout << "Hit Cyl 1" << endl;
   }
-  if(cylTrigger50CollidingWithBall && m_scoreTimer > 60)
+  if(cylTrigger50CollidingWithBall && m_scoreTimer > 600)
   {
      m_score += 50;
      m_fout << m_score << endl;
      m_scoreTimer = 0;
      //cout << "Hit Cyl 2" << endl;
   }
-  if(cylTrigger500CollidingWithBall && m_scoreTimer > 60)
+  if(cylTrigger500CollidingWithBall && m_scoreTimer > 600)
   {
      m_score += 500;
      m_fout << m_score << endl;
@@ -441,8 +453,12 @@ void World::Render(GLint& modelMatrix, char obj)
     case 'u':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperL->GetModel()));
       m_bumperL->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperTL->GetModel()));
+      m_bumperTL->Render();
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperR->GetModel()));
       m_bumperR->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperTR->GetModel()));
+      m_bumperTR->Render();
       break; 
     default: break;
   }
@@ -484,6 +500,11 @@ FlipperLeft& World::GetFlipperLeft()
 Cylinder& World::GetCylinder()
 {
   return *m_cylinder1;
+}
+
+int World::GetScore()
+{
+  return m_score;
 }
 
 int World::GetBallCounter()
