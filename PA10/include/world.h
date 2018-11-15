@@ -32,6 +32,7 @@ public:
   FlipperRight& GetFlipperRight();
   FlipperLeft& GetFlipperLeft();
   Cylinder& GetCylinder();
+  int GetBallCounter();
 
   /*
   float GetBoardSpecular();
@@ -58,7 +59,6 @@ public:
   void ReleasePlunger();
 
   void createWalls();
-
 
 private:
   Board *m_board;
@@ -87,6 +87,9 @@ private:
   btTriangleMesh *bumpMeshL;
   Bumper *m_bumperR;
   btTriangleMesh *bumpMeshR;
+
+  int m_ballCounter = 4;
+  int m_dtSinceLastBallLoss = 0;
 
   /*
   float m_boardSpecular;

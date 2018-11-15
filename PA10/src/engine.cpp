@@ -81,19 +81,19 @@ void Engine::Run()
     
     while(SDL_PollEvent(&m_event) != 0)
     {
-      if (!ImGui::IsMouseHoveringAnyWindow())
-      {
+      //if (!ImGui::IsMouseHoveringAnyWindow())
+      //{
         //ImGui_ImplSDL2_ProcessEvent(&m_event)
         Keyboard();
-      }
+      //}
     }
     
     m_graphics->Update(m_DT);
     m_graphics->Render();
 
     // Update and render the GUI
-    //m_gui->Update(m_window->GetWindow(), m_graphics);
-    //m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+    m_gui->Update(m_window->GetWindow(), m_graphics, m_graphics->m_world->GetBallCounter());
+    m_gui->Render(m_window->GetWindow(), m_window->GetContext());
 
     // Swap to the Window
     m_window->Swap();

@@ -105,7 +105,7 @@ bool World::Initialize()
 
   m_outArea = new TriggerObject(
     glm::vec3(50.0f, 10.0f, 5.0f),
-    glm::vec3(14.0f, 1.0f, -75.0f));
+    glm::vec3(14.0f, 1.0f, -77.0f));
   m_outArea->Initialize();
   m_dynamicsWorld->addCollisionObject(m_outArea->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -202,16 +202,31 @@ void World::Update(unsigned int dt)
     m_ballInLaunchRange = false;
   }
 
+  m_dtSinceLastBallLoss += dt;
+
   //if out area colliding with ball
-  if (outAreaCollidingWithBall)
+  if (outAreaCollidingWithBall && m_dtSinceLastBallLoss > 60)
   {
+    //set delta time since last ball loss to zero
+    m_dtSinceLastBallLoss = 0;
+
+    //create transform matching ball's initial transform
     btTransform ballTransform(
       btQuaternion::getIdentity(),
       btVector3(-45.5f, 10.0f, 0.0f));
 
-    cout << "RESETTING BALL VELOCITY" << endl;
+    //zero ball's velocity and set ball to initial transform
     m_ball->m_rigidBody->setWorldTransform(ballTransform);
     m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+
+    //decrement ball counter
+    m_ballCounter--;
+
+    //if ball counter is zero, game over
+    if (m_ballCounter == 0)
+    {
+      m_ballCounter = 4;
+    }
     
   }
 
@@ -299,6 +314,11 @@ FlipperLeft& World::GetFlipperLeft()
 Cylinder& World::GetCylinder()
 {
   return *m_cylinder;
+}
+
+int World::GetBallCounter()
+{
+  return m_ballCounter;
 }
 
 /*
