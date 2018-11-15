@@ -8,6 +8,8 @@
 #include "gui.h"
 #include "graphics.h"
 #include "world.h"
+#include <algorithm>
+#include <vector>
 
 class Engine
 {
@@ -22,6 +24,8 @@ class Engine
     int getWidth();
     unsigned int getDT();
     long long GetCurrentTimeMillis();
+    
+    void generateScores();
 
   private:
     // Window related variables

@@ -102,9 +102,6 @@ void Engine::Run()
 
 void Engine::Keyboard()
 {
-  ifstream fin;
-  fin.open("..//assets//scoreLog.txt");
-  int score = 0;
   
   if(m_event.type == SDL_QUIT)
   {
@@ -118,9 +115,7 @@ void Engine::Keyboard()
   			switch (m_event.key.keysym.sym)
   			{
   				case SDLK_ESCAPE:
-                                        while(!fin.eof())
-                                            fin >> score;
-                                        cout << endl << "SCORE: " << score << endl;
+                                        generateScores();
   					m_running = false;
   					break;
           case SDLK_w:
@@ -236,4 +231,49 @@ long long Engine::GetCurrentTimeMillis()
   gettimeofday(&t, NULL);
   long long ret = t.tv_sec * 1000 + t.tv_usec / 1000;
   return ret;
+}
+
+void Engine::generateScores()
+{
+    ifstream fin, topFin;
+    fin.open("..//assets//scoreLog.txt");
+    topFin.open("..//assets//topScores.txt");
+    
+    
+    
+    int score = 0;
+    int temp = 0;
+    
+    vector<int> topScores;
+    
+    while(!fin.eof())
+        fin >> score;
+    
+    cout << endl << "YOUR SCORE: " << score << endl;
+    
+    for(int i=0 ; i<10 ; i++)
+    {
+       topFin >> temp;
+       //cout << temp << endl;
+       topScores.push_back(temp);
+    }
+    
+    topScores.push_back(score);
+    
+    sort(topScores.begin(), topScores.end());
+    
+    ofstream fout;
+    fout.open("..//assets//topScores.txt");
+    
+    int rank = 1;
+    cout << endl << "**TOP SCORES**" << endl;
+    for(int i=10; i>0 ; i--)
+    {
+        cout << rank++ << ") " << topScores[i] << endl;
+        fout << topScores[i] << endl; 
+    }
+        
+    fin.close();
+    topFin.close();
+    fout.close();
 }
