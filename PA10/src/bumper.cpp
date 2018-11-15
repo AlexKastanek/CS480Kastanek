@@ -80,7 +80,7 @@ bool Bumper::Initialize(btTriangleMesh *triMesh)
     m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
    
    if(m_isBouncy)
-        m_rigidBody->setRestitution(0.15);//elasticity!!!
+        m_rigidBody->setRestitution(0.8);//elasticity!!!
     //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
     model = m_translationMatrix;

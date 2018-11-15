@@ -83,7 +83,7 @@ bool Ball::Initialize()
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.1f);
+  btScalar mass(0.01f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
