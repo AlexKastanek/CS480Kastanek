@@ -51,6 +51,8 @@ bool World::Initialize()
     m_gravity.y,
     m_gravity.z));
 
+  m_backBoard = new Object("..//assets//Backboard.obj", 25.0f, glm::vec3(10.0, 90.0, 120.0));
+
   boardMesh = new btTriangleMesh();
   m_board = new Board("..//assets//Board.obj", 20.0f, glm::vec3(10.0, 13.0, 20.0), boardMesh);
   m_board->Initialize(boardMesh);
@@ -81,12 +83,12 @@ bool World::Initialize()
   m_flipperLeft->Initialize(leftFlipperMesh);
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
-  m_plunger = new Plunger("..//assets//Plunger.obj", 10.0f, glm::vec3(-45.0f, 2.5f, -60.0f));
+  m_plunger = new Plunger("..//assets//Plunger.obj", 20.0f, glm::vec3(-45.0f, 2.5f, -60.0f));
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 
   cylMesh1 = new btTriangleMesh();
-  m_cylinder1 = new Cylinder("..//assets//cylinder.obj", 8.0f, glm::vec3(0.0f, 2.0f, 25.0f), cylMesh1);
+  m_cylinder1 = new Cylinder("..//assets//CylinderPink.obj", 8.0f, glm::vec3(-7.0f, 2.0f, 50.0f), cylMesh1);
   m_cylinder1->Initialize(cylMesh1);
   m_cylTrigger1 = new TriggerObject(
     glm::vec3(4.0f, 4.0f, 4.0f),
@@ -98,7 +100,7 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_cylinder1->m_rigidBody);
     
   cylMesh2 = new btTriangleMesh();
-  m_cylinder2 = new Cylinder("..//assets//cylinder.obj", 12.0f, glm::vec3(20.0f, 2.0f, 5.0f), cylMesh2);
+  m_cylinder2 = new Cylinder("..//assets//CylinderGreen.obj", 12.0f, glm::vec3(38.0f, 2.0f, 5.0f), cylMesh2);
   m_cylinder2->Initialize(cylMesh2);
   m_cylTrigger2 = new TriggerObject(
     glm::vec3(6.0f, 6.0f, 6.0f),
@@ -110,7 +112,7 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_cylinder2->m_rigidBody);
   
   cylMesh3 = new btTriangleMesh();
-  m_cylinder3 = new Cylinder("..//assets//cylinder.obj", 8.0f, glm::vec3(30.0f, 2.0f, 50.0f), cylMesh3);
+  m_cylinder3 = new Cylinder("..//assets//CylinderPink.obj", 8.0f, glm::vec3(23.0f, 2.0f, 50.0f), cylMesh3);
   m_cylinder3->Initialize(cylMesh3);
   m_cylTrigger3 = new TriggerObject(
     glm::vec3(4.0f, 4.0f, 4.0f),
@@ -122,7 +124,7 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_cylinder3->m_rigidBody);
   
   cylMesh4 = new btTriangleMesh();
-  m_cylinder4 = new Cylinder("..//assets//cylinder.obj", 12.0f, glm::vec3(-25.0f, 2.0f, 65.0f), cylMesh4);
+  m_cylinder4 = new Cylinder("..//assets//CylinderGreen.obj", 12.0f, glm::vec3(-22.0f, 2.0f, 5.0f), cylMesh4);
   m_cylinder4->Initialize(cylMesh4);
   m_cylTrigger4 = new TriggerObject(
     glm::vec3(6.0f, 6.0f, 6.0f),
@@ -134,11 +136,11 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_cylinder4->m_rigidBody);
   
   cylMesh5 = new btTriangleMesh();
-  m_cylinder5 = new Cylinder("..//assets//cylinder.obj", 5.0f, glm::vec3(20.0f, 2.0f, 100.0f), cylMesh5);
+  m_cylinder5 = new Cylinder("..//assets//CylinderYellow.obj", 5.0f, glm::vec3(8.0f, 2.0f, 90.0f), cylMesh5);
   m_cylinder5->Initialize(cylMesh5);
   m_cylTrigger5 = new TriggerObject(
     glm::vec3(2.5f, 2.5f, 2.5f),
-    glm::vec3(20.0f, 2.0f, 100.0f));
+    glm::vec3(7.0f, 2.0f, 90.0f));
   m_cylTrigger5->Initialize();
   m_dynamicsWorld->addCollisionObject(m_cylTrigger5->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->
@@ -188,6 +190,7 @@ void World::Update(unsigned int dt)
 {
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
   
+  m_backBoard->Update(dt);
   m_board->Update(dt);
   m_ball->Update(dt);
   m_laneRight->Update(dt);
@@ -391,6 +394,10 @@ void World::Render(GLint& modelMatrix, char obj)
 {
   switch(obj)
   {
+    case 'a':
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_backBoard->GetModel()));
+      m_backBoard->Render();
+      break;
     case 't':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_board->GetModel()));
       m_board->Render();

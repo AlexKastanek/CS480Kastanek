@@ -61,6 +61,7 @@ public:
   void createWalls();
 
 private:
+  Object *m_backBoard;
   Board *m_board;
   btTriangleMesh *boardMesh;  
   btTriangleMesh *rightFlipperMesh;

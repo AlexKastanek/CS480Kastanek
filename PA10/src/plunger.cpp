@@ -19,7 +19,7 @@ Plunger::Plunger(string filename, float scale, glm::vec3 position) : PhysicsObje
   m_thresholdPosition = m_initialPosition - 20;
 
   m_pullStep = 0.02f;
-  m_releaseStep = 0.13f;
+  m_releaseStep = 0.05f;
   m_pullDistance = 0.0f;
 }
 
@@ -54,9 +54,9 @@ bool Plunger::Initialize()
 
   //create the collider
   m_collider = new btBoxShape(btVector3(
-    (m_scale.x) * 0.25,
-    (m_scale.y) * 0.25,
-    (m_scale.z) * 1.5));
+    (m_scale.x) * 0.125,
+    (m_scale.y) * 0.125,
+    (m_scale.z) * 0.75));
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);

@@ -317,6 +317,8 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  m_world->Render(m_modelMatrix, 'a');
+
   m_world->Render(m_modelMatrix, 't');
 
   //render ball
