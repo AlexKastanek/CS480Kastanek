@@ -36,6 +36,7 @@ public:
   Cylinder& GetCylinder();
   int GetScore();
   int GetBallCounter();
+  bool isGameOver();
 
   /*
   float GetBoardSpecular();
@@ -146,6 +147,7 @@ private:
   btRigidBody *m_rightWallRigid;
   btRigidBody *m_lidRigid;
   
+  bool m_gameOver = false;
   int m_score = 0;
   int m_scoreTimer = 0;
   ofstream m_fout;

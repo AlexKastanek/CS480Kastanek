@@ -372,7 +372,8 @@ void World::Update(unsigned int dt)
     //if ball counter is zero, game over
     if (m_ballCounter == 0)
     {
-      generateScores();
+      //generateScores();
+      m_gameOver = true;
       m_ballCounter = 4;
     }
     
@@ -511,6 +512,11 @@ int World::GetScore()
 int World::GetBallCounter()
 {
   return m_ballCounter;
+}
+
+bool World::isGameOver()
+{
+  return m_gameOver;
 }
 
 /*

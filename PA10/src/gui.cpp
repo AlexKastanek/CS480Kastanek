@@ -35,20 +35,33 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   ImGui::SetNextWindowPos(ImVec2(0,0));
   ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
-  if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+
+  if (m_gameOver)
   {
-    string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
-    ImGui::SetCursorPos(ImVec2(10,0));
-    ImGui::Text(scoreDisplay.c_str());
-
-    string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
-    ImGui::SetCursorPos(ImVec2(10, 20));
-    ImGui::Text(ballsLeftDisplay.c_str());
+    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    {
+      string gameOverDisplay = "Game Over!";
+      ImGui::SetCursorPos(ImVec2(10,0));
+      ImGui::Text(gameOverDisplay.c_str());
+    }
+    ImGui::End();
   }
-  ImGui::End();
-  ImGui::PopStyleColor(1);
+  else
+  {
+    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    {
+      string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
+      ImGui::SetCursorPos(ImVec2(10,0));
+      ImGui::Text(scoreDisplay.c_str());
 
-  //ImGui::EndFrame();
+      string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
+      ImGui::SetCursorPos(ImVec2(10, 20));
+      ImGui::Text(ballsLeftDisplay.c_str());
+    }
+    ImGui::End();
+  }
+  
+  ImGui::PopStyleColor(1);
 }
 
 void GUI::Render(SDL_Window* window, SDL_GLContext context)
@@ -62,4 +75,9 @@ void GUI::Render(SDL_Window* window, SDL_GLContext context)
   //glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   //ImGui::EndFrame();
+}
+
+void GUI::SetGameOver(bool gameOver)
+{
+  m_gameOver = gameOver;
 }

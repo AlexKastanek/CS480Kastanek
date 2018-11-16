@@ -1,10 +1,10 @@
+2850 Player
 1100 Best
 750 Nick
 600 Alex
 450 F
 200 Player
 100 Matt
-0 None
 0 None
 0 None
 0 None

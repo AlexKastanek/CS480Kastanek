@@ -72,31 +72,45 @@ void Engine::Run()
 
   while(m_running)
   {
-    // Update the DT
-    m_DT = getDT();
-
-
-    // Update and render the graphics
-    
-    
-    while(SDL_PollEvent(&m_event) != 0)
+    if (m_graphics->m_world->isGameOver())
     {
-      //if (!ImGui::IsMouseHoveringAnyWindow())
-      //{
-        //ImGui_ImplSDL2_ProcessEvent(&m_event)
+      while(SDL_PollEvent(&m_event) != 0)
+      {
         Keyboard();
-      //}
+      }
+
+      m_graphics->Render();
+
+      // Update and render the GUI
+      m_gui->SetGameOver(true);
+      m_gui->Update(m_window->GetWindow(), m_graphics);
+      m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+
+      // Swap to the Window
+      m_window->Swap();
     }
+    else
+    {
+      // Update the DT
+      m_DT = getDT();
+
+      while(SDL_PollEvent(&m_event) != 0)
+      {
+        Keyboard();
+      }
     
-    m_graphics->Update(m_DT);
-    m_graphics->Render();
+      // Update and render the graphics
+      m_graphics->Update(m_DT);
+      m_graphics->Render();
 
-    // Update and render the GUI
-    m_gui->Update(m_window->GetWindow(), m_graphics);
-    m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+      // Update and render the GUI
+      m_gui->SetGameOver(false);
+      m_gui->Update(m_window->GetWindow(), m_graphics);
+      m_gui->Render(m_window->GetWindow(), m_window->GetContext());
 
-    // Swap to the Window
-    m_window->Swap();
+      // Swap to the Window
+      m_window->Swap();
+    }
   }
 }
 

@@ -23,10 +23,13 @@ public:
 	void Update(SDL_Window* window, Graphics* graphics);
 	void Render(SDL_Window* window, SDL_GLContext context);
 
+  void SetGameOver(bool gameOver);
+
 private:
 
   int m_width;
   int m_height;
+  bool m_gameOver = false;
 	
 };
 
