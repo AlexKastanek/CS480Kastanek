@@ -83,7 +83,7 @@ bool World::Initialize()
   m_flipperLeft->Initialize(leftFlipperMesh);
   m_dynamicsWorld->addRigidBody(m_flipperLeft->m_rigidBody);
 
-  m_plunger = new Plunger("..//assets//Plunger.obj", 20.0f, glm::vec3(-45.0f, 2.5f, -60.0f));
+  m_plunger = new Plunger("..//assets//Plunger.obj", 20.0f, glm::vec3(-45.5f, 2.5f, -60.0f));
   m_plunger->Initialize();
   m_dynamicsWorld->addRigidBody(m_plunger->m_rigidBody);
 

@@ -552,7 +552,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 0:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -566,7 +566,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 1:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -580,7 +580,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 2:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -594,7 +594,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 3:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -608,7 +608,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 4:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -622,7 +622,7 @@ void Graphics::AdjustSpecular(unsigned int object)
     case 5:
       for (int i = 0; i < m_numLights; i++)
       {
-        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        string variableName = "lights[" + to_string(i) + "]";
         variableName += ".specularProduct";
         
         glUniform4f(
@@ -633,6 +633,7 @@ void Graphics::AdjustSpecular(unsigned int object)
           m_lights[i].specular.w);
       }
     break;
+    default:break;
   }
 
   

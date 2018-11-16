@@ -175,8 +175,20 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       ImGui::Text(scoreDisplay.c_str());
 
       string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
-      ImGui::SetCursorPos(ImVec2(10, 20));
+      ImGui::SetCursorPos(ImVec2(10, 25));
       ImGui::Text(ballsLeftDisplay.c_str());
+
+      string modeDisplay = "Camera Mode: ";
+      if (graphics->m_camera->GetMode() == MODE_GAME)
+      {
+        modeDisplay += "Game";
+      }
+      else
+      {
+        modeDisplay += "Free";
+      }
+      ImGui::SetCursorPos(ImVec2(10, m_height - 55));
+      ImGui::Text(modeDisplay.c_str());
 
       string currentLightDisplay = "Current Light: ";
       switch (graphics->GetLightIndex())
