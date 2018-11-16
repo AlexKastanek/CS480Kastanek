@@ -30,47 +30,100 @@ int GUI::Initialize(SDL_Window* window, SDL_GLContext context)
  	return true;
 }
 
-void GUI::Update(SDL_Window* window, Graphics* graphics)
+bool GUI::Update(SDL_Window* window, Graphics* graphics)
 {
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplSDL2_NewFrame(window);
   ImGui::NewFrame();
 
-  ImGui::SetNextWindowPos(ImVec2(0,0));
-  ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+  ImGui::SetNextWindowPos(ImVec2(0,0), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2 (m_width, m_height), ImGuiCond_Always);
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+  bool running = true;
 
   if (m_gameOver)
   {
     //bigger text first
     ImGui::PushFont(m_fontBig);
 
+    //ImGui::SetNextWindowPos(ImVec2(0,0));
+    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
+
     string gameOverDisplay = "Game Over!";
     ImVec2 gameOverSize = ImGui::CalcTextSize(gameOverDisplay.c_str());
     ImVec2 gameOverCursor = CalculateCenteredPos(gameOverSize);
 
-    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    if (ImGui::Begin("GameOver", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 200));
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
 
+    //ImGui::PopStyleColor(1);
+
     ImGui::PopFont();
 
     //then medium text
     ImGui::PushFont(m_fontMed);
 
+    //ImGui::SetNextWindowPos(ImVec2(0,0));
+    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
+
     string finalScoreDisplay = "Final Score: " + to_string(graphics->m_world->GetScore());
     ImVec2 finalScoreSize = ImGui::CalcTextSize(finalScoreDisplay.c_str());
     ImVec2 finalScoreCursor = CalculateCenteredPos(finalScoreSize);
 
-    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    if (ImGui::Begin("FinalScore", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 150));
       ImGui::Text(finalScoreDisplay.c_str());
     }
     ImGui::End();
+
+    //ImGui::PopStyleColor(1);
+
+    ImGui::PopFont();
+
+    //finally small text
+    ImGui::PushFont(m_fontSmall);
+
+    //ImGui::SetNextWindowPos(ImVec2(0,0));
+    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
+
+    string restartDisplay = "Restart";
+    ImVec2 restartSize = ImGui::CalcTextSize(restartDisplay.c_str());
+    ImVec2 restartCursor = CalculateCenteredPos(restartSize);
+    
+    string exitDisplay = "Exit";
+    ImVec2 exitSize = ImGui::CalcTextSize(exitDisplay.c_str());
+    ImVec2 exitCursor = CalculateCenteredPos(exitSize);
+
+    //TODO: set this menu to restart cursor position
+    if (ImGui::Begin("UserOptions", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar))
+    {
+      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 110));
+      if (ImGui::Button(restartDisplay.c_str()))
+      {
+        cout << "restarting" << endl;
+        graphics->m_world->Reset();
+      }
+
+      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 150));
+      if (ImGui::Button(exitDisplay.c_str()))
+      {
+        cout << "exiting" << endl;
+        running = false;
+      }
+    }
+    ImGui::End();
+
+    //ImGui::PopStyleColor(1);
 
     ImGui::PopFont();
   }
@@ -78,7 +131,7 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   {
     ImGui::PushFont(m_fontSmall);
 
-    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    if (ImGui::Begin("HUD", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
@@ -94,6 +147,9 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   }
   
   ImGui::PopStyleColor(1);
+  ImGui::PopStyleVar(1);
+
+  return running;
 }
 
 void GUI::Render(SDL_Window* window, SDL_GLContext context)
@@ -112,18 +168,18 @@ void GUI::Render(SDL_Window* window, SDL_GLContext context)
 ImVec2 GUI::CalculateCenteredPos(ImVec2 textSize)
 {
   ImVec2 centerOfWindow = ImVec2(m_width/2, m_height/2);
-  cout << "CENTER OF WINDOW" << endl;
-  cout << "(" << centerOfWindow.x << "," << centerOfWindow.y << ")" << endl;
+  //cout << "CENTER OF WINDOW" << endl;
+  //cout << "(" << centerOfWindow.x << "," << centerOfWindow.y << ")" << endl;
 
   ImVec2 textSizeOffset = ImVec2(textSize.x/2, textSize.y/2);
-  cout << "TEXT OFFSET" << endl;
-  cout << "(" << textSizeOffset.x << "," << textSizeOffset.y << ")" << endl;
+  //cout << "TEXT OFFSET" << endl;
+  //cout << "(" << textSizeOffset.x << "," << textSizeOffset.y << ")" << endl;
 
   ImVec2 centeredCursorPos = ImVec2(
     centerOfWindow.x - textSizeOffset.x,
     centerOfWindow.y - textSizeOffset.y);
-  cout << "CENTERED CURSOR" << endl;
-  cout << "(" << centeredCursorPos.x << "," << centeredCursorPos.y << ")" << endl;
+  //cout << "CENTERED CURSOR" << endl;
+  //cout << "(" << centeredCursorPos.x << "," << centeredCursorPos.y << ")" << endl;
 
   return centeredCursorPos;
 }

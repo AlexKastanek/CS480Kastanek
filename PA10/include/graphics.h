@@ -36,6 +36,7 @@ class Graphics
     bool Initialize(int width, int height);
     void Update(unsigned int dt);
     void Render();
+    void RenderBlank();
 
     void moveLight(char input);
     

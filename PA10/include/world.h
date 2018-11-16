@@ -26,6 +26,7 @@ public:
   bool Initialize();
   void Update(unsigned int dt);
   void Render(GLint &modelMatrix, char obj);
+  void Reset();
 
   void generateScores();
 

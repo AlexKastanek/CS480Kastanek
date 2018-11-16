@@ -74,16 +74,17 @@ void Engine::Run()
   {
     if (m_graphics->m_world->isGameOver())
     {
-      while(SDL_PollEvent(&m_event) != 0)
-      {
-        Keyboard();
-      }
+      // Update the DT
+      m_DT = getDT();
+      
+      while(SDL_PollEvent(&m_event) != 0) {} //clear events
 
+      m_graphics->Update(m_DT);
       m_graphics->Render();
 
       // Update and render the GUI
       m_gui->SetGameOver(true);
-      m_gui->Update(m_window->GetWindow(), m_graphics);
+      m_running = m_gui->Update(m_window->GetWindow(), m_graphics);
       m_gui->Render(m_window->GetWindow(), m_window->GetContext());
 
       // Swap to the Window

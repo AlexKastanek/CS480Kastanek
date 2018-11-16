@@ -479,6 +479,31 @@ void World::Render(GLint& modelMatrix, char obj)
   */
 }
 
+void World::Reset()
+{
+  m_gameOver = false;
+
+  /* reset ball */
+
+  //set delta time since last ball loss to zero
+  m_dtSinceLastBallLoss = 0;
+
+  
+  //create transform matching ball's initial transform
+  btTransform ballTransform(
+    btQuaternion::getIdentity(),
+    btVector3(-45.5f, 10.0f, 0.0f));
+
+  //zero ball's velocity and set ball to initial transform
+  m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+  m_ball->m_rigidBody->setWorldTransform(ballTransform);
+
+
+  m_ballCounter = 4;
+
+  //m_ball->Update(0);
+}
+
 Board& World::GetBoard()
 {
   return *m_board;
