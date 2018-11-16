@@ -42,15 +42,33 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
 
   if (m_gameOver)
   {
+    //bigger text first
     ImGui::PushFont(m_fontBig);
-    ImVec2 textSize = ImGui::CalcTextSize("Game Over!");
-    ImVec2 centeredCursor = CalculateCenteredPos(textSize);
 
-    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    string gameOverDisplay = "Game Over!";
+    ImVec2 gameOverSize = ImGui::CalcTextSize(gameOverDisplay.c_str());
+    ImVec2 gameOverCursor = CalculateCenteredPos(gameOverSize);
+
+    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      string gameOverDisplay = "Game Over!";
-      ImGui::SetCursorPos(centeredCursor);
+      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 200));
       ImGui::Text(gameOverDisplay.c_str());
+    }
+    ImGui::End();
+
+    ImGui::PopFont();
+
+    //then medium text
+    ImGui::PushFont(m_fontMed);
+
+    string finalScoreDisplay = "Final Score: " + to_string(graphics->m_world->GetScore());
+    ImVec2 finalScoreSize = ImGui::CalcTextSize(finalScoreDisplay.c_str());
+    ImVec2 finalScoreCursor = CalculateCenteredPos(finalScoreSize);
+
+    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    {
+      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 150));
+      ImGui::Text(finalScoreDisplay.c_str());
     }
     ImGui::End();
 
@@ -60,7 +78,7 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   {
     ImGui::PushFont(m_fontSmall);
 
-    if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+    if (ImGui::Begin("", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
