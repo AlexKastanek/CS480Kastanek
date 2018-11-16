@@ -24,6 +24,9 @@ public:
 	void Render(SDL_Window* window, SDL_GLContext context);
 
 private:
+
+  int m_width;
+  int m_height;
 	
 };
 
