@@ -158,23 +158,38 @@ bool Graphics::Initialize(int width, int height)
   gLight.attenuation = 0.001f;
   */
 
-  m_spotLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  m_spotLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  m_spotLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  m_spotLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-  m_spotLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  m_spotLight.angle = 40.0f;
-  m_spotLight.shininess = 50;
-  m_spotLight.attenuation = 0.001f;
+  Light spotlight, pointLight1, pointLight2;
 
-  m_pointLight.position = glm::vec4(0.0f, 30.0f, 120.0f, 1.0f);
-  m_pointLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  m_pointLight.diffuse = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-  m_pointLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-  m_pointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  m_pointLight.angle = 180.0f;
-  m_pointLight.shininess = 50;
-  m_pointLight.attenuation = 0.00001f;
+  spotlight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  spotlight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  spotlight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  spotlight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  spotlight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  spotlight.angle = 40.0f;
+  spotlight.shininess = 50;
+  spotlight.attenuation = 0.001f;
+
+  pointLight1.position = glm::vec4(50.0f, 30.0f, 90.0f, 1.0f);
+  pointLight1.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  pointLight1.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  pointLight1.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  pointLight1.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  pointLight1.angle = 180.0f;
+  pointLight1.shininess = 50;
+  pointLight1.attenuation = 0.00001f;
+
+  pointLight2.position = glm::vec4(-50.0f, 30.0f, 10.0f, 1.0f);
+  pointLight2.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  pointLight2.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  pointLight2.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  pointLight2.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  pointLight2.angle = 180.0f;
+  pointLight2.shininess = 50;
+  pointLight2.attenuation = 0.00001f;
+
+  m_lights.push_back(spotlight);
+  m_lights.push_back(pointLight1);
+  m_lights.push_back(pointLight2);
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -217,21 +232,13 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt)
 {
-  //cout << "CHECK GRAPHICS UPDATE" << endl;
-
-  // Update the physics world
-  //m_physics->Update(dt);
-
-  // Update the objects
-  //m_board->Update(dt);
-
   // Update the world
   m_world->Update(dt);
 
-  // Update the lights
+  // Update the spotlight
   glm::vec3 ballPos = m_world->GetBall().GetPosition();
-  m_spotLight.position.x = ballPos.x;
-  m_spotLight.position.z = ballPos.z;
+  m_lights[0].position.x = ballPos.x;
+  m_lights[0].position.z = ballPos.z;
 
   // Update the camera
   m_camera->Update(dt);
@@ -239,14 +246,8 @@ void Graphics::Update(unsigned int dt)
 
 void Graphics::Render()
 {
-  //cout << "CHECK GRAPHICS RENDER" << endl;
-//   cout << "("
-//        << gLight.position.x << ", "
-//        << gLight.position.y << ", "
-//        << gLight.position.z << ")"
-//        << endl;
 
-  //clear the screen
+  // Clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -257,8 +258,10 @@ void Graphics::Render()
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
+  //Send in the number of lights
   glUniform1i(m_currentShader->GetUniformLocation("numLights"), 2);
 
+  /*
   //spotlight
   glUniform4f(m_currentShader->GetUniformLocation("lights[0].lightPosition"), 
     m_spotLight.position.x, m_spotLight.position.y, m_spotLight.position.z, 1.0);
@@ -304,7 +307,15 @@ void Graphics::Render()
     m_pointLight.shininess);
   glUniform1f(m_currentShader->GetUniformLocation("lights[1].attenuationProduct"),
     m_pointLight.attenuation);
+  */
 
+  //Send the data for each light
+  for (int i = 0; i < m_numLights; i++)
+  {
+    passLightToShader(i);
+  }
+
+  //Send in the texture sampler
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
   //render board
@@ -393,6 +404,56 @@ void Graphics::Render()
     string val = ErrorString( error );
     std::cout<< "Error initializing OpenGL! " << error << ", " << val << std::endl;
   }
+}
+
+void Graphics::passLightToShader(int lightIndex)
+{
+  string lightArray = "lights[" + to_string(lightIndex) + "]";
+  string variableName;
+
+  //pass the light position
+  variableName = lightArray + ".lightPosition";
+  glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()), 
+    m_lights[lightIndex].position.x, 
+    m_lights[lightIndex].position.y, 
+    m_lights[lightIndex].position.z, 
+    1.0);
+
+  //pass the lighting components
+  variableName = lightArray + ".ambientProduct";
+  glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].ambient.x + ambientMod, 
+    m_lights[lightIndex].ambient.y + ambientMod, 
+    m_lights[lightIndex].ambient.z + ambientMod, 
+    m_lights[lightIndex].ambient.w);
+  variableName = lightArray + ".diffuseProduct";
+  glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].diffuse.x, 
+    m_lights[lightIndex].diffuse.y, 
+    m_lights[lightIndex].diffuse.z, 
+    m_lights[lightIndex].diffuse.w);
+  variableName = lightArray + ".specularProduct";
+  glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].specular.x, 
+    m_lights[lightIndex].specular.y, 
+    m_lights[lightIndex].specular.z, 
+    m_lights[lightIndex].specular.w);
+
+  //pass additional lighting data
+  variableName = lightArray + ".lightDirection";
+  glUniform3f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].direction.x, 
+    m_lights[lightIndex].direction.y, 
+    m_lights[lightIndex].direction.z);
+  variableName = lightArray + ".lightAngle";
+  glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].angle);
+  variableName = lightArray + ".shininess";
+  glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].shininess);
+  variableName = lightArray + ".attenuationProduct";
+  glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].attenuation);
 }
 
 std::string Graphics::ErrorString(GLenum error)
@@ -581,18 +642,18 @@ void Graphics::decreaseSpecular(unsigned int object)
 
 void Graphics::increaseSpotLightRadius()
 {
-  if (m_spotLight.angle < 180.0f)
+  if (m_lights[0].angle < 180.0f)
   {
-    m_spotLight.angle += 1.0f;
+    m_lights[0].angle += 1.0f;
   }
-  cout << "Spot light angle set to " << m_spotLight.angle << " degrees" << endl;
+  cout << "Spot light angle set to " << m_lights[0].angle << " degrees" << endl;
 }
 
 void Graphics::decreaseSpotLightRadius()
 {
-  if (m_spotLight.angle > 0.0f)
+  if (m_lights[0].angle > 0.0f)
   {
-    m_spotLight.angle -= 1.0f;
+    m_lights[0].angle -= 1.0f;
   }
-  cout << "Spot light angle set to " << m_spotLight.angle << " degrees" << endl;
+  cout << "Spot light angle set to " << m_lights[0].angle << " degrees" << endl;
 }

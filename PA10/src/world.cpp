@@ -372,7 +372,9 @@ void World::Update(unsigned int dt)
     //if ball counter is zero, game over
     if (m_ballCounter == 0)
     {
-      //generateScores();
+      //get leaderboard info
+      GenerateScores(m_topTenStats, m_newHighScore);
+
       m_gameOver = true;
       m_ballCounter = 4;
     }
@@ -544,6 +546,16 @@ bool World::isGameOver()
   return m_gameOver;
 }
 
+string* World::GetTopTenStats()
+{
+  return m_topTenStats;
+}
+
+bool World::IsNewHighScore()
+{
+  return m_newHighScore;
+}
+
 /*
 float World::GetBoardSpecular()
 {
@@ -700,7 +712,7 @@ void World::createWalls()
   m_dynamicsWorld->addRigidBody(m_lidRigid);
 }
 
-void World::generateScores()
+void World::GenerateScores(string topTenList[10], bool& highScore)
 {
     ifstream fin, topFin;
     fin.open("..//assets//scoreLog.txt");
@@ -725,6 +737,12 @@ void World::generateScores()
     {
        topFin >> leaderBoard[i].score >> leaderBoard[i].name;
        //cout << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
+    }
+
+    cout << score << ", " << leaderBoard[0].score << endl;
+    if (score > leaderBoard[0].score)
+    {
+      highScore = true;
     }
 
     /*string str;
@@ -763,7 +781,10 @@ void World::generateScores()
     cout << endl << "**TOP SCORES**" << endl;
     for(int i=0; i<10 ; i++)
     {
-        cout << rank++ << ") " << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
+        stringstream ss;
+        ss << rank++ << ") " << leaderBoard[i].score << " " << leaderBoard[i].name;
+        cout << ss.str() << endl;
+        topTenList[i] = ss.str();
         fout << leaderBoard[i].score << " " << leaderBoard[i].name << endl; 
     }
         

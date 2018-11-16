@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <iostream>
+#include <sstream>
 #include <stdio.h>
 using namespace std;
 
@@ -24,6 +25,8 @@ public:
 	void Render(SDL_Window* window, SDL_GLContext context);
 
   ImVec2 CalculateCenteredPos(ImVec2 textSize);
+
+  void GenerateScores(string topTenList[10], bool& highScore);
 
   void SetGameOver(bool gameOver);
 

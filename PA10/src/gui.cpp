@@ -48,8 +48,8 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     //bigger text first
     ImGui::PushFont(m_fontBig);
 
-    //ImGui::SetNextWindowPos(ImVec2(0,0));
-    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
     //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
 
     string gameOverDisplay = "Game Over!";
@@ -58,7 +58,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("GameOver", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 200));
+      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 220));
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
@@ -70,8 +70,8 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     //then medium text
     ImGui::PushFont(m_fontMed);
 
-    //ImGui::SetNextWindowPos(ImVec2(0,0));
-    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
     //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
 
     string finalScoreDisplay = "Final Score: " + to_string(graphics->m_world->GetScore());
@@ -80,21 +80,58 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("FinalScore", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 150));
+      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 170));
       ImGui::Text(finalScoreDisplay.c_str());
     }
     ImGui::End();
-
-    //ImGui::PopStyleColor(1);
 
     ImGui::PopFont();
 
     //finally small text
     ImGui::PushFont(m_fontSmall);
 
-    //ImGui::SetNextWindowPos(ImVec2(0,0));
-    //ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
-    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
+    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+
+    //High score notifier
+    if (graphics->m_world->IsNewHighScore())
+    {
+      string congratsDisplay = "Congrats! You got a new high score!";
+      ImVec2 congratsSize = ImGui::CalcTextSize(congratsDisplay.c_str());
+      ImVec2 congratsCursor = CalculateCenteredPos(congratsSize);
+
+      if (ImGui::Begin("CongratsMessage", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+      {
+        ImGui::SetCursorPos(ImVec2(congratsCursor.x, congratsCursor.y - 135));
+        ImGui::Text(congratsDisplay.c_str());
+      }
+      ImGui::End();
+    }
+
+    //leaderboards
+    string *topTenScores = graphics->m_world->GetTopTenStats();
+    int initialYOffset = -100;
+    for (int i = 0; i < 10; i++)
+    {
+      ImGui::SetNextWindowPos(ImVec2(0,0));
+      ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
+
+      string topPlayerDisplay = topTenScores[i];
+      ImVec2 topPlayerSize = ImGui::CalcTextSize(topPlayerDisplay.c_str());
+      ImVec2 topPlayerCursor = CalculateCenteredPos(topPlayerSize);
+
+      string header = "Leaderboard" + to_string(i);
+
+      if (ImGui::Begin(header.c_str(), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
+      {
+        ImGui::SetCursorPos(ImVec2(topPlayerCursor.x, topPlayerCursor.y + (initialYOffset + 25 * i)));
+        ImGui::Text(topPlayerDisplay.c_str());
+      }
+      ImGui::End();
+    }
+
+    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
 
     string restartDisplay = "Restart";
     ImVec2 restartSize = ImGui::CalcTextSize(restartDisplay.c_str());
@@ -107,14 +144,14 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     //TODO: set this menu to restart cursor position
     if (ImGui::Begin("UserOptions", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar))
     {
-      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 110));
+      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 180));
       if (ImGui::Button(restartDisplay.c_str()))
       {
         cout << "restarting" << endl;
         graphics->m_world->Reset();
       }
 
-      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 150));
+      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 220));
       if (ImGui::Button(exitDisplay.c_str()))
       {
         cout << "exiting" << endl;

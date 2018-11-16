@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <sstream>
 #include "graphics_headers.h"
 #include "physics.h"
 #include "board.h"
@@ -28,7 +29,7 @@ public:
   void Render(GLint &modelMatrix, char obj);
   void Reset();
 
-  void generateScores();
+  void GenerateScores(string topTenList[10], bool& highScore);
 
   Board& GetBoard();
   Ball& GetBall();
@@ -38,6 +39,8 @@ public:
   int GetScore();
   int GetBallCounter();
   bool isGameOver();
+  string* GetTopTenStats();
+  bool IsNewHighScore();
 
   /*
   float GetBoardSpecular();
@@ -153,7 +156,8 @@ private:
   int m_scoreTimer = 0;
   ofstream m_fout;
 
-  
+  string m_topTenStats[10];
+  bool m_newHighScore = false;
 };
 
 #endif /* WORLD_H */

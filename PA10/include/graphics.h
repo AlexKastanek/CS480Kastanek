@@ -38,6 +38,8 @@ class Graphics
     void Render();
     void RenderBlank();
 
+    void passLightToShader(int lightIndex);
+
     void moveLight(char input);
     
     void changeShader();
@@ -65,9 +67,8 @@ class Graphics
     GLint m_viewMatrix;
     GLint m_modelMatrix; 
 
-    Light m_spotLight;
-    Light m_pointLight;
-    int m_numLights = 2;
+    vector<Light> m_lights;
+    int m_numLights = 3;
     
     float ambientMod = 0;
     float diffuseMod = 0;
