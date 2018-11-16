@@ -1,4 +1,5 @@
 #include <window.h>
+#include <fstream>
 
 Window::Window()
 {
@@ -15,6 +16,18 @@ Window::~Window()
 
 bool Window::Initialize(const string &name, int* width, int* height)
 {
+    
+    cout << endl << "Please Enter Your Name: ";
+    string temp;
+    cin >> temp;
+    
+    ofstream fout;
+    fout.open("..//assets//nameLog.txt");
+    
+    fout << temp;
+    fout.close();
+    
+    
     // Start SDL
   if(SDL_Init(SDL_INIT_VIDEO) < 0)
   {
