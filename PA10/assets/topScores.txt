@@ -1,6 +1,6 @@
-3750 Player
-1250 Player
-750 Player
+750 Alex
+0 None
+0 None
 0 None
 0 None
 0 None

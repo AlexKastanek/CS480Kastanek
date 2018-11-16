@@ -58,7 +58,7 @@ bool World::Initialize()
   m_board->Initialize(boardMesh);
   m_dynamicsWorld->addRigidBody(m_board->m_rigidBody);
 
-  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(20.0f, 2.0f, 30.0f));
+  m_ball = new Ball("..//assets//Ball.obj", 2.0f, glm::vec3(-45.5f, 2.0f, 30.0f));
 
   m_ball->Initialize();  
   m_dynamicsWorld->addRigidBody(m_ball->m_rigidBody);
@@ -192,6 +192,7 @@ bool World::Initialize()
   createWalls();
   
   m_fout.open("..//assets//scoreLog.txt");
+  
 
   return true;
 }
@@ -498,6 +499,7 @@ void World::Reset()
   //reset game stats
   m_score = 0;
   m_ballCounter = 4;
+  m_score = 0;
 }
 
 Board& World::GetBoard()
@@ -739,12 +741,15 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
       highScore = true;
     }
 
-    /*string str;
-    cout << "Please Enter Your Name: ";
-    cin >> str;*/
+    string str;
+    ifstream nameFin;
+    nameFin.open("..//assets//nameLog.txt");
+    nameFin >> str;
+    nameFin.close();
+    
 
     leaderBoard[10].score = score;
-    leaderBoard[10].name = "Player";
+    leaderBoard[10].name = str;
 
     
     //topScores.push_back(score);

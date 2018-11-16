@@ -174,7 +174,7 @@ bool Graphics::Initialize(int width, int height)
   spotlight.shininess = 50;
   spotlight.attenuation = 0.001f;
 
-  pointLight1.position = glm::vec4(-50.0f, 20.0f, 70.0f, 1.0f);
+  pointLight1.position = glm::vec4(-50.0f, 20.0f, 90.0f, 1.0f);
   pointLight1.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   pointLight1.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   pointLight1.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
@@ -183,7 +183,7 @@ bool Graphics::Initialize(int width, int height)
   pointLight1.shininess = 50;
   pointLight1.attenuation = 0.000001f;
 
-  pointLight2.position = glm::vec4(50.0f, 20.0f, 30.0f, 1.0f);
+  pointLight2.position = glm::vec4(50.0f, 20.0f, -50.0f, 1.0f);
   pointLight2.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   pointLight2.diffuse = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   pointLight2.specular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -249,12 +249,31 @@ bool Graphics::Initialize(int width, int height)
   m_lights.push_back(spotlight);
   m_lights.push_back(pointLight1);
   m_lights.push_back(pointLight2);
-  m_lights.push_back(pointLight3);
+  //m_lights.push_back(pointLight3);
   m_lights.push_back(cylSpotLight1);
   m_lights.push_back(cylSpotLight2);
   m_lights.push_back(cylSpotLight3);
   m_lights.push_back(cylSpotLight4);
   m_lights.push_back(cylSpotLight5);
+
+  ambientMod = new float[m_numLights];
+  diffuseMod = new float[m_numLights];
+  boardSpecularMod = new float[m_numLights];
+  ballSpecularMod = new float[m_numLights];
+  flipperSpecularMod = new float[m_numLights];
+  cylinderSpecularMod = new float[m_numLights];
+  plungerSpecularMod = new float[m_numLights];
+
+  for (int i = 0; i < m_numLights; i++)
+  {
+    ambientMod[i] = 0;
+    diffuseMod[i] = 0;
+    boardSpecularMod[i] = 0;
+    ballSpecularMod[i] = 0;
+    flipperSpecularMod[i] = 0;
+    cylinderSpecularMod[i] = 0;
+    plungerSpecularMod[i] = 0;
+  }
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -392,9 +411,9 @@ void Graphics::Render()
     gLight.specular.z + boardSpecularMod, 
     gLight.specular.w);
   */
-
+  
+  AdjustSpecular(0);
   m_world->Render(m_modelMatrix, 'a');
-
   m_world->Render(m_modelMatrix, 't');
 
   //render ball
@@ -407,6 +426,7 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  AdjustSpecular(1);
   m_world->Render(m_modelMatrix, 'b');
 
   //render flippers
@@ -419,6 +439,7 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  AdjustSpecular(2);
   m_world->Render(m_modelMatrix, 'f');
 
   //render plunger
@@ -431,6 +452,7 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  AdjustSpecular(4);
   m_world->Render(m_modelMatrix, 'p');
   
   //render cylinders
@@ -443,6 +465,7 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  AdjustSpecular(3);
   m_world->Render(m_modelMatrix, 'c');
 
   //render launch barrier, lanes, and bumpers
@@ -455,8 +478,8 @@ void Graphics::Render()
     gLight.specular.w);
   */
 
+  AdjustSpecular(5);
   m_world->Render(m_modelMatrix, 'l');
-
   m_world->Render(m_modelMatrix, 'u');
 
   //cout << "finished rendering objects" << endl;
@@ -486,15 +509,15 @@ void Graphics::passLightToShader(int lightIndex)
   //pass the lighting components
   variableName = lightArray + ".ambientProduct";
   glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
-    m_lights[lightIndex].ambient.x + ambientMod, 
-    m_lights[lightIndex].ambient.y + ambientMod, 
-    m_lights[lightIndex].ambient.z + ambientMod, 
+    m_lights[lightIndex].ambient.x + ambientMod[lightIndex], 
+    m_lights[lightIndex].ambient.y + ambientMod[lightIndex], 
+    m_lights[lightIndex].ambient.z + ambientMod[lightIndex], 
     m_lights[lightIndex].ambient.w);
   variableName = lightArray + ".diffuseProduct";
   glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
-    m_lights[lightIndex].diffuse.x, 
-    m_lights[lightIndex].diffuse.y, 
-    m_lights[lightIndex].diffuse.z, 
+    m_lights[lightIndex].diffuse.x + diffuseMod[lightIndex], 
+    m_lights[lightIndex].diffuse.y + diffuseMod[lightIndex], 
+    m_lights[lightIndex].diffuse.z + diffuseMod[lightIndex], 
     m_lights[lightIndex].diffuse.w);
   variableName = lightArray + ".specularProduct";
   glUniform4f(m_currentShader->GetUniformLocation(variableName.c_str()),
@@ -518,6 +541,110 @@ void Graphics::passLightToShader(int lightIndex)
   variableName = lightArray + ".attenuationProduct";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].attenuation);
+}
+
+void Graphics::AdjustSpecular(unsigned int object)
+{
+  
+
+  switch (object)
+  {
+    case 0:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x + boardSpecularMod[i], 
+          m_lights[i].specular.y + boardSpecularMod[i], 
+          m_lights[i].specular.z + boardSpecularMod[i], 
+          m_lights[i].specular.w);
+      }
+    break;
+    case 1:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x + ballSpecularMod[i], 
+          m_lights[i].specular.y + ballSpecularMod[i], 
+          m_lights[i].specular.z + ballSpecularMod[i], 
+          m_lights[i].specular.w);
+      }
+    break;
+    case 2:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x + flipperSpecularMod[i], 
+          m_lights[i].specular.y + flipperSpecularMod[i], 
+          m_lights[i].specular.z + flipperSpecularMod[i], 
+          m_lights[i].specular.w);
+      }
+    break;
+    case 3:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x + cylinderSpecularMod[i], 
+          m_lights[i].specular.y + cylinderSpecularMod[i], 
+          m_lights[i].specular.z + cylinderSpecularMod[i], 
+          m_lights[i].specular.w);
+      }
+    break;
+    case 4:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x + plungerSpecularMod[i], 
+          m_lights[i].specular.y + plungerSpecularMod[i], 
+          m_lights[i].specular.z + plungerSpecularMod[i], 
+          m_lights[i].specular.w);
+      }
+    break;
+    case 5:
+      for (int i = 0; i < m_numLights; i++)
+      {
+        string variableName = "lights[" + to_string(m_currentLightIndex) + "]";
+        variableName += ".specularProduct";
+        
+        glUniform4f(
+          m_currentShader->GetUniformLocation(variableName.c_str()), 
+          m_lights[i].specular.x, 
+          m_lights[i].specular.y, 
+          m_lights[i].specular.z, 
+          m_lights[i].specular.w);
+      }
+    break;
+  }
+
+  
+}
+
+void Graphics::ChangeLightIndex()
+{
+  m_currentLightIndex++;
+  if (m_currentLightIndex >= m_numLights)
+  {
+    m_currentLightIndex = 0;
+  }
 }
 
 std::string Graphics::ErrorString(GLenum error)
@@ -634,26 +761,28 @@ void Graphics::changeShader()
 
 void Graphics::increaseBrightness()
 {
-    ambientMod += .05;
-    cout << "Scene brightness set to " << ambientMod << endl;
+    ambientMod[m_currentLightIndex] += .05;
+    cout << "Object " << m_currentLightIndex << "'s scene brightness set to " << ambientMod[m_currentLightIndex] << endl;
 }
 
 void Graphics::decreaseBrightness()
 {
-    ambientMod -= .05;
-    cout << "Scene brightness set to " << ambientMod << endl;
+    ambientMod[m_currentLightIndex] -= .05;
+    cout << "Object " << m_currentLightIndex << "'s scene brightness set to " << ambientMod[m_currentLightIndex] << endl;
 }
 
 void Graphics::increaseDiffuse()
 {
-  diffuseMod += diffuseAdj;
-  cout << "Spot light brightness set to " << diffuseMod << endl;
+  diffuseMod[m_currentLightIndex] += diffuseAdj;
+  cout << "Diffuse modifier set to " << diffuseMod[m_currentLightIndex] << endl;
+  //cout << "Spot light brightness set to " << diffuseMod << endl;
 }
 
 void Graphics::decreaseDiffuse()
 {
-  diffuseMod -= diffuseAdj;
-  cout << "Spot light brightness set to " << diffuseMod << endl;
+  diffuseMod[m_currentLightIndex] -= diffuseAdj;
+  cout << "Diffuse modifier set to " << diffuseMod[m_currentLightIndex] << endl;
+  //cout << "Spot light brightness set to " << diffuseMod << endl;
 }
 
 void Graphics::increaseSpecular(unsigned int object)
@@ -661,20 +790,24 @@ void Graphics::increaseSpecular(unsigned int object)
   switch (object)
   {
     case 0:
-      boardSpecularMod += specularAdj;
-      cout << "Board specular set to " << boardSpecularMod << endl;
+      boardSpecularMod[m_currentLightIndex] += specularAdj;
+      cout << "Board specular set to " << boardSpecularMod[m_currentLightIndex] << endl;
       break;
     case 1:
-      ballSpecularMod += specularAdj;
-      cout << "Ball specular set to " << ballSpecularMod << endl;
+      ballSpecularMod[m_currentLightIndex] += specularAdj;
+      cout << "Ball specular set to " << ballSpecularMod[m_currentLightIndex] << endl;
       break;
     case 2:
-      flipperSpecularMod += specularAdj;
-      cout << "Flipper specular set to " << flipperSpecularMod << endl;
+      flipperSpecularMod[m_currentLightIndex] += specularAdj;
+      cout << "Flipper specular set to " << flipperSpecularMod[m_currentLightIndex] << endl;
       break;
     case 3:
-      cylinderSpecularMod += specularAdj;
-      cout << "Cylinder specular set to " << cylinderSpecularMod << endl;
+      cylinderSpecularMod[m_currentLightIndex] += specularAdj;
+      cout << "Cylinder specular set to " << cylinderSpecularMod[m_currentLightIndex] << endl;
+      break;
+    case 4:
+      plungerSpecularMod[m_currentLightIndex] += specularAdj;
+      cout << "Plunger specular set to " << plungerSpecularMod[m_currentLightIndex] << endl;
       break;
     default: break;
   }
@@ -685,20 +818,24 @@ void Graphics::decreaseSpecular(unsigned int object)
   switch (object)
   {
     case 0:
-      boardSpecularMod -= specularAdj;
-      cout << "Board specular set to " << boardSpecularMod << endl;
+      boardSpecularMod[m_currentLightIndex] -= specularAdj;
+      cout << "Board specular set to " << boardSpecularMod[m_currentLightIndex] << endl;
       break;
     case 1:
-      ballSpecularMod -= specularAdj;
-      cout << "Ball specular set to " << ballSpecularMod << endl;
+      ballSpecularMod[m_currentLightIndex] -= specularAdj;
+      cout << "Ball specular set to " << ballSpecularMod[m_currentLightIndex] << endl;
       break;
     case 2:
-      flipperSpecularMod -= specularAdj;
-      cout << "Flipper specular set to " << flipperSpecularMod << endl;
+      flipperSpecularMod[m_currentLightIndex] -= specularAdj;
+      cout << "Flipper specular set to " << flipperSpecularMod[m_currentLightIndex] << endl;
       break;
     case 3:
-      cylinderSpecularMod -= specularAdj;
-      cout << "Cylinder specular set to " << cylinderSpecularMod << endl;
+      cylinderSpecularMod[m_currentLightIndex] -= specularAdj;
+      cout << "Cylinder specular set to " << cylinderSpecularMod[m_currentLightIndex] << endl;
+      break;
+    case 4:
+      plungerSpecularMod[m_currentLightIndex] -= specularAdj;
+      cout << "Plunger specular set to " << plungerSpecularMod[m_currentLightIndex] << endl;
       break;
     default: break;
   }
@@ -720,4 +857,9 @@ void Graphics::decreaseSpotLightRadius()
     m_lights[0].angle -= 1.0f;
   }
   cout << "Spot light angle set to " << m_lights[0].angle << " degrees" << endl;
+}
+
+int Graphics::GetLightIndex()
+{
+  return m_currentLightIndex;
 }

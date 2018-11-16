@@ -76,7 +76,7 @@ void Engine::Run()
     {
       // Update the DT
       m_DT = getDT();
-      
+
       while(SDL_PollEvent(&m_event) != 0) {} //clear events
 
       m_graphics->Update(m_DT);
@@ -170,6 +170,9 @@ void Engine::Keyboard()
               m_graphics->m_camera->SetMode(MODE_GAME);
             }
             break;
+          case SDLK_TAB:
+            m_graphics->ChangeLightIndex();
+            break;
           case SDLK_1:
             m_graphics->decreaseSpecular(0);
             break;
@@ -195,15 +198,27 @@ void Engine::Keyboard()
             m_graphics->increaseSpecular(3);
             break;
           case SDLK_9:
-            m_graphics->decreaseBrightness();
+            m_graphics->decreaseSpecular(4);
             break;
           case SDLK_0:
-            m_graphics->increaseBrightness();
-            break;
-          case SDLK_EQUALS:
-            m_graphics->increaseSpotLightRadius();
+            m_graphics->increaseSpecular(4);
             break;
           case SDLK_MINUS:
+            m_graphics->decreaseBrightness();
+            break;
+          case SDLK_EQUALS:
+            m_graphics->increaseBrightness();
+            break;
+          case SDLK_LEFTBRACKET:
+            m_graphics->decreaseDiffuse();
+            break;
+          case SDLK_RIGHTBRACKET:
+            m_graphics->increaseDiffuse();
+            break;
+          case SDLK_PERIOD:
+            m_graphics->increaseSpotLightRadius();
+            break;
+          case SDLK_COMMA:
             m_graphics->decreaseSpotLightRadius();
             break;
           case SDLK_LSHIFT:
@@ -217,28 +232,6 @@ void Engine::Keyboard()
             m_graphics->m_world->PullPlunger();
             break;
           case SDLK_SPACE:
-            //cout << "current state: " << state << endl;
-          /*
-            if(state == 0){
-              m_graphics->m_shader->Initialize();
-              m_graphics->m_shader->LoadShader(GL_VERTEX_SHADER, 1);
-              m_graphics->m_shader->LoadShader(GL_FRAGMENT_SHADER, 1);
-                m_graphics->m_shader->AddShader(GL_VERTEX_SHADER, 1);
-                m_graphics->m_shader->AddShader(GL_FRAGMENT_SHADER, 1);
-              m_graphics->m_shader->Finalize();
-              m_graphics->m_shader->Enable();
-              state = 1;
-            } else if(state == 1){
-              m_graphics->m_shader->Initialize();
-              m_graphics->m_shader->LoadShader(GL_VERTEX_SHADER, 0);
-              m_graphics->m_shader->LoadShader(GL_FRAGMENT_SHADER, 0);
-                m_graphics->m_shader->AddShader(GL_VERTEX_SHADER, 0);
-                m_graphics->m_shader->AddShader(GL_FRAGMENT_SHADER, 0);
-              m_graphics->m_shader->Finalize();
-              m_graphics->m_shader->Enable();
-              state = 0;
-            }
-            */
             m_graphics->changeShader();
             break; 
           default:
@@ -250,14 +243,12 @@ void Engine::Keyboard()
         {
           case SDLK_w:
             m_graphics->m_camera->HandleKeyboardInput("w", false);
-            //m_graphics->increaseDiffuse();
             break;
           case SDLK_a:
             m_graphics->m_camera->HandleKeyboardInput("a", false);
             break;
           case SDLK_s:
             m_graphics->m_camera->HandleKeyboardInput("s", false);
-            //m_graphics->decreaseDiffuse();
             break;
           case SDLK_d:
             m_graphics->m_camera->HandleKeyboardInput("d", false);

@@ -177,6 +177,38 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
       ImGui::SetCursorPos(ImVec2(10, 20));
       ImGui::Text(ballsLeftDisplay.c_str());
+
+      string currentLightDisplay = "Current Light: ";
+      switch (graphics->GetLightIndex())
+      {
+        case 0:
+          currentLightDisplay += "Ball Spotlight";
+          break;
+        case 1:
+          currentLightDisplay += "Back Pointlight";
+          break;
+        case 2:
+          currentLightDisplay += "Front Pointlight";
+          break;
+        case 3:
+          currentLightDisplay += "Cylinder Spotlight 1";
+          break;
+        case 4:
+          currentLightDisplay += "Cylinder Spotlight 2";
+          break;
+        case 5:
+          currentLightDisplay += "Cylinder Spotlight 3";
+          break;
+        case 6:
+          currentLightDisplay += "Cylinder Spotlight 4";
+          break;
+        case 7:
+          currentLightDisplay += "Cylinder Spotlight 5";
+          break;
+        default: break;
+      }
+      ImGui::SetCursorPos(ImVec2(10, m_height - 30));
+      ImGui::Text(currentLightDisplay.c_str());
     }
     ImGui::End();
 

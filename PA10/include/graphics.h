@@ -40,9 +40,12 @@ class Graphics
 
     void passLightToShader(int lightIndex);
 
+    void AdjustSpecular(unsigned int object);
+
     void moveLight(char input);
     
     void changeShader();
+    void ChangeLightIndex();
     void increaseBrightness();
     void decreaseBrightness();
     void increaseDiffuse();
@@ -52,6 +55,8 @@ class Graphics
 
     void increaseSpotLightRadius();
     void decreaseSpotLightRadius();
+
+    int GetLightIndex();
     
     Shader *m_currentShader;
     Shader *m_vertexBasedShader;
@@ -68,15 +73,19 @@ class Graphics
     GLint m_modelMatrix; 
 
     vector<Light> m_lights;
-    int m_numLights = 9;
+    int m_numLights = 8;
+    int m_currentLightIndex = 0;
     
-    float ambientMod = 0;
-    float diffuseMod = 0;
-    float boardSpecularMod = 0;
-    float ballSpecularMod = 0;
-    float flipperSpecularMod = 0;
-    float cylinderSpecularMod = 0;
+    float* ambientMod;
+    float* diffuseMod;
 
+    float* boardSpecularMod;
+    float* ballSpecularMod;
+    float* flipperSpecularMod;
+    float* cylinderSpecularMod;
+    float* plungerSpecularMod;
+
+    float ambientAdj = 0.5f;
     float diffuseAdj = 0.5f;
     float specularAdj = 0.5f;
 
