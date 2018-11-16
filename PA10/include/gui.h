@@ -23,9 +23,15 @@ public:
 	void Update(SDL_Window* window, Graphics* graphics);
 	void Render(SDL_Window* window, SDL_GLContext context);
 
+  ImVec2 CalculateCenteredPos(ImVec2 textSize);
+
   void SetGameOver(bool gameOver);
 
 private:
+
+  ImFont* m_fontSmall;
+  ImFont* m_fontMed;
+  ImFont* m_fontBig;
 
   int m_width;
   int m_height;

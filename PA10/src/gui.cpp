@@ -23,6 +23,10 @@ int GUI::Initialize(SDL_Window* window, SDL_GLContext context)
   SDL_GetWindowSize(window, &m_width, &m_height);
   cout << "(" << m_width << "," << m_height << ")" << endl;
 
+  m_fontSmall = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 25);
+  m_fontMed = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 50);
+  m_fontBig = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 100);
+
  	return true;
 }
 
@@ -38,6 +42,10 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
 
   if (m_gameOver)
   {
+    ImGui::PushFont(m_fontBig);
+    ImVec2 textSize = ImGui::CalcTextSize("Game Over!");
+    cout << "(" << textSize.x << "," << textSize.y << ")" << endl;
+
     if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       string gameOverDisplay = "Game Over!";
@@ -45,9 +53,13 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
+
+    ImGui::PopFont();
   }
   else
   {
+    ImGui::PushFont(m_fontSmall);
+
     if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
@@ -59,6 +71,8 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
       ImGui::Text(ballsLeftDisplay.c_str());
     }
     ImGui::End();
+
+    ImGui::PopFont();
   }
   
   ImGui::PopStyleColor(1);
@@ -75,6 +89,11 @@ void GUI::Render(SDL_Window* window, SDL_GLContext context)
   //glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   //ImGui::EndFrame();
+}
+
+ImVec2 GUI::CalculateCenteredPos(ImVec2 textSize)
+{
+  
 }
 
 void GUI::SetGameOver(bool gameOver)
