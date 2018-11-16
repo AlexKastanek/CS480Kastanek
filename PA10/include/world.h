@@ -27,6 +27,8 @@ public:
   void Update(unsigned int dt);
   void Render(GLint &modelMatrix, char obj);
 
+  void generateScores();
+
   Board& GetBoard();
   Ball& GetBall();
   FlipperRight& GetFlipperRight();
@@ -147,6 +149,7 @@ private:
   int m_score = 0;
   int m_scoreTimer = 0;
   ofstream m_fout;
+
   
 };
 

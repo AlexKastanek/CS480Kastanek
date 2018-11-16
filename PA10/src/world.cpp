@@ -372,6 +372,7 @@ void World::Update(unsigned int dt)
     //if ball counter is zero, game over
     if (m_ballCounter == 0)
     {
+      generateScores();
       m_ballCounter = 4;
     }
     
@@ -666,4 +667,76 @@ void World::createWalls()
   m_lidRigid = new btRigidBody(lidCI);
   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
   m_dynamicsWorld->addRigidBody(m_lidRigid);
+}
+
+void World::generateScores()
+{
+    ifstream fin, topFin;
+    fin.open("..//assets//scoreLog.txt");
+    topFin.open("..//assets//topScores.txt");
+    
+    struct TopPlayer
+    {
+      int score;
+      string name;
+    };
+    
+    int score = 0;
+    
+    TopPlayer leaderBoard[11];
+    
+    while(!fin.eof())
+        fin >> score;
+    
+    cout << endl << "YOUR SCORE: " << score << endl;
+    
+    for(int i=0 ; i<10 ; i++)
+    {
+       topFin >> leaderBoard[i].score >> leaderBoard[i].name;
+       //cout << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
+    }
+
+    /*string str;
+    cout << "Please Enter Your Name: ";
+    cin >> str;*/
+
+    leaderBoard[10].score = score;
+    leaderBoard[10].name = "Player";
+
+    
+    //topScores.push_back(score);
+    
+    ofstream fout;
+    fout.open("..//assets//topScores.txt");
+
+    //**SORT**
+
+    TopPlayer temp;
+    for(int i=0 ; i<11 ; i++)
+    {
+      for(int j=i+1 ; j<11 ; j++)
+      {
+        if(leaderBoard[i].score < leaderBoard[j].score)
+        {
+          //swap
+          temp = leaderBoard[i];
+          leaderBoard[i] = leaderBoard[j];
+          leaderBoard[j] = temp;
+        }
+      }
+    }
+
+    //********
+    
+    int rank = 1;
+    cout << endl << "**TOP SCORES**" << endl;
+    for(int i=0; i<10 ; i++)
+    {
+        cout << rank++ << ") " << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
+        fout << leaderBoard[i].score << " " << leaderBoard[i].name << endl; 
+    }
+        
+    fin.close();
+    topFin.close();
+    fout.close();
 }

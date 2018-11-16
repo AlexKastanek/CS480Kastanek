@@ -115,8 +115,8 @@ void Engine::Keyboard()
   			switch (m_event.key.keysym.sym)
   			{
   				case SDLK_ESCAPE:
-            generateScores();
   					m_running = false;
+            //generateScores();
   					break;
           case SDLK_w:
             m_graphics->m_camera->HandleKeyboardInput("w", true);
