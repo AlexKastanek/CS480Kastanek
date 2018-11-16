@@ -44,12 +44,12 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   {
     ImGui::PushFont(m_fontBig);
     ImVec2 textSize = ImGui::CalcTextSize("Game Over!");
-    cout << "(" << textSize.x << "," << textSize.y << ")" << endl;
+    ImVec2 centeredCursor = CalculateCenteredPos(textSize);
 
     if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
       string gameOverDisplay = "Game Over!";
-      ImGui::SetCursorPos(ImVec2(10,0));
+      ImGui::SetCursorPos(centeredCursor);
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
@@ -93,7 +93,21 @@ void GUI::Render(SDL_Window* window, SDL_GLContext context)
 
 ImVec2 GUI::CalculateCenteredPos(ImVec2 textSize)
 {
-  
+  ImVec2 centerOfWindow = ImVec2(m_width/2, m_height/2);
+  cout << "CENTER OF WINDOW" << endl;
+  cout << "(" << centerOfWindow.x << "," << centerOfWindow.y << ")" << endl;
+
+  ImVec2 textSizeOffset = ImVec2(textSize.x/2, textSize.y/2);
+  cout << "TEXT OFFSET" << endl;
+  cout << "(" << textSizeOffset.x << "," << textSizeOffset.y << ")" << endl;
+
+  ImVec2 centeredCursorPos = ImVec2(
+    centerOfWindow.x - textSizeOffset.x,
+    centerOfWindow.y - textSizeOffset.y);
+  cout << "CENTERED CURSOR" << endl;
+  cout << "(" << centeredCursorPos.x << "," << centeredCursorPos.y << ")" << endl;
+
+  return centeredCursorPos;
 }
 
 void GUI::SetGameOver(bool gameOver)
