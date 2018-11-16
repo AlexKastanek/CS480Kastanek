@@ -422,12 +422,6 @@ void World::Render(GLint& modelMatrix, char obj)
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ball->GetModel()));
       m_ball->Render();
       break;
-    case 'd':
-      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneRight->GetModel()));
-      m_laneRight->Render();
-      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneLeft->GetModel()));
-      m_laneLeft->Render();
-      break;
     case 'f':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_flipperRight->GetModel()));
       m_flipperRight->Render();
@@ -453,6 +447,10 @@ void World::Render(GLint& modelMatrix, char obj)
     case 'l':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_launchBarrier->GetModel()));
       m_launchBarrier->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneRight->GetModel()));
+      m_laneRight->Render();
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_laneLeft->GetModel()));
+      m_laneLeft->Render();
       break; 
     case 'u':
       glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_bumperL->GetModel()));
@@ -485,12 +483,9 @@ void World::Reset()
 {
   m_gameOver = false;
 
-  /* reset ball */
-
   //set delta time since last ball loss to zero
   m_dtSinceLastBallLoss = 0;
 
-  
   //create transform matching ball's initial transform
   btTransform ballTransform(
     btQuaternion::getIdentity(),
@@ -500,10 +495,9 @@ void World::Reset()
   m_ball->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
   m_ball->m_rigidBody->setWorldTransform(ballTransform);
 
-
+  //reset game stats
+  m_score = 0;
   m_ballCounter = 4;
-
-  //m_ball->Update(0);
 }
 
 Board& World::GetBoard()

@@ -158,10 +158,15 @@ bool Graphics::Initialize(int width, int height)
   gLight.attenuation = 0.001f;
   */
 
-  Light spotlight, pointLight1, pointLight2;
+  Light spotlight, pointLight1, pointLight2, pointLight3;
+  Light cylSpotLight1, 
+        cylSpotLight2,
+        cylSpotLight3,
+        cylSpotLight4,
+        cylSpotLight5;
 
   spotlight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  spotlight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  spotlight.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
   spotlight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   spotlight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
   spotlight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -169,27 +174,87 @@ bool Graphics::Initialize(int width, int height)
   spotlight.shininess = 50;
   spotlight.attenuation = 0.001f;
 
-  pointLight1.position = glm::vec4(50.0f, 30.0f, 90.0f, 1.0f);
-  pointLight1.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
+  pointLight1.position = glm::vec4(-50.0f, 20.0f, 70.0f, 1.0f);
+  pointLight1.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   pointLight1.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  pointLight1.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  pointLight1.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
   pointLight1.direction = glm::vec3(0.0f, -1.0f, 0.0f);
   pointLight1.angle = 180.0f;
   pointLight1.shininess = 50;
-  pointLight1.attenuation = 0.00001f;
+  pointLight1.attenuation = 0.000001f;
 
-  pointLight2.position = glm::vec4(-50.0f, 30.0f, 10.0f, 1.0f);
-  pointLight2.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  pointLight2.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  pointLight2.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  pointLight2.position = glm::vec4(50.0f, 20.0f, 30.0f, 1.0f);
+  pointLight2.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  pointLight2.diffuse = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  pointLight2.specular = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   pointLight2.direction = glm::vec3(0.0f, -1.0f, 0.0f);
   pointLight2.angle = 180.0f;
   pointLight2.shininess = 50;
-  pointLight2.attenuation = 0.00001f;
+  pointLight2.attenuation = 0.000001f;
+
+  pointLight3.position = glm::vec4(10.0f, 20.0f, 100.0f, 1.0f);
+  pointLight3.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  pointLight3.diffuse = glm::vec4(4.0f, 4.0f, 4.0f, 1.0f);
+  pointLight3.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
+  pointLight3.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  pointLight3.angle = 180.0f;
+  pointLight3.shininess = 50;
+  pointLight3.attenuation = 0.001f;
+
+  cylSpotLight1.position = glm::vec4(-7.0f, 20.0f, 50.0f, 1.0f);
+  cylSpotLight1.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  cylSpotLight1.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  cylSpotLight1.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  cylSpotLight1.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  cylSpotLight1.angle = 40.0f;
+  cylSpotLight1.shininess = 50;
+  cylSpotLight1.attenuation = 0.001f;
+
+  cylSpotLight2.position = glm::vec4(38.0f, 20.0f, 5.0f, 1.0f);
+  cylSpotLight2.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  cylSpotLight2.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  cylSpotLight2.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  cylSpotLight2.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  cylSpotLight2.angle = 40.0f;
+  cylSpotLight2.shininess = 50;
+  cylSpotLight2.attenuation = 0.001f;
+
+  cylSpotLight3.position = glm::vec4(23.0f, 20.0f, 50.0f, 1.0f);
+  cylSpotLight3.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  cylSpotLight3.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  cylSpotLight3.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  cylSpotLight3.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  cylSpotLight3.angle = 40.0f;
+  cylSpotLight3.shininess = 50;
+  cylSpotLight3.attenuation = 0.001f;
+
+  cylSpotLight4.position = glm::vec4(-22.0f, 20.0f, 5.0f, 1.0f);
+  cylSpotLight4.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  cylSpotLight4.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  cylSpotLight4.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  cylSpotLight4.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  cylSpotLight4.angle = 40.0f;
+  cylSpotLight4.shininess = 50;
+  cylSpotLight4.attenuation = 0.001f;
+
+  cylSpotLight5.position = glm::vec4(8.0f, 20.0f, 90.0f, 1.0f);
+  cylSpotLight5.ambient = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+  cylSpotLight5.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  cylSpotLight5.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
+  cylSpotLight5.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  cylSpotLight5.angle = 40.0f;
+  cylSpotLight5.shininess = 50;
+  cylSpotLight5.attenuation = 0.001f;
 
   m_lights.push_back(spotlight);
   m_lights.push_back(pointLight1);
   m_lights.push_back(pointLight2);
+  m_lights.push_back(pointLight3);
+  m_lights.push_back(cylSpotLight1);
+  m_lights.push_back(cylSpotLight2);
+  m_lights.push_back(cylSpotLight3);
+  m_lights.push_back(cylSpotLight4);
+  m_lights.push_back(cylSpotLight5);
 
   // Locate the projection matrix in the shader
   m_projectionMatrix = m_currentShader->GetUniformLocation("projectionMatrix");
@@ -259,7 +324,7 @@ void Graphics::Render()
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
 
   //Send in the number of lights
-  glUniform1i(m_currentShader->GetUniformLocation("numLights"), 2);
+  glUniform1i(m_currentShader->GetUniformLocation("numLights"), m_numLights);
 
   /*
   //spotlight
@@ -344,8 +409,6 @@ void Graphics::Render()
 
   m_world->Render(m_modelMatrix, 'b');
 
-  m_world->Render(m_modelMatrix, 'd');
-
   //render flippers
   /*
   glUniform4f(
@@ -370,7 +433,7 @@ void Graphics::Render()
 
   m_world->Render(m_modelMatrix, 'p');
   
-  //render cylinder
+  //render cylinders
   /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"), 
@@ -382,7 +445,7 @@ void Graphics::Render()
 
   m_world->Render(m_modelMatrix, 'c');
 
-  //render launch barrier
+  //render launch barrier, lanes, and bumpers
   /*
   glUniform4f(
     m_currentShader->GetUniformLocation("specularProduct"),
@@ -393,6 +456,7 @@ void Graphics::Render()
   */
 
   m_world->Render(m_modelMatrix, 'l');
+
   m_world->Render(m_modelMatrix, 'u');
 
   //cout << "finished rendering objects" << endl;

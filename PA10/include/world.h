@@ -71,7 +71,8 @@ public:
 private:
   Object *m_backBoard;
   Board *m_board;
-  btTriangleMesh *boardMesh;  
+  btTriangleMesh *boardMesh;
+    
   btTriangleMesh *rightFlipperMesh;
   btTriangleMesh *leftFlipperMesh;
 
