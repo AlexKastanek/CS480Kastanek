@@ -38,11 +38,11 @@ void GUI::Update(SDL_Window* window, Graphics* graphics)
   if (ImGui::Begin("Menu", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
   {
     string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
-    ImGui::SetCursorPos(ImVec2(0,0));
+    ImGui::SetCursorPos(ImVec2(10,0));
     ImGui::Text(scoreDisplay.c_str());
 
     string ballsLeftDisplay = "Balls Left: " + to_string(graphics->m_world->GetBallCounter());
-    ImGui::SetCursorPos(ImVec2(0, 20));
+    ImGui::SetCursorPos(ImVec2(10, 20));
     ImGui::Text(ballsLeftDisplay.c_str());
   }
   ImGui::End();
