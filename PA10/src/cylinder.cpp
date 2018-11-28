@@ -79,7 +79,7 @@ bool Cylinder::Initialize(btTriangleMesh *triMesh)
     //create the rigid body
     m_rigidBody = new btRigidBody(ci);
     m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-    m_rigidBody->setRestitution(1.0);//elasticity!!!
+    m_rigidBody->setRestitution(0.5);//elasticity!!!
     //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
     model = m_translationMatrix;

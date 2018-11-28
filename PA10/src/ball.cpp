@@ -95,13 +95,14 @@ bool Ball::Initialize()
     inertia
     );
 
-  ci.m_restitution = 1;
-  ci.m_friction = 1;
+  //ci.m_restitution = 1;
+  //ci.m_friction = 1;
   //ci.m_rollingFriction = 0.001;
 
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+  m_rigidBody->setRestitution(1.0);
 
   //don't delete motion state
   //delete motionState;
