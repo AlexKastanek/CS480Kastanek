@@ -109,6 +109,8 @@ void Engine::Run()
 
 void Engine::Keyboard()
 {
+
+  int mouse_x, mouse_y;
   
   if(m_event.type == SDL_QUIT)
   {
@@ -196,7 +198,14 @@ void Engine::Keyboard()
           default:
             break;
         }
-        break;			
+        break;
+      case SDL_MOUSEMOTION:
+        mouse_x = m_event.motion.xrel;
+        mouse_y = m_event.motion.yrel;
+        cout << "MOUSE X: " << mouse_x << endl;
+        cout << "MOUSE Y: " << mouse_y << endl;
+        m_graphics->m_camera->HandleMouseMotion(mouse_x, mouse_y);
+        break;
   		default:
   			break;
   	}

@@ -12,6 +12,8 @@ Camera::Camera()
   m_rotateSpeed = 5.0f;
   m_pitch = 0.0f;
   m_yaw = 0.0f;
+  m_horizontalSensitivity = 0.75f;
+  m_verticalSensitivity = 0.5f;
 
   m_mode = MODE_GAME;
 }
@@ -259,6 +261,21 @@ void Camera::HandleKeyboardInput(string input, bool isPressed)
     default:
       break;
   }
+}
+
+void Camera::HandleMouseMotion(int x, int y)
+{
+  m_pitch += y * m_verticalSensitivity * -1;
+  if (m_pitch > 89.0f)
+  {
+    m_pitch = 89.0f;
+  }
+  if (m_pitch < -89.0f)
+  {
+    m_pitch = -89.0f;
+  }
+
+  m_yaw += x * m_horizontalSensitivity;
 }
 
 glm::mat4 Camera::GetProjection()

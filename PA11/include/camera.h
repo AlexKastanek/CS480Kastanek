@@ -21,6 +21,7 @@ class Camera
     void Reset();
 
     void HandleKeyboardInput(string input, bool isPressed);
+    void HandleMouseMotion(int x, int y);
 
     glm::mat4 GetProjection();
     glm::mat4 GetView();
@@ -55,6 +56,8 @@ class Camera
     float m_rotateSpeed;
     float m_pitch;
     float m_yaw;
+    float m_horizontalSensitivity;
+    float m_verticalSensitivity;
 
     unsigned int m_mode;
 };
