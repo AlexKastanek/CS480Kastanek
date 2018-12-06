@@ -24,6 +24,7 @@ class Camera
 
     glm::mat4 GetProjection();
     glm::mat4 GetView();
+    glm::mat4 GetModel();
 
     glm::vec3 GetPosition();
     glm::vec3 GetFocusPoint();
@@ -42,6 +43,7 @@ class Camera
   private:
     glm::mat4 projection;
     glm::mat4 view;
+    glm::mat4 model;
 
     glm::vec3 m_initialPosition;
     glm::vec3 m_position;

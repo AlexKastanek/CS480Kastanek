@@ -29,12 +29,17 @@ public:
   int GetScore();
   bool IsNewHighScore();
   string* GetTopTenStats();
+
+  glm::mat4 m_cameraTransform;
   
 private:
   int m_objectCount = 20;
 
   Obstacle *m_ground;
   btTriangleMesh *m_groundColMesh;
+
+  Obstacle *m_target;
+  btTriangleMesh *m_targetColMesh;
 
   bool m_gameOver = false;
   int m_score = 0;

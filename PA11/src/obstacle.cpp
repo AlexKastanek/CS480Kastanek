@@ -33,7 +33,7 @@ Obstacle::~Obstacle()
 
 bool Obstacle::Initialize()
 {
-  cout << "CHECK BOARD INITIALIZE" << endl;
+  cout << "CHECK OBSTACLE INITIALIZE" << endl;
 
   //set transform
   btTransform transform(

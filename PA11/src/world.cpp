@@ -35,7 +35,8 @@ bool World::Initialize()
     m_gravity.y,
     m_gravity.z));
 
-  //initialize objects
+  /* Initialize objects */
+
   m_groundColMesh = new btTriangleMesh();
   m_ground = new Obstacle(
     "..//assets//Ground.obj",     //obj file path
@@ -45,6 +46,15 @@ bool World::Initialize()
   m_ground->Initialize();
   m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
 
+  m_targetColMesh = new btTriangleMesh();
+  m_target = new Obstacle(
+    "..//assets//Target.obj",
+    1.0f,
+    glm::vec3(0.0f, 4.0f, 0.0f), 
+    m_targetColMesh);
+  m_target->Initialize();
+  m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
+
   return true;
 }
 
@@ -53,6 +63,7 @@ void World::Update(unsigned int dt)
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
 
   m_ground->Update(dt);
+  m_target->Update(dt);
 }
 
 void World::Render()
@@ -71,11 +82,22 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
   {
     case 0:
       //render specific object with id 0
-      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ground->GetModel()));
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_ground->GetModel()));
       m_ground->Render();
       break;
     case 1:
-      //render object 1
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_target->GetModel()));
+      m_target->Render();
+      break;
+    case 2:
       break;
     //add more cases for more objects
     default: break;

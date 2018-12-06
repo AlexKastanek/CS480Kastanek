@@ -42,6 +42,16 @@ bool Graphics::Initialize(int width, int height)
   //Init Physics
   //m_physics = new Physics();
 
+   // Init Camera
+  m_camera = new Camera();
+  if(!m_camera->Initialize(width, height))
+  {
+    printf("Camera Failed to Initialize\n");
+    return false;
+  }
+
+  cout << "CHECK GRAPHICS FINISHED CAMERA ALLOC" << endl;
+
   //Init the world
   m_world = new World(glm::vec3(0.0f, -0.0005f, -0.00005f));
   if (!m_world->Initialize())
@@ -51,16 +61,6 @@ bool Graphics::Initialize(int width, int height)
   }
 
   cout << "CHECK GRAPHICS FINISHED PHYSICS AND WORLD ALLOC" << endl;
-
-  // Init Camera
-  m_camera = new Camera();
-  if(!m_camera->Initialize(width, height))
-  {
-    printf("Camera Failed to Initialize\n");
-    return false;
-  }
-
-  cout << "CHECK GRAPHICS FINISHED CAMERA ALLOC" << endl;
 
   // Init the objects
   //m_board = new Board("..//assets//Board.obj", 13.0f);
@@ -222,11 +222,12 @@ bool Graphics::Initialize(int width, int height)
 
 void Graphics::Update(unsigned int dt)
 {
-  // Update the world
-  m_world->Update(dt);
-
   // Update the camera
   m_camera->Update(dt);
+
+  // Update the world
+  m_world->m_cameraTransform = m_camera->GetModel();
+  m_world->Update(dt);
 }
 
 void Graphics::Render()
