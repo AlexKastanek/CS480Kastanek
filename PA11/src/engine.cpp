@@ -153,17 +153,6 @@ void Engine::Keyboard()
           case SDLK_RIGHT:
             m_graphics->m_camera->HandleKeyboardInput("right", true);
             break;
-          case SDLK_m:
-            m_graphics->m_camera->Reset();
-            if (m_graphics->m_camera->GetMode() == MODE_GAME)
-            {
-              m_graphics->m_camera->SetMode(MODE_FREE);
-            }
-            else
-            {
-              m_graphics->m_camera->SetMode(MODE_GAME);
-            }
-            break;
           default:
             break;
         }

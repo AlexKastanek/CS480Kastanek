@@ -14,8 +14,6 @@ Camera::Camera()
   m_yaw = 0.0f;
   m_horizontalSensitivity = 0.75f;
   m_verticalSensitivity = 0.5f;
-
-  m_mode = MODE_GAME;
 }
 
 Camera::~Camera()
@@ -41,76 +39,43 @@ bool Camera::Initialize(int w, int h)
 
 void Camera::Update(unsigned int dt)
 {
-  if (m_mode == MODE_GAME)
+  glm::vec3 localForward = glm::vec3(0.0f, 0.0f, -1.0f);
+  glm::vec3 localUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+  localForward.x = cos(glm::radians(m_pitch)) * cos(glm::radians(m_yaw));
+  localForward.y = sin(glm::radians(m_pitch));
+  localForward.z = cos(glm::radians(m_pitch)) * sin(glm::radians(m_yaw));
+  localForward = glm::normalize(localForward);
+
+  if (m_moveDirection.z > 0)
   {
-    if (m_moveDirection.x > 0)
-    {
-      m_position.x += m_moveSpeed * ((float) dt);
-    }
-    else if (m_moveDirection.x < 0)
-    {
-      m_position.x -= m_moveSpeed * ((float) dt);
-    }
-
-    if (m_moveDirection.y > 0)
-    {
-      m_position.y += m_moveSpeed * ((float) dt);
-    }
-    else if (m_moveDirection.y < 0)
-    {
-      m_position.y -= m_moveSpeed * ((float) dt);
-    }
-
-    if (m_moveDirection.z > 0)
-    {
-      m_position.z += m_moveSpeed * ((float) dt);
-      //cout << "moving forward" << endl;
-    }
-    else if (m_moveDirection.z < 0)
-    {
-      m_position.z -= m_moveSpeed * ((float) dt);
-    }
+    //move forward
+    m_position += m_moveSpeed * localForward * ((float) dt);
   }
-  else if (m_mode == MODE_FREE)
+  else if (m_moveDirection.z < 0)
   {
-    glm::vec3 localForward = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 localUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-    localForward.x = cos(glm::radians(m_pitch)) * cos(glm::radians(m_yaw));
-    localForward.y = sin(glm::radians(m_pitch));
-    localForward.z = cos(glm::radians(m_pitch)) * sin(glm::radians(m_yaw));
-    localForward = glm::normalize(localForward);
-
-    if (m_moveDirection.z > 0)
-    {
-      //move forward
-      m_position += m_moveSpeed * localForward * ((float) dt);
-    }
-    else if (m_moveDirection.z < 0)
-    {
-      //move back
-      m_position -= m_moveSpeed * localForward * ((float) dt);
-    }
-
-    if (m_moveDirection.x > 0)
-    {
-      //move right
-      m_position -= glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
-    }
-    else if (m_moveDirection.x < 0)
-    {
-      //move left
-      m_position += glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
-    }
-
-    m_focusPoint = m_position + localForward;
-
-    cout << "Camera Position: ("
-         << m_position.x << ", "
-         << m_position.y << ", "
-         << m_position.z << ")"
-         << endl;
+    //move back
+    m_position -= m_moveSpeed * localForward * ((float) dt);
   }
+
+  if (m_moveDirection.x > 0)
+  {
+    //move right
+    m_position -= glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
+  }
+  else if (m_moveDirection.x < 0)
+  {
+    //move left
+    m_position += glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
+  }
+
+  m_focusPoint = m_position + localForward;
+
+  cout << "Camera Position: ("
+       << m_position.x << ", "
+       << m_position.y << ", "
+       << m_position.z << ")"
+       << endl;
 
   view = glm::lookAt( m_position,
     m_focusPoint,
@@ -131,28 +96,14 @@ void Camera::HandleKeyboardInput(string input, bool isPressed)
 
   if (input == "up")
   {
-    if (m_mode == MODE_FREE)
+    if (isPressed)
     {
-      if (isPressed)
-      {
-        //increase pitch
-        m_pitch += m_rotateSpeed;
+      //increase pitch
+      m_pitch += m_rotateSpeed;
 
-        if (m_pitch > 89.0f)
-        {
-          m_pitch = 89.0f;
-        }
-      }
-    }
-    else
-    {
-      if (isPressed)
+      if (m_pitch > 89.0f)
       {
-        SetMoveDirectionY(1);
-      }
-      else
-      {
-        SetMoveDirectionY(0);
+        m_pitch = 89.0f;
       }
     }
 
@@ -160,28 +111,14 @@ void Camera::HandleKeyboardInput(string input, bool isPressed)
   }
   else if (input == "down")
   {
-    if (m_mode == MODE_FREE)
+    if (isPressed)
     {
-      if (isPressed)
-      {
-        //decrease pitch
-        m_pitch -= m_rotateSpeed;
+      //decrease pitch
+      m_pitch -= m_rotateSpeed;
 
-        if (m_pitch < -89.0f)
-        {
-          m_pitch = -89.0f;
-        }
-      }
-    }
-    else
-    {
-      if (isPressed)
+      if (m_pitch < -89.0f)
       {
-        SetMoveDirectionY(-1);
-      }
-      else
-      {
-        SetMoveDirectionY(0);
+        m_pitch = -89.0f;
       }
     }
 
@@ -189,26 +126,20 @@ void Camera::HandleKeyboardInput(string input, bool isPressed)
   }
   else if (input == "left")
   {
-    if (m_mode == MODE_FREE)
+    if (isPressed)
     {
-      if (isPressed)
-      {
-        //decrease yaw
-        m_yaw -= m_rotateSpeed;
-      }
+      //decrease yaw
+      m_yaw -= m_rotateSpeed;
     }
 
     return;
   }
   else if (input == "right")
   {
-    if (m_mode == MODE_FREE)
+    if (isPressed)
     {
-      if (isPressed)
-      {
-        //increase yaw
-        m_yaw += m_rotateSpeed;
-      }
+      //increase yaw
+      m_yaw += m_rotateSpeed;
     }
 
     return;
@@ -318,11 +249,6 @@ float Camera::GetMoveDirectionZ()
   return m_moveDirection.z;
 }
 
-unsigned int Camera::GetMode()
-{
-  return m_mode;
-}
-
 void Camera::SetPosition(glm::vec3 position)
 {
   m_position = position;
@@ -346,9 +272,4 @@ void Camera::SetMoveDirectionY(float y)
 void Camera::SetMoveDirectionZ(float z)
 {
   m_moveDirection.z = z;
-}
-
-void Camera::SetMode(unsigned int mode)
-{
-  m_mode = mode;
 }

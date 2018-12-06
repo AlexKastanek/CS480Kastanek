@@ -6,11 +6,6 @@
 
 using namespace std;
 
-enum CameraMode {
-  MODE_GAME = 0,
-  MODE_FREE
-};
-
 class Camera
 {
   public:
@@ -32,14 +27,12 @@ class Camera
     float GetMoveDirectionX();
     float GetMoveDirectionY();
     float GetMoveDirectionZ();
-    unsigned int GetMode();
 
     void SetPosition(glm::vec3 position);
     void SetFocusPoint(glm::vec3 focusPoint);
     void SetMoveDirectionX(float x);
     void SetMoveDirectionY(float y);
     void SetMoveDirectionZ(float z);
-    void SetMode(unsigned int mode);
   
   private:
     glm::mat4 projection;
@@ -58,8 +51,6 @@ class Camera
     float m_yaw;
     float m_horizontalSensitivity;
     float m_verticalSensitivity;
-
-    unsigned int m_mode;
 };
 
 #endif /* CAMERA_H */

@@ -173,18 +173,6 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
       ImGui::Text(scoreDisplay.c_str());
-
-      string modeDisplay = "Camera Mode: ";
-      if (graphics->m_camera->GetMode() == MODE_GAME)
-      {
-        modeDisplay += "Game";
-      }
-      else
-      {
-        modeDisplay += "Free";
-      }
-      ImGui::SetCursorPos(ImVec2(10, m_height - 55));
-      ImGui::Text(modeDisplay.c_str());
     }
     ImGui::End();
 
