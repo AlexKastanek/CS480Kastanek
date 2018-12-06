@@ -48,7 +48,6 @@ Object::Object(string filename, float scale, glm::vec3 position)
   cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
 
-
 Object::Object(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh)
 {
   cout << "CHECK OBJECT CONSTRUCTOR" << endl;

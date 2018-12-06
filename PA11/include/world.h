@@ -24,12 +24,18 @@ public:
 
   void GenerateScores(string topTenList[10], bool& highScore);
 
+  int GetObjectCount();
   bool isGameOver();
   int GetScore();
   bool IsNewHighScore();
   string* GetTopTenStats();
   
 private:
+  int m_objectCount = 20;
+
+  Obstacle *m_ground;
+  btTriangleMesh *m_groundColMesh;
+
   bool m_gameOver = false;
   int m_score = 0;
 

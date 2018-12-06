@@ -17,8 +17,9 @@ PhysicsObject::PhysicsObject(string filename, float scale, glm::vec3 position) :
 
 PhysicsObject::PhysicsObject(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : Object(filename, scale, position, triMesh)
 {
-
+  m_colliderMesh = triMesh;
 }
+
 PhysicsObject::~PhysicsObject()
 {
   delete m_renderData;

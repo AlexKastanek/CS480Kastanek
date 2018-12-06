@@ -21,6 +21,7 @@ public:
   //btCollisionShape* GetCollider();
   //btRigidBody* GetRigidBody();
 
+  btTriangleMesh *m_colliderMesh;
   btCollisionShape *m_collider;
   btMotionState *m_motionState;
   btRigidBody *m_rigidBody;

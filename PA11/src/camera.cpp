@@ -2,9 +2,9 @@
 
 Camera::Camera()
 {
-  m_initialPosition = glm::vec3(10.0, 50.0, -100.0);
+  m_initialPosition = glm::vec3(0.0, 4.0, -10.0);
   m_position = m_initialPosition;
-  m_initialFocusPoint = glm::vec3(10.0, 0.0, 0.0);
+  m_initialFocusPoint = glm::vec3(0.0, 0.0, 0.0);
   m_focusPoint = m_initialFocusPoint;
 
   m_moveDirection = glm::vec3(0.0, 0.0, 0.0);
@@ -103,6 +103,12 @@ void Camera::Update(unsigned int dt)
     }
 
     m_focusPoint = m_position + localForward;
+
+    cout << "Camera Position: ("
+         << m_position.x << ", "
+         << m_position.y << ", "
+         << m_position.z << ")"
+         << endl;
   }
 
   view = glm::lookAt( m_position,

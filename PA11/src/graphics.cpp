@@ -257,6 +257,15 @@ void Graphics::Render()
 
   /* render the objects */
 
+  //render generic objects
+  m_world->Render();
+
+  //render specific objects
+  for (int i = 0; i < m_world->GetObjectCount(); i++)
+  {
+    m_world->Render(m_modelMatrix, i);
+  }
+
   //cout << "finished rendering objects" << endl;
 
   // Get any errors from OpenGL

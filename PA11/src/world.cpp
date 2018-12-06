@@ -35,12 +35,24 @@ bool World::Initialize()
     m_gravity.y,
     m_gravity.z));
 
+  //initialize objects
+  m_groundColMesh = new btTriangleMesh();
+  m_ground = new Obstacle(
+    "..//assets//Ground.obj",     //obj file path
+    1.0f,                         //scale  
+    glm::vec3(0.0f, 0.0f, 0.0f),  //position 
+    m_groundColMesh);             //collider mesh
+  m_ground->Initialize();
+  m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
+
   return true;
 }
 
 void World::Update(unsigned int dt)
 {
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
+
+  m_ground->Update(dt);
 }
 
 void World::Render()
@@ -57,8 +69,13 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
 
   switch(obj)
   {
-    case '0':
+    case 0:
       //render specific object with id 0
+      glUniformMatrix4fv(modelMatrix, 1, GL_FALSE, glm::value_ptr(m_ground->GetModel()));
+      m_ground->Render();
+      break;
+    case 1:
+      //render object 1
       break;
     //add more cases for more objects
     default: break;
@@ -155,6 +172,11 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
     fin.close();
     topFin.close();
     fout.close();
+}
+
+int World::GetObjectCount()
+{
+  return m_objectCount;
 }
 
 bool World::isGameOver()
