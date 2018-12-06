@@ -55,6 +55,8 @@ bool World::Initialize()
   m_target->Initialize();
   m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
 
+  m_gun = new Gun("..//assets//Gun.obj", 1.0);
+
   return true;
 }
 
@@ -62,8 +64,11 @@ void World::Update(unsigned int dt)
 {
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
 
+  m_gun->SetCameraTransform(m_cameraTransform);
+
   m_ground->Update(dt);
   m_target->Update(dt);
+  m_gun->Update(dt);
 }
 
 void World::Render()
@@ -98,6 +103,12 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
       m_target->Render();
       break;
     case 2:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_gun->GetModel()));
+      m_gun->Render();
       break;
     //add more cases for more objects
     default: break;

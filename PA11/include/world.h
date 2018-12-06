@@ -6,6 +6,7 @@
 #include "physics.h"
 #include "trigger_object.h"
 #include "obstacle.h"
+#include "gun.h"
 
 using namespace std;
 
@@ -40,6 +41,8 @@ private:
 
   Obstacle *m_target;
   btTriangleMesh *m_targetColMesh;
+
+  Gun *m_gun;
 
   bool m_gameOver = false;
   int m_score = 0;
