@@ -60,15 +60,21 @@ bool Engine::Initialize()
 
 void Engine::Run()
 {
+
   m_running = true;
+  SDL_SetRelativeMouseMode(SDL_TRUE);
+
 
   while(m_running)
   {
+
     if (m_graphics->m_world->isGameOver())
     {
       // Update the DT
       m_DT = getDT();
 
+      //SDL_SetWindowGrab(m_window->GetWindow(), SDL_TRUE);
+      //SDL_SetRelativeMouseMode(SDL_FALSE);
       while(SDL_PollEvent(&m_event) != 0) {} //clear events
 
       m_graphics->Update(m_DT);
@@ -87,22 +93,37 @@ void Engine::Run()
       // Update the DT
       m_DT = getDT();
 
+      
+      
+      //SDL_ShowWindow(m_window->GetWindow());
+      //SDL_RaiseWindow(m_window->GetWindow());
+      
+      cout << "Relative mouse mode? " << SDL_GetRelativeMouseMode() << endl;
+      
+      
       while(SDL_PollEvent(&m_event) != 0)
       {
         Keyboard();
       }
+      
     
       // Update and render the graphics
       m_graphics->Update(m_DT);
       m_graphics->Render();
 
+      /*
       // Update and render the GUI
       m_gui->SetGameOver(false);
       m_gui->Update(m_window->GetWindow(), m_graphics);
       m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+      */
+
+      //SDL_SetWindowGrab(m_window->GetWindow(), SDL_TRUE);
 
       // Swap to the Window
       m_window->Swap();
+
+      cout << "Window grabbed? " << SDL_GetWindowGrab(m_window->GetWindow()) << endl;;
     }
   }
 }
@@ -188,11 +209,14 @@ void Engine::Keyboard()
             break;
         }
         break;
+      case SDL_MOUSEBUTTONDOWN:
+        cout << "mouse clicked" << endl;
+        break;
       case SDL_MOUSEMOTION:
         mouse_x = m_event.motion.xrel;
         mouse_y = m_event.motion.yrel;
-        cout << "MOUSE X: " << mouse_x << endl;
-        cout << "MOUSE Y: " << mouse_y << endl;
+        //cout << "MOUSE X: " << mouse_x << endl;
+        //cout << "MOUSE Y: " << mouse_y << endl;
         m_graphics->m_camera->HandleMouseMotion(mouse_x, mouse_y);
         break;
   		default:
