@@ -44,10 +44,7 @@ bool Obstacle::Initialize()
       m_position.z));
 
   //create the collider
-  //m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
-  
   m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
-
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);

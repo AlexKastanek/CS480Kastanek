@@ -2,11 +2,13 @@
 #define WORLD_H
 
 #include <sstream>
+#include <vector>
 #include "graphics_headers.h"
 #include "physics.h"
 #include "trigger_object.h"
 #include "obstacle.h"
 #include "gun.h"
+#include "bb.h"
 
 using namespace std;
 
@@ -43,6 +45,9 @@ private:
   btTriangleMesh *m_targetColMesh;
 
   Gun *m_gun;
+
+  vector<BB*> m_bbContainer;
+  btTriangleMesh *m_bbColMesh;
 
   bool m_gameOver = false;
   int m_score = 0;
