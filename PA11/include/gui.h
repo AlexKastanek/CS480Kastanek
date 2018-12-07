@@ -22,7 +22,7 @@ public:
 
 	int Initialize(SDL_Window* window, SDL_GLContext context);
 	bool Update(SDL_Window* window, Graphics* graphics);
-	void Render(SDL_Window* window, SDL_GLContext context);
+	void Render();
 
   ImVec2 CalculateCenteredPos(ImVec2 textSize);
 

@@ -60,11 +60,8 @@ bool Engine::Initialize()
 
 void Engine::Run()
 {
-
   m_running = true;
-  SDL_SetRelativeMouseMode(SDL_TRUE);
-
-
+  
   while(m_running)
   {
 
@@ -73,8 +70,7 @@ void Engine::Run()
       // Update the DT
       m_DT = getDT();
 
-      //SDL_SetWindowGrab(m_window->GetWindow(), SDL_TRUE);
-      //SDL_SetRelativeMouseMode(SDL_FALSE);
+      SDL_SetRelativeMouseMode(SDL_FALSE);
       while(SDL_PollEvent(&m_event) != 0) {} //clear events
 
       m_graphics->Update(m_DT);
@@ -83,7 +79,7 @@ void Engine::Run()
       // Update and render the GUI
       m_gui->SetGameOver(true);
       m_running = m_gui->Update(m_window->GetWindow(), m_graphics);
-      m_gui->Render(m_window->GetWindow(), m_window->GetContext());
+      m_gui->Render();
 
       // Swap to the Window
       m_window->Swap();
@@ -92,38 +88,31 @@ void Engine::Run()
     {
       // Update the DT
       m_DT = getDT();
-
       
-      
-      //SDL_ShowWindow(m_window->GetWindow());
-      //SDL_RaiseWindow(m_window->GetWindow());
-      
-      cout << "Relative mouse mode? " << SDL_GetRelativeMouseMode() << endl;
-      
-      
+      // Get input and ensure input is always given from mouse
+      SDL_SetRelativeMouseMode(SDL_TRUE);
       while(SDL_PollEvent(&m_event) != 0)
       {
         Keyboard();
       }
+
+      // Keep mouse inside window
+      SDL_WarpMouseInWindow(
+        m_window->GetWindow(),
+        m_WINDOW_WIDTH/2, 
+        m_WINDOW_HEIGHT/2);
       
-    
       // Update and render the graphics
       m_graphics->Update(m_DT);
       m_graphics->Render();
 
-      /*
       // Update and render the GUI
       m_gui->SetGameOver(false);
       m_gui->Update(m_window->GetWindow(), m_graphics);
-      m_gui->Render(m_window->GetWindow(), m_window->GetContext());
-      */
-
-      //SDL_SetWindowGrab(m_window->GetWindow(), SDL_TRUE);
+      m_gui->Render();
 
       // Swap to the Window
       m_window->Swap();
-
-      cout << "Window grabbed? " << SDL_GetWindowGrab(m_window->GetWindow()) << endl;;
     }
   }
 }

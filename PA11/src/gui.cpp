@@ -51,7 +51,6 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
-    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
 
     string gameOverDisplay = "Game Over!";
     ImVec2 gameOverSize = ImGui::CalcTextSize(gameOverDisplay.c_str());
@@ -64,8 +63,6 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     }
     ImGui::End();
 
-    //ImGui::PopStyleColor(1);
-
     ImGui::PopFont();
 
     //then medium text
@@ -73,7 +70,6 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowSize(ImVec2 (m_width, m_height));
-    //ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0,0,0,0));
 
     string finalScoreDisplay = "Final Score: " + to_string(graphics->m_world->GetScore());
     ImVec2 finalScoreSize = ImGui::CalcTextSize(finalScoreDisplay.c_str());
@@ -160,8 +156,6 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     }
     ImGui::End();
 
-    //ImGui::PopStyleColor(1);
-
     ImGui::PopFont();
   }
   else
@@ -185,17 +179,10 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
   return running;
 }
 
-void GUI::Render(SDL_Window* window, SDL_GLContext context)
+void GUI::Render()
 {
   ImGui::Render();
-  //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-  ImGuiIO& io = ImGui::GetIO(); (void)io;
-  SDL_GL_MakeCurrent(window, context);
-  glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-  //glClear(GL_COLOR_BUFFER_BIT);
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-  //ImGui::EndFrame();
 }
 
 ImVec2 GUI::CalculateCenteredPos(ImVec2 textSize)
