@@ -7,6 +7,8 @@
 #include "trigger_object.h"
 #include "obstacle.h"
 #include "gun.h"
+#include "bullet.h"
+#include "camera.h"
 
 using namespace std;
 
@@ -30,6 +32,8 @@ public:
   int GetScore();
   bool IsNewHighScore();
   string* GetTopTenStats();
+  
+  void createBullet(float, float, float);
 
   glm::mat4 m_cameraTransform;
   
@@ -41,6 +45,10 @@ private:
 
   Obstacle *m_target;
   btTriangleMesh *m_targetColMesh;
+  
+  Bullet *m_bullets[100];
+  btVector3 bulletDir[100];
+  int m_bulletIterator = 0;
 
   Gun *m_gun;
 

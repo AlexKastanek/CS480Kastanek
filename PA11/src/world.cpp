@@ -69,6 +69,11 @@ void World::Update(unsigned int dt)
   m_ground->Update(dt);
   m_target->Update(dt);
   m_gun->Update(dt);
+  
+  for(int i=0 ; i<m_bulletIterator ; i++)
+  {
+      m_bullets[i]->Update(dt, bulletDir[i]);
+  }
 }
 
 void World::Render()
@@ -109,6 +114,17 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
         GL_FALSE, 
         glm::value_ptr(m_gun->GetModel()));
       m_gun->Render();
+      break;
+    case 3:
+        for(int i=0 ; i<m_bulletIterator ; i++)
+        {
+            glUniformMatrix4fv(
+                modelMatrix, 
+                1, 
+                GL_FALSE, 
+                glm::value_ptr(m_bullets[i]->GetModel()));
+            m_bullets[i]->Render();
+        }
       break;
     //add more cases for more objects
     default: break;
@@ -230,4 +246,22 @@ bool World::IsNewHighScore()
 string* World::GetTopTenStats()
 {
   return m_topTenStats;
+}
+
+void World::createBullet(float x, float y, float z)
+{
+  if(m_bulletIterator < 10)
+  {
+    m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 5.0, glm::vec3(x,y,z +.5));
+    m_bullets[m_bulletIterator]->Initialize();
+    m_dynamicsWorld->addRigidBody(m_bullets[m_bulletIterator]->m_rigidBody);
+    bulletDir[m_bulletIterator] = btVector3(x,y,z);
+    m_bulletIterator++;
+  }
+  
+  else
+  {
+      cout << "Out of Ammo!!" << endl;
+      
+  }
 }

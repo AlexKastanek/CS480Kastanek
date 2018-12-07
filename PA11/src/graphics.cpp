@@ -399,3 +399,8 @@ std::string Graphics::ErrorString(GLenum error)
     return "None";
   }
 }
+
+void Graphics::shooooooooooot()
+{
+    m_world->createBullet(m_camera->GetPosition().x, m_camera->GetPosition().y, m_camera->GetPosition().z);
+}
