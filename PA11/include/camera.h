@@ -27,6 +27,8 @@ class Camera
     float GetMoveDirectionX();
     float GetMoveDirectionY();
     float GetMoveDirectionZ();
+    float GetPitch();
+    float GetYaw();
 
     void SetPosition(glm::vec3 position);
     void SetFocusPoint(glm::vec3 focusPoint);

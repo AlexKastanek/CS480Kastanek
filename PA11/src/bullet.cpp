@@ -83,7 +83,7 @@ bool Bullet::Initialize()
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.01f);
+  btScalar mass(5.0f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -102,7 +102,7 @@ bool Bullet::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-  m_rigidBody->setRestitution(1.0);
+  //m_rigidBody->setRestitution(1.0);
 
   //don't delete motion state
   //delete motionState;

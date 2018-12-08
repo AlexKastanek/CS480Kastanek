@@ -33,7 +33,7 @@ public:
   bool IsNewHighScore();
   string* GetTopTenStats();
   
-  void createBullet(float, float, float);
+  void createBullet(float, float, float, float, float);
 
   glm::mat4 m_cameraTransform;
   

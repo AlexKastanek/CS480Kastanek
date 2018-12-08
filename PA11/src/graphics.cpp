@@ -402,5 +402,6 @@ std::string Graphics::ErrorString(GLenum error)
 
 void Graphics::shooooooooooot()
 {
-    m_world->createBullet(m_camera->GetPosition().x, m_camera->GetPosition().y, m_camera->GetPosition().z);
+    glm::vec3 pos = m_camera->GetPosition();
+    m_world->createBullet(pos.x, pos.y, pos.z, m_camera->GetPitch(), m_camera->GetYaw());
 }

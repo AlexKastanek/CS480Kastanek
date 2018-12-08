@@ -275,3 +275,13 @@ void Camera::SetMoveDirectionZ(float z)
 {
   m_moveDirection.z = z;
 }
+
+float Camera::GetPitch()
+{
+    return m_pitch;
+}
+
+float Camera::GetYaw()
+{
+    return m_yaw;
+}

@@ -248,14 +248,30 @@ string* World::GetTopTenStats()
   return m_topTenStats;
 }
 
-void World::createBullet(float x, float y, float z)
+void World::createBullet(float x, float y, float z, float pitch, float yaw)
 {
-  if(m_bulletIterator < 10)
+  if(m_bulletIterator < 100)
   {
-    m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 5.0, glm::vec3(x,y,z +.5));
+    //bulletDir[m_bulletIterator] = btVector3(0.0,0.0,z);
+    
+//     float xDir = -cos(pitch*M_PI/180.0) * sin(yaw*M_PI/180.0);
+//     float yDir = sin(pitch*M_PI/180.0);
+//     float zDir = -cos(pitch*M_PI/180.0) * cos(yaw*M_PI/180.0);
+    
+    glm::vec3 localForward = glm::vec3(0.0, 0.0, -1.0);
+    localForward.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+    localForward.y = sin(glm::radians(pitch));
+    localForward.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+    localForward = glm::normalize(localForward);
+    btVector3 shootDir = btVector3(localForward.x,localForward.y,localForward.z);
+    
+    
+    
+    m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 5.0, glm::vec3(x, y, z));
     m_bullets[m_bulletIterator]->Initialize();
     m_dynamicsWorld->addRigidBody(m_bullets[m_bulletIterator]->m_rigidBody);
-    bulletDir[m_bulletIterator] = btVector3(x,y,z);
+    
+    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir);
     m_bulletIterator++;
   }
   
