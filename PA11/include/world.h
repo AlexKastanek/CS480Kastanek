@@ -45,10 +45,16 @@ private:
 
   Obstacle *m_target;
   btTriangleMesh *m_targetColMesh;
+  TriggerObject *m_targetTrigger;
+  double hitTimer = 0.0f;
   
   Bullet *m_bullets[100];
-  btVector3 bulletDir[100];
+  btVector3 m_bulletDir[100];
   int m_bulletIterator = 0;
+  
+  btCollisionShape *m_lid;
+  btDefaultMotionState *m_lidMotion;
+  btRigidBody *m_lidRigid;
 
   Gun *m_gun;
 

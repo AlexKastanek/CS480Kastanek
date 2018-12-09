@@ -127,6 +127,7 @@ void Bullet::Update(unsigned int dt, btVector3 dir)
   //then update model with transform
 //   m_rigidBody->setLinearVelocity(dir);
   m_rigidBody->getMotionState()->getWorldTransform(transform);
+  //m_rigidBody->setLinearVelocity(dir);
   
   transform.getOpenGLMatrix(modelUpdate);
   model = glm::make_mat4(modelUpdate) * m_scaleMatrix;

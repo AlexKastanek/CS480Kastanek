@@ -14,7 +14,7 @@ public:
   Obstacle(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
   ~Obstacle();
 
-  bool Initialize();
+  bool Initialize(btTriangleMesh*);
   void Update(unsigned int dt);
 
 private:
