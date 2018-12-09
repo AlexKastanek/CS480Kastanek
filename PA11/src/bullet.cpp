@@ -108,7 +108,7 @@ bool Bullet::Initialize()
   //delete motionState;
   //motionState = NULL;
 
-  model = m_translationMatrix;
+  //model = m_translationMatrix;
 
   return true;
 }

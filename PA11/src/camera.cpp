@@ -89,7 +89,7 @@ void Camera::Update(unsigned int dt)
 void Camera::Reset()
 {
   m_position = m_initialPosition;
-  m_focusPoint = m_initialFocusPoint;
+  m_focusPoint = m_initialFocusPoint;//m_ground->Update(dt);
 }
 
 void Camera::HandleKeyboardInput(string input, bool isPressed)
