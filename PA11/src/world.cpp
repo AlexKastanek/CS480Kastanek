@@ -73,6 +73,7 @@ bool World::Initialize()
   }
   
   m_gun = new Gun("..//assets//Gun.obj", 1.0);
+  m_cross = new Cross("..//assets//cross.obj", 1.0);
 
   return true;
 }
@@ -82,10 +83,12 @@ void World::Update(unsigned int dt)
   m_dynamicsWorld->stepSimulation(dt, 0.05f);
 
   m_gun->SetCameraTransform(m_cameraTransform);
+  m_cross->SetCameraTransform(m_cameraTransform);
 
   m_ground->Update(dt);
   m_target->Update(dt);
   m_gun->Update(dt);
+  m_cross->Update(dt);
   
   for(int i=0 ; i<m_ammoCount ; i++)
   {
@@ -111,7 +114,7 @@ void World::Update(unsigned int dt)
   
   hitTimer += (double)dt;
   
-  if(ifTargetHit && hitTimer > 600)
+  if(ifTargetHit && hitTimer > 60)
   {
       cout << "HIT TARGET" << endl;
       m_score += 50;
@@ -158,6 +161,13 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
         GL_FALSE, 
         glm::value_ptr(m_gun->GetModel()));
       m_gun->Render();
+      
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_cross->GetModel()));
+      m_cross->Render();
       break;
     case 3:
         for(int i=0 ; i<m_ammoCount ; i++)
@@ -314,7 +324,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     //zero ball's velocity and set ball to initial transform
     m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
     m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .1);
+    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .5);
     m_bulletIterator++;
 
 }

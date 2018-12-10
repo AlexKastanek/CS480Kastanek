@@ -11,6 +11,7 @@
 #include "bullet.h"
 #include "camera.h"
 #include "bb.h"
+#include "cross.h"
 
 
 using namespace std;
@@ -59,7 +60,7 @@ private:
   Bullet *m_bullets[100];
   int m_bulletIterator = 0;
   
-  
+  Cross *m_cross;
 
   Gun *m_gun;
 

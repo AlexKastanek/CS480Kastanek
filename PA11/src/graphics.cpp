@@ -276,6 +276,7 @@ void Graphics::Render()
     string val = ErrorString( error );
     std::cout<< "Error initializing OpenGL! " << error << ", " << val << std::endl;
   }
+  
 }
 
 void Graphics::passLightToShader(int lightIndex)
@@ -408,3 +409,4 @@ void Graphics::shooooooooooot()
     
     m_world->createBullet(pos.x, pos.y, pos.z, m_camera->GetPitch(), m_camera->GetYaw());
 }
+
