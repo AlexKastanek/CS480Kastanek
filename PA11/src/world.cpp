@@ -63,14 +63,14 @@ bool World::Initialize()
   m_dynamicsWorld->addCollisionObject(m_targetTrigger->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
   
+  //glm::vec3 pos  = setCameraPos();
   
-//   m_lid = new btStaticPlaneShape(btVector3(1, 0, 0), 1);
-//   m_lidMotion = NULL;
-//   m_lidMotion = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1), btVector3(0,4,0)));
-//   btRigidBody::btRigidBodyConstructionInfo lidCI(0, m_lidMotion, m_lid, btVector3(0,0,0));
-//   m_lidRigid = new btRigidBody(lidCI);
-//   m_lidRigid -> setActivationState(DISABLE_DEACTIVATION);
-//   m_dynamicsWorld->addRigidBody(m_lidRigid);
+  for(int i=0 ; i<10 ; i++)
+  {
+    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.6, glm::vec3(900, -900, -900));
+    m_bullets[i]->Initialize();
+    m_dynamicsWorld->addRigidBody(m_bullets[i]->m_rigidBody);
+  }
   
   
 
@@ -89,9 +89,9 @@ void World::Update(unsigned int dt)
   m_target->Update(dt);
   m_gun->Update(dt);
   
-  for(int i=0 ; i<m_bulletIterator ; i++)
+  for(int i=0 ; i<10 ; i++)
   {
-      m_bullets[i]->Update(dt, m_bulletDir[i]);
+    m_bullets[i]->Update(dt, m_bulletDir[i]);
   }
   
   //-----------TRIGGER OBJECT STUFF--------------
@@ -162,7 +162,7 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
       m_gun->Render();
       break;
     case 3:
-        for(int i=0 ; i<m_bulletIterator ; i++)
+        for(int i=0 ; i<10 ; i++)
         {
             glUniformMatrix4fv(
                 modelMatrix, 
@@ -296,7 +296,7 @@ string* World::GetTopTenStats()
 
 void World::createBullet(float x, float y, float z, float pitch, float yaw)
 {
-  if(m_bulletIterator < 100)
+  if(m_bulletIterator < 10)
   {
     //bulletDir[m_bulletIterator] = btVector3(0.0,0.0,z);
     
@@ -314,9 +314,17 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     
     cout << "BULLET POSITION: " << x << " " << y << " "  << z << endl;
     
-    m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 0.6, glm::vec3(x, y, z));
-    m_bullets[m_bulletIterator]->Initialize();
-    m_dynamicsWorld->addRigidBody(m_bullets[m_bulletIterator]->m_rigidBody);
+//     m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 0.6, glm::vec3(x, y, z));
+//     m_bullets[m_bulletIterator]->Initialize();
+//     m_dynamicsWorld->addRigidBody(m_bullets[m_bulletIterator]->m_rigidBody);
+    
+      btTransform bulletTransform(
+      btQuaternion::getIdentity(),
+      btVector3(x, y, z));
+
+    //zero ball's velocity and set ball to initial transform
+    m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
+    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
     
     m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .05);
     m_bulletIterator++;

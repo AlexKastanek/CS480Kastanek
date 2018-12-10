@@ -34,6 +34,7 @@ public:
   string* GetTopTenStats();
   
   void createBullet(float, float, float, float, float);
+  void setCameraPos(glm::vec3 cameraPos);
 
   glm::mat4 m_cameraTransform;
   
@@ -51,6 +52,7 @@ private:
   Bullet *m_bullets[100];
   btVector3 m_bulletDir[100];
   int m_bulletIterator = 0;
+  glm::vec3 m_cameraPos;
   
   btCollisionShape *m_lid;
   btDefaultMotionState *m_lidMotion;
