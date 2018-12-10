@@ -116,6 +116,7 @@ void World::Update(unsigned int dt)
   if(ifTargetHit && hitTimer > 600)
   {
       cout << "HIT TARGET" << endl;
+      m_score += 50;
       hitTimer = 0.0;
   }
   //---------------------------------------------
