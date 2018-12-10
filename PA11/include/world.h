@@ -42,24 +42,24 @@ public:
   glm::mat4 m_cameraTransform;
   
 private:
-  int m_objectCount = 20;
+  int m_objectCount = 20;//object count
 
+  //ground stuff
   Obstacle *m_ground;
   btTriangleMesh *m_groundColMesh;
 
+  //target stuff
   Obstacle *m_target;
   btTriangleMesh *m_targetColMesh;
   TriggerObject *m_targetTrigger;
   double hitTimer = 0.0f;
   
+  //bullet stuff
+  int m_ammoCount = 10;
   Bullet *m_bullets[100];
-  btVector3 m_bulletDir[100];
   int m_bulletIterator = 0;
-  glm::vec3 m_cameraPos;
   
-  btCollisionShape *m_lid;
-  btDefaultMotionState *m_lidMotion;
-  btRigidBody *m_lidRigid;
+  
 
   Gun *m_gun;
 

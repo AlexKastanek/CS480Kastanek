@@ -56,7 +56,7 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
   
   m_targetTrigger = new TriggerObject(
-      glm::vec3(0.01f, 0.01f, 0.01f),
+      glm::vec3(0.1f, 0.1f, 0.1f),
       glm::vec3(0.0f, 4.0f, 0.0f)                  
   );
   m_targetTrigger->Initialize();
@@ -65,15 +65,13 @@ bool World::Initialize()
   
   //glm::vec3 pos  = setCameraPos();
   
-  for(int i=0 ; i<10 ; i++)
+  for(int i=0 ; i<m_ammoCount ; i++)
   {
-    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.6, glm::vec3(900, -900, -900));
+    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.1, glm::vec3(900, -900, -900));
     m_bullets[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_bullets[i]->m_rigidBody);
   }
   
-  
-
   m_gun = new Gun("..//assets//Gun.obj", 1.0);
 
   return true;
@@ -89,9 +87,9 @@ void World::Update(unsigned int dt)
   m_target->Update(dt);
   m_gun->Update(dt);
   
-  for(int i=0 ; i<10 ; i++)
+  for(int i=0 ; i<m_ammoCount ; i++)
   {
-    m_bullets[i]->Update(dt, m_bulletDir[i]);
+    m_bullets[i]->Update(dt);
   }
   
   //-----------TRIGGER OBJECT STUFF--------------
@@ -162,7 +160,7 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
       m_gun->Render();
       break;
     case 3:
-        for(int i=0 ; i<10 ; i++)
+        for(int i=0 ; i<m_ammoCount ; i++)
         {
             glUniformMatrix4fv(
                 modelMatrix, 
@@ -296,13 +294,8 @@ string* World::GetTopTenStats()
 
 void World::createBullet(float x, float y, float z, float pitch, float yaw)
 {
-  if(m_bulletIterator < 10)
-  {
-    //bulletDir[m_bulletIterator] = btVector3(0.0,0.0,z);
-    
-//     float xDir = -cos(pitch*M_PI/180.0) * sin(yaw*M_PI/180.0);
-//     float yDir = sin(pitch*M_PI/180.0);
-//     float zDir = -cos(pitch*M_PI/180.0) * cos(yaw*M_PI/180.0);
+    if(m_bulletIterator >= m_ammoCount)
+        m_bulletIterator = 0;
     
     glm::vec3 localForward = glm::vec3(0.0, 0.0, -1.0);
     localForward.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
@@ -314,10 +307,6 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     
     cout << "BULLET POSITION: " << x << " " << y << " "  << z << endl;
     
-//     m_bullets[m_bulletIterator] = new Bullet("..//assets//Bb.obj", 0.6, glm::vec3(x, y, z));
-//     m_bullets[m_bulletIterator]->Initialize();
-//     m_dynamicsWorld->addRigidBody(m_bullets[m_bulletIterator]->m_rigidBody);
-    
       btTransform bulletTransform(
       btQuaternion::getIdentity(),
       btVector3(x, y, z));
@@ -325,14 +314,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     //zero ball's velocity and set ball to initial transform
     m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
     m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-    
-    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .05);
+    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .1);
     m_bulletIterator++;
-  }
-  
-  else
-  {
-      cout << "Out of Ammo!!" << endl;
-      
-  }
+
 }

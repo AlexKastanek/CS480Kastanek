@@ -14,7 +14,7 @@ public:
   ~Bullet();
 
   bool Initialize();
-  void Update(unsigned int dt, btVector3 dir);
+  void Update(unsigned int dt);
 
 private:
 

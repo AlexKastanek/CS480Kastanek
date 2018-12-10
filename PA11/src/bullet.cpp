@@ -113,7 +113,7 @@ bool Bullet::Initialize()
   return true;
 }
 
-void Bullet::Update(unsigned int dt, btVector3 dir)
+void Bullet::Update(unsigned int dt)
 {
   btTransform transform;
   btScalar modelUpdate[16];
