@@ -52,7 +52,7 @@ link_directories    ( ${BULLET_LIBRARY_DIRS} )
 
 # Set sources
 FILE(GLOB_RECURSE SOURCES "src/*.cpp")
-ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES})
+ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES} src/sound.cpp include/sound.h)
 
 
 add_custom_target("${PROJECT_NAME}_SUCCESSFUL" ALL

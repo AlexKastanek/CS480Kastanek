@@ -29,6 +29,11 @@ To install Bullet, the linux terminal command is
 sudo apt-get update
 sudo apt-get install libbullet-dev
 ```
+To install SDL_Mixer, the linux terminal command is
+```
+sudo apt-get update
+sudo apt-get install libsdl2-mixer-dev
+```
 
 This project uses OpenGL 3.3. Some computers, such as virtual machines in the ECC, can not run this version. In in order to run OpenGL 2.7 follow the instructions at [Using OpenGL 2.7](https://github.com/HPC-Vis/computer-graphics/wiki/Using-OpenGL-2.7)
 

@@ -35,6 +35,7 @@ bool Window::Initialize(const string &name, int* width, int* height)
     return false;
   }
 
+  Sound::background();
   // Start OpenGL for SDL
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);

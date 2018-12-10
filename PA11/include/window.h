@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
+#include "sound.h"
 using namespace std;
 
 class Window
