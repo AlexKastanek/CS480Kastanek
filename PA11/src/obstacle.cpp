@@ -31,7 +31,7 @@ Obstacle::~Obstacle()
 }
 
 
-bool Obstacle::Initialize(btTriangleMesh* triMesh)
+bool Obstacle::Initialize()
 {
   cout << "CHECK OBSTACLE INITIALIZE" << endl;
 
@@ -47,8 +47,8 @@ bool Obstacle::Initialize(btTriangleMesh* triMesh)
   //m_collider = new btStaticPlaneShape(btVector3(0.0f, 1.0f, 0.0f), 1);
   
   //m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
-  m_collider = new btBvhTriangleMeshShape(triMesh, false);
-
+  //m_collider = new btBvhTriangleMeshShape(triMesh, false);
+  m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);

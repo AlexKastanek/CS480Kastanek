@@ -43,7 +43,7 @@ bool World::Initialize()
     1.0f,                         //scale  
     glm::vec3(0.0f, 0.0f, 0.0f),  //position 
     m_groundColMesh);             //collider mesh
-  m_ground->Initialize(m_groundColMesh);
+  m_ground->Initialize();
   m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
 
   m_targetColMesh = new btTriangleMesh();
@@ -52,7 +52,7 @@ bool World::Initialize()
     1.0f,
     glm::vec3(0.0f, 4.0f, 0.0f), 
     m_targetColMesh);
-  m_target->Initialize(m_targetColMesh);
+  m_target->Initialize();
   m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
   
   m_targetTrigger = new TriggerObject(

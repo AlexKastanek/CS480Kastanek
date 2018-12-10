@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <sstream>
+#include <vector>
 #include "graphics_headers.h"
 #include "physics.h"
 #include "trigger_object.h"
@@ -9,6 +10,8 @@
 #include "gun.h"
 #include "bullet.h"
 #include "camera.h"
+#include "bb.h"
+
 
 using namespace std;
 
@@ -59,6 +62,9 @@ private:
   btRigidBody *m_lidRigid;
 
   Gun *m_gun;
+
+  vector<BB*> m_bbContainer;
+  btTriangleMesh *m_bbColMesh;
 
   bool m_gameOver = false;
   int m_score = 0;
