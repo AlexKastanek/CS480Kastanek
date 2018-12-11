@@ -22,6 +22,7 @@ struct Light
   float angle;
   float shininess;
   float attenuation;
+  bool directional;
 };
 
 class Graphics

@@ -157,18 +157,19 @@ bool Graphics::Initialize(int width, int height)
   gLight.attenuation = 0.001f;
   */
 
-  Light mainPointLight;
+  Light mainLight;
 
-  mainPointLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  mainPointLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-  mainPointLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  mainPointLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
-  mainPointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  mainPointLight.angle = 20.0f;
-  mainPointLight.shininess = 50;
-  mainPointLight.attenuation = 0.000001f;
+  mainLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
+  mainLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  mainLight.angle = 20.0f;
+  mainLight.shininess = 50;
+  mainLight.attenuation = 0.000001f;
+  mainLight.directional = true;
 
-  m_lights.push_back(mainPointLight);
+  m_lights.push_back(mainLight);
 
   ambientMod = new float[m_numLights];
   diffuseMod = new float[m_numLights];
@@ -327,6 +328,9 @@ void Graphics::passLightToShader(int lightIndex)
   variableName = lightArray + ".attenuationProduct";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].attenuation);
+  variableName = lightArray + ".directional";
+  glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].directional);
 }
 
 /*
