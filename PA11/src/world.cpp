@@ -88,7 +88,7 @@ void World::Update(unsigned int dt)
   m_ground->Update(dt);
   m_target->Update(dt);
   m_gun->Update(dt);
-  m_cross->Update(dt);
+  if(m_crossRender) m_cross->Update(dt);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
@@ -114,7 +114,7 @@ void World::Update(unsigned int dt)
   
   hitTimer += (double)dt;
   
-  if(ifTargetHit && hitTimer > 60) /**PLAY A "BTINNNNNNNG" SOUND**/
+  if(ifTargetHit && hitTimer > 100) /**PLAY A "BTINNNNNNNG" SOUND**/
   {
       cout << "HIT TARGET" << endl;
       m_score += 50;
@@ -162,12 +162,15 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
         glm::value_ptr(m_gun->GetModel()));
       m_gun->Render();
       
-      glUniformMatrix4fv(
-        modelMatrix, 
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(m_cross->GetModel()));
-      m_cross->Render();
+      if(m_crossRender)
+      {
+        glUniformMatrix4fv(
+            modelMatrix, 
+            1, 
+            GL_FALSE, 
+            glm::value_ptr(m_cross->GetModel()));
+        m_cross->Render();
+      }
       break;
     case 3:
         for(int i=0 ; i<m_bulletInstance ; i++)
@@ -191,12 +194,13 @@ void World::Reset()
 
   //reset game stats
   m_score = 0;
+  m_crossRender = true;
+  m_ammoCount = 0;
 }
 
 void World::GenerateScores(string topTenList[10], bool& highScore)
 {
     ifstream fin, topFin;
-    fin.open("..//assets//scoreLog.txt");
     topFin.open("..//assets//topScores.txt");
     
     struct TopPlayer
@@ -205,14 +209,9 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
       string name;
     };
     
-    int score = 0;
-    
     TopPlayer leaderBoard[11];
     
-    while(!fin.eof())
-        fin >> score;
-    
-    cout << endl << "YOUR SCORE: " << score << endl;
+    cout << endl << "YOUR SCORE: " << m_score << endl;
     
     for(int i=0 ; i<10 ; i++)
     {
@@ -220,8 +219,8 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
        //cout << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
     }
 
-    cout << score << ", " << leaderBoard[0].score << endl;
-    if (score > leaderBoard[0].score)
+    //cout << m_score << ", " << leaderBoard[0].score << endl;
+    if (m_score > leaderBoard[0].score)
     {
       highScore = true;
     }
@@ -233,12 +232,13 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
     nameFin.close();
     
 
-    leaderBoard[10].score = score;
+    leaderBoard[10].score = m_score;
     leaderBoard[10].name = str;
 
     
     //topScores.push_back(score);
     
+    topFin.close();
     ofstream fout;
     fout.open("..//assets//topScores.txt");
 
@@ -272,8 +272,6 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
         fout << leaderBoard[i].score << " " << leaderBoard[i].name << endl; 
     }
         
-    fin.close();
-    topFin.close();
     fout.close();
 }
 
@@ -307,13 +305,13 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     m_ammoCount++;
     if(m_ammoCount > m_ammoMax) /**PLAY A CLICK SOUND**/
     {
-        m_ammoCount = 0;
         cout << "Ran out of Ammo!!" << endl;
         
         //end the game
-        m_score = 0;
-        //GenerateScores(m_topTenStats, m_newHighScore);
-        //m_gameOver = true;
+        //m_score = 0;
+        GenerateScores(m_topTenStats, m_newHighScore);
+        m_gameOver = true;
+        m_crossRender = false;
     }
     
     else /**shoot a bullet;PLAY AN AIR RIFLE POP SOUND**/
@@ -337,7 +335,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         //zero ball's velocity and set ball to initial transform
         m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .095);
+        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .25);
         m_bulletIterator++;
     }
 }

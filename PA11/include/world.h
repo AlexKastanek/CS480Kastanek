@@ -63,6 +63,7 @@ private:
   const int m_ammoMax = 20;
   
   Cross *m_cross;
+  bool m_crossRender = true;
 
   Gun *m_gun;
 
