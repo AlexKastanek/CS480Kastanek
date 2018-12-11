@@ -89,7 +89,7 @@ void Camera::Update(unsigned int dt)
 void Camera::Reset()
 {
   m_position = m_initialPosition;
-  m_focusPoint = m_initialFocusPoint;
+  m_focusPoint = m_initialFocusPoint;//m_ground->Update(dt);
 }
 
 void Camera::HandleKeyboardInput(string input, bool isPressed)
@@ -274,4 +274,14 @@ void Camera::SetMoveDirectionY(float y)
 void Camera::SetMoveDirectionZ(float z)
 {
   m_moveDirection.z = z;
+}
+
+float Camera::GetPitch()
+{
+    return m_pitch;
+}
+
+float Camera::GetYaw()
+{
+    return m_yaw;
 }

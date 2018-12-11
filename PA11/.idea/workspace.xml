@@ -13,14 +13,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1294fcd9-c0fa-4c06-9b4a-217af892e45c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/include/sound.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sound.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PA10/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PA10/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/RioGrande.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/brushed_metal.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/can.blend" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/can.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/can.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/cross.blend" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/cross.blend1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/cross.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/cross.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/green.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/pepsi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/topScores.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/bullet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/can.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/include/cross.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bullet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/can.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/cross.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Bb.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Bb.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Ground.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Ground.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Ground.obj" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Ground.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/nameLog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/nameLog.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/camera.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/graphics.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/graphics.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/window.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/window.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/world.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/world.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/engine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/obstacle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/obstacle.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/window.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/window.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/world.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/world.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -106,6 +132,7 @@
     <session id="1320045506">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -126,13 +153,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cpp" value="318" />
-          <entry key="h" value="209" />
+          <entry key="h" value="211" />
           <entry key="md" value="143" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="527" />
+          <entry key="ObjectiveC" value="529" />
           <entry key="PLAIN_TEXT" value="143" />
         </counts>
       </usages-collector>
@@ -144,7 +171,7 @@
         <entry file="file://$PROJECT_DIR$/src/sound.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="41" lean-forward="true" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+              <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -161,23 +188,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/window.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#120#141#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="150">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/window.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="-540">
+              <caret column="9" selection-start-column="9" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -217,10 +244,10 @@
         <option value="$PROJECT_DIR$/src/engine.cpp" />
         <option value="$PROJECT_DIR$/include/engine.h" />
         <option value="$PROJECT_DIR$/src/sound.cpp" />
-        <option value="$PROJECT_DIR$/include/window.h" />
         <option value="$PROJECT_DIR$/src/window.cpp" />
         <option value="$PROJECT_DIR$/include/sound.h" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/include/window.h" />
       </list>
     </option>
   </component>
@@ -230,7 +257,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="993" />
     <option name="y" value="25" />
     <option name="width" value="927" />
@@ -322,18 +349,17 @@
       <workItem from="1540655705465" duration="4333000" />
       <workItem from="1541093139231" duration="8427000" />
       <workItem from="1541331927998" duration="1902000" />
-      <workItem from="1544394882141" duration="4429000" />
+      <workItem from="1544394882141" duration="4665000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19091000" />
+    <option name="totallyTimeSpent" value="19327000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="993" y="25" width="927" height="1055" extended-state="4" />
-    <editor active="true" />
+    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15437004" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16878805" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -513,16 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/window.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#120#141#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shader.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1615">
@@ -543,7 +559,7 @@
     <entry file="file://$PROJECT_DIR$/src/sound.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="41" lean-forward="true" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -556,8 +572,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/window.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="-540">
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/window.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>

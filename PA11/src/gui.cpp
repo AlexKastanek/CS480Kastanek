@@ -24,9 +24,9 @@ int GUI::Initialize(SDL_Window* window, SDL_GLContext context)
   cout << "(" << m_width << "," << m_height << ")" << endl;
 
   //TODO: change font
-  m_fontSmall = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 25);
-  m_fontMed = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 50);
-  m_fontBig = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 100);
+  m_fontSmall = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 25);
+  m_fontMed = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 50);
+  m_fontBig = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 100);
 
  	return true;
 }
@@ -77,7 +77,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("FinalScore", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 170));
+      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 150));
       ImGui::Text(finalScoreDisplay.c_str());
     }
     ImGui::End();
@@ -167,6 +167,11 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
       ImGui::Text(scoreDisplay.c_str());
+      
+      //Add Ammo Count
+      string ammoDisplay = "Ammo: " + to_string(graphics->m_world->GetAmmoCount());
+      ImGui::SetCursorPos(ImVec2(10,30));
+      ImGui::Text(ammoDisplay.c_str());
     }
     ImGui::End();
 

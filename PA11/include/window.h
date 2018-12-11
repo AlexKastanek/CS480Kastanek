@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include "sound.h"
+#include "graphics_headers.h"
 using namespace std;
 
 class Window

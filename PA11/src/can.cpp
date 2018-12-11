@@ -1,26 +1,26 @@
-#include "obstacle.h"
+#include "can.h"
 
-Obstacle::Obstacle() : PhysicsObject()
+Can::Can() : PhysicsObject()
 {
 
 }
 
-Obstacle::Obstacle(string filename) : PhysicsObject(filename)
+Can::Can(string filename) : PhysicsObject(filename)
 {
 
 }
 
-Obstacle::Obstacle(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
+Can::Can(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
 
 }
 
-Obstacle::Obstacle(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+Can::Can(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
 {
 
 }
 
-Obstacle::~Obstacle()
+Can::~Can()
 {
   delete m_renderData;
   m_children.clear();
@@ -31,9 +31,9 @@ Obstacle::~Obstacle()
 }
 
 
-bool Obstacle::Initialize()
+bool Can::Initialize()
 {
-  cout << "CHECK OBSTACLE INITIALIZE" << endl;
+  cout << "CHECK CAN INITIALIZE" << endl;
 
   //set transform
   btTransform transform(
@@ -44,13 +44,17 @@ bool Obstacle::Initialize()
       m_position.z));
 
   //create the collider
-  m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
+  //m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
+    m_collider = new btCylinderShape(btVector3(
+            m_scale.x/2,
+            m_scale.y/2,
+            m_scale.z/2));
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.0f);
+  btScalar mass(0.01f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -75,7 +79,7 @@ bool Obstacle::Initialize()
   return true;
 }
 
-void Obstacle::Update(unsigned int dt)
+void Can::Update(unsigned int dt)
 {
     btTransform transform;
     btScalar modelUpdate[16];

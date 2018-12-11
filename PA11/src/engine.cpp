@@ -200,6 +200,7 @@ void Engine::Keyboard()
         break;
       case SDL_MOUSEBUTTONDOWN:
         cout << "mouse clicked" << endl;
+        m_graphics-> shooooooooooot();
         break;
       case SDL_MOUSEMOTION:
         mouse_x = m_event.motion.xrel;

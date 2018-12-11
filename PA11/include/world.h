@@ -8,7 +8,11 @@
 #include "trigger_object.h"
 #include "obstacle.h"
 #include "gun.h"
+#include "bullet.h"
+#include "camera.h"
 #include "bb.h"
+#include "cross.h"
+#include "can.h"
 
 using namespace std;
 
@@ -32,17 +36,40 @@ public:
   int GetScore();
   bool IsNewHighScore();
   string* GetTopTenStats();
+  int GetAmmoCount();
+  
+  void createBullet(float, float, float, float, float);
+  void setCameraPos(glm::vec3 cameraPos);
 
   glm::mat4 m_cameraTransform;
   
 private:
-  int m_objectCount = 20;
+  int m_objectCount = 20;//object count
 
+  //ground stuff
   Obstacle *m_ground;
   btTriangleMesh *m_groundColMesh;
 
+  //target stuff
   Obstacle *m_target;
   btTriangleMesh *m_targetColMesh;
+  TriggerObject *m_targetTrigger;
+  double hitTimer = 0.0f;
+  
+  Can *m_can;
+  btTriangleMesh *m_canColMesh;
+  TriggerObject *m_canTrigger;
+  bool m_canShot = false;
+  
+  //bullet stuff
+  const int m_bulletInstance = 10;
+  Bullet *m_bullets[100];
+  int m_bulletIterator = 0;
+  int m_ammoCount = 0;
+  const int m_ammoMax = 20;
+  
+  Cross *m_cross;
+  bool m_crossRender = true;
 
   Gun *m_gun;
 
