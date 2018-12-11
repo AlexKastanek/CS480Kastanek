@@ -23,6 +23,7 @@ class Window
     SDL_GLContext GetContext();
 
   private:
+    Sound *t;
     SDL_Window* gWindow;
     SDL_GLContext gContext;
 };

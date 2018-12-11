@@ -112,7 +112,16 @@
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/bb.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/bullet.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/camera.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/can.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/cross.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/engine.cpp">
@@ -169,6 +178,9 @@
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/sound.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/target.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/texture.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
@@ -203,6 +215,9 @@
 			<Option virtualFolder="CMake Files\CMakeModules\"/>
 		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/CMakeModules/FindSDL2.cmake">
+			<Option virtualFolder="CMake Files\CMakeModules\"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/CMakeModules/FindSDL2_MIXER.cmake">
 			<Option virtualFolder="CMake Files\CMakeModules\"/>
 		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/CMakeModules/Findassimp.cmake">

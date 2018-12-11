@@ -11,10 +11,12 @@ using namespace std;
 
 class Sound{
 public:
+    Sound();
+    ~Sound();
     void background();
-    void audio(const string &file);
+    void audio(const char* &file);
     static Mix_Chunk *soundEffect;
-    static Mix_Chunk *bgMusic;
+    static Mix_Music *bgMusic;
 };
 
 

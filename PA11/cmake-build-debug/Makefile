@@ -163,6 +163,33 @@ src/bb.cpp.s:
 	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/bb.cpp.s
 .PHONY : src/bb.cpp.s
 
+src/bullet.o: src/bullet.cpp.o
+
+.PHONY : src/bullet.o
+
+# target to build an object file
+src/bullet.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/bullet.cpp.o
+.PHONY : src/bullet.cpp.o
+
+src/bullet.i: src/bullet.cpp.i
+
+.PHONY : src/bullet.i
+
+# target to preprocess a source file
+src/bullet.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/bullet.cpp.i
+.PHONY : src/bullet.cpp.i
+
+src/bullet.s: src/bullet.cpp.s
+
+.PHONY : src/bullet.s
+
+# target to generate assembly for a file
+src/bullet.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/bullet.cpp.s
+.PHONY : src/bullet.cpp.s
+
 src/camera.o: src/camera.cpp.o
 
 .PHONY : src/camera.o
@@ -189,6 +216,60 @@ src/camera.s: src/camera.cpp.s
 src/camera.cpp.s:
 	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/camera.cpp.s
 .PHONY : src/camera.cpp.s
+
+src/can.o: src/can.cpp.o
+
+.PHONY : src/can.o
+
+# target to build an object file
+src/can.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/can.cpp.o
+.PHONY : src/can.cpp.o
+
+src/can.i: src/can.cpp.i
+
+.PHONY : src/can.i
+
+# target to preprocess a source file
+src/can.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/can.cpp.i
+.PHONY : src/can.cpp.i
+
+src/can.s: src/can.cpp.s
+
+.PHONY : src/can.s
+
+# target to generate assembly for a file
+src/can.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/can.cpp.s
+.PHONY : src/can.cpp.s
+
+src/cross.o: src/cross.cpp.o
+
+.PHONY : src/cross.o
+
+# target to build an object file
+src/cross.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/cross.cpp.o
+.PHONY : src/cross.cpp.o
+
+src/cross.i: src/cross.cpp.i
+
+.PHONY : src/cross.i
+
+# target to preprocess a source file
+src/cross.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/cross.cpp.i
+.PHONY : src/cross.cpp.i
+
+src/cross.s: src/cross.cpp.s
+
+.PHONY : src/cross.s
+
+# target to generate assembly for a file
+src/cross.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/cross.cpp.s
+.PHONY : src/cross.cpp.s
 
 src/engine.o: src/engine.cpp.o
 
@@ -676,6 +757,33 @@ src/sound.cpp.s:
 	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/sound.cpp.s
 .PHONY : src/sound.cpp.s
 
+src/target.o: src/target.cpp.o
+
+.PHONY : src/target.o
+
+# target to build an object file
+src/target.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/target.cpp.o
+.PHONY : src/target.cpp.o
+
+src/target.i: src/target.cpp.i
+
+.PHONY : src/target.i
+
+# target to preprocess a source file
+src/target.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/target.cpp.i
+.PHONY : src/target.cpp.i
+
+src/target.s: src/target.cpp.s
+
+.PHONY : src/target.s
+
+# target to generate assembly for a file
+src/target.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/target.cpp.s
+.PHONY : src/target.cpp.s
+
 src/texture.o: src/texture.cpp.o
 
 .PHONY : src/texture.o
@@ -797,9 +905,18 @@ help:
 	@echo "... src/bb.o"
 	@echo "... src/bb.i"
 	@echo "... src/bb.s"
+	@echo "... src/bullet.o"
+	@echo "... src/bullet.i"
+	@echo "... src/bullet.s"
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"
+	@echo "... src/can.o"
+	@echo "... src/can.i"
+	@echo "... src/can.s"
+	@echo "... src/cross.o"
+	@echo "... src/cross.i"
+	@echo "... src/cross.s"
 	@echo "... src/engine.o"
 	@echo "... src/engine.i"
 	@echo "... src/engine.s"
@@ -854,6 +971,9 @@ help:
 	@echo "... src/sound.o"
 	@echo "... src/sound.i"
 	@echo "... src/sound.s"
+	@echo "... src/target.o"
+	@echo "... src/target.i"
+	@echo "... src/target.s"
 	@echo "... src/texture.o"
 	@echo "... src/texture.i"
 	@echo "... src/texture.s"

@@ -15,6 +15,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../CMakeModules/FindPackageHandleStandardArgs.cmake"
   "../CMakeModules/FindPackageMessage.cmake"
   "../CMakeModules/FindSDL2.cmake"
+  "../CMakeModules/FindSDL2_MIXER.cmake"
   "../CMakeModules/Findassimp.cmake"
   "CMakeFiles/3.12.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.12.2/CMakeCXXCompiler.cmake"

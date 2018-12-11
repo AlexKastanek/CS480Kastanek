@@ -22,6 +22,7 @@ This warning is for project developers.  Use -Wno-dev to suppress it.
 <FindSDL2.cmake>
 </FindSDL2.cmake>
 -- Found asset importer library: /usr/lib/x86_64-linux-gnu/libassimp.so
+-- Found SDL2_mixer: /usr/lib/x86_64-linux-gnu/libSDL2_mixer.so  
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/mari/CS480Kastanek/PA11/cmake-build-debug
