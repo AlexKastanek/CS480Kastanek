@@ -65,9 +65,9 @@ bool World::Initialize()
   
   //glm::vec3 pos  = setCameraPos();
   
-  for(int i=0 ; i<m_ammoCount ; i++)
+  for(int i=0 ; i<m_bulletInstance ; i++)
   {
-    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.1, glm::vec3(900, -900, -900));
+    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.06, glm::vec3(900, -900, -900));
     m_bullets[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_bullets[i]->m_rigidBody);
   }
@@ -90,7 +90,7 @@ void World::Update(unsigned int dt)
   m_gun->Update(dt);
   m_cross->Update(dt);
   
-  for(int i=0 ; i<m_ammoCount ; i++)
+  for(int i=0 ; i<m_bulletInstance ; i++)
   {
     m_bullets[i]->Update(dt);
   }
@@ -114,7 +114,7 @@ void World::Update(unsigned int dt)
   
   hitTimer += (double)dt;
   
-  if(ifTargetHit && hitTimer > 60)
+  if(ifTargetHit && hitTimer > 60) /**PLAY A "BTINNNNNNNG" SOUND**/
   {
       cout << "HIT TARGET" << endl;
       m_score += 50;
@@ -170,7 +170,7 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
       m_cross->Render();
       break;
     case 3:
-        for(int i=0 ; i<m_ammoCount ; i++)
+        for(int i=0 ; i<m_bulletInstance ; i++)
         {
             glUniformMatrix4fv(
                 modelMatrix, 
@@ -304,27 +304,38 @@ string* World::GetTopTenStats()
 
 void World::createBullet(float x, float y, float z, float pitch, float yaw)
 {
-    if(m_bulletIterator >= m_ammoCount)
+    m_ammoCount++;
+    if(m_ammoCount > m_ammoMax) /**PLAY A CLICK SOUND**/
+    {
+        m_ammoCount = 0;
+        cout << "Ran out of Ammo!!" << endl;
+        
+        //end the game
+        m_score = 0;
+    }
+    
+    else /**shoot a bullet;PLAY AN AIR RIFLE POP SOUND**/
+    {
+        if(m_bulletIterator >= m_bulletInstance)
         m_bulletIterator = 0;
-    
-    glm::vec3 localForward = glm::vec3(0.0, 0.0, -1.0);
-    localForward.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-    localForward.y = sin(glm::radians(pitch));
-    localForward.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-    localForward = glm::normalize(localForward);
-    btVector3 shootDir = btVector3(localForward.x,localForward.y,localForward.z);
-    //m_bulletDir[m_bulletIterator] = btVector3(localForward.x,localForward.y,localForward.z);
-    
-    cout << "BULLET POSITION: " << x << " " << y << " "  << z << endl;
-    
-      btTransform bulletTransform(
-      btQuaternion::getIdentity(),
-      btVector3(x, y, z));
+        
+        glm::vec3 localForward = glm::vec3(0.0, 0.0, -1.0);
+        localForward.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+        localForward.y = sin(glm::radians(pitch));
+        localForward.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+        localForward = glm::normalize(localForward);
+        btVector3 shootDir = btVector3(localForward.x,localForward.y,localForward.z);
+        //m_bulletDir[m_bulletIterator] = btVector3(localForward.x,localForward.y,localForward.z);
+        
+        cout << "BULLET POSITION: " << x << " " << y << " "  << z << endl;
+        cout << "LOOKING AT: " << localForward.x << " " << localForward.y << " " << localForward.z << endl;
+        
+        btTransform bulletTransform(btQuaternion::getIdentity(), btVector3(x, y, z));
 
-    //zero ball's velocity and set ball to initial transform
-    m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
-    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-    m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .5);
-    m_bulletIterator++;
-
+        //zero ball's velocity and set ball to initial transform
+        m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
+        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
+        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .5);
+        m_bulletIterator++;
+    }
 }

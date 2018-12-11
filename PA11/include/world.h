@@ -56,9 +56,11 @@ private:
   double hitTimer = 0.0f;
   
   //bullet stuff
-  int m_ammoCount = 10;
+  const int m_bulletInstance = 10;
   Bullet *m_bullets[100];
   int m_bulletIterator = 0;
+  int m_ammoCount = 0;
+  const int m_ammoMax = 20;
   
   Cross *m_cross;
 
