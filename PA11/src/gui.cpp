@@ -167,6 +167,11 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
       ImGui::Text(scoreDisplay.c_str());
+      
+      //Add Ammo Count
+      string ammoDisplay = "Ammo: " + to_string(graphics->m_world->GetAmmoCount());
+      ImGui::SetCursorPos(ImVec2(10,20));
+      ImGui::Text(ammoDisplay.c_str());
     }
     ImGui::End();
 

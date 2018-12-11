@@ -78,6 +78,7 @@ bool Window::Initialize(const string &name, int* width, int* height)
   }
 
   SDL_SetWindowBordered(gWindow, SDL_FALSE);
+  
 
   return true;
 }
@@ -98,3 +99,5 @@ SDL_GLContext Window::GetContext()
 {
   return gContext;
 }
+
+

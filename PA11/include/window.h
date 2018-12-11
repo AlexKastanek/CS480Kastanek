@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
+#include "graphics_headers.h"
 using namespace std;
 
 class Window
