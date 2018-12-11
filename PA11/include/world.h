@@ -13,6 +13,7 @@
 #include "bb.h"
 #include "cross.h"
 #include "can.h"
+#include "target.h"
 
 using namespace std;
 
@@ -51,7 +52,7 @@ private:
   btTriangleMesh *m_groundColMesh;
 
   //target stuff
-  Obstacle *m_target;
+  Target *m_target;
   btTriangleMesh *m_targetColMesh;
   TriggerObject *m_targetTrigger;
   double hitTimer = 0.0f;
@@ -63,10 +64,10 @@ private:
   
   //bullet stuff
   const int m_bulletInstance = 10;
-  Bullet *m_bullets[100];
+  Bullet *m_bullets[10];
   int m_bulletIterator = 0;
   int m_ammoCount = 0;
-  const int m_ammoMax = 20;
+  const int m_ammoMax = 200;
   
   Cross *m_cross;
   bool m_crossRender = true;

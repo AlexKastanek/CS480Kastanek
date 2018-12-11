@@ -65,6 +65,7 @@ bool Obstacle::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+  
 
   //don't delete motion state
   //delete motionState;
