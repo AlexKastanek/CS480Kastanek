@@ -312,6 +312,8 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         
         //end the game
         m_score = 0;
+        //GenerateScores(m_topTenStats, m_newHighScore);
+        //m_gameOver = true;
     }
     
     else /**shoot a bullet;PLAY AN AIR RIFLE POP SOUND**/
@@ -338,4 +340,13 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .5);
         m_bulletIterator++;
     }
+}
+
+int World::GetAmmoCount()
+{
+    if(m_ammoMax - m_ammoCount > 0)
+        return m_ammoMax - m_ammoCount;
+    
+    else
+        return 0;
 }

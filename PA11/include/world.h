@@ -36,6 +36,7 @@ public:
   int GetScore();
   bool IsNewHighScore();
   string* GetTopTenStats();
+  int GetAmmoCount();
   
   void createBullet(float, float, float, float, float);
   void setCameraPos(glm::vec3 cameraPos);
