@@ -50,7 +50,7 @@ bool Obstacle::Initialize()
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0);
+  btScalar mass(0.0f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -69,24 +69,26 @@ bool Obstacle::Initialize()
   //don't delete motion state
   //delete motionState;
   //motionState = NULL;
+  
+  model = m_translationMatrix;
 
   return true;
 }
 
 void Obstacle::Update(unsigned int dt)
 {
-  btTransform transform;
-  btScalar modelUpdate[16];
+    btTransform transform;
+    btScalar modelUpdate[16];
 
-  //set the scale
-  m_scaleMatrix = glm::scale(
-    glm::mat4(1.0),
-    m_scale);
+    //set the scale
+    m_scaleMatrix = glm::scale(
+            glm::mat4(1.0),
+            m_scale);
 
-  //assign value to transform based on rigid body's new world status
-  //then update model with transform
-  m_rigidBody->getMotionState()->getWorldTransform(transform);
-  
-  transform.getOpenGLMatrix(modelUpdate);
-  model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+    //assign value to transform based on rigid body's new world status
+    //then update model with transform
+    m_rigidBody->getMotionState()->getWorldTransform(transform);
+
+    transform.getOpenGLMatrix(modelUpdate);
+    model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
 }

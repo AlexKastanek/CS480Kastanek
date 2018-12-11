@@ -53,7 +53,7 @@ bool Graphics::Initialize(int width, int height)
   cout << "CHECK GRAPHICS FINISHED CAMERA ALLOC" << endl;
 
   //Init the world
-  m_world = new World(glm::vec3(0.0f, -0.0005f, -0.00005f));
+  m_world = new World(glm::vec3(0.0f, -0.00005f, 0.0f));
   if (!m_world->Initialize())
   {
     printf("World Failed to Initialize\n");
@@ -398,4 +398,13 @@ std::string Graphics::ErrorString(GLenum error)
   {
     return "None";
   }
+}
+
+void Graphics::shooooooooooot()
+{
+    glm::vec3 pos = m_camera->GetPosition();
+    
+    cout << "POSITION: " << pos.x << " " << pos.y << " "  << pos.z << endl;
+    
+    m_world->createBullet(pos.x, pos.y, pos.z, m_camera->GetPitch(), m_camera->GetYaw());
 }

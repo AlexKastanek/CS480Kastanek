@@ -44,6 +44,8 @@ class Graphics
 
     World *m_world;
     Camera *m_camera;
+    
+    void shooooooooooot();
 
   private:
     std::string ErrorString(GLenum error);
