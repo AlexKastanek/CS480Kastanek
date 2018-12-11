@@ -12,6 +12,7 @@
 #include "camera.h"
 #include "bb.h"
 #include "cross.h"
+#include "can.h"
 
 using namespace std;
 
@@ -54,6 +55,11 @@ private:
   btTriangleMesh *m_targetColMesh;
   TriggerObject *m_targetTrigger;
   double hitTimer = 0.0f;
+  
+  Can *m_can;
+  btTriangleMesh *m_canColMesh;
+  TriggerObject *m_canTrigger;
+  bool m_canShot = false;
   
   //bullet stuff
   const int m_bulletInstance = 10;

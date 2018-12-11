@@ -28,7 +28,7 @@ Bullet::~Bullet()
 bool Bullet::Initialize()
 {
   cout << "CHECK Bullet INITIALIZE" << endl;
-  cout << m_position.y << endl;
+  //cout << m_position.y << endl;
 
   btTransform transform(
     btQuaternion::getIdentity(),
