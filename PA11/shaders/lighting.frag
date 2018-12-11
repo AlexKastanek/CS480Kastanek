@@ -17,7 +17,9 @@ uniform struct Light {
     vec3 lightDirection;
     float lightAngle;
     float shininess;
-    float attenuationProduct;    
+    float attenuationProduct;
+    bool directional;
+    bool shadowed;    
 } lights[MAX_LIGHTS];
 
 uniform sampler2D gSampler;
@@ -55,12 +57,20 @@ void main()
         float distanceToLight = length(lights[i].lightPosition.xyz - fP);
         float attenuation = 1.0 / (1.0 + lights[i].attenuationProduct * pow(distanceToLight, 2));
 
-        //if object is outside the cone of influence, set attenuation to zero
-        vec3 direction = normalize(lights[i].lightDirection);
-        float lightToSurfaceAngle = degrees(acos(dot(-L,direction)));
-        if (lightToSurfaceAngle > lights[i].lightAngle)
+        if (!lights[i].directional)
         {
-            attenuation = 0.0;
+            //if object is outside the cone of influence, set attenuation to 
+            //zero
+            vec3 direction = normalize(lights[i].lightDirection);
+            float lightToSurfaceAngle = degrees(acos(dot(-L,direction)));
+            if (lightToSurfaceAngle > lights[i].lightAngle)
+            {
+                attenuation = 0.0;
+            }
+        }
+        else
+        {
+            attenuation = 1.0;
         }
 
         linearColor += (ambient + (attenuation * (diffuse + specular))).xyz;

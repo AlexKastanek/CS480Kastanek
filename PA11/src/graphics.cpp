@@ -159,12 +159,12 @@ bool Graphics::Initialize(int width, int height)
 
   Light mainPointLight;
 
-  mainPointLight.position = glm::vec4(-50.0f, 20.0f, 90.0f, 1.0f);
+  mainPointLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
   mainPointLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainPointLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainPointLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
   mainPointLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  mainPointLight.angle = 180.0f;
+  mainPointLight.angle = 20.0f;
   mainPointLight.shininess = 50;
   mainPointLight.attenuation = 0.000001f;
 
