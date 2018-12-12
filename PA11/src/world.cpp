@@ -47,7 +47,7 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
 
   m_targetColMesh = new btTriangleMesh();
-  m_target = new Obstacle(
+  m_target = new Target(
     "..//assets//Target.obj",
     1.0f,
     glm::vec3(0.0f, 4.0f, 0.0f), 
@@ -63,24 +63,22 @@ bool World::Initialize()
   m_dynamicsWorld->addCollisionObject(m_targetTrigger->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
   
-  m_canColMesh = new btTriangleMesh();
-  m_can = new Can(
-    "..//assets//can.obj",
-    1.0f,
-    glm::vec3(0.0f, 3.0f, -3.0f), 
-    m_canColMesh);
-  m_can->Initialize();
-  m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
-  
-  m_canTrigger = new TriggerObject(
-      glm::vec3(1.0f, 1.0f, 1.0f),
-      glm::vec3(0.0f, 3.0f, -3.0f)                  
-  );
-  m_canTrigger->Initialize();
-  m_dynamicsWorld->addCollisionObject(m_canTrigger->m_ghostObject);
-  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-  
-  //glm::vec3 pos  = setCameraPos();
+//   m_canColMesh = new btTriangleMesh();
+//   m_can = new Can(
+//     "..//assets//can.obj",
+//     1.0f,
+//     glm::vec3(0.0f, 3.0f, -3.0f), 
+//     m_canColMesh);
+//   m_can->Initialize();
+//   m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
+//   
+//   m_canTrigger = new TriggerObject(
+//       glm::vec3(1.0f, 1.0f, 1.0f),
+//       glm::vec3(0.0f, 3.0f, -3.0f)                  
+//   );
+//   m_canTrigger->Initialize();
+//   m_dynamicsWorld->addCollisionObject(m_canTrigger->m_ghostObject);
+//   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
@@ -106,7 +104,7 @@ void World::Update(unsigned int dt)
   m_target->Update(dt);
   m_gun->Update(dt);
   if(m_crossRender) m_cross->Update(dt);
-  m_can->Update(dt);
+//   m_can->Update(dt);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
@@ -116,10 +114,10 @@ void World::Update(unsigned int dt)
   //-----------TRIGGER OBJECT STUFF--------------
   
   bool ifTargetHit = false;
-  bool ifCanHit = false;
+//   bool ifCanHit = false;
   
   int targetCollisionNum = m_targetTrigger->m_ghostObject->getNumOverlappingObjects();
-  int canCollisionNum = m_canTrigger->m_ghostObject->getNumOverlappingObjects();
+//   int canCollisionNum = m_canTrigger->m_ghostObject->getNumOverlappingObjects();
   
   for(int i=0 ; i<targetCollisionNum ; i++)
   {
@@ -131,16 +129,16 @@ void World::Update(unsigned int dt)
             ifTargetHit = true;
       }
   }
-  for(int i=0 ; i<canCollisionNum ; i++)
-  {
-      btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_canTrigger->m_ghostObject->getOverlappingObject(i));
-      
-      for(int j=0 ; j<m_bulletIterator ; j++)
-      {
-        if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
-            ifCanHit = true;
-      }
-  }
+//   for(int i=0 ; i<canCollisionNum ; i++)
+//   {
+//       btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_canTrigger->m_ghostObject->getOverlappingObject(i));
+//       
+//       for(int j=0 ; j<m_bulletIterator ; j++)
+//       {
+//         if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
+//             ifCanHit = true;
+//       }
+//   }
   
   hitTimer += (double)dt;
   
@@ -151,17 +149,17 @@ void World::Update(unsigned int dt)
       hitTimer = 0.0;
   }
   
-  if(ifCanHit && hitTimer > 100) /**PLAY A "BTINNNNNNNG" SOUND**/
-  {
-      if(!m_canShot)
-      {
-        cout << "HIT CAN" << endl;
-        m_score += 500;
-        hitTimer = 0.0;
-        m_canShot = true;
-      }
-      
-  }
+//   if(ifCanHit && hitTimer > 100) /**PLAY A "BTINNNNNNNG" SOUND**/
+//   {
+//       if(!m_canShot)
+//       {
+//         cout << "HIT CAN" << endl;
+//         m_score += 500;
+//         hitTimer = 0.0;
+//         m_canShot = true;
+//       }
+//       
+//   }
   //---------------------------------------------
 }
 
@@ -226,12 +224,12 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
         }
       break;
     case 4:
-        glUniformMatrix4fv(
-            modelMatrix, 
-            1, 
-            GL_FALSE, 
-            glm::value_ptr(m_can->GetModel()));
-        m_can->Render();
+//         glUniformMatrix4fv(
+//             modelMatrix, 
+//             1, 
+//             GL_FALSE, 
+//             glm::value_ptr(m_can->GetModel()));
+//         m_can->Render();
 
       break;
     //add more cases for more objects
@@ -386,7 +384,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         //zero ball's velocity and set ball to initial transform
         m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .25);
+        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .1);
         m_bulletIterator++;
     }
 }
