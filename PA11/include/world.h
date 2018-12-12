@@ -56,13 +56,16 @@ private:
   //target stuff
   Target *m_target;
   btTriangleMesh *m_targetColMesh;
-  TriggerObject *m_targetTrigger;
-  double m_hitTimer = 0.0f;
+  Target *m_target2;
+  btTriangleMesh *m_target2ColMesh;
+  Target *m_target3;
+  btTriangleMesh *m_target3ColMesh;
+  double m_targetHitTimer = 0.0f;
   
   Can *m_can;
   btTriangleMesh *m_canColMesh;
-  TriggerObject *m_canTrigger;
-  bool m_canShot = false;
+  double m_canHitTimer = 0.0f;
+  bool m_canIsHit = false;
   
   //bullet stuff
   const int m_bulletInstance = 10;

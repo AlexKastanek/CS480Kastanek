@@ -15,9 +15,10 @@ Target::Target(string filename, float scale, glm::vec3 position) : PhysicsObject
     m_translateMod = 0;
 }
 
-Target::Target(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh) : PhysicsObject(filename, scale, position, triMesh)
+Target::Target(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, char dir) : PhysicsObject(filename, scale, position, triMesh)
 {
     m_translateMod = 0;
+    m_direction = dir;
 }
 
 Target::~Target()
@@ -93,19 +94,39 @@ void Target::Update(unsigned int dt)
     
     m_position = glm::vec3(origin.x(), origin.y(), origin.z());
      
-    if(m_position.z >= 5.0)
-    {
-        m_direction = false;
-    }
-    else if(m_position.z <= -5.0)
-    {
-        m_direction = true;
-    }
+//     if(m_position.z >= 5.0)
+//     {
+//         m_direction = false;
+//     }
+//     else if(m_position.z <= -5.0)
+//     {
+//         m_direction = true;
+//     }
+//     
+//     if(m_direction)
+//         m_position.z += .06;
+//     else
+//         m_position.z -= .06;
     
-    if(m_direction)
-        m_position.z += .06;
-    else
-        m_position.z -= .06;
+    if(m_position.z >= 5 && m_position.y <= 4)
+        m_direction = 'u';
+    else if(m_position.z >= 5 && m_position.y >= 9)
+        m_direction = 'l';
+    else if(m_position.z <= -5 && m_position.y >= 9)
+        m_direction = 'd';
+    else if(m_position.z <= -5 && m_position.y <= 4)
+        m_direction = 'r';
+    
+    
+    float moveMod = .06;
+    if(m_direction == 'u')
+        m_position.y += moveMod;
+    else if(m_direction == 'l')
+        m_position.z -= moveMod;
+    else if(m_direction == 'd')
+        m_position.y -= moveMod;
+    else if(m_direction == 'r')
+        m_position.z += moveMod;
     
     
     //translate the collision box
