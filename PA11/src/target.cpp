@@ -65,7 +65,7 @@ bool Target::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
 
   //don't delete motion state
   //delete motionState;

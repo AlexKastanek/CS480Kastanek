@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <sstream>
+#include <btBulletDynamicsCommon.h>
 #include <vector>
 #include "graphics_headers.h"
 #include "physics.h"
@@ -55,7 +56,7 @@ private:
   Target *m_target;
   btTriangleMesh *m_targetColMesh;
   TriggerObject *m_targetTrigger;
-  double hitTimer = 0.0f;
+//   double m_hitTimer = 0.0f;
   
   Can *m_can;
   btTriangleMesh *m_canColMesh;
