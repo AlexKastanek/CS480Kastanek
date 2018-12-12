@@ -16,6 +16,7 @@ public:
 
   virtual bool Initialize();
   virtual void Update(unsigned int dt);
+  virtual void transformTrigger(btTransform tf);
 
   //btCollisionShape* GetCollider();
   //btRigidBody* GetRigidBody();

@@ -71,6 +71,13 @@ bool Target::Initialize()
   //delete motionState;
   //motionState = NULL;
   
+  //Initialize Trigger  
+  m_trigger = new TriggerObject(
+      glm::vec3(0.1f, 0.1f, 0.1f) * m_scale,
+      glm::vec3(m_position.x, m_position.y, m_position.z)                  
+  );
+  m_trigger->Initialize();
+  
   model = m_translationMatrix;
 
   return true;
@@ -96,9 +103,9 @@ void Target::Update(unsigned int dt)
     }
     
     if(m_direction)
-        m_position.z += .01;
+        m_position.z += .06;
     else
-        m_position.z -= .01;
+        m_position.z -= .06;
     
     
     //translate the collision box
@@ -109,6 +116,9 @@ void Target::Update(unsigned int dt)
     newTransform.setBasis(basis);
     
     m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+    
+    //translate the trigger
+    m_trigger->transformTrigger(newTransform);
 
     //set the scale
     m_scaleMatrix = glm::scale(

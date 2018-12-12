@@ -45,6 +45,7 @@ public:
 
   glm::mat4 m_cameraTransform;
   
+  
 private:
   int m_objectCount = 20;//object count
 
@@ -56,7 +57,7 @@ private:
   Target *m_target;
   btTriangleMesh *m_targetColMesh;
   TriggerObject *m_targetTrigger;
-//   double m_hitTimer = 0.0f;
+  double m_hitTimer = 0.0f;
   
   Can *m_can;
   btTriangleMesh *m_canColMesh;
@@ -68,7 +69,7 @@ private:
   Bullet *m_bullets[10];
   int m_bulletIterator = 0;
   int m_ammoCount = 0;
-  const int m_ammoMax = 200;
+  const int m_ammoMax = 20;
   
   Cross *m_cross;
   bool m_crossRender = true;

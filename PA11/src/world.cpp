@@ -1,29 +1,6 @@
 #include "world.h"
 #include "graphics.h"
 
-
-/**START CALL BACK**/
-double m_hitTimer = 0.0f;
-bool callbackFunc(btManifoldPoint& cp, const btCollisionObjectWrapper* obj1, int id1, int index1, const btCollisionObjectWrapper* obj2, int id2, int index2)
-{
-    btRigidBody *collidingBody1 = (btRigidBody*)obj1;
-    btRigidBody *collidingBody2 = (btRigidBody*)obj2;
-    
-    if(m_hitTimer > 600)
-    {
-        cout << "collision" << endl;
-        m_hitTimer = 0;
-    }
-    
-//     if((collidingBody1->getCompanionId() == m_bullets[0]->m_rigidBody->getCompanionId()))
-//     {
-//     }
-//     
-    return false;
-}
-
-/**END CALL BACK**/
-
 World::World() : Physics()
 {
 
@@ -78,14 +55,17 @@ bool World::Initialize()
   m_target->Initialize();
   m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
   
-//   m_canColMesh = new btTriangleMesh();
-//   m_can = new Can(
-//     "..//assets//can.obj",
-//     1.0f,
-//     glm::vec3(0.0f, 3.0f, -3.0f), 
-//     m_canColMesh);
-//   m_can->Initialize();
-//   m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
+  m_dynamicsWorld->addCollisionObject(m_target->m_trigger->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+  
+  m_canColMesh = new btTriangleMesh();
+  m_can = new Can(
+    "..//assets//can.obj",
+    1.0f,
+    glm::vec3(0.0f, 3.0f, -3.0f), 
+    m_canColMesh);
+  m_can->Initialize();
+  m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
@@ -96,8 +76,6 @@ bool World::Initialize()
   
   m_gun = new Gun("..//assets//Gun.obj", 1.0);
   m_cross = new Cross("..//assets//cross.obj", 1.0);
-  
-  gContactAddedCallback = callbackFunc;
   
   return true;
 }
@@ -113,15 +91,39 @@ void World::Update(unsigned int dt)
   m_target->Update(dt);
   m_gun->Update(dt);
   if(m_crossRender) m_cross->Update(dt);
-//   m_can->Update(dt);
+  m_can->Update(dt);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
     m_bullets[i]->Update(dt);
   }
   
+  
+  //------------------------------------------------
   m_hitTimer += dt;
   
+  bool ifTargetHit = false;
+  
+  int targetCollisionNum = m_target->m_trigger->m_ghostObject->getNumOverlappingObjects();
+  
+  for(int i=0 ; i<targetCollisionNum ; i++)
+  {
+      btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_target->m_trigger->m_ghostObject->getOverlappingObject(i));
+      
+      for(int j=0 ; j<m_bulletIterator ; j++)
+      {
+        if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
+            ifTargetHit = true;
+      }
+  }
+  
+  if(ifTargetHit && m_hitTimer > 100) /**PLAY A "BTINNNNNNNG" SOUND**/
+  {
+      cout << "HIT TARGET" << endl;
+      m_score += 50;
+      m_hitTimer = 0.0;
+  }
+//---------------------------------------------
 }
 
 void World::Render()
@@ -185,12 +187,12 @@ void World::Render(GLint& modelMatrix, unsigned int obj)
         }
       break;
     case 4:
-//         glUniformMatrix4fv(
-//             modelMatrix, 
-//             1, 
-//             GL_FALSE, 
-//             glm::value_ptr(m_can->GetModel()));
-//         m_can->Render();
+        glUniformMatrix4fv(
+            modelMatrix, 
+            1, 
+            GL_FALSE, 
+            glm::value_ptr(m_can->GetModel()));
+        m_can->Render();
 
       break;
     //add more cases for more objects

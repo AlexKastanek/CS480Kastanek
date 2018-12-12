@@ -51,3 +51,8 @@ void TriggerObject::Update(unsigned int dt)
 {
 
 }
+
+void TriggerObject::transformTrigger(btTransform tf)
+{
+    m_ghostObject->setWorldTransform(tf);
+}
