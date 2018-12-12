@@ -2,6 +2,7 @@
 #define LIGHT_H
 
 #include "graphics_headers.h"
+#include "shadow.h"
 #include <iostream>
 
 using namespace std;
@@ -27,6 +28,8 @@ public:
   bool directional;
   float angle;
   float attenuation;
+
+  bool castsShadows;
   
 
 private:
