@@ -53,7 +53,34 @@ void Shadow::Update()
 
 }
 
-void Shadow::Render()
+void Shadow::Bind(Shader& shader)
 {
+  glm::mat4 lightMatrix = m_lightProjection * m_lightView;
+  GLint lightMatrixLocation = shader.GetUniformLocation("lightMatrix");
+  glUniformMatrix4fv(
+    lightMatrixLocation, 
+    1, 
+    GL_FALSE, 
+    glm::value_ptr(lightMatrix));
 
+  glViewport(0, 0, m_shadowWidth, m_shadowHeight);
+  glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, m_depthMap); 
+}
+
+void Shadow::Reset()
+{
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Shadow::SetLightProjection(glm::mat4 lightProjection)
+{
+  m_lightProjection = lightProjection;
+}
+
+void Shadow::SetLightView(glm::mat4 lightView)
+{
+  m_lightView = lightView;
 }
