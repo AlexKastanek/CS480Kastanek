@@ -11,7 +11,9 @@ using namespace std;
 #include "world.h"
 #include "camera.h"
 #include "shader.h"
+#include "light.h"
 
+/*
 struct Light
 {
   glm::vec4 position;
@@ -24,6 +26,7 @@ struct Light
   float attenuation;
   bool directional;
 };
+*/
 
 class Graphics
 {

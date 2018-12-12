@@ -14,6 +14,8 @@ public:
   Light();
   ~Light();
 
+  void Initialize();
+
   /* public attributes to be sent to shader */
 
   glm::vec4 position;
@@ -33,6 +35,9 @@ public:
   
 
 private:
+
+  glm::mat4 m_projection;
+  glm::mat4 m_view;
 
 };
 
