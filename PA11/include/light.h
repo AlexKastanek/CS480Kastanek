@@ -16,10 +16,14 @@ public:
 
   void Initialize();
 
+  glm::mat4 GetProjection();
+  glm::mat4 GetView();
+
   /* public attributes to be sent to shader */
 
   glm::vec4 position;
-  glm::vec3 direction;
+  glm::vec3 focusPoint;
+  //glm::vec3 direction;
 
   glm::vec4 ambient;
   glm::vec4 diffuse;

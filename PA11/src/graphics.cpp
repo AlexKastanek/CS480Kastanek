@@ -163,7 +163,7 @@ bool Graphics::Initialize(int width, int height)
   mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
-  mainLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
+  mainLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
   mainLight.angle = 20.0f;
   mainLight.shininess = 50;
   mainLight.attenuation = 0.000001f;
@@ -314,11 +314,15 @@ void Graphics::passLightToShader(int lightIndex)
     m_lights[lightIndex].specular.w);
 
   //pass additional lighting data
+  glm::vec3 lightDirection = m_lights[lightIndex].focusPoint - glm::vec3(
+    m_lights[lightIndex].position.x,
+    m_lights[lightIndex].position.y,
+    m_lights[lightIndex].position.z);
   variableName = lightArray + ".lightDirection";
   glUniform3f(m_currentShader->GetUniformLocation(variableName.c_str()),
-    m_lights[lightIndex].direction.x, 
-    m_lights[lightIndex].direction.y, 
-    m_lights[lightIndex].direction.z);
+    lightDirection.x, 
+    lightDirection.y, 
+    lightDirection.z);
   variableName = lightArray + ".lightAngle";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].angle);
