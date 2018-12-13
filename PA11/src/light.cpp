@@ -25,7 +25,7 @@ Light::~Light()
 
 void Light::Initialize()
 {
-  m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 50.0f);
+  m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 20.0f);
   m_view = glm::lookAt(
     glm::vec3(
       position.x,
