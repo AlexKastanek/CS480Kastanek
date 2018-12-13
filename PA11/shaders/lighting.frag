@@ -3,7 +3,7 @@
 
 in vec4 fLightSpacePos;
 in vec3 fN;
-//in vec3 fE;
+in vec3 fE;
 in vec3 fP;
 in vec2 uv;
 

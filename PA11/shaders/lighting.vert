@@ -7,7 +7,7 @@ layout (location = 2) in vec3 v_normal;
 
 out vec4 fLightSpacePos;
 out vec3 fN;
-//out vec3 fE;
+out vec3 fE;
 out vec3 fP;
 out vec2 uv;
 
@@ -23,9 +23,9 @@ void main()
     vec4 v = vec4(v_position, 1.0);
     vec3 pos = ((viewMatrix * modelMatrix) * v).xyz;
 
-    fN = ((viewMatrix * modelMatrix) * vec4(v_normal, 0.0)).xyz;
+    fN = (modelMatrix * vec4(v_normal, 0.0)).xyz;
     //fN = transpose(inverse(mat3(modelMatrix))) * v_normal;
-    //fE = ;
+    fE = -pos;
     fP = (modelMatrix * v).xyz;
     
     uv = v_texture;

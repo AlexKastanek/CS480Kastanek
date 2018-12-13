@@ -134,10 +134,10 @@ bool Graphics::Initialize(int width, int height)
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
   mainLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
-  mainLight.angle = 20.0f;
+  mainLight.angle = 10.0f;
   mainLight.shininess = 50;
   mainLight.attenuation = 0.000001f;
-  mainLight.directional = true;
+  mainLight.directional = false;
   mainLight.castsShadows = true;
 
   mainLight.Initialize();
