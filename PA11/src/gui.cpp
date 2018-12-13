@@ -58,7 +58,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("GameOver", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 220));
+      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 240));
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
@@ -77,7 +77,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("FinalScore", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 150));
+      ImGui::SetCursorPos(ImVec2(finalScoreCursor.x, finalScoreCursor.y - 170));
       ImGui::Text(finalScoreDisplay.c_str());
     }
     ImGui::End();
@@ -99,7 +99,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
       if (ImGui::Begin("CongratsMessage", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
       {
-        ImGui::SetCursorPos(ImVec2(congratsCursor.x, congratsCursor.y - 135));
+        ImGui::SetCursorPos(ImVec2(congratsCursor.x, congratsCursor.y - 130));
         ImGui::Text(congratsDisplay.c_str());
       }
       ImGui::End();
@@ -121,7 +121,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
       if (ImGui::Begin(header.c_str(), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
       {
-        ImGui::SetCursorPos(ImVec2(topPlayerCursor.x, topPlayerCursor.y + (initialYOffset + 25 * i)));
+        ImGui::SetCursorPos(ImVec2(topPlayerCursor.x, topPlayerCursor.y + (initialYOffset + 40 * i)));
         ImGui::Text(topPlayerDisplay.c_str());
       }
       ImGui::End();
@@ -140,14 +140,14 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("UserOptions", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar))
     {
-      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 180));
+      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 295));
       if (ImGui::Button(restartDisplay.c_str()))
       {
         cout << "restarting" << endl;
         graphics->m_world->Reset();
       }
 
-      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 220));
+      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 335));
       if (ImGui::Button(exitDisplay.c_str()))
       {
         cout << "exiting" << endl;

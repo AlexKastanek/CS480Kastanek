@@ -12,10 +12,12 @@ class TriggerObject
 {
 public:
   TriggerObject(glm::vec3 dimensions, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
+  TriggerObject(glm::vec3 dimensions, glm::vec3 position, btCollisionShape* colShape);
   virtual ~TriggerObject();
 
   virtual bool Initialize();
   virtual void Update(unsigned int dt);
+  virtual void transformTrigger(btTransform tf);
 
   //btCollisionShape* GetCollider();
   //btRigidBody* GetRigidBody();

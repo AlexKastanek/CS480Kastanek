@@ -2,6 +2,7 @@
 #define Can_H
 
 #include "physics_object.h"
+#include "trigger_object.h"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ public:
 
   bool Initialize();
   void Update(unsigned int dt);
+  
+  TriggerObject *m_trigger;
 
 private:
 

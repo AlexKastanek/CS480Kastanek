@@ -102,7 +102,7 @@ bool Bullet::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-  //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+  m_rigidBody->setCollisionFlags(btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
   //m_rigidBody->setRestitution(1.0);
 
   //don't delete motion state

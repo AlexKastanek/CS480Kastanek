@@ -54,7 +54,7 @@ bool Can::Initialize()
   m_motionState = new btDefaultMotionState(transform);
 
   //set mass and inertia
-  btScalar mass(0.01f);
+  btScalar mass(0.1f);
   btVector3 inertia(0, 0, 0);
   m_collider->calculateLocalInertia(mass, inertia);
 
@@ -70,6 +70,12 @@ bool Can::Initialize()
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
   //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+  
+    m_trigger = new TriggerObject(
+      glm::vec3(1.0f, 1.0f, 1.0f) * m_scale,
+      glm::vec3(m_position.x, m_position.y, m_position.z)                  
+  );
+  m_trigger->Initialize();
 
   //don't delete motion state
   //delete motionState;
@@ -82,8 +88,25 @@ bool Can::Initialize()
 
 void Can::Update(unsigned int dt)
 {
-    btTransform transform;
+    btTransform transform, newTransform;
     btScalar modelUpdate[16];
+    btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+    btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+
+    
+    m_position = glm::vec3(origin.x(), origin.y(), origin.z());
+    
+    //translate the collision box
+    btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
+    btQuaternion newRotation = btQuaternion::getIdentity();
+    
+    newTransform.setOrigin(newOrigin);
+    newTransform.setBasis(basis);
+    
+    m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+    
+    //translate the trigger
+//     m_trigger->transformTrigger(newTransform);
 
     //set the scale
     m_scaleMatrix = glm::scale(
@@ -93,7 +116,8 @@ void Can::Update(unsigned int dt)
     //assign value to transform based on rigid body's new world status
     //then update model with transform
     m_rigidBody->getMotionState()->getWorldTransform(transform);
-
-    transform.getOpenGLMatrix(modelUpdate);
+    //m_trigger->transformTrigger(transform);
+    
+    newTransform.getOpenGLMatrix(modelUpdate);
     model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
 }

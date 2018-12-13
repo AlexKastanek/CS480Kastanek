@@ -11,7 +11,9 @@ using namespace std;
 #include "world.h"
 #include "camera.h"
 #include "shader.h"
+#include "light.h"
 
+/*
 struct Light
 {
   glm::vec4 position;
@@ -22,7 +24,9 @@ struct Light
   float angle;
   float shininess;
   float attenuation;
+  bool directional;
 };
+*/
 
 class Graphics
 {
@@ -41,6 +45,7 @@ class Graphics
     Shader *m_currentShader;
     Shader *m_vertexBasedShader;
     Shader *m_fragmentBasedShader;
+    Shader *m_shadowDepthShader;
 
     World *m_world;
     Camera *m_camera;
@@ -49,6 +54,8 @@ class Graphics
 
   private:
     std::string ErrorString(GLenum error);
+
+    int m_windowWidth, m_windowHeight;
 
     GLint m_projectionMatrix;
     GLint m_viewMatrix;

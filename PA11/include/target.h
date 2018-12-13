@@ -2,6 +2,8 @@
 #define Target_H
 
 #include "physics_object.h"
+#include "trigger_object.h"
+
 
 using namespace std;
 
@@ -11,17 +13,27 @@ public:
   Target();
   Target(string filename);
   Target(string filename, float scale, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f));
-  Target(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh);
+  Target(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, char dir);
   ~Target();
 
   bool Initialize();
   void Update(unsigned int dt);
+ 
+  TriggerObject *m_trigger;
+  
+  float m_fallTimer = 0;
+  
+  bool m_isUp = true;
 
 private:
     
     float m_translateMod;
     glm::mat4 translation;
-    bool m_direction = true;
+    char m_direction;
+    
+    glm::vec3 m_fallPos;
+    
+    
 
 };
 
