@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+
 #include <sstream>
 #include <btBulletDynamicsCommon.h>
 #include <vector>
@@ -16,9 +17,10 @@
 #include "cross.h"
 #include "can.h"
 #include "target.h"
+#include "sound.h"
 
 using namespace std;
-
+class Sound;
 class World : public Physics
 {
 public:

@@ -215,6 +215,7 @@ void World::Update(unsigned int dt)
   if(ifTargetHit && m_targetHitTimer > 200) /**PLAY A "BTINNNNNNNG" SOUND**/
   {
       cout << "HIT TARGET" << endl;
+      Mix_PlayChannel(-1, Sound::soundEffect, 0);
       m_score += 50;
       m_targetHitTimer = 0.0;
   }
@@ -460,6 +461,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .05 * m_worldScale);
         m_bulletIterator++;
+        Mix_PlayChannel(-1, Sound::soundEffect2, 0);
     }
 }
 
