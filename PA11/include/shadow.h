@@ -25,8 +25,8 @@ public:
   void SetLightView(glm::mat4 lightView);
 
 private:
-  const unsigned int m_shadowWidth = 1024;
-  const unsigned int m_shadowHeight = 1024;
+  const unsigned int m_shadowWidth = 4096;
+  const unsigned int m_shadowHeight = 4096;
 
   GLuint m_depthMapFBO; //the frame buffer
   GLuint m_depthMap;    //the texture
