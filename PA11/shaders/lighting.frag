@@ -102,7 +102,8 @@ void main()
         if (lights[i].shadowed)
         {
             // set the bias
-            float bias = max(0.07 * (1.0 - dot(N, L)), 0.007);
+            float bias = 0.005 * tan(acos(dot(N,L)));
+            bias = clamp(bias, 0, 0.01);
 
             shadow = CalculateShadow(fLightSpacePos, bias);
         }
