@@ -257,6 +257,28 @@ void Graphics::Render()
   //Send in the texture sampler
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
 
+  // Render scene from light's perspective
+  for (int i = 0; i < m_numLights; i++)
+  {
+    if (m_lights[i].castsShadows)
+    {
+      m_lights[i].Bind(m_currentShader);
+
+      /* render the objects */
+
+      //render generic objects
+      m_world->Render();
+
+      //render specific objects
+      for (int i = 0; i < m_world->GetObjectCount(); i++)
+      {
+        m_world->Render(m_modelMatrix, i);
+      }
+
+      m_lights[i].Reset();
+    }
+  }
+
   /* render the objects */
 
   //render generic objects

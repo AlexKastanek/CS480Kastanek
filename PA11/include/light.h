@@ -2,6 +2,7 @@
 #define LIGHT_H
 
 #include "graphics_headers.h"
+#include "shader.h"
 #include "shadow.h"
 #include <iostream>
 
@@ -15,6 +16,8 @@ public:
   ~Light();
 
   void Initialize();
+  void Bind(Shader& shader);
+  void Reset();
 
   glm::mat4 GetProjection();
   glm::mat4 GetView();
@@ -42,6 +45,8 @@ private:
 
   glm::mat4 m_projection;
   glm::mat4 m_view;
+
+  Shadow m_shadowMap;
 
 };
 

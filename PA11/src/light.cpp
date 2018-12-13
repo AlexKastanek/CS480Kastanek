@@ -35,6 +35,24 @@ void Light::Initialize()
     glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
+void Bind(Shader& shader)
+{
+  if (castsShadows)
+  {
+    m_shadow.SetProjection(m_projection);
+    m_shadow.SetView(m_view);
+    m_shadow.Bind(shader);
+  }
+}
+
+void Reset()
+{
+  if (castsShadows)
+  {
+    m_shadow.Reset();
+  }
+}
+
 glm::mat4 Light::GetProjection()
 {
   return m_projection;
