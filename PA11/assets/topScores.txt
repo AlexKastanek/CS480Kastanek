@@ -1,8 +1,8 @@
+1050 f
+1050 d
+900 f
+850 f
 50 f
-0 none
-0 none
-0 none
-0 none
 0 none
 0 none
 0 none

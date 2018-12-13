@@ -74,8 +74,9 @@ bool Target::Initialize()
   
   //Initialize Trigger  
   m_trigger = new TriggerObject(
-      glm::vec3(0.1f, 0.1f, 0.1f) * m_scale,
-      glm::vec3(m_position.x, m_position.y, m_position.z)                  
+      glm::vec3(0.001f, 0.001f, 0.001f) * m_scale,
+      glm::vec3(m_position.x, m_position.y, m_position.z),
+      m_collider
   );
   m_trigger->Initialize();
   
@@ -118,7 +119,7 @@ void Target::Update(unsigned int dt)
         m_direction = 'r';
     
     
-    float moveMod = .06;
+    float moveMod = .07;
     if(m_direction == 'u')
         m_position.y += moveMod;
     else if(m_direction == 'l')

@@ -62,6 +62,17 @@ private:
   btTriangleMesh *m_target3ColMesh;
   double m_targetHitTimer = 0.0f;
   
+  //target array 1
+  const int m_row1Count = 5;
+  Target *m_row1[5];
+  btTriangleMesh *m_row1ColMesh[5];
+  
+  //target array 2
+  const int m_row2Count = 5;
+  Target *m_row2[5];
+  btTriangleMesh *m_row2ColMesh[5];
+  
+  //can
   Can *m_can;
   btTriangleMesh *m_canColMesh;
   double m_canHitTimer = 0.0f;

@@ -4,6 +4,20 @@ TriggerObject::TriggerObject(glm::vec3 dimensions, glm::vec3 position)
 {
   m_dimensions = dimensions;
   m_position = position;
+  
+  //create the collider
+  m_collider = new btBoxShape(btVector3(
+    m_dimensions.x,
+    m_dimensions.y,
+    m_dimensions.z));
+}
+
+TriggerObject::TriggerObject(glm::vec3 dimensions, glm::vec3 position, btCollisionShape* colShape)
+{
+  m_dimensions = dimensions;
+  m_position = position;
+  
+  m_collider = colShape;
 }
 
 TriggerObject::~TriggerObject()
@@ -24,11 +38,6 @@ bool TriggerObject::Initialize()
       m_position.y,
       m_position.z));
 
-  //create the collider
-  m_collider = new btBoxShape(btVector3(
-    m_dimensions.x,
-    m_dimensions.y,
-    m_dimensions.z));
 
   //create the collider object
   m_ghostObject = new btGhostObject();
