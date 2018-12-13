@@ -21,6 +21,7 @@ public:
 
   glm::mat4 GetProjection();
   glm::mat4 GetView();
+  Shadow& GetShadow();
 
   /* public attributes to be sent to shader */
 
@@ -43,8 +44,8 @@ public:
 
 private:
 
-  glm::mat4 m_projection;
-  glm::mat4 m_view;
+  glm::mat4 m_projection = glm::mat4(1.0);
+  glm::mat4 m_view = glm::mat4(1.0);
 
   Shadow m_shadowMap;
 

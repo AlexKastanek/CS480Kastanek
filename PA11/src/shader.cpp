@@ -89,14 +89,13 @@ std::string Shader::LoadShader(GLenum ShaderType, string shaderName)
 bool Shader::AddShader(GLenum ShaderType, string shaderName)
 {
   std::string s;
-
   
   //type 0 is per vertex, type 1 is per fragment
   try
   {
     if(ShaderType == GL_VERTEX_SHADER)
     {
-      s = LoadShader(GL_VERTEX_SHADER, type);
+      s = LoadShader(GL_VERTEX_SHADER, shaderName);
       /*s = "#version 330\n \
             \
             layout (location = 0) in vec3 v_position; \
@@ -118,7 +117,7 @@ bool Shader::AddShader(GLenum ShaderType, string shaderName)
     }
     else if(ShaderType == GL_FRAGMENT_SHADER)
     {
-      s = LoadShader(GL_FRAGMENT_SHADER, type);
+      s = LoadShader(GL_FRAGMENT_SHADER, shaderName);
       /*s = "#version 330\n \
             \
             smooth in vec3 color; \

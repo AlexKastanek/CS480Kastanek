@@ -128,12 +128,14 @@ void World::Render()
   /* render all generic renderable objects */
 }
 
-void World::Render(GLint& modelMatrix, unsigned int obj)
+void World::Render(Shader& shader, unsigned int obj)
 {
   /* render select objects */
 
   //objects that are rendered in this function should not 
   //be rendered in the other render function
+
+  GLint modelMatrix = shader.GetUniformLocation("modelMatrix");
 
   switch(obj)
   {

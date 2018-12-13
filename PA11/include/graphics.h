@@ -55,6 +55,8 @@ class Graphics
   private:
     std::string ErrorString(GLenum error);
 
+    int m_windowWidth, m_windowHeight;
+
     GLint m_projectionMatrix;
     GLint m_viewMatrix;
     GLint m_modelMatrix; 

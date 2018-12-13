@@ -10,6 +10,8 @@
 
 #include "graphics_headers.h"
 
+using namespace std;
+
 class Shader
 {
   public:

@@ -25,31 +25,40 @@ Light::~Light()
 
 void Light::Initialize()
 {
-  m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
+  m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 50.0f);
   m_view = glm::lookAt(
     glm::vec3(
       position.x,
       position.y,
       position.z),
     focusPoint, 
-    glm::vec3(0.0f, 1.0f, 0.0f));
-}
+    glm::vec3(1.0f, 0.0f, 0.0f));
 
-void Bind(Shader& shader)
-{
   if (castsShadows)
   {
-    m_shadow.SetProjection(m_projection);
-    m_shadow.SetView(m_view);
-    m_shadow.Bind(shader);
+    m_shadowMap.Initialize();
   }
 }
 
-void Reset()
+void Light::Bind(Shader& shader)
 {
   if (castsShadows)
   {
-    m_shadow.Reset();
+    cout << "light position: "
+         << position.x << ", "
+         << position.y << ", "
+         << position.z << endl;
+    m_shadowMap.SetLightProjection(m_projection);
+    m_shadowMap.SetLightView(m_view);
+    m_shadowMap.Bind(shader);
+  }
+}
+
+void Light::Reset()
+{
+  if (castsShadows)
+  {
+    m_shadowMap.Reset();
   }
 }
 
@@ -61,4 +70,9 @@ glm::mat4 Light::GetProjection()
 glm::mat4 Light::GetView()
 {
   return m_view;
+}
+
+Shadow& Light::GetShadow()
+{
+  return m_shadowMap;
 }

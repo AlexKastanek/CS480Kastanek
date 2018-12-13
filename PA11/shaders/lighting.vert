@@ -7,7 +7,7 @@ layout (location = 2) in vec3 v_normal;
 
 out vec4 fLightSpacePos;
 out vec3 fN;
-out vec3 fE;
+//out vec3 fE;
 out vec3 fP;
 out vec2 uv;
 
@@ -24,14 +24,12 @@ void main()
     vec3 pos = ((viewMatrix * modelMatrix) * v).xyz;
 
     fN = ((viewMatrix * modelMatrix) * vec4(v_normal, 0.0)).xyz;
-    fE = -pos;
+    //fN = transpose(inverse(mat3(modelMatrix))) * v_normal;
+    //fE = ;
     fP = (modelMatrix * v).xyz;
     
     uv = v_texture;
 
-    if (shadowed)
-    {
-    	fLightSpacePos = lightMatrix * vec4(fP, 1.0);
-    }
+    fLightSpacePos = (lightMatrix * modelMatrix) * v;
     gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * v;
 } 

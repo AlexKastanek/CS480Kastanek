@@ -19,6 +19,8 @@ public:
   void Bind(Shader& shader);
   void Reset();
 
+  GLuint GetDepthMap();
+
   void SetLightProjection(glm::mat4 lightProjection);
   void SetLightView(glm::mat4 lightView);
 
@@ -26,11 +28,11 @@ private:
   const unsigned int m_shadowWidth = 1024;
   const unsigned int m_shadowHeight = 1024;
 
-  unsigned int m_depthMapFBO; //the frame buffer
-  unsigned int m_depthMap;    //the texture
+  GLuint m_depthMapFBO; //the frame buffer
+  GLuint m_depthMap;    //the texture
 
-  glm::mat4 m_lightProjection;
-  glm::mat4 m_lightView;
+  glm::mat4 m_lightProjection = glm::mat4(1.0f);
+  glm::mat4 m_lightView = glm::mat4(1.0f);
 
 };
 

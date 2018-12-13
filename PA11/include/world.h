@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include "graphics_headers.h"
+#include "shader.h"
 #include "physics.h"
 #include "trigger_object.h"
 #include "obstacle.h"
@@ -25,7 +26,7 @@ public:
   bool Initialize();
   void Update(unsigned int dt);
   void Render();
-  void Render(GLint &modelMatrix, unsigned int obj);
+  void Render(Shader& shader, unsigned int obj);
   void Reset();
 
   void GenerateScores(string topTenList[10], bool& highScore);

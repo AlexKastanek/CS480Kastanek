@@ -34,6 +34,9 @@ bool Graphics::Initialize(int width, int height)
     }
   #endif
 
+  m_windowWidth = width;
+  m_windowHeight = height;
+
   // For OpenGL 3
   GLuint vao;
   glGenVertexArrays(1, &vao);
@@ -62,57 +65,7 @@ bool Graphics::Initialize(int width, int height)
 
   cout << "CHECK GRAPHICS FINISHED PHYSICS AND WORLD ALLOC" << endl;
 
-  // Init the objects
-  //m_board = new Board("..//assets//Board.obj", 13.0f);
-
-  //cout << "CHECK GRAPHICS FINISHED BOARD ALLOC" << endl;
-
   // Set up the shaders
-  /*
-  m_shader = new Shader();
-  if(!m_shader->Initialize())
-  {
-    printf("Shader Failed to Initialize\n");
-    return false;
-  }
-  */
-  m_vertexBasedShader = new Shader();
-  if (!m_vertexBasedShader->Initialize())
-  {
-    printf("Vertex based shader failed to initialize\n");
-    return false;
-  }
-
-  // Add the vertex shader
-  if(!m_vertexBasedShader->AddShader(GL_VERTEX_SHADER, 0))
-  {
-    printf("Vertex Shader failed to Initialize\n");
-    return false;
-  }
-
-  // Add the fragment shader
-  if(!m_vertexBasedShader->AddShader(GL_FRAGMENT_SHADER, 0))
-  {
-    printf("Fragment Shader failed to Initialize\n");
-    return false;
-  }
-
-  // Connect the program
-  if(!m_vertexBasedShader->Finalize())
-  {
-    printf("Program to Finalize\n");
-    return false;
-  }
-
-  // Set up the shaders
-  /*
-  m_shader = new Shader();
-  if(!m_shader->Initialize())
-  {
-    printf("Shader Failed to Initialize\n");
-    return false;
-  }
-  */
   m_fragmentBasedShader = new Shader();
   if (!m_fragmentBasedShader->Initialize())
   {
@@ -121,14 +74,14 @@ bool Graphics::Initialize(int width, int height)
   }
 
   // Add the vertex shader
-  if(!m_fragmentBasedShader->AddShader(GL_VERTEX_SHADER, 1))
+  if(!m_fragmentBasedShader->AddShader(GL_VERTEX_SHADER, "lighting.vert"))
   {
     printf("Vertex Shader failed to Initialize\n");
     return false;
   }
 
   // Add the fragment shader
-  if(!m_fragmentBasedShader->AddShader(GL_FRAGMENT_SHADER, 1))
+  if(!m_fragmentBasedShader->AddShader(GL_FRAGMENT_SHADER, "lighting.frag"))
   {
     printf("Fragment Shader failed to Initialize\n");
     return false;
@@ -141,48 +94,42 @@ bool Graphics::Initialize(int width, int height)
     return false;
   }
 
-  //set which lighting type is currently being used (default is vertex-based)
   m_currentShader = m_fragmentBasedShader;
 
   // Set up the shadow depth shader
   m_shadowDepthShader = new Shader();
-  if (!m_shadowDepthShader->Initialize()
+  if (!m_shadowDepthShader->Initialize())
   {
     printf("Shadow depth shader failed to initialize\n");
     return false;
   }
 
   // Add the vertex shader
-  if (!m_shadowDepthShader->AddShader(GL_VERTEX_SHADER, 2)
+  if (!m_shadowDepthShader->AddShader(GL_VERTEX_SHADER, "shadow_depth.vert"))
   {
     printf("Vertex Shader failed to initialize\n");
     return false;
   }
 
   // Add the fragment shader
-  if (!m_shadowDepthShader->AddShader(GL_FRAGMENT_SHADER, 2)
+  if (!m_shadowDepthShader->AddShader(GL_FRAGMENT_SHADER, "shadow_depth.frag"))
   {
     printf("Fragment Shader failed to initialize\n");
     return false;
   }
 
+  // Connect the program
+  if(!m_shadowDepthShader->Finalize())
+  {
+    printf("Program to Finalize\n");
+    return false;
+  }
 
   /* set the light data */
 
-  /*
-  gLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
-  gLight.ambient = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
-  gLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  gLight.specular = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);
-  gLight.direction = glm::vec3(0.0f, -1.0f, 0.0f);
-  gLight.angle = 40.0f;
-  gLight.shininess = 50;
-  gLight.attenuation = 0.001f;
-  */
-
   Light mainLight;
 
-  mainLight.position = glm::vec4(0.0f, 20.0f, 0.0f, 1.0f);
+  mainLight.position = glm::vec4(0.0f, 10.0f, 0.0f, 1.0f);
   mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
@@ -191,6 +138,9 @@ bool Graphics::Initialize(int width, int height)
   mainLight.shininess = 50;
   mainLight.attenuation = 0.000001f;
   mainLight.directional = true;
+  mainLight.castsShadows = true;
+
+  mainLight.Initialize();
 
   m_lights.push_back(mainLight);
 
@@ -231,7 +181,7 @@ bool Graphics::Initialize(int width, int height)
 
   //enable depth testing
   glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
+  //glDepthFunc(GL_LESS);
 
   //glEnable(GL_LIGHTING);
 
@@ -257,8 +207,45 @@ void Graphics::Update(unsigned int dt)
 void Graphics::Render()
 {
 
+  cout << "CHECK GRAPHICS RENDER ENTRY" << endl;
+
   // Clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   
+  // Render scene from light's perspective
+  cout << "rendering from lights perspective" << endl; 
+  m_shadowDepthShader->Enable();
+
+  glUniform1i(m_currentShader->GetUniformLocation("depthMap"), 0);
+  for (int i = 0; i < m_numLights; i++)
+  {
+    if (m_lights[i].castsShadows)
+    {
+      m_lights[i].Bind(*m_shadowDepthShader);
+
+      /* render the objects */
+
+      //render generic objects
+      m_world->Render();
+
+      //render specific objects
+      for (int j = 0; j < m_world->GetObjectCount(); j++)
+      {
+        m_world->Render(*m_shadowDepthShader, j);
+      }
+
+      m_lights[i].Reset();
+    }
+  }
+
+  glViewport(0, 0, m_windowWidth, m_windowHeight);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+  cout << "finished rendering from lights perspective" << endl;
+  
+  glViewport(0, 0, m_windowWidth, m_windowHeight);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Start the correct program
@@ -267,6 +254,9 @@ void Graphics::Render()
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
+  glm::mat4 lightMatrix = m_lights[0].GetProjection() * m_lights[0].GetView();
+  GLint lightMatrixLocation = m_currentShader->GetUniformLocation("lightMatrix");
+  glUniformMatrix4fv(lightMatrixLocation, 1, GL_FALSE, glm::value_ptr(lightMatrix)); 
 
   //Send in the number of lights
   glUniform1i(m_currentShader->GetUniformLocation("numLights"), m_numLights);
@@ -277,31 +267,20 @@ void Graphics::Render()
     passLightToShader(i);
   }
 
+  // Send in the camera position
+  glm::vec3 cameraPosition = m_camera->GetPosition();
+  glUniform3f(
+    m_currentShader->GetUniformLocation("cameraPosition"),
+    cameraPosition.x,
+    cameraPosition.y,
+    cameraPosition.z);
+
   //Send in the texture sampler
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
   glUniform1i(m_currentShader->GetUniformLocation("shadowMap"), 1);
 
-  // Render scene from light's perspective
-  for (int i = 0; i < m_numLights; i++)
-  {
-    if (m_lights[i].castsShadows)
-    {
-      m_lights[i].Bind(m_currentShader);
-
-      /* render the objects */
-
-      //render generic objects
-      m_world->Render();
-
-      //render specific objects
-      for (int i = 0; i < m_world->GetObjectCount(); i++)
-      {
-        m_world->Render(m_modelMatrix, i);
-      }
-
-      m_lights[i].Reset();
-    }
-  }
+  glActiveTexture(GL_TEXTURE1);
+  glBindTexture(GL_TEXTURE_2D, m_lights[0].GetShadow().GetDepthMap());
 
   /* render the objects */
 
@@ -311,10 +290,10 @@ void Graphics::Render()
   //render specific objects
   for (int i = 0; i < m_world->GetObjectCount(); i++)
   {
-    m_world->Render(m_modelMatrix, i);
+    m_world->Render(*m_currentShader, i);
   }
 
-  //cout << "finished rendering objects" << endl;
+  cout << "finished rendering objects" << endl;
 
   // Get any errors from OpenGL
   auto error = glGetError();
@@ -364,6 +343,10 @@ void Graphics::passLightToShader(int lightIndex)
     m_lights[lightIndex].position.x,
     m_lights[lightIndex].position.y,
     m_lights[lightIndex].position.z);
+  cout << "light direction: "
+       << lightDirection.x << ", "
+       << lightDirection.y << ", "
+       << lightDirection.z << endl;
   variableName = lightArray + ".lightDirection";
   glUniform3f(m_currentShader->GetUniformLocation(variableName.c_str()),
     lightDirection.x, 
@@ -381,6 +364,9 @@ void Graphics::passLightToShader(int lightIndex)
   variableName = lightArray + ".directional";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].directional);
+  variableName = lightArray + ".shadowed";
+  glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
+    m_lights[lightIndex].castsShadows);
 }
 
 /*

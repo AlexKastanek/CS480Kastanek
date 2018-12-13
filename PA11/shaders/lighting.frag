@@ -3,7 +3,7 @@
 
 in vec4 fLightSpacePos;
 in vec3 fN;
-in vec3 fE;
+//in vec3 fE;
 in vec3 fP;
 in vec2 uv;
 
@@ -23,13 +23,15 @@ uniform struct Light {
     bool shadowed;    
 } lights[MAX_LIGHTS];
 
+uniform vec3 cameraPosition;
+
 uniform sampler2D gSampler;
 uniform sampler2D shadowMap;
 
 float CalculateShadow(vec4 posLightSpace, float bias)
 {
     // manual perspective divide (unnecessary if orthographic projection)
-    vec3 projCoords = fLightSpacePos.xyz / fLightSpacePos.w;
+    vec3 projCoords = posLightSpace.xyz / posLightSpace.w;
 
     // shift coordinates from [-1, 1] to [0, 1]
     projCoords = projCoords * 0.5 + 0.5;
@@ -41,7 +43,7 @@ float CalculateShadow(vec4 posLightSpace, float bias)
     float currentDepth = projCoords.z;
 
     // if in shadow set to 0
-    float shadow = currentDepth > closestDepth ? 1.0 : 0.0;
+    float shadow = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
 
     return shadow;
 }
@@ -49,7 +51,7 @@ float CalculateShadow(vec4 posLightSpace, float bias)
 void main()
 {
     vec3 N = normalize(fN);
-    vec3 E = normalize(fE);
+    vec3 E = normalize(cameraPosition);
 
     vec3 linearColor = vec3(0);
 
@@ -100,7 +102,7 @@ void main()
         if (lights[i].shadowed)
         {
             // set the bias
-            float bias = max(0.05 * (1.0 - dot(N, normalize(lights[i].lightDirection))), 0.005);
+            float bias = max(0.07 * (1.0 - dot(N, L)), 0.007);
 
             shadow = CalculateShadow(fLightSpacePos, bias);
         }
@@ -109,7 +111,7 @@ void main()
             shadow = 0.0;
         }
 
-        linearColor += (ambient + (attenuation * (diffuse + specular))).xyz;
+        linearColor += (ambient + (1.0 - shadow) * (attenuation * (diffuse + specular))).xyz;
     }
 
     vec3 gamma = vec3(1.0/2.2);
