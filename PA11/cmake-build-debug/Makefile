@@ -541,6 +541,33 @@ src/imgui_widgets.cpp.s:
 	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.s
 .PHONY : src/imgui_widgets.cpp.s
 
+src/light.o: src/light.cpp.o
+
+.PHONY : src/light.o
+
+# target to build an object file
+src/light.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/light.cpp.o
+.PHONY : src/light.cpp.o
+
+src/light.i: src/light.cpp.i
+
+.PHONY : src/light.i
+
+# target to preprocess a source file
+src/light.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/light.cpp.i
+.PHONY : src/light.cpp.i
+
+src/light.s: src/light.cpp.s
+
+.PHONY : src/light.s
+
+# target to generate assembly for a file
+src/light.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/light.cpp.s
+.PHONY : src/light.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -729,6 +756,33 @@ src/shader.s: src/shader.cpp.s
 src/shader.cpp.s:
 	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/shader.cpp.s
 .PHONY : src/shader.cpp.s
+
+src/shadow.o: src/shadow.cpp.o
+
+.PHONY : src/shadow.o
+
+# target to build an object file
+src/shadow.cpp.o:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o
+.PHONY : src/shadow.cpp.o
+
+src/shadow.i: src/shadow.cpp.i
+
+.PHONY : src/shadow.i
+
+# target to preprocess a source file
+src/shadow.cpp.i:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/shadow.cpp.i
+.PHONY : src/shadow.cpp.i
+
+src/shadow.s: src/shadow.cpp.s
+
+.PHONY : src/shadow.s
+
+# target to generate assembly for a file
+src/shadow.cpp.s:
+	$(MAKE) -f CMakeFiles/ShootingGallery.dir/build.make CMakeFiles/ShootingGallery.dir/src/shadow.cpp.s
+.PHONY : src/shadow.cpp.s
 
 src/sound.o: src/sound.cpp.o
 
@@ -947,6 +1001,9 @@ help:
 	@echo "... src/imgui_widgets.o"
 	@echo "... src/imgui_widgets.i"
 	@echo "... src/imgui_widgets.s"
+	@echo "... src/light.o"
+	@echo "... src/light.i"
+	@echo "... src/light.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -968,6 +1025,9 @@ help:
 	@echo "... src/shader.o"
 	@echo "... src/shader.i"
 	@echo "... src/shader.s"
+	@echo "... src/shadow.o"
+	@echo "... src/shadow.i"
+	@echo "... src/shadow.s"
 	@echo "... src/sound.o"
 	@echo "... src/sound.i"
 	@echo "... src/sound.s"

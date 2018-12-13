@@ -13,7 +13,7 @@ Window::~Window()
   gWindow = NULL;
   SDL_Quit();
 
-  //t.~Sound();
+  t->~Sound();
 }
 
 bool Window::Initialize(const string &name, int* width, int* height)
@@ -36,7 +36,8 @@ bool Window::Initialize(const string &name, int* width, int* height)
     printf("SDL failed to initialize: %s\n", SDL_GetError());
     return false;
   }
-  //t.background();
+
+  t->background();
   // Start OpenGL for SDL
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);

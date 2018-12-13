@@ -252,9 +252,22 @@ CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mari/CS480Kastanek/PA11/src/imgui_widgets.cpp -o CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.s
 
+CMakeFiles/ShootingGallery.dir/src/light.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
+CMakeFiles/ShootingGallery.dir/src/light.cpp.o: ../src/light.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ShootingGallery.dir/src/light.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/light.cpp.o -c /home/mari/CS480Kastanek/PA11/src/light.cpp
+
+CMakeFiles/ShootingGallery.dir/src/light.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShootingGallery.dir/src/light.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mari/CS480Kastanek/PA11/src/light.cpp > CMakeFiles/ShootingGallery.dir/src/light.cpp.i
+
+CMakeFiles/ShootingGallery.dir/src/light.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShootingGallery.dir/src/light.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mari/CS480Kastanek/PA11/src/light.cpp -o CMakeFiles/ShootingGallery.dir/src/light.cpp.s
+
 CMakeFiles/ShootingGallery.dir/src/main.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/ShootingGallery.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ShootingGallery.dir/src/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/main.cpp.o -c /home/mari/CS480Kastanek/PA11/src/main.cpp
 
 CMakeFiles/ShootingGallery.dir/src/main.cpp.i: cmake_force
@@ -267,7 +280,7 @@ CMakeFiles/ShootingGallery.dir/src/main.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/model.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/model.cpp.o: ../src/model.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/ShootingGallery.dir/src/model.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ShootingGallery.dir/src/model.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/model.cpp.o -c /home/mari/CS480Kastanek/PA11/src/model.cpp
 
 CMakeFiles/ShootingGallery.dir/src/model.cpp.i: cmake_force
@@ -280,7 +293,7 @@ CMakeFiles/ShootingGallery.dir/src/model.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/object.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/object.cpp.o: ../src/object.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/ShootingGallery.dir/src/object.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/ShootingGallery.dir/src/object.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/object.cpp.o -c /home/mari/CS480Kastanek/PA11/src/object.cpp
 
 CMakeFiles/ShootingGallery.dir/src/object.cpp.i: cmake_force
@@ -293,7 +306,7 @@ CMakeFiles/ShootingGallery.dir/src/object.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o: ../src/obstacle.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o -c /home/mari/CS480Kastanek/PA11/src/obstacle.cpp
 
 CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.i: cmake_force
@@ -306,7 +319,7 @@ CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/physics.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/physics.cpp.o: ../src/physics.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/ShootingGallery.dir/src/physics.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/ShootingGallery.dir/src/physics.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/physics.cpp.o -c /home/mari/CS480Kastanek/PA11/src/physics.cpp
 
 CMakeFiles/ShootingGallery.dir/src/physics.cpp.i: cmake_force
@@ -319,7 +332,7 @@ CMakeFiles/ShootingGallery.dir/src/physics.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o: ../src/physics_object.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o -c /home/mari/CS480Kastanek/PA11/src/physics_object.cpp
 
 CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.i: cmake_force
@@ -332,7 +345,7 @@ CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/shader.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/shader.cpp.o: ../src/shader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/ShootingGallery.dir/src/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/ShootingGallery.dir/src/shader.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/shader.cpp.o -c /home/mari/CS480Kastanek/PA11/src/shader.cpp
 
 CMakeFiles/ShootingGallery.dir/src/shader.cpp.i: cmake_force
@@ -343,9 +356,22 @@ CMakeFiles/ShootingGallery.dir/src/shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShootingGallery.dir/src/shader.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mari/CS480Kastanek/PA11/src/shader.cpp -o CMakeFiles/ShootingGallery.dir/src/shader.cpp.s
 
+CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
+CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o: ../src/shadow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o -c /home/mari/CS480Kastanek/PA11/src/shadow.cpp
+
+CMakeFiles/ShootingGallery.dir/src/shadow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ShootingGallery.dir/src/shadow.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mari/CS480Kastanek/PA11/src/shadow.cpp > CMakeFiles/ShootingGallery.dir/src/shadow.cpp.i
+
+CMakeFiles/ShootingGallery.dir/src/shadow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ShootingGallery.dir/src/shadow.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mari/CS480Kastanek/PA11/src/shadow.cpp -o CMakeFiles/ShootingGallery.dir/src/shadow.cpp.s
+
 CMakeFiles/ShootingGallery.dir/src/sound.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/sound.cpp.o: ../src/sound.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/ShootingGallery.dir/src/sound.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/ShootingGallery.dir/src/sound.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/sound.cpp.o -c /home/mari/CS480Kastanek/PA11/src/sound.cpp
 
 CMakeFiles/ShootingGallery.dir/src/sound.cpp.i: cmake_force
@@ -358,7 +384,7 @@ CMakeFiles/ShootingGallery.dir/src/sound.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/target.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/target.cpp.o: ../src/target.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/ShootingGallery.dir/src/target.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/ShootingGallery.dir/src/target.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/target.cpp.o -c /home/mari/CS480Kastanek/PA11/src/target.cpp
 
 CMakeFiles/ShootingGallery.dir/src/target.cpp.i: cmake_force
@@ -371,7 +397,7 @@ CMakeFiles/ShootingGallery.dir/src/target.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/texture.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/texture.cpp.o: ../src/texture.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/ShootingGallery.dir/src/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/ShootingGallery.dir/src/texture.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/texture.cpp.o -c /home/mari/CS480Kastanek/PA11/src/texture.cpp
 
 CMakeFiles/ShootingGallery.dir/src/texture.cpp.i: cmake_force
@@ -384,7 +410,7 @@ CMakeFiles/ShootingGallery.dir/src/texture.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.o: ../src/trigger_object.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.o -c /home/mari/CS480Kastanek/PA11/src/trigger_object.cpp
 
 CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.i: cmake_force
@@ -397,7 +423,7 @@ CMakeFiles/ShootingGallery.dir/src/trigger_object.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/window.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/window.cpp.o: ../src/window.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/ShootingGallery.dir/src/window.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/ShootingGallery.dir/src/window.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/window.cpp.o -c /home/mari/CS480Kastanek/PA11/src/window.cpp
 
 CMakeFiles/ShootingGallery.dir/src/window.cpp.i: cmake_force
@@ -410,7 +436,7 @@ CMakeFiles/ShootingGallery.dir/src/window.cpp.s: cmake_force
 
 CMakeFiles/ShootingGallery.dir/src/world.cpp.o: CMakeFiles/ShootingGallery.dir/flags.make
 CMakeFiles/ShootingGallery.dir/src/world.cpp.o: ../src/world.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/ShootingGallery.dir/src/world.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/ShootingGallery.dir/src/world.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ShootingGallery.dir/src/world.cpp.o -c /home/mari/CS480Kastanek/PA11/src/world.cpp
 
 CMakeFiles/ShootingGallery.dir/src/world.cpp.i: cmake_force
@@ -438,6 +464,7 @@ ShootingGallery_OBJECTS = \
 "CMakeFiles/ShootingGallery.dir/src/imgui_impl_opengl3.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/imgui_impl_sdl.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.o" \
+"CMakeFiles/ShootingGallery.dir/src/light.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/main.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/model.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/object.cpp.o" \
@@ -445,6 +472,7 @@ ShootingGallery_OBJECTS = \
 "CMakeFiles/ShootingGallery.dir/src/physics.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/shader.cpp.o" \
+"CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/sound.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/target.cpp.o" \
 "CMakeFiles/ShootingGallery.dir/src/texture.cpp.o" \
@@ -470,6 +498,7 @@ ShootingGallery: CMakeFiles/ShootingGallery.dir/src/imgui_draw.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/imgui_impl_opengl3.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/imgui_impl_sdl.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/imgui_widgets.cpp.o
+ShootingGallery: CMakeFiles/ShootingGallery.dir/src/light.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/main.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/model.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/object.cpp.o
@@ -477,6 +506,7 @@ ShootingGallery: CMakeFiles/ShootingGallery.dir/src/obstacle.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/physics.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/physics_object.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/shader.cpp.o
+ShootingGallery: CMakeFiles/ShootingGallery.dir/src/shadow.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/sound.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/target.cpp.o
 ShootingGallery: CMakeFiles/ShootingGallery.dir/src/texture.cpp.o
@@ -492,12 +522,12 @@ ShootingGallery: /usr/lib/x86_64-linux-gnu/libGL.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libGLU.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libSDL2main.a
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libSDL2.so
+ShootingGallery: /usr/lib/x86_64-linux-gnu/libSDL2_mixer.so
 ShootingGallery: /usr/local/lib/libMagick++-7.Q16HDRI.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libBulletDynamics.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libBulletCollision.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libLinearMath.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libBulletSoftBody.so
-ShootingGallery: /usr/lib/x86_64-linux-gnu/libSDL2_mixer.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libGL.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libGLU.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libSDL2main.a
@@ -507,7 +537,7 @@ ShootingGallery: /usr/lib/x86_64-linux-gnu/libBulletCollision.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libLinearMath.so
 ShootingGallery: /usr/lib/x86_64-linux-gnu/libBulletSoftBody.so
 ShootingGallery: CMakeFiles/ShootingGallery.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable ShootingGallery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mari/CS480Kastanek/PA11/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX executable ShootingGallery"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ShootingGallery.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

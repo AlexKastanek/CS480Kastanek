@@ -154,6 +154,9 @@
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/imgui_widgets.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/light.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/main.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
@@ -173,6 +176,9 @@
 			<Option target="ShootingGallery"/>
 		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/shader.cpp">
+			<Option target="ShootingGallery"/>
+		</Unit>
+		<Unit filename="/home/mari/CS480Kastanek/PA11/src/shadow.cpp">
 			<Option target="ShootingGallery"/>
 		</Unit>
 		<Unit filename="/home/mari/CS480Kastanek/PA11/src/sound.cpp">
