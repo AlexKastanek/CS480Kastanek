@@ -28,6 +28,13 @@ uniform vec3 cameraPosition;
 uniform sampler2D gSampler;
 uniform sampler2D shadowMap;
 
+vec2 poissonDisk[4] = vec2[](
+  vec2( -0.94201624, -0.39906216 ),
+  vec2( 0.94558609, -0.76890725 ),
+  vec2( -0.094184101, -0.92938870 ),
+  vec2( 0.34495938, 0.29387760 )
+);
+
 float CalculateShadow(vec4 posLightSpace, float bias)
 {
     // manual perspective divide (unnecessary if orthographic projection)
@@ -42,9 +49,35 @@ float CalculateShadow(vec4 posLightSpace, float bias)
     // get depth of current fragment
     float currentDepth = projCoords.z;
 
-    // if in shadow set to 0
-    float shadow = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
+    float shadow = 0.0;
 
+    if (projCoords.z > 1.0)
+    {
+        return shadow;
+    }
+
+    // if in shadow set to 0
+    //shadow = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (texture(shadowMap, projCoords.xy + poissonDisk[i]/500.0).z < projCoords.z)
+        {
+            shadow += 0.01;
+        }
+    }
+
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for (int i = -1; i <= 1; ++i)
+    {
+        for (int j = -1; j <= 1; ++j)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+    
     return shadow;
 }
 
@@ -101,11 +134,18 @@ void main()
         float shadow;
         if (lights[i].shadowed)
         {
-            // set the bias
-            float bias = 0.005 * tan(acos(dot(N,L)));
-            bias = clamp(bias, 0, 0.01);
+            if (dot(N, L) < 0)
+            {
+                shadow = 0.0;
+            }
+            else
+            {
+                // set the bias
+                float bias = 0.005 * tan(acos(dot(N,L)));
+                bias = clamp(bias, 0, 0.01);
 
-            shadow = CalculateShadow(fLightSpacePos, bias);
+                shadow = CalculateShadow(fLightSpacePos, bias);
+            }
         }
         else
         {

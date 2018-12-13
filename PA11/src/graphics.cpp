@@ -129,7 +129,7 @@ bool Graphics::Initialize(int width, int height)
 
   Light mainLight;
 
-  mainLight.position = glm::vec4(2.0f, 10.0f, -5.0f, 1.0f);
+  mainLight.position = glm::vec4(2.0f, 20.0f, -5.0f, 1.0f);
   mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
@@ -217,6 +217,8 @@ void Graphics::Render()
   cout << "rendering from lights perspective" << endl; 
   m_shadowDepthShader->Enable();
 
+  glCullFace(GL_FRONT);
+
   glUniform1i(m_currentShader->GetUniformLocation("depthMap"), 0);
   for (int i = 0; i < m_numLights; i++)
   {
@@ -250,6 +252,8 @@ void Graphics::Render()
 
   // Start the correct program
   m_currentShader->Enable();
+
+  glCullFace(GL_BACK);
 
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
