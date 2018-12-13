@@ -1,10 +1,10 @@
-0 none
-0 none
-0 none
-0 none
-0 none 
-0 none
-0 none
+1050 f
+1050 d
+1000 s
+900 f
+850 f
+800 s
+50 f
 0 none
 0 none
 0 none

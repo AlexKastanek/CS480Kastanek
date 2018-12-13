@@ -24,9 +24,9 @@ int GUI::Initialize(SDL_Window* window, SDL_GLContext context)
   cout << "(" << m_width << "," << m_height << ")" << endl;
 
   //TODO: change font
-  m_fontSmall = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 25);
-  m_fontMed = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 50);
-  m_fontBig = io.Fonts->AddFontFromFileTTF("../assets/nasalization-rg.ttf", 100);
+  m_fontSmall = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 25);
+  m_fontMed = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 50);
+  m_fontBig = io.Fonts->AddFontFromFileTTF("../assets/RioGrande.ttf", 100);
 
  	return true;
 }
@@ -58,7 +58,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("GameOver", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar |ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
-      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 220));
+      ImGui::SetCursorPos(ImVec2(gameOverCursor.x, gameOverCursor.y - 240));
       ImGui::Text(gameOverDisplay.c_str());
     }
     ImGui::End();
@@ -99,7 +99,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
       if (ImGui::Begin("CongratsMessage", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
       {
-        ImGui::SetCursorPos(ImVec2(congratsCursor.x, congratsCursor.y - 135));
+        ImGui::SetCursorPos(ImVec2(congratsCursor.x, congratsCursor.y - 130));
         ImGui::Text(congratsDisplay.c_str());
       }
       ImGui::End();
@@ -121,7 +121,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
       if (ImGui::Begin(header.c_str(), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
       {
-        ImGui::SetCursorPos(ImVec2(topPlayerCursor.x, topPlayerCursor.y + (initialYOffset + 25 * i)));
+        ImGui::SetCursorPos(ImVec2(topPlayerCursor.x, topPlayerCursor.y + (initialYOffset + 40 * i)));
         ImGui::Text(topPlayerDisplay.c_str());
       }
       ImGui::End();
@@ -140,14 +140,14 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("UserOptions", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar))
     {
-      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 180));
+      ImGui::SetCursorPos(ImVec2(restartCursor.x, restartCursor.y + 295));
       if (ImGui::Button(restartDisplay.c_str()))
       {
         cout << "restarting" << endl;
         graphics->m_world->Reset();
       }
 
-      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 220));
+      ImGui::SetCursorPos(ImVec2(exitCursor.x, exitCursor.y + 335));
       if (ImGui::Button(exitDisplay.c_str()))
       {
         cout << "exiting" << endl;
@@ -170,7 +170,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       
       //Add Ammo Count
       string ammoDisplay = "Ammo: " + to_string(graphics->m_world->GetAmmoCount());
-      ImGui::SetCursorPos(ImVec2(10,20));
+      ImGui::SetCursorPos(ImVec2(10,30));
       ImGui::Text(ammoDisplay.c_str());
     }
     ImGui::End();

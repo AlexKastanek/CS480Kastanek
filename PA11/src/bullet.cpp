@@ -28,7 +28,7 @@ Bullet::~Bullet()
 bool Bullet::Initialize()
 {
   cout << "CHECK Bullet INITIALIZE" << endl;
-  cout << m_position.y << endl;
+  //cout << m_position.y << endl;
 
   btTransform transform(
     btQuaternion::getIdentity(),
@@ -102,6 +102,7 @@ bool Bullet::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
+  m_rigidBody->setCollisionFlags(btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
   //m_rigidBody->setRestitution(1.0);
 
   //don't delete motion state

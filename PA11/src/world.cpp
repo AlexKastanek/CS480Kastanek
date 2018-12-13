@@ -18,13 +18,14 @@ World::~World()
 
 bool World::Initialize()
 {
+  //Set up the world info  
   btDefaultCollisionConfiguration *collisionConfig;
-
   m_broadphase = new btDbvtBroadphase();
   collisionConfig = new btDefaultCollisionConfiguration();
   m_dispatcher = new btCollisionDispatcher(collisionConfig);
   m_solver = new btSequentialImpulseConstraintSolver();
 
+  //create the world
   m_dynamicsWorld = new btDiscreteDynamicsWorld(
     m_dispatcher,
     m_broadphase,
@@ -37,6 +38,7 @@ bool World::Initialize()
 
   /* Initialize objects */
 
+  //ground
   m_groundColMesh = new btTriangleMesh();
   m_ground = new Obstacle(
     "..//assets//Ground.obj",     //obj file path
@@ -45,36 +47,62 @@ bool World::Initialize()
     m_groundColMesh);             //collider mesh
   m_ground->Initialize();
   m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
-
-  m_targetColMesh = new btTriangleMesh();
-  m_target = new Obstacle(
-    "..//assets//Target.obj",
-    1.0f,
-    glm::vec3(0.0f, 4.0f, 0.0f), 
-    m_targetColMesh);
-  m_target->Initialize();
-  m_dynamicsWorld->addRigidBody(m_target->m_rigidBody);
   
-  m_targetTrigger = new TriggerObject(
-      glm::vec3(0.1f, 0.1f, 0.1f),
-      glm::vec3(0.0f, 4.0f, 0.0f)                  
-  );
-  m_targetTrigger->Initialize();
-  m_dynamicsWorld->addCollisionObject(m_targetTrigger->m_ghostObject);
+  int offset = 0;
+  
+  //target row 1
+  for(int i=0 ; i<m_row1Count ; i++)
+  {
+    m_row1ColMesh[i] = new btTriangleMesh();
+    m_row1[i] = new Target("..//assets//Target.obj", 0.3f, glm::vec3(0.0f, 4.0f, (float)(-4.0 + offset)), m_row1ColMesh[i], 'r');
+    m_row1[i]->Initialize();
+    m_dynamicsWorld->addRigidBody(m_row1[i]->m_rigidBody);
+    m_dynamicsWorld->addCollisionObject(m_row1[i]->m_trigger->m_ghostObject);
+    m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+    
+    offset += 2;
+  }
+  offset = 0;
+  
+  //target row 2
+  for(int i=0 ; i<m_row2Count ; i++)
+  {
+    m_row2ColMesh[i] = new btTriangleMesh();
+    m_row2[i] = new Target("..//assets//Target.obj", 0.3f, glm::vec3(0.0f, 9.0f, (float)(-4.0 + offset)), m_row2ColMesh[i], 'l');
+    m_row2[i]->Initialize();
+    m_dynamicsWorld->addRigidBody(m_row2[i]->m_rigidBody);
+    m_dynamicsWorld->addCollisionObject(m_row2[i]->m_trigger->m_ghostObject);
+    m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+    
+    offset += 2;
+  }
+  offset = 0;
+  
+  
+  //can
+  m_canColMesh = new btTriangleMesh();
+  m_can = new Can(
+    "..//assets//can.obj",
+    1.0f,
+    glm::vec3(0.0f, 3.0f, -3.0f), 
+    m_canColMesh);
+  m_can->Initialize();
+  m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
+  m_dynamicsWorld->addCollisionObject(m_can->m_trigger->m_ghostObject);
   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
   
-  //glm::vec3 pos  = setCameraPos();
-  
+  //bullets
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
-    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.06, glm::vec3(900, -900, -900));
+    m_bullets[i] = new Bullet("..//assets//Bb.obj", 0.06, glm::vec3(900 *(i+1), -900*(i+1), -900*(i+1)));
     m_bullets[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_bullets[i]->m_rigidBody);
   }
   
+  //camera objects
   m_gun = new Gun("..//assets//Gun.obj", 1.0);
   m_cross = new Cross("..//assets//cross.obj", 1.0);
-
+  
   return true;
 }
 
@@ -86,41 +114,91 @@ void World::Update(unsigned int dt)
   m_cross->SetCameraTransform(m_cameraTransform);
 
   m_ground->Update(dt);
-  m_target->Update(dt);
+  
+  for(int i=0 ; i<m_row1Count ; i++)
+    m_row1[i]->Update(dt);
+  
+  for(int i=0 ; i<m_row2Count ; i++)
+    m_row2[i]->Update(dt);
+  
   m_gun->Update(dt);
-  m_cross->Update(dt);
+  if(m_crossRender) m_cross->Update(dt);
+  m_can->Update(dt);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
     m_bullets[i]->Update(dt);
   }
   
-  //-----------TRIGGER OBJECT STUFF--------------
   
+  //------------------------------------------------
+  
+  //increase timers by dt
+  m_targetHitTimer += dt;
+  //m_canHitTimer += dt;
+  
+  //create bool
   bool ifTargetHit = false;
+  bool ifCanHit = false;
   
-  int targetCollisionNum = m_targetTrigger->m_ghostObject->getNumOverlappingObjects();
+  //get number over overlaps
+  int canCollisionNum = m_can->m_trigger->m_ghostObject->getNumOverlappingObjects();
+  int row1CollisionNum[m_row1Count];
+  for(int n=0 ; n<m_row1Count ; n++)
+      row1CollisionNum[n] = m_row1[n]->m_trigger->m_ghostObject->getNumOverlappingObjects();
+  int row2CollisionNum[m_row2Count];
+  for(int n=0 ; n<m_row2Count ; n++)
+      row2CollisionNum[n] = m_row2[n]->m_trigger->m_ghostObject->getNumOverlappingObjects();
   
-  for(int i=0 ; i<targetCollisionNum ; i++)
+  
+  //Check for collisions
+  for(int i=0 ; i<canCollisionNum ; i++)
   {
-      btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_targetTrigger->m_ghostObject->getOverlappingObject(i));
+      btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_can->m_trigger->m_ghostObject->getOverlappingObject(i));
       
       for(int j=0 ; j<m_bulletIterator ; j++)
       {
         if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
-            ifTargetHit = true;
+            ifCanHit = true;
       }
   }
   
-  hitTimer += (double)dt;
+  for(int n=0 ; n<m_row1Count ; n++)
+  {
+    for(int i=0 ; i<row1CollisionNum[n] ; i++)
+    {
+        btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_row1[n]->m_trigger->m_ghostObject->getOverlappingObject(i));
+        
+        for(int j=0 ; j<m_bulletIterator ; j++)
+        {
+            if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
+                ifTargetHit = true;
+        }
+    }
+  }
   
-  if(ifTargetHit && hitTimer > 60) /**PLAY A "BTINNNNNNNG" SOUND**/
+  for(int n=0 ; n<m_row2Count ; n++)
+  {
+    for(int i=0 ; i<row2CollisionNum[n] ; i++)
+    {
+        btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_row2[n]->m_trigger->m_ghostObject->getOverlappingObject(i));
+        
+        for(int j=0 ; j<m_bulletIterator ; j++)
+        {
+            if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
+                ifTargetHit = true;
+        }
+    }
+  }
+  
+  
+  //do stuff
+  if(ifTargetHit && m_targetHitTimer > 200) /**PLAY A "BTINNNNNNNG" SOUND**/
   {
       cout << "HIT TARGET" << endl;
       m_score += 50;
-      hitTimer = 0.0;
+      m_targetHitTimer = 0.0;
   }
-  //---------------------------------------------
 }
 
 void World::Render()
@@ -149,12 +227,25 @@ void World::Render(Shader& shader, unsigned int obj)
       m_ground->Render();
       break;
     case 1:
-      glUniformMatrix4fv(
-        modelMatrix, 
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(m_target->GetModel()));
-      m_target->Render();
+        for(int i=0 ; i<m_row1Count ; i++)
+        {
+            glUniformMatrix4fv(
+                modelMatrix, 
+                1, 
+                GL_FALSE, 
+                glm::value_ptr(m_row1[i]->GetModel()));
+            m_row1[i]->Render();
+        }
+        
+        for(int i=0 ; i<m_row2Count ; i++)
+        {
+            glUniformMatrix4fv(
+                modelMatrix, 
+                1, 
+                GL_FALSE, 
+                glm::value_ptr(m_row2[i]->GetModel()));
+            m_row2[i]->Render();
+        }
       break;
     case 2:
       glUniformMatrix4fv(
@@ -164,12 +255,15 @@ void World::Render(Shader& shader, unsigned int obj)
         glm::value_ptr(m_gun->GetModel()));
       m_gun->Render();
       
-      glUniformMatrix4fv(
-        modelMatrix, 
-        1, 
-        GL_FALSE, 
-        glm::value_ptr(m_cross->GetModel()));
-      m_cross->Render();
+      if(m_crossRender)
+      {
+        glUniformMatrix4fv(
+            modelMatrix, 
+            1, 
+            GL_FALSE, 
+            glm::value_ptr(m_cross->GetModel()));
+        m_cross->Render();
+      }
       break;
     case 3:
         for(int i=0 ; i<m_bulletInstance ; i++)
@@ -182,6 +276,15 @@ void World::Render(Shader& shader, unsigned int obj)
             m_bullets[i]->Render();
         }
       break;
+    case 4:
+        glUniformMatrix4fv(
+            modelMatrix, 
+            1, 
+            GL_FALSE, 
+            glm::value_ptr(m_can->GetModel()));
+        m_can->Render();
+
+      break;
     //add more cases for more objects
     default: break;
   }
@@ -193,12 +296,14 @@ void World::Reset()
 
   //reset game stats
   m_score = 0;
+  m_crossRender = true;
+  m_ammoCount = 0;
+  m_newHighScore = false;
 }
 
 void World::GenerateScores(string topTenList[10], bool& highScore)
 {
     ifstream fin, topFin;
-    fin.open("..//assets//scoreLog.txt");
     topFin.open("..//assets//topScores.txt");
     
     struct TopPlayer
@@ -207,14 +312,9 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
       string name;
     };
     
-    int score = 0;
-    
     TopPlayer leaderBoard[11];
     
-    while(!fin.eof())
-        fin >> score;
-    
-    cout << endl << "YOUR SCORE: " << score << endl;
+    cout << endl << "YOUR SCORE: " << m_score << endl;
     
     for(int i=0 ; i<10 ; i++)
     {
@@ -222,8 +322,8 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
        //cout << leaderBoard[i].score << " " << leaderBoard[i].name << endl;
     }
 
-    cout << score << ", " << leaderBoard[0].score << endl;
-    if (score > leaderBoard[0].score)
+    //cout << m_score << ", " << leaderBoard[0].score << endl;
+    if (m_score > leaderBoard[0].score)
     {
       highScore = true;
     }
@@ -235,12 +335,13 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
     nameFin.close();
     
 
-    leaderBoard[10].score = score;
+    leaderBoard[10].score = m_score;
     leaderBoard[10].name = str;
 
     
     //topScores.push_back(score);
     
+    topFin.close();
     ofstream fout;
     fout.open("..//assets//topScores.txt");
 
@@ -274,8 +375,6 @@ void World::GenerateScores(string topTenList[10], bool& highScore)
         fout << leaderBoard[i].score << " " << leaderBoard[i].name << endl; 
     }
         
-    fin.close();
-    topFin.close();
     fout.close();
 }
 
@@ -309,13 +408,13 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
     m_ammoCount++;
     if(m_ammoCount > m_ammoMax) /**PLAY A CLICK SOUND**/
     {
-        m_ammoCount = 0;
         cout << "Ran out of Ammo!!" << endl;
         
         //end the game
-        m_score = 0;
-        //GenerateScores(m_topTenStats, m_newHighScore);
-        //m_gameOver = true;
+        //m_score = 0;
+        GenerateScores(m_topTenStats, m_newHighScore);
+        m_gameOver = true;
+        m_crossRender = false;
     }
     
     else /**shoot a bullet;PLAY AN AIR RIFLE POP SOUND**/
@@ -336,7 +435,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         
         btTransform bulletTransform(btQuaternion::getIdentity(), btVector3(x, y, z));
 
-        //zero ball's velocity and set ball to initial transform
+        //make bullet shoot from camera location
         m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .095);

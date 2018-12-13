@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <sstream>
+#include <btBulletDynamicsCommon.h>
 #include <vector>
 #include "graphics_headers.h"
 #include "shader.h"
@@ -13,6 +14,8 @@
 #include "camera.h"
 #include "bb.h"
 #include "cross.h"
+#include "can.h"
+#include "target.h"
 
 using namespace std;
 
@@ -43,6 +46,7 @@ public:
 
   glm::mat4 m_cameraTransform;
   
+  
 private:
   int m_objectCount = 20;//object count
 
@@ -51,19 +55,39 @@ private:
   btTriangleMesh *m_groundColMesh;
 
   //target stuff
-  Obstacle *m_target;
+  Target *m_target;
   btTriangleMesh *m_targetColMesh;
-  TriggerObject *m_targetTrigger;
-  double hitTimer = 0.0f;
+  Target *m_target2;
+  btTriangleMesh *m_target2ColMesh;
+  Target *m_target3;
+  btTriangleMesh *m_target3ColMesh;
+  double m_targetHitTimer = 0.0f;
+  
+  //target array 1
+  const int m_row1Count = 5;
+  Target *m_row1[5];
+  btTriangleMesh *m_row1ColMesh[5];
+  
+  //target array 2
+  const int m_row2Count = 5;
+  Target *m_row2[5];
+  btTriangleMesh *m_row2ColMesh[5];
+  
+  //can
+  Can *m_can;
+  btTriangleMesh *m_canColMesh;
+  double m_canHitTimer = 0.0f;
+  bool m_canIsHit = false;
   
   //bullet stuff
   const int m_bulletInstance = 10;
-  Bullet *m_bullets[100];
+  Bullet *m_bullets[10];
   int m_bulletIterator = 0;
   int m_ammoCount = 0;
   const int m_ammoMax = 20;
   
   Cross *m_cross;
+  bool m_crossRender = true;
 
   Gun *m_gun;
 
