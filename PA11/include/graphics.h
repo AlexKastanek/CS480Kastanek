@@ -45,6 +45,7 @@ class Graphics
     Shader *m_currentShader;
     Shader *m_vertexBasedShader;
     Shader *m_fragmentBasedShader;
+    Shader *m_shadowDepthShader;
 
     World *m_world;
     Camera *m_camera;

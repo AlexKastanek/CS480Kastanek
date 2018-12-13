@@ -144,6 +144,29 @@ bool Graphics::Initialize(int width, int height)
   //set which lighting type is currently being used (default is vertex-based)
   m_currentShader = m_fragmentBasedShader;
 
+  // Set up the shadow depth shader
+  m_shadowDepthShader = new Shader();
+  if (!m_shadowDepthShader->Initialize()
+  {
+    printf("Shadow depth shader failed to initialize\n");
+    return false;
+  }
+
+  // Add the vertex shader
+  if (!m_shadowDepthShader->AddShader(GL_VERTEX_SHADER, 2)
+  {
+    printf("Vertex Shader failed to initialize\n");
+    return false;
+  }
+
+  // Add the fragment shader
+  if (!m_shadowDepthShader->AddShader(GL_FRAGMENT_SHADER, 2)
+  {
+    printf("Fragment Shader failed to initialize\n");
+    return false;
+  }
+
+
   /* set the light data */
 
   /*
@@ -256,6 +279,7 @@ void Graphics::Render()
 
   //Send in the texture sampler
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
+  glUniform1i(m_currentShader->GetUniformLocation("shadowMap"), 1);
 
   // Render scene from light's perspective
   for (int i = 0; i < m_numLights; i++)
