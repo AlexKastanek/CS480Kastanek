@@ -44,10 +44,10 @@ void Light::Bind(Shader& shader)
 {
   if (castsShadows)
   {
-    cout << "light position: "
-         << position.x << ", "
-         << position.y << ", "
-         << position.z << endl;
+//     cout << "light position: "
+//          << position.x << ", "
+//          << position.y << ", "
+//          << position.z << endl;
     m_shadowMap.SetLightProjection(m_projection);
     m_shadowMap.SetLightView(m_view);
     m_shadowMap.Bind(shader);

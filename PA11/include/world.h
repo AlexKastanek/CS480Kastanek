@@ -49,6 +49,7 @@ public:
   
 private:
   int m_objectCount = 20;//object count
+  float m_worldScale = 3;
 
   //ground stuff
   Obstacle *m_ground;
@@ -64,12 +65,12 @@ private:
   double m_targetHitTimer = 0.0f;
   
   //target array 1
-  const int m_row1Count = 5;
+  const int m_row1Count = 4;
   Target *m_row1[5];
   btTriangleMesh *m_row1ColMesh[5];
   
   //target array 2
-  const int m_row2Count = 5;
+  const int m_row2Count = 4;
   Target *m_row2[5];
   btTriangleMesh *m_row2ColMesh[5];
   

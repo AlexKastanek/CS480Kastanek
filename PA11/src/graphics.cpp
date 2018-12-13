@@ -207,14 +207,14 @@ void Graphics::Update(unsigned int dt)
 void Graphics::Render()
 {
 
-  cout << "CHECK GRAPHICS RENDER ENTRY" << endl;
+  //cout << "CHECK GRAPHICS RENDER ENTRY" << endl;
 
   // Clear the screen
   glClearColor(0.0, 0.0, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    
   // Render scene from light's perspective
-  cout << "rendering from lights perspective" << endl; 
+ // cout << "rendering from lights perspective" << endl; 
   m_shadowDepthShader->Enable();
 
   glUniform1i(m_currentShader->GetUniformLocation("depthMap"), 0);
@@ -243,7 +243,7 @@ void Graphics::Render()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-  cout << "finished rendering from lights perspective" << endl;
+  //cout << "finished rendering from lights perspective" << endl;
   
   glViewport(0, 0, m_windowWidth, m_windowHeight);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -293,7 +293,7 @@ void Graphics::Render()
     m_world->Render(*m_currentShader, i);
   }
 
-  cout << "finished rendering objects" << endl;
+  //cout << "finished rendering objects" << endl;
 
   // Get any errors from OpenGL
   auto error = glGetError();
@@ -343,10 +343,10 @@ void Graphics::passLightToShader(int lightIndex)
     m_lights[lightIndex].position.x,
     m_lights[lightIndex].position.y,
     m_lights[lightIndex].position.z);
-  cout << "light direction: "
-       << lightDirection.x << ", "
-       << lightDirection.y << ", "
-       << lightDirection.z << endl;
+//   cout << "light direction: "
+//        << lightDirection.x << ", "
+//        << lightDirection.y << ", "
+//        << lightDirection.z << endl;
   variableName = lightArray + ".lightDirection";
   glUniform3f(m_currentShader->GetUniformLocation(variableName.c_str()),
     lightDirection.x, 
@@ -445,7 +445,7 @@ void Graphics::shooooooooooot()
 {
     glm::vec3 pos = m_camera->GetPosition();
     
-    cout << "POSITION: " << pos.x << " " << pos.y << " "  << pos.z << endl;
+    //cout << "POSITION: " << pos.x << " " << pos.y << " "  << pos.z << endl;
     
     m_world->createBullet(pos.x, pos.y, pos.z, m_camera->GetPitch(), m_camera->GetYaw());
 }

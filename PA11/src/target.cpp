@@ -67,16 +67,11 @@ bool Target::Initialize()
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
   m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
-
-  //don't delete motion state
-  //delete motionState;
-  //motionState = NULL;
   
   //Initialize Trigger  
   m_trigger = new TriggerObject(
-      glm::vec3(0.001f, 0.001f, 0.001f) * m_scale,
-      glm::vec3(m_position.x, m_position.y, m_position.z),
-      m_collider
+      glm::vec3(0.00001, 0.00001, 0.00001) * m_scale,
+      glm::vec3(m_position.x, m_position.y, m_position.z)
   );
   m_trigger->Initialize();
   
@@ -95,31 +90,17 @@ void Target::Update(unsigned int dt)
     
     m_position = glm::vec3(origin.x(), origin.y(), origin.z());
      
-//     if(m_position.z >= 5.0)
-//     {
-//         m_direction = false;
-//     }
-//     else if(m_position.z <= -5.0)
-//     {
-//         m_direction = true;
-//     }
-//     
-//     if(m_direction)
-//         m_position.z += .06;
-//     else
-//         m_position.z -= .06;
     
-    if(m_position.z >= 5 && m_position.y <= 4)
-        m_direction = 'u';
-    else if(m_position.z >= 5 && m_position.y >= 9)
-        m_direction = 'l';
-    else if(m_position.z <= -5 && m_position.y >= 9)
-        m_direction = 'd';
-    else if(m_position.z <= -5 && m_position.y <= 4)
-        m_direction = 'r';
+//     if(m_position.z >= 15 && m_position.y <= 12)
+//         m_direction = 'u';
+//     else if(m_position.z >= 15 && m_position.y >= 27)
+//         m_direction = 'l';
+//     else if(m_position.z <= -15 && m_position.y >= 27)
+//         m_direction = 'd';
+//     else if(m_position.z <= -15 && m_position.y <= 12)
+//         m_direction = 'r';
     
-    
-    float moveMod = .07;
+    float moveMod = .06;
     if(m_direction == 'u')
         m_position.y += moveMod * (dt + 1) * 0.1f;
     else if(m_direction == 'l')
@@ -129,6 +110,12 @@ void Target::Update(unsigned int dt)
     else if(m_direction == 'r')
         m_position.z += moveMod * (dt + 1) * 0.1f;
     
+    
+    if(m_position.z >= 15 && m_direction == 'r')
+        m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
+    
+    if(m_position.z <= -15 && m_direction == 'l')
+        m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
     
     //translate the collision box
     btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
