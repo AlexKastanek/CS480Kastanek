@@ -196,6 +196,6 @@ void Target::Update(unsigned int dt)
         //then update model with transform
         m_rigidBody->getMotionState()->getWorldTransform(transform);
         newTransform.getOpenGLMatrix(modelUpdate);
-        model = glm::make_mat4(modelUpdate) * m_rotationMatrix * m_scaleMatrix;
+        model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
     }
 }
