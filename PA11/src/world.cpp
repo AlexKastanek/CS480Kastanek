@@ -117,6 +117,7 @@ void World::Update(unsigned int dt)
   
   for(int i=0 ; i<m_row1Count ; i++)
     m_row1[i]->Update(dt);
+
   
   for(int i=0 ; i<m_row2Count ; i++)
     m_row2[i]->Update(dt);
@@ -139,7 +140,15 @@ void World::Update(unsigned int dt)
   
   //create bool
   bool ifTargetHit = false;
-  bool ifCanHit = false;
+  bool row1IsHit[m_row1Count];
+  bool row2IsHit[m_row2Count];
+  
+  for(int i=0 ; i<m_row1Count ; i++)
+      row1IsHit[i] = false;
+  for(int i=0 ; i<m_row2Count ; i++)
+      row2IsHit[i] = false;
+  
+  
   
   //get number over overlaps
 //   int canCollisionNum = m_can->m_trigger->m_ghostObject->getNumOverlappingObjects();
@@ -172,7 +181,12 @@ void World::Update(unsigned int dt)
         for(int j=0 ; j<m_bulletIterator ; j++)
         {
             if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
-                ifTargetHit = true;
+            {
+                if(m_row1[n]->m_isUp)
+                    ifTargetHit = true;
+                
+                m_row1[n]->m_isUp = false;
+            }
         }
     }
   }
@@ -186,7 +200,12 @@ void World::Update(unsigned int dt)
         for(int j=0 ; j<m_bulletIterator ; j++)
         {
             if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
-                ifTargetHit = true;
+            {
+                if(m_row2[n]->m_isUp)
+                    ifTargetHit = true;
+                
+                m_row2[n]->m_isUp = false;
+            }
         }
     }
   }
@@ -200,6 +219,7 @@ void World::Update(unsigned int dt)
       m_targetHitTimer = 0.0;
   }
 }
+
 
 void World::Render()
 {

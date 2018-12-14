@@ -18,14 +18,20 @@ public:
 
   bool Initialize();
   void Update(unsigned int dt);
-  
+ 
   TriggerObject *m_trigger;
+  
+  float m_fallTimer = 0;
+  
+  bool m_isUp = true;
 
 private:
     
     float m_translateMod;
     glm::mat4 translation;
     char m_direction;
+    
+    glm::vec3 m_fallPos;
     
     
 

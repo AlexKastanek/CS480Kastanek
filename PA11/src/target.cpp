@@ -66,7 +66,7 @@ bool Target::Initialize()
   //create the rigid body
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
-  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+  m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
   
   //Initialize Trigger  
   m_trigger = new TriggerObject(
@@ -82,61 +82,120 @@ bool Target::Initialize()
 
 void Target::Update(unsigned int dt)
 {
-    btTransform transform, newTransform;
-    btScalar modelUpdate[16];
-    btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
-    btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+    if(m_isUp)
+    {
+        btTransform transform, newTransform;
+        btScalar modelUpdate[16];
+        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
 
-    
-    m_position = glm::vec3(origin.x(), origin.y(), origin.z());
-     
-    
-//     if(m_position.z >= 15 && m_position.y <= 12)
-//         m_direction = 'u';
-//     else if(m_position.z >= 15 && m_position.y >= 27)
-//         m_direction = 'l';
-//     else if(m_position.z <= -15 && m_position.y >= 27)
-//         m_direction = 'd';
-//     else if(m_position.z <= -15 && m_position.y <= 12)
-//         m_direction = 'r';
-    
-    float moveMod = .06;
-    if(m_direction == 'u')
-        m_position.y += moveMod * (dt + 1) * 0.1f;
-    else if(m_direction == 'l')
-        m_position.z -= moveMod * (dt + 1) * 0.1f;
-    else if(m_direction == 'd')
-        m_position.y -= moveMod * (dt + 1) * 0.1f;
-    else if(m_direction == 'r')
-        m_position.z += moveMod * (dt + 1) * 0.1f;
-    
-    
-    if(m_position.z >= 15 && m_direction == 'r')
-        m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
-    
-    if(m_position.z <= -15 && m_direction == 'l')
-        m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
-    
-    //translate the collision box
-    btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
-    btQuaternion newRotation = btQuaternion::getIdentity();
-    
-    newTransform.setOrigin(newOrigin);
-    newTransform.setBasis(basis);
-    
-    m_rigidBody->getMotionState()->setWorldTransform(newTransform);
-    
-    //translate the trigger
-    m_trigger->transformTrigger(newTransform);
+        
+        m_position = glm::vec3(origin.x(), origin.y(), origin.z());
 
-    //set the scale
-    m_scaleMatrix = glm::scale(
-            glm::mat4(1.0),
-            m_scale);
+        float moveMod = .05;
+        if(m_direction == 'u')
+            m_position.y += moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'l')
+            m_position.z -= moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'd')
+            m_position.y -= moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'r')
+            m_position.z += moveMod * (dt + 1) * 0.1f;
+        
+        
+        if(m_position.z >= 15 && m_direction == 'r')
+            m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
+        
+        if(m_position.z <= -15 && m_direction == 'l')
+            m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
+        
+        //translate the collision box
+        btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
+        newTransform.setOrigin(newOrigin);
+        
+        basis.setRotation(btQuaternion(
+            0,
+            0,
+            0
+        ));
+        newTransform.setBasis(basis);
+        
+        m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+        
+        //translate the trigger
+        m_trigger->transformTrigger(newTransform);
 
-    //assign value to transform based on rigid body's new world status
-    //then update model with transform
-    m_rigidBody->getMotionState()->getWorldTransform(transform);
-    newTransform.getOpenGLMatrix(modelUpdate);
-    model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+        //set the scale
+        m_scaleMatrix = glm::scale(
+                glm::mat4(1.0),
+                m_scale);
+
+        //assign value to transform based on rigid body's new world status
+        //then update model with transform
+        m_rigidBody->getMotionState()->getWorldTransform(transform);
+        newTransform.getOpenGLMatrix(modelUpdate);
+        model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+    }
+    else
+    {
+        btTransform transform, newTransform;
+        btScalar modelUpdate[16];
+        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+
+        
+        m_position = glm::vec3(origin.x(), origin.y(), origin.z());
+        
+        float moveMod = .05;
+        if(m_direction == 'u')
+            m_position.y += moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'l')
+            m_position.z -= moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'd')
+            m_position.y -= moveMod * (dt + 1) * 0.1f;
+        else if(m_direction == 'r')
+            m_position.z += moveMod * (dt + 1) * 0.1f;
+        
+        
+        if(m_position.z >= 15 && m_direction == 'r')
+        {
+            m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
+            m_isUp = true;
+        }
+        
+        if(m_position.z <= -15 && m_direction == 'l')
+        {
+            m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
+            m_isUp = true;
+        }
+        
+        //translate the collision box
+        btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
+        
+        newTransform.setOrigin(newOrigin);
+        
+        
+      basis.setRotation(btQuaternion(
+        0,
+        0,
+        (M_PI/2)
+      ));
+        newTransform.setBasis(basis);
+        
+        m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+        
+        //translate the trigger
+        m_trigger->transformTrigger(newTransform);
+
+        //set the scale
+        m_scaleMatrix = glm::scale(
+                glm::mat4(1.0),
+                m_scale);
+
+        //assign value to transform based on rigid body's new world status
+        //then update model with transform
+        m_rigidBody->getMotionState()->getWorldTransform(transform);
+        newTransform.getOpenGLMatrix(modelUpdate);
+        model = glm::make_mat4(modelUpdate) * m_rotationMatrix * m_scaleMatrix;
+    }
 }
