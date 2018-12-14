@@ -59,18 +59,13 @@ void Shadow::Bind(Shader& shader)
 {
   cout << "SHADOW BIND ENTRY" << endl;
 
-  glm::mat4 lightMatrix = m_lightProjection * m_lightView;
-  cout << "projection: " << glm::to_string(m_lightProjection) << endl;
-  cout << "view: " << glm::to_string(m_lightView) << endl;
-  GLint lightMatrixLocation = shader.GetUniformLocation("lightSpaceMatrix");
-  cout << glm::to_string(lightMatrix) << endl;
-  glUniformMatrix4fv(
-    lightMatrixLocation, 
-    1, 
-    GL_FALSE, 
-    glm::value_ptr(lightMatrix));
-
-  cout << "light matrix set" << endl;
+  //glm::mat4 lightMatrix = m_lightProjection * m_lightView;
+  //cout << "projection: " << glm::to_string(m_lightProjection) << endl;
+  //cout << "view: " << glm::to_string(m_lightView) << endl;
+  //GLint lightMatrixLocation = shader.GetUniformLocation("lightSpaceMatrix");
+  //cout << glm::to_string(lightMatrix) << endl;
+  
+  
 
   glViewport(0, 0, m_shadowWidth, m_shadowHeight);
   glBindFramebuffer(GL_FRAMEBUFFER, m_depthMapFBO);
