@@ -1,10 +1,10 @@
-1050 f
-1050 d
-1000 s
-1000 d
-900 d
-900 f
-850 f
-850 mari
-800 s
-0 
+0 none	
+0 none
+0 none
+0 none
+0 none
+0 none
+0 none
+0 none
+0 none
+0 none
