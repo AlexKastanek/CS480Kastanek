@@ -127,14 +127,14 @@ bool Graphics::Initialize(int width, int height)
 
   /* set the light data */
 
-  Light mainLight;
+  Light mainLight, secondaryLight;
 
-  mainLight.position = glm::vec4(2.0f, 10.0f, -5.0f, 1.0f);
+  mainLight.position = glm::vec4(2.0f, 50.0f, -5.0f, 1.0f);
   mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
   mainLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
-  mainLight.angle = 20.0f;
+  mainLight.angle = 10.0f;
   mainLight.shininess = 50;
   mainLight.attenuation = 0.000001f;
   mainLight.directional = true;
@@ -143,6 +143,21 @@ bool Graphics::Initialize(int width, int height)
   mainLight.Initialize();
 
   m_lights.push_back(mainLight);
+
+  secondaryLight.position = glm::vec4(-10, 30, 10, 1.0);
+  secondaryLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  secondaryLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  secondaryLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
+  secondaryLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
+  secondaryLight.angle = 40.0f;
+  secondaryLight.shininess = 50;
+  secondaryLight.attenuation = 0.000001f;
+  secondaryLight.directional = false;
+  secondaryLight.castsShadows = true;
+
+  secondaryLight.Initialize();
+
+  m_lights.push_back(secondaryLight);
 
   ambientMod = new float[m_numLights];
   diffuseMod = new float[m_numLights];
@@ -181,7 +196,7 @@ bool Graphics::Initialize(int width, int height)
 
   //enable depth testing
   glEnable(GL_DEPTH_TEST);
-  //glDepthFunc(GL_LESS);
+  glDepthFunc(GL_LESS);
 
   //glEnable(GL_LIGHTING);
 
@@ -217,7 +232,10 @@ void Graphics::Render()
  // cout << "rendering from lights perspective" << endl; 
   m_shadowDepthShader->Enable();
 
+  glCullFace(GL_FRONT);
+
   glUniform1i(m_currentShader->GetUniformLocation("depthMap"), 0);
+
   for (int i = 0; i < m_numLights; i++)
   {
     if (m_lights[i].castsShadows)
@@ -239,32 +257,35 @@ void Graphics::Render()
     }
   }
 
-  glViewport(0, 0, m_windowWidth, m_windowHeight);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
   //cout << "finished rendering from lights perspective" << endl;
-  
+
   glViewport(0, 0, m_windowWidth, m_windowHeight);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Start the correct program
   m_currentShader->Enable();
 
+  glCullFace(GL_BACK);
+
   // Send in the projection and view to the shader
   glUniformMatrix4fv(m_projectionMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetProjection())); 
   glUniformMatrix4fv(m_viewMatrix, 1, GL_FALSE, glm::value_ptr(m_camera->GetView())); 
-  glm::mat4 lightMatrix = m_lights[0].GetProjection() * m_lights[0].GetView();
-  GLint lightMatrixLocation = m_currentShader->GetUniformLocation("lightMatrix");
-  glUniformMatrix4fv(lightMatrixLocation, 1, GL_FALSE, glm::value_ptr(lightMatrix)); 
+  //glm::mat4 lightMatrix = m_lights[0].GetProjection() * m_lights[0].GetView();
+  //GLint lightMatrixLocation = m_currentShader->GetUniformLocation("lightMatrix");
+  //glUniformMatrix4fv(lightMatrixLocation, 1, GL_FALSE, glm::value_ptr(lightMatrix)); 
 
   //Send in the number of lights
   glUniform1i(m_currentShader->GetUniformLocation("numLights"), m_numLights);
 
   //Send the data for each light
+  int shadowIndex = 0;
   for (int i = 0; i < m_numLights; i++)
   {
-    passLightToShader(i);
+    passLightToShader(i, shadowIndex);
+    if (m_lights[i].castsShadows)
+    {
+      shadowIndex++;
+    }
   }
 
   // Send in the camera position
@@ -277,10 +298,19 @@ void Graphics::Render()
 
   //Send in the texture sampler
   glUniform1i(m_currentShader->GetUniformLocation("gSampler"), 0);
-  glUniform1i(m_currentShader->GetUniformLocation("shadowMap"), 1);
+  //glUniform1i(m_currentShader->GetUniformLocation("shadowMap"), 1);
 
-  glActiveTexture(GL_TEXTURE1);
-  glBindTexture(GL_TEXTURE_2D, m_lights[0].GetShadow().GetDepthMap());
+  //bind the depth maps
+  GLenum shadowMapIndex = GL_TEXTURE1;
+  for (int i = 0; i < m_numLights; i++)
+  {
+    if (m_lights[i].castsShadows)
+    {
+      glActiveTexture(shadowMapIndex);
+      glBindTexture(GL_TEXTURE_2D, m_lights[i].GetShadow().GetDepthMap());
+      shadowMapIndex++;
+    }
+  }
 
   /* render the objects */
 
@@ -305,10 +335,21 @@ void Graphics::Render()
   
 }
 
-void Graphics::passLightToShader(int lightIndex)
+void Graphics::passLightToShader(int lightIndex, int shadowIndex)
 {
   string lightArray = "lights[" + to_string(lightIndex) + "]";
   string variableName;
+
+  // pass the light matrix
+  glm::mat4 lightMatrix = m_lights[lightIndex].GetProjection() 
+    * m_lights[lightIndex].GetView();
+  variableName = lightArray + ".lightMatrix";
+  GLint lightMatrixLocation = m_currentShader->GetUniformLocation(variableName.c_str());
+  glUniformMatrix4fv(
+    lightMatrixLocation, 
+    1, 
+    GL_FALSE, 
+    glm::value_ptr(lightMatrix)); 
 
   //pass the light position
   variableName = lightArray + ".lightPosition";
@@ -339,6 +380,7 @@ void Graphics::passLightToShader(int lightIndex)
     m_lights[lightIndex].specular.w);
 
   //pass additional lighting data
+
   glm::vec3 lightDirection = m_lights[lightIndex].focusPoint - glm::vec3(
     m_lights[lightIndex].position.x,
     m_lights[lightIndex].position.y,
@@ -352,21 +394,34 @@ void Graphics::passLightToShader(int lightIndex)
     lightDirection.x, 
     lightDirection.y, 
     lightDirection.z);
+
   variableName = lightArray + ".lightAngle";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].angle);
+
   variableName = lightArray + ".shininess";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].shininess);
+
   variableName = lightArray + ".attenuationProduct";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].attenuation);
+
   variableName = lightArray + ".directional";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].directional);
+
   variableName = lightArray + ".shadowed";
   glUniform1f(m_currentShader->GetUniformLocation(variableName.c_str()),
     m_lights[lightIndex].castsShadows);
+
+  // if the light casts shadows, send in the depth map sampler data
+  if (m_lights[lightIndex].castsShadows)
+  {
+    variableName = "shadowMap[" + to_string(lightIndex) + "]";
+    glUniform1i(m_currentShader->GetUniformLocation(variableName.c_str()), 
+    shadowIndex + 1);
+  }
 }
 
 /*

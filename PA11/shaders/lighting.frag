@@ -1,9 +1,9 @@
 #version 330
 #define MAX_LIGHTS 10
 
-in vec4 fLightSpacePos;
+in vec4 f_position;
 in vec3 fN;
-//in vec3 fE;
+in vec3 fE;
 in vec3 fP;
 in vec2 uv;
 
@@ -13,6 +13,7 @@ uniform mat4 modelMatrix;
 
 uniform int numLights;
 uniform struct Light {
+    mat4 lightMatrix;
     vec4 ambientProduct, diffuseProduct, specularProduct;
     vec4 lightPosition;
     vec3 lightDirection;
@@ -26,9 +27,18 @@ uniform struct Light {
 uniform vec3 cameraPosition;
 
 uniform sampler2D gSampler;
-uniform sampler2D shadowMap;
 
-float CalculateShadow(vec4 posLightSpace, float bias)
+uniform int numShadows;
+uniform sampler2D shadowMap[MAX_LIGHTS];
+
+vec2 poissonDisk[4] = vec2[](
+  vec2( -0.94201624, -0.39906216 ),
+  vec2( 0.94558609, -0.76890725 ),
+  vec2( -0.094184101, -0.92938870 ),
+  vec2( 0.34495938, 0.29387760 )
+);
+
+float CalculateShadow(vec4 posLightSpace, float bias, int shadowIndex)
 {
     // manual perspective divide (unnecessary if orthographic projection)
     vec3 projCoords = posLightSpace.xyz / posLightSpace.w;
@@ -37,14 +47,40 @@ float CalculateShadow(vec4 posLightSpace, float bias)
     projCoords = projCoords * 0.5 + 0.5;
 
     // get closest depth value from light's perspective
-    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    float closestDepth = texture(shadowMap[shadowIndex], projCoords.xy).r;
 
     // get depth of current fragment
     float currentDepth = projCoords.z;
 
-    // if in shadow set to 0
-    float shadow = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
+    float shadow = 0.0;
 
+    if (projCoords.z > 1.0)
+    {
+        return shadow;
+    }
+
+    // if in shadow set to 0
+    //shadow = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (texture(shadowMap[shadowIndex], projCoords.xy + poissonDisk[i]/500.0).z < projCoords.z)
+        {
+            shadow += 0.01;
+        }
+    }
+
+    vec2 texelSize = 1.0 / textureSize(shadowMap[shadowIndex], 0);
+    for (int i = -1; i <= 1; ++i)
+    {
+        for (int j = -1; j <= 1; ++j)
+        {
+            float pcfDepth = texture(shadowMap[shadowIndex], projCoords.xy + vec2(i, j) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+    
     return shadow;
 }
 
@@ -98,13 +134,25 @@ void main()
         }
 
         //calculate shadows if this light casts shadows
+        vec4 lightSpacePos;
         float shadow;
         if (lights[i].shadowed)
         {
-            // set the bias
-            float bias = max(0.07 * (1.0 - dot(N, L)), 0.007);
+            if (dot(N, L) < 0)
+            {
+                shadow = 0.0;
+            }
+            else
+            {
+                // get position of fragment in light space
+                lightSpacePos = (lights[i].lightMatrix * modelMatrix) * f_position;
 
-            shadow = CalculateShadow(fLightSpacePos, bias);
+                // set the bias
+                float bias = 0.005 * tan(acos(dot(N,L)));
+                bias = clamp(bias, 0, 0.05);
+
+                shadow = CalculateShadow(lightSpacePos, bias, i);
+            }
         }
         else
         {

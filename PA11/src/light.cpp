@@ -25,7 +25,16 @@ Light::~Light()
 
 void Light::Initialize()
 {
-  m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 20.0f);
+
+  if (directional)
+  {
+    m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 100.0f);
+  }
+  else
+  {
+    m_projection = glm::perspective(glm::radians(45.0f), 1.0f, 2.0f, 50.0f);
+  }
+  
   m_view = glm::lookAt(
     glm::vec3(
       position.x,
@@ -48,6 +57,25 @@ void Light::Bind(Shader& shader)
 //          << position.x << ", "
 //          << position.y << ", "
 //          << position.z << endl;
+
+    // Pass in the position
+    glUniform3f(
+      shader.GetUniformLocation("lightPosition"),
+      position.x,
+      position.y,
+      position.z);
+
+    // Pass in the light matrix
+    glm::mat4 lightMatrix = m_projection * m_view;
+    GLint lightMatrixLocation = shader.GetUniformLocation("lightSpaceMatrix");
+    glUniformMatrix4fv(
+    lightMatrixLocation, 
+    1, 
+    GL_FALSE, 
+    glm::value_ptr(lightMatrix));
+
+    //cout << "light matrix set" << endl;
+
     m_shadowMap.SetLightProjection(m_projection);
     m_shadowMap.SetLightView(m_view);
     m_shadowMap.Bind(shader);
