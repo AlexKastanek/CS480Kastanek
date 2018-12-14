@@ -2,23 +2,26 @@
 
 Target::Target() : PhysicsObject()
 {
-
+    m_direction = 'r';
+    m_speedMod = .06;
 }
 
 Target::Target(string filename) : PhysicsObject(filename)
 {
-    m_translateMod = 0;
+    m_direction = 'r';
+    m_speedMod = .06;
 }
 
 Target::Target(string filename, float scale, glm::vec3 position) : PhysicsObject(filename, scale, position)
 {
-    m_translateMod = 0;
+    m_direction = 'r';
+    m_speedMod = .06;
 }
 
 Target::Target(string filename, float scale, glm::vec3 position, btTriangleMesh *triMesh, char dir) : PhysicsObject(filename, scale, position, triMesh)
 {
-    m_translateMod = 0;
     m_direction = dir;
+    m_speedMod = .06;
 }
 
 Target::~Target()
@@ -80,7 +83,7 @@ bool Target::Initialize()
   return true;
 }
 
-void Target::Update(unsigned int dt)
+void Target::rowUpdate(unsigned int dt)
 {
     if(m_isUp)
     {
@@ -92,15 +95,14 @@ void Target::Update(unsigned int dt)
         
         m_position = glm::vec3(origin.x(), origin.y(), origin.z());
 
-        float moveMod = .05;
         if(m_direction == 'u')
-            m_position.y += moveMod * (dt + 1) * 0.1f;
+            m_position.y += m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'l')
-            m_position.z -= moveMod * (dt + 1) * 0.1f;
+            m_position.z -= m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'd')
-            m_position.y -= moveMod * (dt + 1) * 0.1f;
+            m_position.y -= m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'r')
-            m_position.z += moveMod * (dt + 1) * 0.1f;
+            m_position.z += m_speedMod * (dt + 1) * 0.1f;
         
         
         if(m_position.z >= 15 && m_direction == 'r')
@@ -146,15 +148,14 @@ void Target::Update(unsigned int dt)
         
         m_position = glm::vec3(origin.x(), origin.y(), origin.z());
         
-        float moveMod = .05;
         if(m_direction == 'u')
-            m_position.y += moveMod * (dt + 1) * 0.1f;
+            m_position.y += m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'l')
-            m_position.z -= moveMod * (dt + 1) * 0.1f;
+            m_position.z -= m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'd')
-            m_position.y -= moveMod * (dt + 1) * 0.1f;
+            m_position.y -= m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'r')
-            m_position.z += moveMod * (dt + 1) * 0.1f;
+            m_position.z += m_speedMod * (dt + 1) * 0.1f;
         
         
         if(m_position.z >= 15 && m_direction == 'r')
@@ -196,6 +197,11 @@ void Target::Update(unsigned int dt)
         //then update model with transform
         m_rigidBody->getMotionState()->getWorldTransform(transform);
         newTransform.getOpenGLMatrix(modelUpdate);
-        model = glm::make_mat4(modelUpdate) * m_rotationMatrix * m_scaleMatrix;
+        model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
     }
+}
+
+void Target::setSpeed(float mod)
+{
+    m_speedMod = mod;
 }

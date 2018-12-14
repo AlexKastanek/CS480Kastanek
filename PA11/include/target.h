@@ -17,23 +17,20 @@ public:
   ~Target();
 
   bool Initialize();
-  void Update(unsigned int dt);
+  void rowUpdate(unsigned int dt);
+  void popUpdate(unsigned int dt);
+  
+  void setSpeed(float);
  
   TriggerObject *m_trigger;
-  
-  float m_fallTimer = 0;
-  
   bool m_isUp = true;
 
 private:
     
-    float m_translateMod;
     glm::mat4 translation;
     char m_direction;
     
-    glm::vec3 m_fallPos;
-    
-    
+    float m_speedMod;
 
 };
 

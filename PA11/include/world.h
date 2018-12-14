@@ -68,13 +68,18 @@ private:
   
   //target array 1
   const int m_row1Count = 4;
-  Target *m_row1[5];
-  btTriangleMesh *m_row1ColMesh[5];
+  Target *m_row1[4];
+  btTriangleMesh *m_row1ColMesh[4];
   
   //target array 2
   const int m_row2Count = 4;
-  Target *m_row2[5];
-  btTriangleMesh *m_row2ColMesh[5];
+  Target *m_row2[4];
+  btTriangleMesh *m_row2ColMesh[4];
+  
+  //target array 3
+  const int m_row3Count = 4;
+  Target *m_row3[4];
+  btTriangleMesh *m_row3ColMesh[4];
   
   //can
   Can *m_can;
