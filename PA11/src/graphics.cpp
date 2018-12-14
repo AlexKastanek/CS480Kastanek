@@ -137,7 +137,7 @@ bool Graphics::Initialize(int width, int height)
   mainLight.angle = 10.0f;
   mainLight.shininess = 50;
   mainLight.attenuation = 0.000001f;
-  mainLight.directional = false;
+  mainLight.directional = true;
   mainLight.castsShadows = true;
 
   mainLight.Initialize();
