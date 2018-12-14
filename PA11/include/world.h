@@ -18,6 +18,7 @@
 #include "can.h"
 #include "target.h"
 #include "sound.h"
+#include <stdlib.h>
 
 using namespace std;
 class Sound;
@@ -57,26 +58,26 @@ private:
   Obstacle *m_ground;
   btTriangleMesh *m_groundColMesh;
 
-  //target stuff
-  Target *m_target;
-  btTriangleMesh *m_targetColMesh;
-  Target *m_target2;
-  btTriangleMesh *m_target2ColMesh;
-  Target *m_target3;
-  btTriangleMesh *m_target3ColMesh;
-  double m_targetHitTimer = 0.0f;
   
-  //target array 1
+  double m_targetHitTimer = 0.0;
+  double m_popTarget1Timer = 0.0;
+  float m_popYoffset = 0.0;
+  float m_popZoffset = 0.0;
+  //pop-up targets
+  Target *m_popTarget1;
+  btTriangleMesh *m_popTarget1ColMesh;
+
+  //target array 1; bottom
   const int m_row1Count = 4;
   Target *m_row1[4];
   btTriangleMesh *m_row1ColMesh[4];
   
-  //target array 2
+  //target array 2; middle
   const int m_row2Count = 4;
   Target *m_row2[4];
   btTriangleMesh *m_row2ColMesh[4];
   
-  //target array 3
+  //target array 3; top
   const int m_row3Count = 4;
   Target *m_row3[4];
   btTriangleMesh *m_row3ColMesh[4];

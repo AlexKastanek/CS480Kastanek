@@ -68,7 +68,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row2Count ; i++)
   {
     m_row2ColMesh[i] = new btTriangleMesh();
-    m_row2[i] = new Target("..//assets//Target.obj", 0.5f * m_worldScale, glm::vec3(0.0f, 6.0f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
+    m_row2[i] = new Target("..//assets//Target.obj", 0.6f * m_worldScale, glm::vec3(0.0f, 6.0f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
     m_row2[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row2[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row2[i]->m_trigger->m_ghostObject);
@@ -82,7 +82,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row3Count ; i++)
   {
     m_row3ColMesh[i] = new btTriangleMesh();
-    m_row3[i] = new Target("..//assets//Target.obj", 0.3f * m_worldScale, glm::vec3(0.0f, 8.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
+    m_row3[i] = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(0.0f, 8.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
     m_row3[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row3[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row3[i]->m_trigger->m_ghostObject);
@@ -91,6 +91,15 @@ bool World::Initialize()
     offset += 2.5;
   }
   offset = 0;
+  
+  //pop up targets
+  m_popTarget1ColMesh = new btTriangleMesh();
+  m_popTarget1 = new Target("..//assets//Target.obj", 0.2f * m_worldScale, glm::vec3(-900.0f, -900.0f, -900.0f) * m_worldScale, m_popTarget1ColMesh, 'r');
+  m_popTarget1->Initialize();
+  m_dynamicsWorld->addRigidBody(m_popTarget1->m_rigidBody);
+  m_dynamicsWorld->addCollisionObject(m_popTarget1->m_trigger->m_ghostObject);
+  m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+  m_popTarget1->m_isUp = false;
   
   
   //can
@@ -139,6 +148,14 @@ void World::Update(unsigned int dt)
   for(int i=0 ; i<m_row3Count ; i++)
     m_row3[i]->rowUpdate(dt);
   
+  if(!m_popTarget1->m_isUp)
+  {
+    m_popYoffset = rand() % 8;
+    m_popZoffset = rand() % 5;
+  }
+  
+  m_popTarget1->popUpdate(dt, (glm::vec3(-4.0f, 2.0f + m_popYoffset, -0.0f + m_popZoffset)) * m_worldScale);
+  
   m_gun->Update(dt);
   if(m_crossRender) m_cross->Update(dt);
 //   m_can->Update(dt);
@@ -147,6 +164,11 @@ void World::Update(unsigned int dt)
   {
     m_bullets[i]->Update(dt);
   }
+  
+  //check for popup target
+  m_popTarget1Timer += dt;
+  if(m_popTarget1Timer > 5000)
+      m_popTarget1->m_isUp = true;
   
   
   //------------------------------------------------
@@ -158,6 +180,7 @@ void World::Update(unsigned int dt)
   bool ifTargetHit50 = false;
   bool ifTargetHit100 = false;
   bool ifTargetHit250 = false;
+  bool ifTargetHit500 = false;
 
   //get number over overlaps
 //   int canCollisionNum = m_can->m_trigger->m_ghostObject->getNumOverlappingObjects();
@@ -170,6 +193,8 @@ void World::Update(unsigned int dt)
   int row3CollisionNum[m_row3Count];
   for(int n=0 ; n<m_row3Count ; n++)
       row3CollisionNum[n] = m_row3[n]->m_trigger->m_ghostObject->getNumOverlappingObjects();
+  
+  int popTarget1CollisionNum = m_popTarget1->m_trigger->m_ghostObject->getNumOverlappingObjects(); 
   
   for(int n=0 ; n<m_row1Count ; n++)
   {
@@ -227,6 +252,21 @@ void World::Update(unsigned int dt)
         }
     }
   }
+  for(int i=0 ; i<popTarget1CollisionNum ; i++)
+  {
+    btRigidBody *collidingBody = dynamic_cast<btRigidBody*>(m_popTarget1->m_trigger->m_ghostObject->getOverlappingObject(i));
+        
+    for(int j=0 ; j<m_bulletIterator ; j++)
+    {
+        if(collidingBody->getCompanionId() == m_bullets[j]->m_rigidBody->getCompanionId())
+        {
+            if(m_popTarget1->m_isUp)
+                ifTargetHit500 = true;
+            
+            m_popTarget1->m_isUp = false;
+        }
+    }
+  }
   
   
   //do stuff
@@ -250,6 +290,14 @@ void World::Update(unsigned int dt)
       Mix_PlayChannel(-1, Sound::soundEffect, 0);
       m_score += 250;
       m_targetHitTimer = 0.0;
+  }
+  if(ifTargetHit500 && m_targetHitTimer > 200) /**PLAY A "BTINNNNNNNG" SOUND**/
+  {
+      cout << "HIT TARGET" << endl;
+      Mix_PlayChannel(-1, Sound::soundEffect, 0);
+      m_score += 500;
+      m_targetHitTimer = 0.0;
+      m_popTarget1Timer = 0.0;
   }
 }
 
@@ -309,6 +357,13 @@ void World::Render(Shader& shader, unsigned int obj)
                 glm::value_ptr(m_row3[i]->GetModel()));
             m_row3[i]->Render();
         }
+        
+        glUniformMatrix4fv(
+            modelMatrix, 
+            1, 
+            GL_FALSE, 
+            glm::value_ptr(m_popTarget1->GetModel()));
+        m_popTarget1->Render();
       break;
     case 2:
       glUniformMatrix4fv(

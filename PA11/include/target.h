@@ -18,7 +18,7 @@ public:
 
   bool Initialize();
   void rowUpdate(unsigned int dt);
-  void popUpdate(unsigned int dt);
+  void popUpdate(unsigned int dt, glm::vec3 pos);
   
   void setSpeed(float);
  

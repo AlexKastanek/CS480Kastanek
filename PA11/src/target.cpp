@@ -85,14 +85,13 @@ bool Target::Initialize()
 
 void Target::rowUpdate(unsigned int dt)
 {
+    btTransform transform, newTransform;
+    btScalar modelUpdate[16];
+    btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+    btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+    
     if(m_isUp)
     {
-        btTransform transform, newTransform;
-        btScalar modelUpdate[16];
-        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
-        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
-
-        
         m_position = glm::vec3(origin.x(), origin.y(), origin.z());
 
         if(m_direction == 'u')
@@ -140,12 +139,6 @@ void Target::rowUpdate(unsigned int dt)
     }
     else
     {
-        btTransform transform, newTransform;
-        btScalar modelUpdate[16];
-        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
-        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
-
-        
         m_position = glm::vec3(origin.x(), origin.y(), origin.z());
         
         if(m_direction == 'u')
@@ -204,4 +197,89 @@ void Target::rowUpdate(unsigned int dt)
 void Target::setSpeed(float mod)
 {
     m_speedMod = mod;
+}
+
+void Target::popUpdate(unsigned int dt, glm::vec3 pos)
+{
+    btTransform transform, newTransform;
+    btScalar modelUpdate[16];
+    btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+    btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+    
+    if(m_isUp)
+    {
+        btTransform transform, newTransform;
+        btScalar modelUpdate[16];
+        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+        
+        m_position = pos;
+        
+        btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
+        
+        newTransform.setOrigin(newOrigin);
+        
+        
+        basis.setRotation(btQuaternion(
+            0,
+            0,
+            0
+        ));
+        
+        newTransform.setBasis(basis);
+        
+        m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+        
+        //translate the trigger
+        m_trigger->transformTrigger(newTransform);
+
+        //set the scale
+        m_scaleMatrix = glm::scale(
+                glm::mat4(1.0),
+                m_scale);
+
+        //assign value to transform based on rigid body's new world status
+        //then update model with transform
+        m_rigidBody->getMotionState()->getWorldTransform(transform);
+        newTransform.getOpenGLMatrix(modelUpdate);
+        model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+    }
+    else
+    {
+        btTransform transform, newTransform;
+        btScalar modelUpdate[16];
+        btVector3 origin = m_rigidBody->getWorldTransform().getOrigin();
+        btMatrix3x3 basis = m_rigidBody->getWorldTransform().getBasis();
+        
+        m_position = glm::vec3(-900.0f, -900.0f, -900.0f);
+        
+        btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
+        
+        newTransform.setOrigin(newOrigin);
+        
+        
+        basis.setRotation(btQuaternion(
+            0,
+            0,
+            0
+        ));
+        
+        newTransform.setBasis(basis);
+        
+        m_rigidBody->getMotionState()->setWorldTransform(newTransform);
+        
+        //translate the trigger
+        m_trigger->transformTrigger(newTransform);
+
+        //set the scale
+        m_scaleMatrix = glm::scale(
+                glm::mat4(1.0),
+                m_scale);
+
+        //assign value to transform based on rigid body's new world status
+        //then update model with transform
+        m_rigidBody->getMotionState()->getWorldTransform(transform);
+        newTransform.getOpenGLMatrix(modelUpdate);
+        model = glm::make_mat4(modelUpdate) * m_scaleMatrix;
+    }
 }
