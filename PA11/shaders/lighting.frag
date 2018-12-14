@@ -1,4 +1,4 @@
-#version 330
+#version 440
 #define MAX_LIGHTS 10
 
 in vec4 f_position;
@@ -6,6 +6,8 @@ in vec3 fN;
 in vec3 fE;
 in vec3 fP;
 in vec2 uv;
+
+out vec4 frag_color;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
@@ -164,7 +166,7 @@ void main()
 
     vec3 gamma = vec3(1.0/2.2);
 
-    gl_FragColor = vec4(pow(linearColor, gamma), 1.0) * texture2D(gSampler, uv.st);
-    gl_FragColor.a = 1.0;
+    frag_color = vec4(pow(linearColor, gamma), 1.0) * texture2D(gSampler, uv.st);
+    frag_color.a = 1.0;
 
 }

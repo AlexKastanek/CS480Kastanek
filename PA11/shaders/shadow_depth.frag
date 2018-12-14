@@ -1,4 +1,4 @@
-#version 330
+#version 440
 
 in vec4 fragPosition;
 in vec2 fragTexture;
