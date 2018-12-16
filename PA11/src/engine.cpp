@@ -68,7 +68,7 @@ void Engine::Run()
   {
 
     m_timeLeft = m_gameTime - ((clock() - m_startTime) / CLOCKS_PER_SEC);
-    cout << m_timeLeft << " ";
+    //cout << m_timeLeft << " ";
     m_gui->SetTimeLeft(m_timeLeft);
     if (m_timeLeft <= 0 && !justGameOver)
     {

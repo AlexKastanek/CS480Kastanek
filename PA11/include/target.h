@@ -25,13 +25,16 @@ public:
   TriggerObject *m_trigger;
   bool m_isUp = true;
 
+  glm::vec3 m_ambient = glm::vec3(0.0f, 0.0f, 0.0f);
+  glm::vec3 m_diffuse = glm::vec3(0.0f, 0.0f, 0.0f);
+  glm::vec3 m_specular = glm::vec3(0.0f, 0.0f, 0.0f);
+
 private:
     
     glm::mat4 translation;
     char m_direction;
     
     float m_speedMod;
-
 };
 
 #endif /* Target_H */

@@ -431,7 +431,7 @@ void World::Render()
   /* render all generic renderable objects */
 }
 
-void World::Render(Shader& shader, unsigned int obj)
+void World::Render(Shader& shader, const vector<Light>& lights, unsigned int obj)
 {
   /* render select objects */
 
@@ -454,6 +454,7 @@ void World::Render(Shader& shader, unsigned int obj)
     case 1:
         for(int i=0 ; i<m_row1Count ; i++)
         {
+            PassTargetLightingParams(shader, lights, 2, *m_row1[i]);
             glUniformMatrix4fv(
                 modelMatrix, 
                 1, 
@@ -464,6 +465,7 @@ void World::Render(Shader& shader, unsigned int obj)
         
         for(int i=0 ; i<m_row2Count ; i++)
         {
+            PassTargetLightingParams(shader, lights, 2, *m_row2[i]);
             glUniformMatrix4fv(
                 modelMatrix, 
                 1, 
@@ -474,6 +476,7 @@ void World::Render(Shader& shader, unsigned int obj)
         
         for(int i=0 ; i<m_row3Count ; i++)
         {
+            PassTargetLightingParams(shader, lights, 2, *m_row3[i]);
             glUniformMatrix4fv(
                 modelMatrix, 
                 1, 
@@ -481,6 +484,7 @@ void World::Render(Shader& shader, unsigned int obj)
                 glm::value_ptr(m_row3[i]->GetModel()));
             m_row3[i]->Render();
         }
+        PassDefaultLighting(shader, lights, 2);
         
         glUniformMatrix4fv(
             modelMatrix, 
@@ -611,6 +615,53 @@ void World::Reset()
   m_crossRender = true;
   m_ammoCount = 0;
   m_newHighScore = false;
+}
+
+void World::PassTargetLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, Target& target)
+{
+  string lightArray = "lights[" + to_string(lightIndex) + "]";
+  string variableName = lightArray + ".ambientProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].ambient.x + target.m_ambient.x, 
+    lights[lightIndex].ambient.y + target.m_ambient.y, 
+    lights[lightIndex].ambient.z + target.m_ambient.z, 
+    lights[lightIndex].ambient.w);
+  variableName = lightArray + ".specularProduct";
+  variableName = lightArray + ".diffuseProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].diffuse.x + target.m_diffuse.x, 
+    lights[lightIndex].diffuse.y + target.m_diffuse.y, 
+    lights[lightIndex].diffuse.z + target.m_diffuse.z, 
+    lights[lightIndex].diffuse.w);
+  variableName = lightArray + ".specularProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].specular.x + target.m_specular.x, 
+    lights[lightIndex].specular.y + target.m_specular.y, 
+    lights[lightIndex].specular.z + target.m_specular.z, 
+    lights[lightIndex].specular.w);
+}
+
+void World::PassDefaultLighting(Shader& shader, const vector<Light>& lights, int lightIndex)
+{
+  string lightArray = "lights[" + to_string(lightIndex) + "]";
+  string variableName = lightArray + ".ambientProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].ambient.x, 
+    lights[lightIndex].ambient.y, 
+    lights[lightIndex].ambient.z, 
+    lights[lightIndex].ambient.w);
+  variableName = lightArray + ".diffuseProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].diffuse.x, 
+    lights[lightIndex].diffuse.y, 
+    lights[lightIndex].diffuse.z, 
+    lights[lightIndex].diffuse.w);
+  variableName = lightArray + ".specularProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].specular.x, 
+    lights[lightIndex].specular.y, 
+    lights[lightIndex].specular.z, 
+    lights[lightIndex].specular.w);
 }
 
 void World::GenerateScores(string topTenList[10], bool& highScore)

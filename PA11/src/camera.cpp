@@ -73,13 +73,13 @@ void Camera::Update(unsigned int dt)
 
   m_focusPoint = m_position + localForward;
 
-  
+  /*
   cout << "Camera Position: ("
        << m_position.x << ", "
        << m_position.y << ", "
        << m_position.z << ")"
        << endl;
-  
+  */
 
   view = glm::lookAt( m_position,
     m_focusPoint,

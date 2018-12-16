@@ -275,7 +275,7 @@ void Graphics::Render()
       //render specific objects
       for (int j = 0; j < m_world->GetObjectCount(); j++)
       {
-        m_world->Render(*m_shadowDepthShader, j);
+        m_world->Render(*m_shadowDepthShader, m_lights, j);
       }
 
       m_lights[i].Reset();
@@ -345,7 +345,7 @@ void Graphics::Render()
   //render specific objects
   for (int i = 0; i < m_world->GetObjectCount(); i++)
   {
-    m_world->Render(*m_currentShader, i);
+    m_world->Render(*m_currentShader, m_lights, i);
   }
 
   //cout << "finished rendering objects" << endl;

@@ -190,7 +190,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       ImVec2 timerSize = ImGui::CalcTextSize(timerDisplay.c_str());
       ImVec2 timerCursor = CalculateCenteredPos(timerSize);
       ImGui::SetCursorPos(ImVec2(timerCursor.x,timerCursor.y - (m_height/2) + 30));
-      cout << timerDisplay << endl;
+      //cout << timerDisplay << endl;
       ImGui::Text(timerDisplay.c_str());
 
       ImGui::PopFont();

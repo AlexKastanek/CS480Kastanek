@@ -103,6 +103,9 @@ void Target::rowUpdate(unsigned int dt)
         else if(m_direction == 'r')
             m_position.z += m_speedMod * (dt + 1) * 0.1f;
         
+        m_ambient = glm::vec3(0.0, 0.0, 0.0);
+        m_diffuse = glm::vec3(0.0, 0.0, 0.0);
+        m_specular = glm::vec3(0.0, 0.0, 0.0); 
         
         if(m_position.z >= 22.5 && m_direction == 'r')
             m_position = glm::vec3(origin.x(), origin.y(), -22.5f);
@@ -158,7 +161,10 @@ void Target::rowUpdate(unsigned int dt)
             m_position.y -= m_speedMod * (dt + 1) * 0.1f;
         else if(m_direction == 'r')
             m_position.z += m_speedMod * (dt + 1) * 0.1f;
-        
+
+        m_ambient = glm::vec3(20.0, 20.0, 20.0);
+        //m_diffuse = glm::vec3(20.0, 20.0, 20.0); 
+        //m_specular = glm::vec3(20.0, 20.0, 20.0);        
         
         if(m_position.z >= 22.5 && m_direction == 'r')
         {
@@ -176,7 +182,6 @@ void Target::rowUpdate(unsigned int dt)
         btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
         
         newTransform.setOrigin(newOrigin);
-        
         
       basis.setRotation(btQuaternion(
         0,

@@ -7,6 +7,7 @@
 #include <vector>
 #include "graphics_headers.h"
 #include "shader.h"
+#include "light.h"
 #include "physics.h"
 #include "trigger_object.h"
 #include "obstacle.h"
@@ -32,8 +33,11 @@ public:
   bool Initialize();
   void Update(unsigned int dt);
   void Render();
-  void Render(Shader& shader, unsigned int obj);
+  void Render(Shader& shader, const vector<Light>& lights, unsigned int obj);
   void Reset();
+
+  void PassTargetLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, Target& target);
+  void PassDefaultLighting(Shader& shader, const vector<Light>& lights, int lightIndex);
 
   void GenerateScores(string topTenList[10], bool& highScore);
 
