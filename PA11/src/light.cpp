@@ -32,7 +32,7 @@ void Light::Initialize()
   }
   else
   {
-    m_projection = glm::perspective(glm::radians(45.0f), 1.0f, 2.0f, 50.0f);
+    m_projection = glm::perspective(glm::radians(45.0f), 1.0f, 1.0f, 50.0f);
   }
   
   m_view = glm::lookAt(

@@ -159,7 +159,7 @@ bool Graphics::Initialize(int width, int height)
 
   m_lights.push_back(outsideLight);
 
-  spotLight.position = glm::vec4(-10, 30, 0, 1.0);
+  spotLight.position = glm::vec4(0, 30, 0, 1.0);
   spotLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   spotLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   spotLight.specular = glm::vec4(7.0f, 7.0f, 7.0f, 7.0f);
