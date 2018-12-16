@@ -8,6 +8,7 @@
 #include "gui.h"
 #include "graphics.h"
 #include "world.h"
+#include <time.h>
 #include <algorithm>
 #include <vector>
 
@@ -43,6 +44,10 @@ class Engine
     unsigned int m_DT;
     long long m_currentTimeMillis;
     bool m_running;
+
+    clock_t m_startTime;
+    int m_timeLeft;
+    int m_gameTime = 120; //seconds
 
     int state = 0;
 };

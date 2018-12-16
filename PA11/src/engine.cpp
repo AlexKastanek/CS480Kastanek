@@ -61,9 +61,15 @@ bool Engine::Initialize()
 void Engine::Run()
 {
   m_running = true;
+  m_startTime = clock();
+  m_timeLeft = m_gameTime;
   
   while(m_running)
   {
+
+    m_timeLeft = m_gameTime - ((clock() - m_startTime) / CLOCKS_PER_SEC);
+    cout << m_timeLeft << " ";
+    m_gui->SetTimeLeft(m_timeLeft);
 
     if (m_graphics->m_world->isGameOver())
     {

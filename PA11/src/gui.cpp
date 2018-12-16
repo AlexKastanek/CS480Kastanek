@@ -164,6 +164,37 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
 
     if (ImGui::Begin("HUD", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoInputs))
     {
+      ImGui::PushFont(m_fontMed);
+
+      int minutes = m_timeLeft / 60;
+      string minutesDisplay;
+      if (minutes > 0)
+      {
+        minutesDisplay = to_string(minutes) + " ";
+      }
+      else
+      {
+        minutesDisplay = "";
+      }
+      int seconds = m_timeLeft % 60;
+      string secondsDisplay;
+      if (seconds <= 0)
+      {
+        secondsDisplay = "00";
+      }
+      else
+      {
+        secondsDisplay = to_string(seconds);
+      }
+      string timerDisplay = minutesDisplay + secondsDisplay;
+      ImVec2 timerSize = ImGui::CalcTextSize(timerDisplay.c_str());
+      ImVec2 timerCursor = CalculateCenteredPos(timerSize);
+      ImGui::SetCursorPos(ImVec2(timerCursor.x,timerCursor.y - (m_height/2) + 30));
+      cout << timerDisplay << endl;
+      ImGui::Text(timerDisplay.c_str());
+
+      ImGui::PopFont();
+
       string scoreDisplay = "Score: " + to_string(graphics->m_world->GetScore());
       ImGui::SetCursorPos(ImVec2(10,0));
       ImGui::Text(scoreDisplay.c_str());
@@ -176,6 +207,7 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
     ImGui::End();
 
     ImGui::PopFont();
+    
   }
   
   ImGui::PopStyleColor(1);
@@ -212,4 +244,9 @@ ImVec2 GUI::CalculateCenteredPos(ImVec2 textSize)
 void GUI::SetGameOver(bool gameOver)
 {
   m_gameOver = gameOver;
+}
+
+void GUI::SetTimeLeft(int timeLeft)
+{
+  m_timeLeft = timeLeft;
 }

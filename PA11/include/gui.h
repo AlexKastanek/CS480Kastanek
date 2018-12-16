@@ -27,6 +27,7 @@ public:
   ImVec2 CalculateCenteredPos(ImVec2 textSize);
 
   void SetGameOver(bool gameOver);
+  void SetTimeLeft(int timeLeft);
 
 private:
 
@@ -36,6 +37,7 @@ private:
 
   int m_width;
   int m_height;
+  int m_timeLeft = 999;
   bool m_gameOver = false;
 	
 };
