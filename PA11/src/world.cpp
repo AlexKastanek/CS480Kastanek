@@ -209,6 +209,36 @@ bool World::Initialize()
     m_table2ColMesh);
   m_table2->Initialize();
   m_dynamicsWorld->addRigidBody(m_table2->m_rigidBody);
+
+  //chairs
+  m_chair1ColMesh = new btTriangleMesh();
+  m_chair1 = new Obstacle(
+    "..//assets//Chair.obj",
+    m_worldScale,
+    glm::vec3(-15.0f, 3.25, -35.0f),
+    m_chair1ColMesh);
+  m_chair1->Initialize();
+  m_dynamicsWorld->addRigidBody(m_chair1->m_rigidBody);
+
+  m_chair2ColMesh = new btTriangleMesh();
+  m_chair2 = new Obstacle(
+    "..//assets//Chair.obj",
+    m_worldScale,
+    glm::vec3(-5.0f, 3.25, 35.0f),
+    m_chair2ColMesh);
+  m_chair2->SetRotation(7*M_PI/6, glm::vec3(0.0f, 1.0f, 0.0f));
+  m_chair2->Initialize();
+  m_dynamicsWorld->addRigidBody(m_chair2->m_rigidBody);
+
+  m_chair3ColMesh = new btTriangleMesh();
+  m_chair3 = new Obstacle(
+    "..//assets//Chair.obj",
+    m_worldScale,
+    glm::vec3(-30.0f, 3.25, 30.0f),
+    m_chair3ColMesh);
+  m_chair3->SetRotation(3*M_PI/4, glm::vec3(0.0f, 1.0f, 0.0f));
+  m_chair3->Initialize();
+  m_dynamicsWorld->addRigidBody(m_chair3->m_rigidBody);
   
   return true;
 }
@@ -228,6 +258,9 @@ void World::Update(unsigned int dt)
   m_stool3->Update(dt);
   m_table1->Update(dt);
   m_table2->Update(dt);
+  m_chair1->Update(dt);
+  m_chair2->Update(dt);
+  m_chair3->Update(dt);
   
   for(int i=0 ; i<m_row1Count ; i++)
     m_row1[i]->rowUpdate(dt);
@@ -541,7 +574,29 @@ void World::Render(Shader& shader, unsigned int obj)
         glm::value_ptr(m_table2->GetModel()));
       m_table2->Render();
       break;
-
+    case 11:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_chair1->GetModel()));
+      m_chair1->Render();
+      break;
+    case 12:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_chair2->GetModel()));
+      m_chair2->Render();
+      break;
+    case 13:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_chair3->GetModel()));
+      m_chair3->Render();
     //add more cases for more objects
     default: break;
   }

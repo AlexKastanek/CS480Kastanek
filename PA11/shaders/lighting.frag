@@ -151,7 +151,7 @@ void main()
 
                 // set the bias
                 float bias = 0.001 * tan(acos(dot(N,L)));
-                bias = clamp(bias, 0.0, 0.01);
+                bias = clamp(bias, 0.0, 0.005);
 
                 shadow = CalculateShadow(lightSpacePos, bias, i);
             }

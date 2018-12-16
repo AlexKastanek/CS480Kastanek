@@ -127,22 +127,22 @@ bool Graphics::Initialize(int width, int height)
 
   /* set the light data */
 
-  Light mainLight, secondaryLight;
+  Light outsideLight, secondaryLight;
 
-  mainLight.position = glm::vec4(60.0f, 60.0f, 150.0f, 1.0f);
-  mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-  mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
-  mainLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
-  mainLight.angle = 10.0f;
-  mainLight.shininess = 50;
-  mainLight.attenuation = 0.000001f;
-  mainLight.directional = true;
-  mainLight.castsShadows = true;
+  outsideLight.position = glm::vec4(60.0f, 60.0f, 150.0f, 1.0f);
+  outsideLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  outsideLight.diffuse = glm::vec4(10.0f, 10.0f, 10.0f, 1.0f);
+  outsideLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
+  outsideLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
+  outsideLight.angle = 10.0f;
+  outsideLight.shininess = 50;
+  outsideLight.attenuation = 0.000001f;
+  outsideLight.directional = true;
+  outsideLight.castsShadows = true;
 
-  mainLight.Initialize();
+  outsideLight.Initialize();
 
-  m_lights.push_back(mainLight);
+  m_lights.push_back(outsideLight);
 
   secondaryLight.position = glm::vec4(-10, 30, 10, 1.0);
   secondaryLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
