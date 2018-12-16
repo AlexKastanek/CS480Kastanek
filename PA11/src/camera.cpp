@@ -2,11 +2,11 @@
 
 Camera::Camera()
 {
-//   m_initialPosition = glm::vec3(0.0, 4.0, -10.0);
-  m_initialPosition = glm::vec3(-41.709, 17.172, -2.74694);
+  m_initialPosition = glm::vec3(-42.0, 15.0, 0.0);
+  //m_initialPosition = glm::vec3(-41.709, 17.172, -2.74694);
   m_position = m_initialPosition;
-//   m_initialFocusPoint = glm::vec3(0.0, 0.0, 0.0);
-  m_initialFocusPoint = glm::vec3(0.998278, 0.436194, 0.0392225);
+  m_initialFocusPoint = glm::vec3(0.0, 0.0, 0.0);
+  //m_initialFocusPoint = glm::vec3(0.998278, 0.436194, 0.0392225);
   m_focusPoint = m_initialFocusPoint;
 
   m_moveDirection = glm::vec3(0.0, 0.0, 0.0);
@@ -211,6 +211,17 @@ void Camera::HandleMouseMotion(int x, int y)
   }
 
   m_yaw += x * m_horizontalSensitivity;
+  //use this if not in free mode
+  /*
+  if (m_yaw > 45.0f)
+  {
+    m_yaw = 45.0f;
+  }
+  if (m_yaw < -45.0)
+  {
+    m_yaw = -45.0;
+  }
+  */
 }
 
 glm::mat4 Camera::GetProjection()
