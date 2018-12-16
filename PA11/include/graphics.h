@@ -62,7 +62,7 @@ class Graphics
     GLint m_modelMatrix; 
 
     vector<Light> m_lights;
-    int m_numLights = 1;
+    int m_numLights = 3;
     
     float* ambientMod;
     float* diffuseMod;

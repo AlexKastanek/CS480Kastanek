@@ -127,7 +127,22 @@ bool Graphics::Initialize(int width, int height)
 
   /* set the light data */
 
-  Light outsideLight, secondaryLight;
+  Light mainLight, outsideLight, spotLight;
+
+  outsideLight.position = glm::vec4(-100.0f, 100.0f, -100.0f, 1.0f);
+  outsideLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  outsideLight.diffuse = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
+  outsideLight.specular = glm::vec4(1.0f, 1.0f, 1.0f, 3.0f);
+  outsideLight.focusPoint = glm::vec3(10.0f, 20.0f, -30.0f);
+  outsideLight.angle = 10.0f;
+  outsideLight.shininess = 50;
+  outsideLight.attenuation = 0.000001f;
+  outsideLight.directional = true;
+  outsideLight.castsShadows = false;
+
+  mainLight.Initialize();
+
+  m_lights.push_back(mainLight);
 
   outsideLight.position = glm::vec4(60.0f, 60.0f, 150.0f, 1.0f);
   outsideLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -144,20 +159,20 @@ bool Graphics::Initialize(int width, int height)
 
   m_lights.push_back(outsideLight);
 
-  secondaryLight.position = glm::vec4(-10, 30, 10, 1.0);
-  secondaryLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-  secondaryLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  secondaryLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
-  secondaryLight.focusPoint = glm::vec3(0.0f, 0.0f, 0.0f);
-  secondaryLight.angle = 40.0f;
-  secondaryLight.shininess = 50;
-  secondaryLight.attenuation = 0.000001f;
-  secondaryLight.directional = false;
-  secondaryLight.castsShadows = true;
+  spotLight.position = glm::vec4(-10, 30, 0, 1.0);
+  spotLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  spotLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+  spotLight.specular = glm::vec4(7.0f, 7.0f, 7.0f, 7.0f);
+  spotLight.focusPoint = glm::vec3(50.0f, 12.0f, 0.0f);
+  spotLight.angle = 25.0f;
+  spotLight.shininess = 50;
+  spotLight.attenuation = 0.000001f;
+  spotLight.directional = false;
+  spotLight.castsShadows = true;
 
-  secondaryLight.Initialize();
+  spotLight.Initialize();
 
-  m_lights.push_back(secondaryLight);
+  m_lights.push_back(spotLight);
 
   ambientMod = new float[m_numLights];
   diffuseMod = new float[m_numLights];
