@@ -12,6 +12,8 @@ Object::Object()
   m_position = glm::vec3(0.0f, 0.0f, 0.0f);
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+  m_rotationMatrix = glm::mat4(1.0);
 }
 
 Object::Object(string filename)
@@ -27,6 +29,8 @@ Object::Object(string filename)
   m_position = glm::vec3(0.0f, 0.0f, 0.0f);
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+  m_rotationMatrix = glm::mat4(1.0);
 }
 
 Object::Object(string filename, float scale, glm::vec3 position)
@@ -44,6 +48,8 @@ Object::Object(string filename, float scale, glm::vec3 position)
   m_position = position;
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+
+  m_rotationMatrix = glm::mat4(1.0);
 
   cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
@@ -63,6 +69,8 @@ Object::Object(string filename, float scale, glm::vec3 position, btTriangleMesh 
   m_position = position;
   m_rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   m_scale = glm::vec3(1.0f * scale, 1.0f * scale, 1.0f * scale);
+
+  m_rotationMatrix = glm::mat4(1.0);
 
   cout << "CHECK FINISHED OBJECT CONSTRUCTOR" << endl;
 }
@@ -169,4 +177,10 @@ void Object::RemoveChild()
   {
     m_children.pop_back();
   }
+}
+
+void Object::SetRotation(float angle, glm::vec3 rotation)
+{
+  m_rotation = rotation;
+  m_rotationMatrix = glm::rotate(glm::mat4(1.0f), angle, rotation);
 }

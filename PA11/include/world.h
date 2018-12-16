@@ -59,7 +59,6 @@ private:
   //btTriangleMesh *m_groundColMesh;
   Obstacle *m_room;
   btTriangleMesh *m_roomColMesh;
-
   
   double m_targetHitTimer = 0.0;
   double m_popTarget1Timer = 0.0;
@@ -102,8 +101,27 @@ private:
 
   Gun *m_gun;
 
-  vector<BB*> m_bbContainer;
-  btTriangleMesh *m_bbColMesh;
+  //scenery
+  Obstacle *m_bar;
+  btTriangleMesh *m_barColMesh;
+  Obstacle *m_shelf;
+  btTriangleMesh *m_shelfColMesh;
+  Obstacle *m_stool1;
+  Obstacle *m_stool2;
+  Obstacle *m_stool3;
+  btTriangleMesh *m_stool1ColMesh;
+  btTriangleMesh *m_stool2ColMesh;
+  btTriangleMesh *m_stool3ColMesh;
+  Obstacle *m_table1;
+  Obstacle *m_table2;
+  btTriangleMesh *m_table1ColMesh;
+  btTriangleMesh *m_table2ColMesh;
+  Obstacle *m_chair1;
+  Obstacle *m_chair2;
+  Obstacle *m_chair3;
+  btTriangleMesh *m_chair1ColMesh;
+  btTriangleMesh *m_chair2ColMesh;
+  btTriangleMesh *m_chair3ColMesh;
 
   bool m_gameOver = false;
   int m_score = 0;

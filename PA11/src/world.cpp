@@ -55,7 +55,7 @@ bool World::Initialize()
   m_room = new Obstacle(
     "..//assets//Room.obj",
     1.0 * m_worldScale,
-    glm::vec3(0.0f, 0.0f, 0.0f) * m_worldScale,
+    glm::vec3(0.0f, 0.0f, 0.0f),
     m_roomColMesh);
   m_room->Initialize();
   m_dynamicsWorld->addRigidBody(m_room->m_rigidBody);
@@ -136,7 +136,79 @@ bool World::Initialize()
   
   //camera objects
   m_gun = new Gun("..//assets//Gun.obj", 1.0 * m_worldScale);
+  m_gun->SetRotation(M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
   m_cross = new Cross("..//assets//cross.obj", 1.0 * m_worldScale);
+
+  /* scenery */
+
+  //bar
+  m_barColMesh = new btTriangleMesh();
+  m_bar = new Obstacle(
+    "..//assets//bar.obj",
+    m_worldScale,
+    glm::vec3(10.0f, -0.5f, 0.0f),
+    m_barColMesh);
+  m_bar->SetRotation(M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
+  m_bar->Initialize();
+  m_dynamicsWorld->addRigidBody(m_bar->m_rigidBody);
+
+  //shelf
+  m_shelfColMesh = new btTriangleMesh();
+  m_shelf = new Obstacle(
+    "..//assets//Shelf.obj",
+    m_worldScale,
+    glm::vec3(40.0f, 13.5f, 0.0f),
+    m_shelfColMesh);
+  m_shelf->SetRotation(M_PI, glm::vec3(0.0f, 1.0f, 0.0f));
+  m_shelf->Initialize();
+  m_dynamicsWorld->addRigidBody(m_shelf->m_rigidBody);
+
+  //stools
+  m_stool1ColMesh = new btTriangleMesh();
+  m_stool1 = new Obstacle(
+    "..//assets//Stool.obj",
+    m_worldScale * 1.4,
+    glm::vec3(-2.0f, -6.0f, -18.0f),
+    m_stool1ColMesh);
+  m_stool1->Initialize();
+  m_dynamicsWorld->addRigidBody(m_stool1->m_rigidBody);
+
+  m_stool2ColMesh = new btTriangleMesh();
+  m_stool2 = new Obstacle(
+    "..//assets//Stool.obj",
+    m_worldScale * 1.4,
+    glm::vec3(-2.0f, -6.0f, 0.0f),
+    m_stool2ColMesh);
+  m_stool2->Initialize();
+  m_dynamicsWorld->addRigidBody(m_stool2->m_rigidBody);
+
+  m_stool3ColMesh = new btTriangleMesh();
+  m_stool3 = new Obstacle(
+    "..//assets//Stool.obj",
+    m_worldScale * 1.4,
+    glm::vec3(-2.0f, -6.0f, 18.0f),
+    m_stool3ColMesh);
+  m_stool3->Initialize();
+  m_dynamicsWorld->addRigidBody(m_stool3->m_rigidBody);
+
+  //tables
+  m_table1ColMesh = new btTriangleMesh();
+  m_table1 = new Obstacle(
+    "..//assets//Table.obj",
+    m_worldScale,
+    glm::vec3(-15.0f, -6.0f, -17.0f),
+    m_table1ColMesh);
+  m_table1->Initialize();
+  m_dynamicsWorld->addRigidBody(m_table1->m_rigidBody);
+
+  m_table2ColMesh = new btTriangleMesh();
+  m_table2 = new Obstacle(
+    "..//assets//Table.obj",
+    m_worldScale,
+    glm::vec3(-15.0f, -6.0f, 17.0f),
+    m_table2ColMesh);
+  m_table2->Initialize();
+  m_dynamicsWorld->addRigidBody(m_table2->m_rigidBody);
   
   return true;
 }
@@ -149,6 +221,13 @@ void World::Update(unsigned int dt)
   m_cross->SetCameraTransform(m_cameraTransform);
 
   m_room->Update(dt);
+  m_bar->Update(dt);
+  m_shelf->Update(dt);
+  m_stool1->Update(dt);
+  m_stool2->Update(dt);
+  m_stool3->Update(dt);
+  m_table1->Update(dt);
+  m_table2->Update(dt);
   
   for(int i=0 ; i<m_row1Count ; i++)
     m_row1[i]->rowUpdate(dt);
@@ -406,6 +485,63 @@ void World::Render(Shader& shader, unsigned int obj)
             m_bullets[i]->Render();
         }
       break;
+    case 4:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_bar->GetModel()));
+      m_bar->Render();
+      break;
+    case 5:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_shelf->GetModel()));
+      m_shelf->Render();
+      break;
+    case 6:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_stool1->GetModel()));
+      m_stool1->Render();
+      break;
+    case 7:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_stool2->GetModel()));
+      m_stool2->Render();
+      break;
+    case 8:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_stool3->GetModel()));
+      m_stool3->Render();
+      break;
+    case 9:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_table1->GetModel()));
+      m_table1->Render();
+      break;
+    case 10:
+      glUniformMatrix4fv(
+        modelMatrix, 
+        1, 
+        GL_FALSE, 
+        glm::value_ptr(m_table2->GetModel()));
+      m_table2->Render();
+      break;
+
     //add more cases for more objects
     default: break;
   }

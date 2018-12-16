@@ -43,6 +43,8 @@ class Object
     void AddChild(Object* child);
     void RemoveChild();
 
+    void SetRotation(float angle, glm::vec3 rotation);
+
   protected:
     Object* m_parent;
     vector<Object*> m_children;
