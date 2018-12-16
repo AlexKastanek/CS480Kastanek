@@ -28,7 +28,7 @@ void Light::Initialize()
 
   if (directional)
   {
-    m_projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.01f, 100.0f);
+    m_projection = glm::ortho(-100.0f, 100.0f, -150.0f, 150.0f, 10.0f, 500.0f);
   }
   else
   {

@@ -150,8 +150,8 @@ void main()
                 lightSpacePos = (lights[i].lightMatrix * modelMatrix) * f_position;
 
                 // set the bias
-                float bias = 0.005 * tan(acos(dot(N,L)));
-                bias = clamp(bias, 0.0, 0.05);
+                float bias = 0.001 * tan(acos(dot(N,L)));
+                bias = clamp(bias, 0.0, 0.01);
 
                 shadow = CalculateShadow(lightSpacePos, bias, i);
             }

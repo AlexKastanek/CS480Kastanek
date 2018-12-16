@@ -39,6 +39,7 @@ bool World::Initialize()
   /* Initialize objects */
 
   //ground
+  /*
   m_groundColMesh = new btTriangleMesh();
   m_ground = new Obstacle(
     "..//assets//Ground.obj",     //obj file path
@@ -47,6 +48,17 @@ bool World::Initialize()
     m_groundColMesh);             //collider mesh
   m_ground->Initialize();
   m_dynamicsWorld->addRigidBody(m_ground->m_rigidBody);
+  */
+
+  //room
+  m_roomColMesh = new btTriangleMesh();
+  m_room = new Obstacle(
+    "..//assets//Room.obj",
+    1.0 * m_worldScale,
+    glm::vec3(0.0f, 0.0f, 0.0f) * m_worldScale,
+    m_roomColMesh);
+  m_room->Initialize();
+  m_dynamicsWorld->addRigidBody(m_room->m_rigidBody);
   
   float offset = 0;
   
@@ -136,7 +148,7 @@ void World::Update(unsigned int dt)
   m_gun->SetCameraTransform(m_cameraTransform);
   m_cross->SetCameraTransform(m_cameraTransform);
 
-  m_ground->Update(dt);
+  m_room->Update(dt);
   
   for(int i=0 ; i<m_row1Count ; i++)
     m_row1[i]->rowUpdate(dt);
@@ -324,8 +336,8 @@ void World::Render(Shader& shader, unsigned int obj)
         modelMatrix, 
         1, 
         GL_FALSE, 
-        glm::value_ptr(m_ground->GetModel()));
-      m_ground->Render();
+        glm::value_ptr(m_room->GetModel()));
+      m_room->Render();
       break;
     case 1:
         for(int i=0 ; i<m_row1Count ; i++)

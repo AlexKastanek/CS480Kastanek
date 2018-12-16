@@ -10,7 +10,7 @@ Camera::Camera()
   m_focusPoint = m_initialFocusPoint;
 
   m_moveDirection = glm::vec3(0.0, 0.0, 0.0);
-  m_moveSpeed = 0.01f;
+  m_moveSpeed = 0.05f;
   m_rotateSpeed = 5.0f;
   m_pitch = 0.0f;
   m_yaw = 0.0f;
@@ -73,13 +73,13 @@ void Camera::Update(unsigned int dt)
 
   m_focusPoint = m_position + localForward;
 
-  /*
+  
   cout << "Camera Position: ("
        << m_position.x << ", "
        << m_position.y << ", "
        << m_position.z << ")"
        << endl;
-  */
+  
 
   view = glm::lookAt( m_position,
     m_focusPoint,

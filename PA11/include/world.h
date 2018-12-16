@@ -55,8 +55,10 @@ private:
   float m_worldScale = 3;
 
   //ground stuff
-  Obstacle *m_ground;
-  btTriangleMesh *m_groundColMesh;
+  //Obstacle *m_ground;
+  //btTriangleMesh *m_groundColMesh;
+  Obstacle *m_room;
+  btTriangleMesh *m_roomColMesh;
 
   
   double m_targetHitTimer = 0.0;

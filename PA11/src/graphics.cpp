@@ -129,7 +129,7 @@ bool Graphics::Initialize(int width, int height)
 
   Light mainLight, secondaryLight;
 
-  mainLight.position = glm::vec4(2.0f, 50.0f, -5.0f, 1.0f);
+  mainLight.position = glm::vec4(60.0f, 60.0f, 150.0f, 1.0f);
   mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   mainLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   mainLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
