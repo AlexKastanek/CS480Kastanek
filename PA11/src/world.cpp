@@ -106,7 +106,7 @@ bool World::Initialize()
   
   //pop up targets
   m_popTarget1ColMesh = new btTriangleMesh();
-  m_popTarget1 = new Target("..//assets//Target.obj", 0.2f * m_worldScale, glm::vec3(-900.0f, -900.0f, -900.0f) * m_worldScale, m_popTarget1ColMesh, 'r');
+  m_popTarget1 = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(-900.0f, -900.0f, -900.0f) * m_worldScale, m_popTarget1ColMesh, 'r');
   m_popTarget1->Initialize();
   m_dynamicsWorld->addRigidBody(m_popTarget1->m_rigidBody);
   m_dynamicsWorld->addCollisionObject(m_popTarget1->m_trigger->m_ghostObject);
@@ -278,7 +278,7 @@ void World::Update(unsigned int dt)
     m_popZoffset = rand() % 5;
   }
   
-  m_popTarget1->popUpdate(dt, (glm::vec3(-4.0f, 2.0f + m_popYoffset, -0.0f + m_popZoffset)) * m_worldScale);
+  m_popTarget1->popUpdate(dt, (glm::vec3(8.0f, 4.0f + m_popYoffset, -0.0f + m_popZoffset)) * m_worldScale);
   
   m_gun->Update(dt);
   if(m_crossRender) m_cross->Update(dt);

@@ -14,8 +14,8 @@ Camera::Camera()
   m_rotateSpeed = 5.0f;
   m_pitch = 0.0f;
   m_yaw = 0.0f;
-  m_horizontalSensitivity = 0.75f;
-  m_verticalSensitivity = 0.5f;
+  m_horizontalSensitivity = 0.5f;
+  m_verticalSensitivity = 0.25f;
 }
 
 Camera::~Camera()
