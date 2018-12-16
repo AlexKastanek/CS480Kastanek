@@ -211,11 +211,12 @@ bool World::Initialize()
   m_dynamicsWorld->addRigidBody(m_table2->m_rigidBody);
 
   //chairs
+  float chairScale = 0.85f;
   m_chair1ColMesh = new btTriangleMesh();
   m_chair1 = new Obstacle(
     "..//assets//Chair.obj",
-    m_worldScale,
-    glm::vec3(-15.0f, 3.25, -35.0f),
+    chairScale * m_worldScale,
+    glm::vec3(-15.0f, 2, -35.0f),
     m_chair1ColMesh);
   m_chair1->Initialize();
   m_dynamicsWorld->addRigidBody(m_chair1->m_rigidBody);
@@ -223,8 +224,8 @@ bool World::Initialize()
   m_chair2ColMesh = new btTriangleMesh();
   m_chair2 = new Obstacle(
     "..//assets//Chair.obj",
-    m_worldScale,
-    glm::vec3(-5.0f, 3.25, 35.0f),
+    chairScale * m_worldScale,
+    glm::vec3(-5.0f, 2, 35.0f),
     m_chair2ColMesh);
   m_chair2->SetRotation(7*M_PI/6, glm::vec3(0.0f, 1.0f, 0.0f));
   m_chair2->Initialize();
@@ -233,8 +234,8 @@ bool World::Initialize()
   m_chair3ColMesh = new btTriangleMesh();
   m_chair3 = new Obstacle(
     "..//assets//Chair.obj",
-    m_worldScale,
-    glm::vec3(-30.0f, 3.25, 30.0f),
+    chairScale * m_worldScale,
+    glm::vec3(-30.0f, 2, 30.0f),
     m_chair3ColMesh);
   m_chair3->SetRotation(3*M_PI/4, glm::vec3(0.0f, 1.0f, 0.0f));
   m_chair3->Initialize();

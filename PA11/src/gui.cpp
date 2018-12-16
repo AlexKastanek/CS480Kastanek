@@ -178,9 +178,9 @@ bool GUI::Update(SDL_Window* window, Graphics* graphics)
       }
       int seconds = m_timeLeft % 60;
       string secondsDisplay;
-      if (seconds <= 0)
+      if (seconds < 10)
       {
-        secondsDisplay = "00";
+        secondsDisplay = "0" + to_string(seconds);
       }
       else
       {

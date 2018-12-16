@@ -14,8 +14,8 @@ Camera::Camera()
   m_rotateSpeed = 5.0f;
   m_pitch = 0.0f;
   m_yaw = 0.0f;
-  m_horizontalSensitivity = 0.5f;
-  m_verticalSensitivity = 0.25f;
+  m_horizontalSensitivity = 0.1f;
+  m_verticalSensitivity = 0.05f;
 }
 
 Camera::~Camera()
@@ -49,26 +49,29 @@ void Camera::Update(unsigned int dt)
   localForward.z = cos(glm::radians(m_pitch)) * sin(glm::radians(m_yaw));
   localForward = glm::normalize(localForward);
 
-  if (m_moveDirection.z > 0)
+  if (m_devMode)
   {
-    //move forward
-    m_position += m_moveSpeed * localForward * ((float) dt);
-  }
-  else if (m_moveDirection.z < 0)
-  {
-    //move back
-    m_position -= m_moveSpeed * localForward * ((float) dt);
-  }
+    if (m_moveDirection.z > 0)
+    {
+      //move forward
+      m_position += m_moveSpeed * localForward * ((float) dt);
+    }
+    else if (m_moveDirection.z < 0)
+    {
+      //move back
+      m_position -= m_moveSpeed * localForward * ((float) dt);
+    }
 
-  if (m_moveDirection.x > 0)
-  {
-    //move right
-    m_position -= glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
-  }
-  else if (m_moveDirection.x < 0)
-  {
-    //move left
-    m_position += glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
+    if (m_moveDirection.x > 0)
+    {
+      //move right
+      m_position -= glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
+    }
+    else if (m_moveDirection.x < 0)
+    {
+      //move left
+      m_position += glm::normalize(glm::cross(localForward, localUp)) * m_moveSpeed * ((float) dt);
+    }
   }
 
   m_focusPoint = m_position + localForward;
@@ -211,17 +214,39 @@ void Camera::HandleMouseMotion(int x, int y)
   }
 
   m_yaw += x * m_horizontalSensitivity;
-  //use this if not in free mode
-  /*
-  if (m_yaw > 45.0f)
+  //use this if not in dev mode
+  if (!m_devMode)
   {
-    m_yaw = 45.0f;
+    if (m_yaw > 45.0f)
+    {
+      m_yaw = 45.0f;
+    }
+    if (m_yaw < -45.0)
+    {
+      m_yaw = -45.0;
+    }
   }
-  if (m_yaw < -45.0)
+}
+
+void Camera::SwitchMode()
+{
+  if (m_devMode)
   {
-    m_yaw = -45.0;
+    cout << "game mode" << endl;
+    m_position = m_initialPosition;
+    m_pitch = 0.0f;
+    m_yaw = 0.0f;
+    m_horizontalSensitivity = 0.1f;
+    m_verticalSensitivity = 0.05f;
+    m_devMode = false;
   }
-  */
+  else
+  {
+    cout << "dev mode" << endl;
+    m_horizontalSensitivity = 0.5f;
+  m_verticalSensitivity = 0.25f;
+    m_devMode = true;
+  }
 }
 
 glm::mat4 Camera::GetProjection()
@@ -297,4 +322,9 @@ float Camera::GetPitch()
 float Camera::GetYaw()
 {
     return m_yaw;
+}
+
+void Camera::SetDevMode(bool devMode)
+{
+  m_devMode = devMode;
 }

@@ -99,7 +99,7 @@ private:
   Bullet *m_bullets[10];
   int m_bulletIterator = 0;
   int m_ammoCount = 0;
-  const int m_ammoMax = 20;
+  const int m_ammoMax = 100;
   
   Cross *m_cross;
   bool m_crossRender = true;

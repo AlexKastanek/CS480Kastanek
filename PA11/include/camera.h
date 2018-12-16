@@ -18,6 +18,8 @@ class Camera
     void HandleKeyboardInput(string input, bool isPressed);
     void HandleMouseMotion(int x, int y);
 
+    void SwitchMode();
+
     glm::mat4 GetProjection();
     glm::mat4 GetView();
     glm::mat4 GetModel();
@@ -35,6 +37,7 @@ class Camera
     void SetMoveDirectionX(float x);
     void SetMoveDirectionY(float y);
     void SetMoveDirectionZ(float z);
+    void SetDevMode(bool devMode);
   
   private:
     glm::mat4 projection;
@@ -53,6 +56,8 @@ class Camera
     float m_yaw;
     float m_horizontalSensitivity;
     float m_verticalSensitivity;
+
+    bool m_devMode = false;
 };
 
 #endif /* CAMERA_H */

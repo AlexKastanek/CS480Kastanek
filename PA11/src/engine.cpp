@@ -186,6 +186,9 @@ void Engine::Keyboard()
           case SDLK_RIGHT:
             m_graphics->m_camera->HandleKeyboardInput("right", true);
             break;
+          case SDLK_m:
+            m_graphics->m_camera->SwitchMode();
+            break;
           default:
             break;
         }
