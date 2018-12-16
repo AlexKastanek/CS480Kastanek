@@ -70,9 +70,18 @@ void Engine::Run()
     m_timeLeft = m_gameTime - ((clock() - m_startTime) / CLOCKS_PER_SEC);
     cout << m_timeLeft << " ";
     m_gui->SetTimeLeft(m_timeLeft);
+    if (m_timeLeft <= 0 && !justGameOver)
+    {
+      m_graphics->m_world->setGameOver(true);
+    }
 
     if (m_graphics->m_world->isGameOver())
     {
+      if (!justGameOver)
+      {
+        justGameOver = true;
+      }
+
       // Update the DT
       m_DT = getDT();
 
@@ -92,6 +101,14 @@ void Engine::Run()
     }
     else
     {
+      if (justGameOver)
+      {
+        //restart timer
+        m_startTime = clock();
+        m_timeLeft = m_gameTime;
+        justGameOver = false;
+      }
+
       // Update the DT
       m_DT = getDT();
       

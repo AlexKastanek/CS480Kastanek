@@ -46,6 +46,7 @@ public:
   
   void createBullet(float, float, float, float, float);
   void setCameraPos(glm::vec3 cameraPos);
+  void setGameOver(bool gameOver);
 
   glm::mat4 m_cameraTransform;
   

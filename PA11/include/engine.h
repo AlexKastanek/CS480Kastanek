@@ -48,6 +48,7 @@ class Engine
     clock_t m_startTime;
     int m_timeLeft;
     int m_gameTime = 120; //seconds
+    bool justGameOver = false;
 
     int state = 0;
 };

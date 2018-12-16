@@ -724,9 +724,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         
         //end the game
         //m_score = 0;
-        GenerateScores(m_topTenStats, m_newHighScore);
-        m_gameOver = true;
-        m_crossRender = false;
+        setGameOver(true);
     }
     
     else /**shoot a bullet;PLAY AN AIR RIFLE POP SOUND**/
@@ -763,4 +761,18 @@ int World::GetAmmoCount()
     
     else
         return 0;
+}
+
+void World::setGameOver(bool gameOver)
+{
+  if (gameOver)
+  {
+    GenerateScores(m_topTenStats, m_newHighScore);
+    m_gameOver = true;
+    m_crossRender = false;
+  }
+  else
+  {
+    Reset();
+  }
 }
