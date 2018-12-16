@@ -21,6 +21,7 @@ public:
 
   //btCollisionShape* GetCollider();
   //btRigidBody* GetRigidBody();
+  glm::vec3 GetPosition();
 
   btCollisionShape *m_collider;
   btMotionState *m_motionState;

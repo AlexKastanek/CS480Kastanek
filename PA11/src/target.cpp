@@ -125,6 +125,15 @@ void Target::rowUpdate(unsigned int dt)
         
         //translate the trigger
         m_trigger->transformTrigger(newTransform);
+        /*
+        glm::vec3 trigPos = m_trigger->GetPosition();
+        cout << "Trigger Position: "
+             << "("
+             << trigPos.x << ", "
+             << trigPos.y << ", "
+             << trigPos.z << ")"
+             << endl;
+        */
 
         //set the scale
         m_scaleMatrix = glm::scale(

@@ -65,3 +65,8 @@ void TriggerObject::transformTrigger(btTransform tf)
 {
     m_ghostObject->setWorldTransform(tf);
 }
+
+glm::vec3 TriggerObject::GetPosition()
+{
+  return m_position;
+}

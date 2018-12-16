@@ -66,7 +66,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row1Count ; i++)
   {
     m_row1ColMesh[i] = new btTriangleMesh();
-    m_row1[i] = new Target("..//assets//Target.obj", 0.8f * m_worldScale, glm::vec3(0.0f, 4.0f, (float)(-4.0 + offset))  * m_worldScale, m_row1ColMesh[i], 'r');
+    m_row1[i] = new Target("..//assets//Target.obj", 0.8f * m_worldScale, glm::vec3(10.0f, 5.0f, (float)(-4.0 + offset))  * m_worldScale, m_row1ColMesh[i], 'r');
     m_row1[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row1[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row1[i]->m_trigger->m_ghostObject);
@@ -80,7 +80,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row2Count ; i++)
   {
     m_row2ColMesh[i] = new btTriangleMesh();
-    m_row2[i] = new Target("..//assets//Target.obj", 0.6f * m_worldScale, glm::vec3(0.0f, 6.0f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
+    m_row2[i] = new Target("..//assets//Target.obj", 0.6f * m_worldScale, glm::vec3(10.0f, 7.125f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
     m_row2[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row2[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row2[i]->m_trigger->m_ghostObject);
@@ -94,7 +94,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row3Count ; i++)
   {
     m_row3ColMesh[i] = new btTriangleMesh();
-    m_row3[i] = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(0.0f, 8.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
+    m_row3[i] = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(10.0f, 9.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
     m_row3[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row3[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row3[i]->m_trigger->m_ghostObject);
