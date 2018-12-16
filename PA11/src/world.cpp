@@ -748,7 +748,7 @@ void World::createBullet(float x, float y, float z, float pitch, float yaw)
         //make bullet shoot from camera location
         m_bullets[m_bulletIterator]->m_rigidBody->setWorldTransform(bulletTransform);
         m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(btVector3(0,0,0));
-        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .05 * m_worldScale);
+        m_bullets[m_bulletIterator]->m_rigidBody->setLinearVelocity(shootDir * .1 * m_worldScale);
         m_bulletIterator++;
         Mix_PlayChannel(-1, Sound::soundEffect2, 0);
     }
