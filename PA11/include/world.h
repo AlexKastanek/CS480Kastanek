@@ -69,14 +69,14 @@ private:
   btTriangleMesh *m_popTarget1ColMesh;
 
   //target array 1; bottom
-  const int m_row1Count = 4;
-  Target *m_row1[4];
-  btTriangleMesh *m_row1ColMesh[4];
+  const int m_row1Count = 8;
+  Target *m_row1[8];
+  btTriangleMesh *m_row1ColMesh[8];
   
   //target array 2; middle
-  const int m_row2Count = 4;
-  Target *m_row2[4];
-  btTriangleMesh *m_row2ColMesh[4];
+  const int m_row2Count = 6;
+  Target *m_row2[6];
+  btTriangleMesh *m_row2ColMesh[6];
   
   //target array 3; top
   const int m_row3Count = 4;

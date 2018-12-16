@@ -129,22 +129,26 @@ bool Graphics::Initialize(int width, int height)
 
   Light mainLight, outsideLight, spotLight;
 
-  outsideLight.position = glm::vec4(-100.0f, 100.0f, -100.0f, 1.0f);
-  outsideLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-  outsideLight.diffuse = glm::vec4(0.05f, 0.05f, 0.05f, 1.0f);
-  outsideLight.specular = glm::vec4(1.0f, 1.0f, 1.0f, 3.0f);
-  outsideLight.focusPoint = glm::vec3(10.0f, 20.0f, -30.0f);
-  outsideLight.angle = 10.0f;
-  outsideLight.shininess = 50;
-  outsideLight.attenuation = 0.000001f;
-  outsideLight.directional = true;
-  outsideLight.castsShadows = false;
+  mainLight.position = glm::vec4(-50.0f, 25.0f, 65.0f, 1.0f);
+  mainLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
+  mainLight.diffuse = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
+  mainLight.specular = glm::vec4(5.0f, 5.0f, 5.0f, 1.0f);
+  mainLight.focusPoint = glm::vec3(-20.0f, 6.0f, -50.0f);
+  mainLight.angle = 50.0f;
+  mainLight.shininess = 50;
+  mainLight.attenuation = 0.000001f;
+  mainLight.directional = false;
+  mainLight.castsShadows = true;
+  mainLight.x_ortho = 50;
+  mainLight.y_ortho = 50;
+  mainLight.near_plane = 5.0;
+  mainLight.far_plane = 200;
 
   mainLight.Initialize();
 
   m_lights.push_back(mainLight);
 
-  outsideLight.position = glm::vec4(60.0f, 60.0f, 150.0f, 1.0f);
+  outsideLight.position = glm::vec4(60.0f, 80.0f, 120.0f, 1.0f);
   outsideLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
   outsideLight.diffuse = glm::vec4(10.0f, 10.0f, 10.0f, 1.0f);
   outsideLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 3.0f);
@@ -154,6 +158,10 @@ bool Graphics::Initialize(int width, int height)
   outsideLight.attenuation = 0.000001f;
   outsideLight.directional = true;
   outsideLight.castsShadows = true;
+  outsideLight.x_ortho = 100;
+  outsideLight.y_ortho = 150;
+  outsideLight.near_plane = 10;
+  outsideLight.far_plane = 500;
 
   outsideLight.Initialize();
 
@@ -161,14 +169,16 @@ bool Graphics::Initialize(int width, int height)
 
   spotLight.position = glm::vec4(0, 30, 0, 1.0);
   spotLight.ambient = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-  spotLight.diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-  spotLight.specular = glm::vec4(7.0f, 7.0f, 7.0f, 7.0f);
+  spotLight.diffuse = glm::vec4(1.5f, 1.5f, 1.5f, 1.0f);
+  spotLight.specular = glm::vec4(3.0f, 3.0f, 3.0f, 1.0f);
   spotLight.focusPoint = glm::vec3(50.0f, 12.0f, 0.0f);
   spotLight.angle = 25.0f;
   spotLight.shininess = 50;
   spotLight.attenuation = 0.000001f;
   spotLight.directional = false;
   spotLight.castsShadows = true;
+  spotLight.near_plane = 1.0;
+  spotLight.far_plane = 50;
 
   spotLight.Initialize();
 

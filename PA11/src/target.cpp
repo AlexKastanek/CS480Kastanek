@@ -104,11 +104,11 @@ void Target::rowUpdate(unsigned int dt)
             m_position.z += m_speedMod * (dt + 1) * 0.1f;
         
         
-        if(m_position.z >= 15 && m_direction == 'r')
-            m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
+        if(m_position.z >= 22.5 && m_direction == 'r')
+            m_position = glm::vec3(origin.x(), origin.y(), -22.5f);
         
-        if(m_position.z <= -15 && m_direction == 'l')
-            m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
+        if(m_position.z <= -22.5 && m_direction == 'l')
+            m_position = glm::vec3(origin.x(), origin.y(), 22.5f);
         
         //translate the collision box
         btVector3 newOrigin = btVector3(m_position.x, m_position.y, m_position.z);
@@ -160,15 +160,15 @@ void Target::rowUpdate(unsigned int dt)
             m_position.z += m_speedMod * (dt + 1) * 0.1f;
         
         
-        if(m_position.z >= 15 && m_direction == 'r')
+        if(m_position.z >= 22.5 && m_direction == 'r')
         {
-            m_position = glm::vec3(origin.x(), origin.y(), -15.0f);
+            m_position = glm::vec3(origin.x(), origin.y(), -22.5f);
             m_isUp = true;
         }
         
-        if(m_position.z <= -15 && m_direction == 'l')
+        if(m_position.z <= -22.5 && m_direction == 'l')
         {
-            m_position = glm::vec3(origin.x(), origin.y(), 15.0f);
+            m_position = glm::vec3(origin.x(), origin.y(), 22.5f);
             m_isUp = true;
         }
         

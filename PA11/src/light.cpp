@@ -28,11 +28,11 @@ void Light::Initialize()
 
   if (directional)
   {
-    m_projection = glm::ortho(-100.0f, 100.0f, -150.0f, 150.0f, 10.0f, 500.0f);
+    m_projection = glm::ortho(-x_ortho, x_ortho, -y_ortho, y_ortho, near_plane, far_plane);
   }
   else
   {
-    m_projection = glm::perspective(glm::radians(45.0f), 1.0f, 1.0f, 50.0f);
+    m_projection = glm::perspective(glm::radians(45.0f), 1.0f, near_plane, far_plane);
   }
   
   m_view = glm::lookAt(

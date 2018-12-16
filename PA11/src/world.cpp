@@ -66,13 +66,13 @@ bool World::Initialize()
   for(int i=0 ; i<m_row1Count ; i++)
   {
     m_row1ColMesh[i] = new btTriangleMesh();
-    m_row1[i] = new Target("..//assets//Target.obj", 0.8f * m_worldScale, glm::vec3(10.0f, 5.0f, (float)(-4.0 + offset))  * m_worldScale, m_row1ColMesh[i], 'r');
+    m_row1[i] = new Target("..//assets//TargetRed.obj", 0.55f * m_worldScale, glm::vec3(10.0f, 5.0f, (float)(-6.0 + offset))  * m_worldScale, m_row1ColMesh[i], 'r');
     m_row1[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row1[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row1[i]->m_trigger->m_ghostObject);
     m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
     m_row1[i]->setSpeed(.04); 
-    offset += 2.5;
+    offset += 1.875;
   }
   offset = 0;
   
@@ -80,7 +80,7 @@ bool World::Initialize()
   for(int i=0 ; i<m_row2Count ; i++)
   {
     m_row2ColMesh[i] = new btTriangleMesh();
-    m_row2[i] = new Target("..//assets//Target.obj", 0.6f * m_worldScale, glm::vec3(10.0f, 7.125f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
+    m_row2[i] = new Target("..//assets//TargetGreen.obj", 0.5f * m_worldScale, glm::vec3(10.0f, 7.125f, (float)(-4.0 + offset)) * m_worldScale, m_row2ColMesh[i], 'l');
     m_row2[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row2[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row2[i]->m_trigger->m_ghostObject);
@@ -94,13 +94,13 @@ bool World::Initialize()
   for(int i=0 ; i<m_row3Count ; i++)
   {
     m_row3ColMesh[i] = new btTriangleMesh();
-    m_row3[i] = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(10.0f, 9.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
+    m_row3[i] = new Target("..//assets//TargetBlue.obj", 0.4f * m_worldScale, glm::vec3(10.0f, 9.0f, (float)(-4.0 + offset)) * m_worldScale, m_row3ColMesh[i], 'r');
     m_row3[i]->Initialize();
     m_dynamicsWorld->addRigidBody(m_row3[i]->m_rigidBody);
     m_dynamicsWorld->addCollisionObject(m_row3[i]->m_trigger->m_ghostObject);
     m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
     m_row3[i]->setSpeed(.08); 
-    offset += 2.5;
+    offset += 3.75;
   }
   offset = 0;
   

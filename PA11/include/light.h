@@ -40,6 +40,11 @@ public:
   float attenuation;
 
   bool castsShadows;
+
+  float x_ortho;
+  float y_ortho;
+  float near_plane;
+  float far_plane;
   
 
 private:
