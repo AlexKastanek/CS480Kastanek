@@ -74,60 +74,23 @@ OpenGL 3.3 will run on the [ubuntu.cse.unr.edu](https://ubuntu.cse.unr.edu/) web
 ## Keyboard/Mouse Input Guide
 ESC - must be pressed to close the window (or right-click on the task bar and select close).  
 
-TAB - change selected light  
-
-1 - decrease specular brightness of board with selected light  
-2 - increase specular brightness of board with selected light  
-
-3 - decrease specular brightness of ball with selected light  
-4 - increase specular brightness of ball with selected light  
-
-5 - decrease specular brightness of flippers with selected light  
-6 - increase specular brightness of flippers with selected light  
-
-7 - decrease specular brightness of cylinder obstacle with selected light  
-8 - increase specular brightness of cylinder obstacle with selected light  
-
-9 - decrease specular brightness of plunger with selected light  
-0 - increase specular brightness of plunger with selected light  
-
-'-' - decrease ambient brightness of selected light  
-'=' - increase ambient brightness of selected light  
-
-‘]’ - increase diffuse brightness of selected light  
-‘[‘ - decrease diffuse brightness of selected light  
-
-'.' - increase spotlight angle (radius) of the spotlight following the ball  
-',' - decrease spotlight angle (radius) of the spotlight following the ball  
-
 M - change camera mode  
 
 W - move camera forward  
 A - move camera to the left  
 S - move camera back  
 D - move camera to the right  
-Up Arrow - if in game mode, move up. If in free mode, tilt camera up  
-Down Arrow - if in game mode, move down. If in free mode, tilt camera down  
-Left Arrow - if in free mode, tilt camera left  
-Right Arrow - if in free mode, tilt camera right  
+Up Arrow - tilt camera up  
+Down Arrow - tilt camera down  
+Left Arrow - tilt camera left  
+Right Arrow - tilt camera right  
 
-Lshift - flip left flipper  
-Rshift - flip right flipper  
-Enter - use the plunger (hold to pull, let go to release)  
+Left Click - shoot
 
-SpaceBar - Toggle Lighting Mode (default is Vertex Based)  
+Move mouse - move camera
 
 ## Extra Credit
-Rubric Defined Extra Credit:  
-This program allows the user to use varying plunger speeds based on how long the key is held  
-This program has a spotlight on the ball with radius and intensity adjustments  
-This program keeps track of the top 10 scores  
-This program has bumpers that bounce but they do not light up.  
-
-Considerations:  
-This program has the ability for the user to use a free camera  
+Considerations for Extra Credit:  
+This program uses shadow maps  
+Advanced shadows that support orthographic or perspective projection and are filtered to have smooth edges
 This program uses custom fonts  
-This program has an advanced game over menu system  
-This program's gui is repositioned with window size  
-This program has a leaderboard system that prompts the user for a name before playing  
-This program uses a trigger system that allows the ball to go back into the launch area and be constrained to one axis while in the launch area  
