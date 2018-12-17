@@ -106,7 +106,7 @@ bool World::Initialize()
   
   //pop up targets
   m_popTarget1ColMesh = new btTriangleMesh();
-  m_popTarget1 = new Target("..//assets//Target.obj", 0.4f * m_worldScale, glm::vec3(-900.0f, -900.0f, -900.0f) * m_worldScale, m_popTarget1ColMesh, 'r');
+  m_popTarget1 = new Target("..//assets//TargetPurple.obj", 0.3f * m_worldScale, glm::vec3(-900.0f, -900.0f, -900.0f) * m_worldScale, m_popTarget1ColMesh, 'r');
   m_popTarget1->Initialize();
   m_dynamicsWorld->addRigidBody(m_popTarget1->m_rigidBody);
   m_dynamicsWorld->addCollisionObject(m_popTarget1->m_trigger->m_ghostObject);
@@ -115,16 +115,16 @@ bool World::Initialize()
   
   
   //can
-//   m_canColMesh = new btTriangleMesh();
-//   m_can = new Can(
-//     "..//assets//can.obj",
-//     1.0f * m_worldScale,
-//     glm::vec3(0.0f, 3.0f, -3.0f) * m_worldScale, 
-//     m_canColMesh);
-//   m_can->Initialize();
-//   m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
-//   m_dynamicsWorld->addCollisionObject(m_can->m_trigger->m_ghostObject);
-//   m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+  m_canColMesh = new btTriangleMesh();
+  m_can = new Can(
+    "..//assets//Bepis.obj",
+    0.2f * m_worldScale,
+    glm::vec3(-10.0f, 10.0f, -15.0f), 
+    m_canColMesh);
+  m_can->Initialize();
+  m_dynamicsWorld->addRigidBody(m_can->m_rigidBody);
+  //m_dynamicsWorld->addCollisionObject(m_can->m_trigger->m_ghostObject);
+  //m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
   
   //bullets
   for(int i=0 ; i<m_bulletInstance ; i++)
@@ -240,6 +240,11 @@ bool World::Initialize()
   m_chair3->SetRotation(3*M_PI/4, glm::vec3(0.0f, 1.0f, 0.0f));
   m_chair3->Initialize();
   m_dynamicsWorld->addRigidBody(m_chair3->m_rigidBody);
+
+  //sky
+  m_sky = new Object(
+    "..//assets//Sky.obj",
+    20.0);
   
   return true;
 }
@@ -262,6 +267,7 @@ void World::Update(unsigned int dt)
   m_chair1->Update(dt);
   m_chair2->Update(dt);
   m_chair3->Update(dt);
+  m_sky->Update(dt);
   
   for(int i=0 ; i<m_row1Count ; i++)
     m_row1[i]->rowUpdate(dt);
@@ -283,7 +289,7 @@ void World::Update(unsigned int dt)
   
   m_gun->Update(dt);
   if(m_crossRender) m_cross->Update(dt);
-//   m_can->Update(dt);
+  m_can->Update(dt);
   
   for(int i=0 ; i<m_bulletInstance ; i++)
   {
@@ -602,6 +608,23 @@ void World::Render(Shader& shader, const vector<Light>& lights, unsigned int obj
         GL_FALSE, 
         glm::value_ptr(m_chair3->GetModel()));
       m_chair3->Render();
+    case 14:
+      glUniformMatrix4fv(
+        modelMatrix,
+        1,
+        GL_FALSE,
+        glm::value_ptr(m_can->GetModel()));
+      m_can->Render();
+      break;
+    case 15:
+      PassLightingParams(shader, lights, 1, glm::vec3(0.15f));
+      glUniformMatrix4fv(
+        modelMatrix,
+        1,
+        GL_FALSE,
+        glm::value_ptr(m_sky->GetModel()));
+      m_sky->Render();
+      PassDefaultLighting(shader, lights, 1);
     //add more cases for more objects
     default: break;
   }
@@ -616,6 +639,30 @@ void World::Reset()
   m_crossRender = true;
   m_ammoCount = 0;
   m_newHighScore = false;
+}
+
+void World::PassLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, glm::vec3 lightAttr)
+{
+  string lightArray = "lights[" + to_string(lightIndex) + "]";
+  string variableName = lightArray + ".ambientProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].ambient.x * lightAttr.x, 
+    lights[lightIndex].ambient.y * lightAttr.y, 
+    lights[lightIndex].ambient.z * lightAttr.z, 
+    lights[lightIndex].ambient.w);
+  variableName = lightArray + ".specularProduct";
+  variableName = lightArray + ".diffuseProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].diffuse.x * lightAttr.x, 
+    lights[lightIndex].diffuse.y * lightAttr.y, 
+    lights[lightIndex].diffuse.z * lightAttr.z, 
+    lights[lightIndex].diffuse.w);
+  variableName = lightArray + ".specularProduct";
+  glUniform4f(shader.GetUniformLocation(variableName.c_str()),
+    lights[lightIndex].specular.x * lightAttr.x, 
+    lights[lightIndex].specular.y * lightAttr.y, 
+    lights[lightIndex].specular.z * lightAttr.z, 
+    lights[lightIndex].specular.w);
 }
 
 void World::PassTargetLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, Target& target)

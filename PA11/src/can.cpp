@@ -46,9 +46,9 @@ bool Can::Initialize()
   //create the collider
   //m_collider = new btBvhTriangleMeshShape(m_colliderMesh, false);
     m_collider = new btCylinderShape(btVector3(
-            m_scale.x/2,
-            m_scale.y/2,
-            m_scale.z/2));
+            m_scale.x * 2,
+            m_scale.y * 2,
+            m_scale.z * 2));
 
   //create the motion state
   m_motionState = new btDefaultMotionState(transform);
@@ -70,12 +70,15 @@ bool Can::Initialize()
   m_rigidBody = new btRigidBody(ci);
   m_rigidBody->setActivationState(DISABLE_DEACTIVATION);
   //m_rigidBody->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+
+  m_rigidBody->setFriction(10000000.0);
   
+  /*
     m_trigger = new TriggerObject(
       glm::vec3(1.0f, 1.0f, 1.0f) * m_scale,
       glm::vec3(m_position.x, m_position.y, m_position.z)                  
   );
-  m_trigger->Initialize();
+  m_trigger->Initialize();*/
 
   //don't delete motion state
   //delete motionState;

@@ -36,6 +36,7 @@ public:
   void Render(Shader& shader, const vector<Light>& lights, unsigned int obj);
   void Reset();
 
+  void PassLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, glm::vec3 lightAttr);
   void PassTargetLightingParams(Shader& shader, const vector<Light>& lights, int lightIndex, Target& target);
   void PassDefaultLighting(Shader& shader, const vector<Light>& lights, int lightIndex);
 
@@ -127,6 +128,9 @@ private:
   btTriangleMesh *m_chair1ColMesh;
   btTriangleMesh *m_chair2ColMesh;
   btTriangleMesh *m_chair3ColMesh;
+
+  //sky
+  Object *m_sky;
 
   bool m_gameOver = false;
   int m_score = 0;
